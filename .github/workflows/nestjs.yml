@@ -1,0 +1,36 @@
+name: Android CI
+
+on: [push, pull_request]
+
+defaults:
+  run:
+    working-directory: train-station-api
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@latest
+      - name: Use Node.js 12
+        uses: actions/setup-node@latest
+        with:
+          node-version: 12
+      - run: yarn install
+      - run: yarn run build --if-present
+        env:
+          CI: true
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@latest
+      - name: Use Node.js 12
+        uses: actions/setup-node@latest
+        with:
+          node-version: 12
+      - run: yarn install
+      - run: yarn test
+        env:
+          CI: true
