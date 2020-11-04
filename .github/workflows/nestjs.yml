@@ -1,4 +1,4 @@
-name: Android CI
+name: Nest CI
 
 on: [push, pull_request]
 
@@ -7,13 +7,13 @@ defaults:
     working-directory: train-station-api
 
 jobs:
-  build:
+  build-nest:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@v2
       - name: Use Node.js 12
-        uses: actions/setup-node@latest
+        uses: actions/setup-node@v1
         with:
           node-version: 12
       - run: yarn install
@@ -21,13 +21,13 @@ jobs:
         env:
           CI: true
 
-  test:
+  test-nest:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@@v2
       - name: Use Node.js 12
-        uses: actions/setup-node@latest
+        uses: actions/setup-node@v1
         with:
           node-version: 12
       - run: yarn install
