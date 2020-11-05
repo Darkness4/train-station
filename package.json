@@ -1,8 +1,8 @@
 {
   "name": "train-station-api",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "1.0.0",
+  "description": "An API about the SNCF Train Station",
+  "author": "Marc NGUYEN and JB RUBIO",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -33,6 +33,7 @@
     "axios": "^0.21.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
+    "fastify-compress": "^3.4.0",
     "fastify-swagger": "^3.4.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
