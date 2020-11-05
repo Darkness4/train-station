@@ -39,12 +39,4 @@ export class TrainStationService extends TypeOrmCrudService<Station> {
           ),
       );
   }
-
-  async testA(): Promise<number> {
-    return 32;
-  }
-
-  async do() {
-    this.testA();
-  }
 }
