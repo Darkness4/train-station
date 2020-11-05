@@ -14,74 +14,75 @@ export class Fields {
   id: number;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  commune: string;
+  @Column('varchar', { length: 255, nullable: true })
+  commune?: string;
 
   @ApiProperty()
-  @Column()
-  y_wgs84: number;
+  @Column({ nullable: true })
+  y_wgs84?: number;
 
   @ApiProperty()
-  @Column()
-  x_wgs84: number;
+  @Column({ nullable: true })
+  x_wgs84?: number;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  libelle: string;
+  @Column('varchar', { length: 255, nullable: true })
+  libelle?: string;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  idgaia: string;
+  @Column('varchar', { length: 255, nullable: true })
+  idgaia?: string;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  voyageurs: string;
+  @Column('varchar', { length: 255, nullable: true })
+  voyageurs?: string;
 
   @ApiProperty()
-  @Column('simple-array')
-  geo_point_2d: number[];
+  @Column('simple-array', { nullable: true })
+  geo_point_2d?: number[];
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  code_ligne: string;
+  @Column('varchar', { length: 255, nullable: true })
+  code_ligne?: string;
 
   @ApiProperty()
-  @Column()
-  x_l93: number;
+  @Column({ nullable: true })
+  x_l93?: number;
 
   @ApiProperty()
-  @Column('simple-array')
-  c_geo: number[];
+  @Column('simple-array', { nullable: true })
+  c_geo?: number[];
 
   @ApiProperty()
-  @Column()
-  rg_troncon: number;
+  @Column({ nullable: true })
+  rg_troncon?: number;
 
   @ApiProperty()
   @OneToOne(() => Geometry, {
     eager: true,
     cascade: true,
+    nullable: true,
   })
   @JoinColumn()
-  geo_shape: Geometry;
+  geo_shape?: Geometry;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  pk: string;
+  @Column('varchar', { length: 255, nullable: true })
+  pk?: string;
 
   @ApiProperty()
-  @Column()
-  idreseau: number;
+  @Column({ nullable: true })
+  idreseau?: number;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  departemen: string;
+  @Column('varchar', { length: 255, nullable: true })
+  departemen?: string;
 
   @ApiProperty()
-  @Column()
-  y_l93: number;
+  @Column({ nullable: true })
+  y_l93?: number;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  fret: string;
+  @Column('varchar', { length: 255, nullable: true })
+  fret?: string;
 }

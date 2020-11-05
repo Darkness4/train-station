@@ -28,19 +28,21 @@ export class Station extends BaseEntity {
   @OneToOne(() => Fields, {
     eager: true,
     cascade: true,
+    nullable: true,
   })
   @JoinColumn()
-  fields: Fields;
+  fields?: Fields;
 
   @ApiProperty()
   @OneToOne(() => Geometry, {
     eager: true,
     cascade: true,
+    nullable: true,
   })
   @JoinColumn()
-  geometry: Geometry;
+  geometry?: Geometry;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  record_timestamp: string;
+  @Column('varchar', { length: 255, nullable: true })
+  record_timestamp?: string;
 }

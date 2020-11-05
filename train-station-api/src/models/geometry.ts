@@ -7,10 +7,10 @@ export class Geometry {
   id: number;
 
   @ApiProperty()
-  @Column('varchar', { length: 255 })
-  type: string;
+  @Column('varchar', { length: 255, nullable: true })
+  type?: string;
 
   @ApiProperty()
-  @Column('simple-array')
-  coordinates: number[];
+  @Column('simple-array', { nullable: true })
+  coordinates?: number[];
 }
