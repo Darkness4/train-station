@@ -31,4 +31,4 @@ jobs:
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_branch: release/api
-          publish_dir: ./
+          publish_dir: ./train-station-api
