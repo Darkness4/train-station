@@ -24,6 +24,7 @@ jobs:
   deploy-nest:
     needs: build-nest
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Deploy
