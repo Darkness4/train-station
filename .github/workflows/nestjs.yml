@@ -20,3 +20,14 @@ jobs:
       - run: yarn build
         env:
           CI: true
+
+  deploy-nest:
+    needs: build-nest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_branch: release/api
+          publish_dir: ./
