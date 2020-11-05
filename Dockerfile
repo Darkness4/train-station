@@ -21,4 +21,4 @@ COPY --from=builder /usr/src/app/dist ./dist
 EXPOSE 8080
 
 ENTRYPOINT [ "/sbin/tini","--"]
-CMD yarn start
+CMD yarn start:prod
