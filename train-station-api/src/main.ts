@@ -13,10 +13,12 @@ async function bootstrap() {
   );
 
   const options = new DocumentBuilder()
-    .setTitle('Bookx example')
-    .setDescription('The books API description')
+    .setTitle('SNCF Train Station Alternative API')
+    .setDescription(
+      'An relay API for the SNCF that only refreshes on reboot...',
+    )
     .setVersion('1.0')
-    .addTag('books')
+    .addTag('train')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
