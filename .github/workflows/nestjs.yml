@@ -17,6 +17,6 @@ jobs:
         with:
           node-version: 12
       - run: yarn install
-      - run: yarn run build
+      - run: yarn build
         env:
           CI: true

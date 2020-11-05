@@ -6,7 +6,7 @@ import { SwaggerModule } from '@nestjs/swagger/dist/swagger-module';
 import { AppModule } from 'modules/app.module';
 
 async function bootstrap() {
-  const port = parseInt(<string>process.env.PORT, 10) || 3000;
+  const port = parseInt(<string>process.env.PORT, 10) || 8080;
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
