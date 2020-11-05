@@ -20,6 +20,14 @@ import { TrainStationService } from 'services/train-station.service';
   query: {
     limit: 10,
     alwaysPaginate: true,
+    join: {
+      fields: {
+        eager: true,
+      },
+      geometry: {
+        eager: true,
+      },
+    },
   },
 })
 @Controller('stations')
