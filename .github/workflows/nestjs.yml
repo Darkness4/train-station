@@ -1,6 +1,6 @@
 name: Nest CI
 
-on: [push, pull_request]
+on: push
 
 defaults:
   run:
@@ -12,25 +12,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 12
+      - name: Use Node.js 14
         uses: actions/setup-node@v1
         with:
-          node-version: 12
-      - run: yarn install
-      - run: yarn run build
+          node-version: 14
+      - run: npm ci
+      - run: npm run build
         env:
           CI: true
 
-  test-nest:
+  deploy-nest:
+    needs: build-nest
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 12
-        uses: actions/setup-node@v1
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          node-version: 12
-      - run: yarn install
-      - run: yarn test
-        env:
-          CI: true
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_branch: release/api
+          publish_dir: ./train-station-api

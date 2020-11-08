@@ -4,24 +4,33 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify/interfaces/nest
 import { DocumentBuilder } from '@nestjs/swagger/dist/document-builder';
 import { SwaggerModule } from '@nestjs/swagger/dist/swagger-module';
 import { AppModule } from 'modules/app.module';
+import { ValidationPipe } from '@nestjs/common';
+import compression from 'fastify-compress';
 
 async function bootstrap() {
-  const port = parseInt(<string>process.env.PORT, 10) || 3000;
+  const host = process.env.HOST || '0.0.0.0';
+  const port = parseInt(<string>process.env.PORT, 10) || 8080;
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
   );
 
+  // Setup Swagger
   const options = new DocumentBuilder()
-    .setTitle('Bookx example')
-    .setDescription('The books API description')
+    .setTitle('SNCF Train Station Alternative API')
+    .setDescription(
+      'An relay API for the SNCF that only refreshes on reboot...',
+    )
     .setVersion('1.0')
-    .addTag('books')
+    .addTag('train')
     .build();
-
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(port);
+  await app.register(compression);
+  app.useGlobalPipes(new ValidationPipe());
+
+  await app.listen(port, host);
 }
 bootstrap();
