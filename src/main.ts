@@ -4,10 +4,13 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify/interfaces/nest
 import { DocumentBuilder } from '@nestjs/swagger/dist/document-builder';
 import { SwaggerModule } from '@nestjs/swagger/dist/swagger-module';
 import { AppModule } from 'modules/app.module';
+import { ValidationPipe } from '@nestjs/common';
 import compression from 'fastify-compress';
 
 async function bootstrap() {
+  const host = process.env.HOST || '0.0.0.0';
   const port = parseInt(<string>process.env.PORT, 10) || 8080;
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
@@ -25,9 +28,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  // Compress Data
-  app.register(compression);
+  await app.register(compression);
+  app.useGlobalPipes(new ValidationPipe());
 
-  await app.listen(port, '0.0.0.0');
+  await app.listen(port, host);
 }
 bootstrap();
