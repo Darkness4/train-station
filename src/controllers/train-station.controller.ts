@@ -27,6 +27,9 @@ import { TrainStationService } from 'services/train-station.service';
       geometry: {
         eager: true,
       },
+      'fields.geo_shape': {
+        eager: true,
+      },
     },
   },
 })
