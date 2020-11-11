@@ -1,6 +1,6 @@
 package com.example.trainstationapp.core.di
 
-import com.example.trainstationapp.domain.repositories.MockStationRepository
+import com.example.trainstationapp.data.repositories.StationRepositoryImpl
 import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.Binds
 import dagger.Module
@@ -13,5 +13,5 @@ import javax.inject.Singleton
 interface DomainModule {
     @Binds
     @Singleton
-    fun bindStationRepository(repository: MockStationRepository): StationRepository
+    fun bindStationRepository(repository: StationRepositoryImpl): StationRepository
 }
