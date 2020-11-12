@@ -6,6 +6,7 @@ import { SwaggerModule } from '@nestjs/swagger/dist/swagger-module';
 import { AppModule } from 'modules/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import compression from 'fastify-compress';
+import rateLimit from 'fastify-rate-limit';
 
 async function bootstrap() {
   const host = process.env.HOST || '0.0.0.0';
@@ -29,6 +30,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.register(compression);
+  await app.register(rateLimit, {
+    max: 100,
+  });
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(port, host);
