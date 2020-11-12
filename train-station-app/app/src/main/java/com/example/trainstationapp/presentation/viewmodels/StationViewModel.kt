@@ -27,7 +27,7 @@ class StationViewModel(private val repository: StationRepository) : ViewModel() 
         return newResult
     }
 
-    class Factory(private val repository: StationRepository): ViewModelProvider.Factory {
+    class Factory(private val repository: StationRepository) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return StationViewModel(repository) as T

@@ -37,7 +37,8 @@ class StationRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = { database.stationDao().watchAsPagingSource() }
         ).flow
-            .map { it.map { model -> model.asEntity() }
+            .map {
+                it.map { model -> model.asEntity() }
             }.flowOn(Dispatchers.Default)
     }
 

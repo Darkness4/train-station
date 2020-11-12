@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity() {
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(decoration)
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = StationsLoadStateAdapter{ adapter.retry() },
-            footer = StationsLoadStateAdapter{ adapter.retry() }
+            header = StationsLoadStateAdapter { adapter.retry() },
+            footer = StationsLoadStateAdapter { adapter.retry() }
         )
 
         adapter.addLoadStateListener { loadState ->

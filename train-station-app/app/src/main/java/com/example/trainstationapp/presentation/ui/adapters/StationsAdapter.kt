@@ -24,7 +24,7 @@ class StationsAdapter(private val onClickListener: OnClickListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        StationItemBinding.inflate(  // station_item.xml
+        StationItemBinding.inflate( // station_item.xml
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -37,12 +37,12 @@ class StationsAdapter(private val onClickListener: OnClickListener) :
     }
 
     class ViewHolder(
-        private val binding: StationItemBinding,  // station_item.xml
+        private val binding: StationItemBinding, // station_item.xml
         private val onClickListener: OnClickListener,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(station: Station) {
             binding.station = station
-            binding.root.setOnClickListener {  // TODO: May want to change root to a card...
+            binding.root.setOnClickListener { // TODO: May want to change root to a card...
                 onClickListener.onClick(station)
             }
             binding.executePendingBindings()

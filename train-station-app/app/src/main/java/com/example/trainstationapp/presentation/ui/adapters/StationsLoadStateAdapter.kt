@@ -36,7 +36,7 @@ class StationsLoadStateAdapter(private val retry: OnClickListener) :
 
         fun bind(loadState: LoadState) {
             binding.loadState = loadState
-            binding.retryButton.setOnClickListener{ retry.onClick() }
+            binding.retryButton.setOnClickListener { retry.onClick() }
             binding.executePendingBindings()
         }
     }
