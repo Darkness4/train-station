@@ -30,8 +30,8 @@ data class Station(
         val departemen: String,
         val yL93: Double,
         val fret: String,
-    ): ModelMappable<StationModel.FieldsModel> {
-        override fun asModel()= StationModel.FieldsModel(
+    ) : ModelMappable<StationModel.FieldsModel> {
+        override fun asModel() = StationModel.FieldsModel(
             id,
             commune,
             yWgs84,
@@ -57,7 +57,7 @@ data class Station(
         val id: String,
         val type: String,
         val coordinates: List<Double>,
-    ): ModelMappable<StationModel.GeometryModel> {
+    ) : ModelMappable<StationModel.GeometryModel> {
         override fun asModel() = StationModel.GeometryModel(
             id,
             type,
