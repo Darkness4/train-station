@@ -30,11 +30,11 @@ interface TrainStationDataSource {
     ): Paginated<StationModel>
 
     @POST("stations")
-    suspend fun create(@Body body: StationModel): StationModel?
+    suspend fun create(@Body body: StationModel): StationModel
 
     @GET("stations/{id}")
     suspend fun findById(@Path("id") id: String): StationModel?
 
     @PUT("stations/{id}")
-    suspend fun replaceById(@Path("id") id: String): StationModel?
+    suspend fun replaceById(@Path("id") id: String, @Body body: StationModel): StationModel?
 }

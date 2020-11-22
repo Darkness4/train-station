@@ -45,10 +45,8 @@ class StationRepositoryImpl @Inject constructor(
     override suspend fun createOne(station: Station): Result<Unit> {
         return try {
             val model = trainStationDataSource.create(station.asModel())
-            model?.let {
-                database.stationDao().insert(model)
-                return Result.Success(Unit)
-            } ?: Result.Failure(Exception("Element not found."))
+            database.stationDao().insert(model)
+            return Result.Success(Unit)
         } catch (e: Throwable) {
             Result.Failure(e)
         }
@@ -56,7 +54,7 @@ class StationRepositoryImpl @Inject constructor(
 
     override suspend fun replaceOne(station: Station): Result<Unit> {
         return try {
-            val model = trainStationDataSource.replaceById(station.recordid)
+            val model = trainStationDataSource.replaceById(station.recordid, station.asModel())
             model?.let {
                 database.stationDao().insert(model)
                 return Result.Success(Unit)
