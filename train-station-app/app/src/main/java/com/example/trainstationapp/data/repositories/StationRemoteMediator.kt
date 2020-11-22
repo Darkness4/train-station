@@ -58,7 +58,7 @@ class StationRemoteMediator(
             database.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
-                    database.remoteKeysDao().clearRemoteKeys()
+                    database.remoteKeysDao().clear()
                     database.stationDao().clear()
                 }
                 val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
@@ -84,7 +84,7 @@ class StationRemoteMediator(
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.recordid?.let { repoId ->
-                database.remoteKeysDao().remoteKeysId(repoId)
+                database.remoteKeysDao().findById(repoId)
             }
         }
     }
@@ -95,7 +95,7 @@ class StationRemoteMediator(
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { item ->
                 // Get the remote keys of the first items retrieved
-                database.remoteKeysDao().remoteKeysId(item.recordid)
+                database.remoteKeysDao().findById(item.recordid)
             }
     }
 
@@ -105,7 +105,7 @@ class StationRemoteMediator(
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { item ->
                 // Get the remote keys of the last item retrieved
-                database.remoteKeysDao().remoteKeysId(item.recordid)
+                database.remoteKeysDao().findById(item.recordid)
             }
     }
 }

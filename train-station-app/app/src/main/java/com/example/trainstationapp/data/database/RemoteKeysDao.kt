@@ -15,8 +15,8 @@ interface RemoteKeysDao {
     suspend fun insert(remoteKey: List<RemoteKeys>)
 
     @Query("SELECT * FROM remote_keys WHERE id = :id")
-    suspend fun remoteKeysId(id: String): RemoteKeys?
+    suspend fun findById(id: String): RemoteKeys?
 
     @Query("DELETE FROM remote_keys")
-    suspend fun clearRemoteKeys()
+    suspend fun clear()
 }
