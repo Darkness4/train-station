@@ -1,4 +1,4 @@
-package com.example.trainstationapp.data.repositories
+package com.example.trainstationapp.utils
 
 import com.example.trainstationapp.domain.entities.Station
 
