@@ -33,16 +33,20 @@ class MainActivity : AppCompatActivity() {
     private val adapter = StationsAdapter(onClickListener = { Timber.i(it.toString()) })
 
     private val viewModel by viewModels<StationViewModel> {
-        StationViewModel.Factory(
-            stationRepository
-        )
+        StationViewModel.Factory(stationRepository)
     }
 
     private var fetchJob: Job? = null
+
+    /**
+     * Call `viewModel.watch()`, collect the `PagingData` result and pass to the `StationAdapter`.
+     *
+     * This method is the bridge between the repository and the `RecyclerView`.
+     */
     private fun fetch() {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
-            viewModel.fetch().collectLatest {
+            viewModel.watch().collectLatest {
                 adapter.submitData(it)
             }
         }
@@ -69,8 +73,8 @@ class MainActivity : AppCompatActivity() {
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(decoration)
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = StationsLoadStateAdapter { adapter.retry() },
-            footer = StationsLoadStateAdapter { adapter.retry() }
+            header = StationsLoadStateAdapter(retry = { adapter.retry() }),
+            footer = StationsLoadStateAdapter(retry = { adapter.retry() })
         )
 
         adapter.addLoadStateListener { loadState ->
@@ -100,7 +104,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
+        // Fetch data
         fetch()
+        // Scroll to top
         initFetch()
     }
 }

@@ -13,16 +13,25 @@ class StationViewModel(private val repository: StationRepository) : ViewModel() 
 
     /**
      * Observable train stations.
+     *
+     * This flow can survives the configuration changes if cached in the CoroutineScope of
+     * the ViewModel.
      */
     private var station: Flow<PagingData<Station>>? = null
 
-    fun fetch(): Flow<PagingData<Station>> {
+    /**
+     * Fetch the `PagingData`.
+     */
+    fun watch(): Flow<PagingData<Station>> {
         val lastResult = station
+
+        // If already fetched
         if (lastResult != null) {
             return lastResult
         }
+
         val newResult: Flow<PagingData<Station>> = repository.watch()
-            .cachedIn(viewModelScope)
+            .cachedIn(viewModelScope) // Cache the content in a CoroutineScope
         station = newResult
         return newResult
     }
