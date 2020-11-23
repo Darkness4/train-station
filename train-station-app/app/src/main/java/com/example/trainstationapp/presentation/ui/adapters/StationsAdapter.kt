@@ -15,7 +15,7 @@ import com.example.trainstationapp.domain.entities.Station
  * The `PagingDataAdapter` gets notified whenever the `PagingData` content is loaded and then it
  * signals the `RecyclerView` to update.
  */
-class StationsAdapter(private val onClickListener: OnClickListener) :
+class StationsAdapter(private val onClick: OnClickListener) :
     PagingDataAdapter<Station, StationsAdapter.ViewHolder>(Comparator) {
 
     object Comparator : DiffUtil.ItemCallback<Station>() {
@@ -36,7 +36,7 @@ class StationsAdapter(private val onClickListener: OnClickListener) :
             parent,
             false
         ),
-        onClickListener,
+        onClick,
     )
 
     fun interface OnClickListener {

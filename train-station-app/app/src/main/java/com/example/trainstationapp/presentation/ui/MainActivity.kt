@@ -14,7 +14,6 @@ import com.example.trainstationapp.presentation.ui.adapters.StationsAdapter
 import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAdapter
 import com.example.trainstationapp.presentation.viewmodels.StationViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var stationRepository: StationRepository
     private lateinit var binding: ActivityMainBinding
 
-    private val adapter = StationsAdapter(onClickListener = { Timber.i(it.toString()) })
+    private val adapter = StationsAdapter(onClick = { Timber.i(it.toString()) })
 
     private val viewModel by viewModels<StationViewModel> {
         StationViewModel.Factory(stationRepository)
@@ -52,9 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @InternalCoroutinesApi
-    private fun initFetch() {
-        // Scroll to top when the list is refreshed from network.
+    private fun scrollToTopOnRefresh() {
         lifecycleScope.launch {
             adapter.loadStateFlow
                 // Only emit when REFRESH LoadState for RemoteMediator changes.
@@ -65,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -73,8 +69,8 @@ class MainActivity : AppCompatActivity() {
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(decoration)
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = StationsLoadStateAdapter(retry = { adapter.retry() }),
-            footer = StationsLoadStateAdapter(retry = { adapter.retry() })
+            header = StationsLoadStateAdapter(onClick = { adapter.retry() }),
+            footer = StationsLoadStateAdapter(onClick = { adapter.retry() })
         )
 
         adapter.addLoadStateListener { loadState ->
@@ -106,7 +102,6 @@ class MainActivity : AppCompatActivity() {
 
         // Fetch data
         fetch()
-        // Scroll to top
-        initFetch()
+        scrollToTopOnRefresh()
     }
 }
