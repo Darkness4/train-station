@@ -8,6 +8,9 @@ import androidx.room.Query
 import com.example.trainstationapp.data.models.StationModel
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Cache for storing the `StationModel`.
+ */
 @Dao
 interface StationDao {
     @Query("SELECT * FROM stations")

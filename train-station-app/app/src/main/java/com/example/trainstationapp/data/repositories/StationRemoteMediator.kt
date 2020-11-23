@@ -13,6 +13,11 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.io.InvalidObjectException
 
+/**
+ * This `StationRemoteMediator` handles paging from a layered data source.
+ *
+ * @see [Paging 3 library overview](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
+ */
 @ExperimentalPagingApi
 class StationRemoteMediator(
     private val service: TrainStationDataSource,
@@ -22,6 +27,21 @@ class StationRemoteMediator(
         private const val STARTING_PAGE_INDEX = 1
     }
 
+    /**
+     * Load data to the database on page actions.
+     *
+     * Steps :
+     * 1.  Find out what page we need to load from the network, based on the LoadType.
+     * 2.  Trigger the network request.
+     * 3.  Once the network request completes, if the received list is not empty,
+     *     then do the following:
+     * 4.  We compute the RemoteKeys for every item.
+     * 5.  If this is a new query (loadType = REFRESH) then we clear the database.
+     * 6.  Save the RemoteKeys and items in the database.
+     * 7.  Return MediatorResult.Success(endOfPaginationReached = false).
+     * 8.  If the list of repos was empty then we return MediatorResult.Success(endOfPaginationReached = true).
+     *     If we get an error requesting data we return MediatorResult.Error.
+     */
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, StationModel>
@@ -83,8 +103,8 @@ class StationRemoteMediator(
         // The paging library is trying to load data after the anchor position
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.recordid?.let { repoId ->
-                database.remoteKeysDao().findById(repoId)
+            state.closestItemToPosition(position)?.recordid?.let { recordid ->
+                database.remoteKeysDao().findById(recordid)
             }
         }
     }

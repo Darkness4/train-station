@@ -8,6 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.trainstationapp.databinding.StationItemBinding
 import com.example.trainstationapp.domain.entities.Station
 
+/**
+ * The `Adapter` for the paged `RecyclerView`.
+ *
+ * To bind `PagingData` to a `RecyclerView` (instead of a `List`), we use a `PagingDataAdapter`.
+ * The `PagingDataAdapter` gets notified whenever the `PagingData` content is loaded and then it
+ * signals the `RecyclerView` to update.
+ */
 class StationsAdapter(private val onClickListener: OnClickListener) :
     PagingDataAdapter<Station, StationsAdapter.ViewHolder>(Comparator) {
 
