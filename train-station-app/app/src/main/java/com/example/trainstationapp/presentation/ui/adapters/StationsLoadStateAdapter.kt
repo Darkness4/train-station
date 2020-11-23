@@ -22,7 +22,7 @@ import com.example.trainstationapp.databinding.StationsLoadStateFooterViewItemBi
  * our `PagingSource` implementation for the right page. The response will be automatically
  * propagated via `Flow<PagingData>`.
  */
-class StationsLoadStateAdapter(private val retry: OnClickListener) :
+class StationsLoadStateAdapter(private val onClick: OnClickListener) :
     LoadStateAdapter<StationsLoadStateAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
         holder.bind(loadState)
@@ -35,7 +35,7 @@ class StationsLoadStateAdapter(private val retry: OnClickListener) :
                 parent,
                 false
             ),
-            retry
+            onClick
         )
     }
 
