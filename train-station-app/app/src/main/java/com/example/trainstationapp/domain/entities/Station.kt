@@ -1,10 +1,12 @@
 package com.example.trainstationapp.domain.entities
 
+import android.annotation.SuppressLint
 import android.os.Parcelable
 import com.example.trainstationapp.core.mappers.ModelMappable
 import com.example.trainstationapp.data.models.StationModel
 import kotlinx.parcelize.Parcelize
 
+@SuppressLint("ParcelCreator") // Parcelize Issue https://youtrack.jetbrains.com/issue/KT-19300
 @Parcelize
 data class Station(
     val recordid: String,
@@ -21,6 +23,7 @@ data class Station(
         return this
     }
 
+    @SuppressLint("ParcelCreator")
     @Parcelize
     data class Fields(
         val id: Int,
@@ -64,6 +67,7 @@ data class Station(
         )
     }
 
+    @SuppressLint("ParcelCreator")
     @Parcelize
     data class Geometry(
         val id: String,
