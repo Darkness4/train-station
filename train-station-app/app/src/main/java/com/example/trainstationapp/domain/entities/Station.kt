@@ -1,16 +1,30 @@
 package com.example.trainstationapp.domain.entities
 
+import android.annotation.SuppressLint
+import android.os.Parcelable
 import com.example.trainstationapp.core.mappers.ModelMappable
 import com.example.trainstationapp.data.models.StationModel
+import kotlinx.parcelize.Parcelize
 
+@SuppressLint("ParcelCreator") // Parcelize Issue https://youtrack.jetbrains.com/issue/KT-19300
+@Parcelize
 data class Station(
     val recordid: String,
     val datasetid: String,
-    val isFavorite: Boolean,
+    var isFavorite: Boolean,
     val fields: Fields,
     val geometry: Geometry,
     val recordTimestamp: String,
-) : ModelMappable<StationModel> {
+) : ModelMappable<StationModel>, Parcelable {
+
+    fun toggleFavorite(): Station {
+        isFavorite = !isFavorite
+
+        return this
+    }
+
+    @SuppressLint("ParcelCreator")
+    @Parcelize
     data class Fields(
         val id: Int,
         val commune: String,
@@ -30,7 +44,7 @@ data class Station(
         val departemen: String,
         val yL93: Double,
         val fret: String,
-    ) : ModelMappable<StationModel.FieldsModel> {
+    ) : ModelMappable<StationModel.FieldsModel>, Parcelable {
         override fun asModel() = StationModel.FieldsModel(
             id,
             commune,
@@ -53,11 +67,13 @@ data class Station(
         )
     }
 
+    @SuppressLint("ParcelCreator")
+    @Parcelize
     data class Geometry(
         val id: String,
         val type: String,
         val coordinates: List<Double>,
-    ) : ModelMappable<StationModel.GeometryModel> {
+    ) : ModelMappable<StationModel.GeometryModel>, Parcelable {
         override fun asModel() = StationModel.GeometryModel(
             id,
             type,
