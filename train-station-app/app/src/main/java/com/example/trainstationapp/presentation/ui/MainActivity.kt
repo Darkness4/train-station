@@ -28,10 +28,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        binding.pager.adapter = MainPagerViewAdapter(this, listOf(
-            stationListFragmentFactory.newInstance(),
-            AboutFragment.newInstance()
-        ))
+        binding.pager.adapter = MainPagerViewAdapter(
+            this,
+            listOf(
+                stationListFragmentFactory.newInstance(),
+                AboutFragment.newInstance()
+            )
+        )
 
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {
