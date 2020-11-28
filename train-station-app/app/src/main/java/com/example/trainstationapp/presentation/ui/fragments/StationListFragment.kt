@@ -140,6 +140,12 @@ class StationListFragment : Fragment() {
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         fetch(query)
         initSearchUi(query)
+        activityViewModel.refreshManually.observe(viewLifecycleOwner) {
+            it?.let {
+                fetch(DEFAULT_QUERY)
+                activityViewModel.refreshManuallyDone()
+            }
+        }
 
         return binding.root
     }

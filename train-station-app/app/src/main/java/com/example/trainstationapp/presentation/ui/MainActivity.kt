@@ -1,8 +1,11 @@
 package com.example.trainstationapp.presentation.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.trainstationapp.R
 import com.example.trainstationapp.databinding.ActivityMainBinding
 import com.example.trainstationapp.presentation.ui.adapters.MainPagerViewAdapter
 import com.example.trainstationapp.presentation.ui.fragments.AboutFragment
@@ -43,5 +46,23 @@ class MainActivity : AppCompatActivity() {
                 else -> throw RuntimeException("No fragment here.")
             }
         }.attach()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.refresh_button -> {
+            viewModel.refreshManually()
+            true
+        }
+
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
