@@ -54,12 +54,12 @@ class StationsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(station: Station) {
             binding.station = station
-            binding.root.setOnClickListener { // TODO: May want to change root to a favorite button...
+            binding.favoriteButton.setOnClickListener { // TODO: May want to change root to a favorite button...
                 onFavorite.onClick(station)
             }
-            // binding.root.setOnClickListener { // TODO: May want to change root to a card...
-            //     onClick.onClick(station)
-            // }
+            binding.root.setOnClickListener {
+                onClick.onClick(station)
+            }
             binding.executePendingBindings()
         }
     }
