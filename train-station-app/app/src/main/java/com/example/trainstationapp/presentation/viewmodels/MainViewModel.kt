@@ -3,9 +3,9 @@ package com.example.trainstationapp.presentation.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.trainstationapp.domain.entities.Station
 
 class MainViewModel : ViewModel() {
-    // TODO: 1. Ici mettre une action "refreshManually" (LiveData<Unit> + méthode action + méthode réinitialisation)
     private val _refreshManually = MutableLiveData<Unit?>()
 
     val refreshManually: LiveData<Unit?>
@@ -19,7 +19,18 @@ class MainViewModel : ViewModel() {
         _refreshManually.value = null
     }
 
-    // TODO: 2. Binder l'action avec un bouton refresh de l'action bar
-    // TODO: 3. Faire que dans StationListFragment, on observer l'action
-    // TODO: 4. Rafraîchir en lançant la méthode fetch de StationListFragment
+    private val _showDetails = MutableLiveData<Station?>()
+
+    val showDetails: LiveData<Station?>
+        get() = _showDetails
+
+    fun showDetails(station: Station) {
+        _showDetails.value = station
+    }
+
+    fun showDetailsDone() {
+        _showDetails.value = null
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.trainstationapp.presentation.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -15,7 +16,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.trainstationapp.databinding.FragmentStationListBinding
+import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
+import com.example.trainstationapp.presentation.ui.DetailsActivity
 import com.example.trainstationapp.presentation.ui.adapters.StationsAdapter
 import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAdapter
 import com.example.trainstationapp.presentation.viewmodels.MainViewModel
@@ -43,7 +46,7 @@ class StationListFragment : Fragment() {
             }
         },
         onClick = { station ->
-            Timber.i("TODO: Lancer une activity et faire passer station")
+            activityViewModel.showDetails(station)
         }
     )
 

@@ -1,5 +1,6 @@
 package com.example.trainstationapp.presentation.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -7,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trainstationapp.R
 import com.example.trainstationapp.databinding.ActivityMainBinding
+import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.presentation.ui.adapters.MainPagerViewAdapter
 import com.example.trainstationapp.presentation.ui.fragments.AboutFragment
 import com.example.trainstationapp.presentation.ui.fragments.StationListFragment
@@ -46,6 +48,20 @@ class MainActivity : AppCompatActivity() {
                 else -> throw RuntimeException("No fragment here.")
             }
         }.attach()
+
+        viewModel.showDetails.observe(this){
+            it?.let {
+                startDetailsActivity(it)
+                viewModel.showDetailsDone()
+            }
+        }
+    }
+
+    private fun startDetailsActivity(station: Station) {
+        val intent = Intent(this, DetailsActivity::class.java).apply {
+            putExtra(STATION_MESSAGE, station)
+        }
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -65,4 +81,10 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
+    companion object {
+        const val STATION_MESSAGE = "com.example.trainstationapp.STATION_MESSAGE"
+    }
+
+
 }
