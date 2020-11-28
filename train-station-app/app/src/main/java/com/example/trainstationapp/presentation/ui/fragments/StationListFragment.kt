@@ -153,9 +153,12 @@ class StationListFragment internal constructor(private val stationRepository: St
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
         private const val DEFAULT_QUERY = ""
+    }
 
-        @JvmStatic
-        fun newInstance(stationRepository: StationRepository): StationListFragment {
+    // Since we have dependencies. Better use a Factory class instead of Factory method.
+    // Fragment args will go to the method. Dependencies will go to the class constructor.
+    class Factory(private val stationRepository: StationRepository) {
+        fun newInstance(): StationListFragment {
             return StationListFragment(stationRepository)
         }
     }

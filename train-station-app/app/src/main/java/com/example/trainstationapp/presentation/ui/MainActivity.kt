@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.trainstationapp.databinding.ActivityMainBinding
 import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.ui.adapters.MainPagerViewAdapter
+import com.example.trainstationapp.presentation.ui.fragments.AboutFragment
+import com.example.trainstationapp.presentation.ui.fragments.StationListFragment
 import com.example.trainstationapp.presentation.viewmodels.MainViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var stationRepository: StationRepository
+    private val stationListFragmentFactory = StationListFragment.Factory(stationRepository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +30,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        binding.pager.adapter = MainPagerViewAdapter(this, stationRepository)
+        binding.pager.adapter = MainPagerViewAdapter(this, listOf(
+            stationListFragmentFactory.newInstance(),
+            AboutFragment.newInstance()
+        ))
 
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {
