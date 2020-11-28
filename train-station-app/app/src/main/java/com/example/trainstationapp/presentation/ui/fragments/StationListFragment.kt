@@ -65,19 +65,19 @@ class StationListFragment internal constructor(private val stationRepository: St
     }
 
     private fun initSearchUi(query: String) {
-        binding.searchRepo.setText(query)
+        binding.searchBar.setText(query)
 
-        binding.searchRepo.setOnEditorActionListener { _, actionId, _ ->
+        binding.searchBar.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
-                updateRepoListFromInput()
+                updateListFromInput()
                 true
             } else {
                 false
             }
         }
-        binding.searchRepo.setOnKeyListener { _, keyCode, event ->
+        binding.searchBar.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                updateRepoListFromInput()
+                updateListFromInput()
                 true
             } else {
                 false
@@ -143,11 +143,11 @@ class StationListFragment internal constructor(private val stationRepository: St
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(LAST_SEARCH_QUERY, binding.searchRepo.text!!.trim().toString())
+        outState.putString(LAST_SEARCH_QUERY, binding.searchBar.text!!.trim().toString())
     }
 
-    private fun updateRepoListFromInput() {
-        fetch(binding.searchRepo.text!!.trim().toString())
+    private fun updateListFromInput() {
+        fetch(binding.searchBar.text!!.trim().toString())
     }
 
     companion object {
