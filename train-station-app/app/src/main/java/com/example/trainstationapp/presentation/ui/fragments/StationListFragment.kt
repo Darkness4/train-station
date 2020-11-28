@@ -29,8 +29,10 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-class StationListFragment internal constructor(private val stationRepository: StationRepository) : Fragment() {
+class StationListFragment : Fragment() {
     private val activityViewModel: MainViewModel by activityViewModels()
+
+    private lateinit var stationRepository: StationRepository
 
     private lateinit var binding: FragmentStationListBinding
 
@@ -160,7 +162,9 @@ class StationListFragment internal constructor(private val stationRepository: St
     // Fragment args will go to the method. Dependencies will go to the class constructor.
     class Factory @Inject constructor(private val stationRepository: StationRepository) {
         fun newInstance(): StationListFragment {
-            return StationListFragment(stationRepository)
+            val fragment = StationListFragment()
+            fragment.stationRepository = stationRepository
+            return fragment
         }
     }
 }
