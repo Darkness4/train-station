@@ -1,9 +1,8 @@
 package com.example.trainstationapp.presentation.util
 
 import android.view.View
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.paging.LoadState
@@ -62,16 +61,11 @@ fun boolToText(
 }
 
 @BindingAdapter("favorite")
-fun boolToImage(
-    imageButton: ImageButton,
+fun boolToImageView(
+    imageView: ImageView,
     boolean: Boolean?,
 ) {
     boolean?.let {
-        imageButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                imageButton.context,
-                if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24
-            )
-        )
+        imageView.setImageResource(if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24)
     }
 }

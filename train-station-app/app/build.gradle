@@ -53,6 +53,12 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        def secureProps = new Properties()
+        if (file("../secure.properties").exists()) {
+            file("../secure.properties")?.withInputStream { secureProps.load(it) }
+        }
+        resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "")
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -127,6 +133,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha06'
+    implementation 'com.google.maps.android:maps-ktx:2.2.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.maps.android:android-maps-utils:2.0.3'
 
     // Fragment
     implementation "androidx.fragment:fragment-ktx:1.2.5"
