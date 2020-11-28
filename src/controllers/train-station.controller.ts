@@ -1,6 +1,12 @@
 import { Controller } from '@nestjs/common';
-import { Crud, CrudController } from '@nestjsx/crud';
-import { Station } from 'models/station';
+import { Override } from '@nestjsx/crud';
+import {
+  Crud,
+  CrudController,
+  CrudRequest,
+  ParsedRequest,
+} from '@nestjsx/crud';
+import { Station } from 'entities/station';
 import { TrainStationService } from 'services/train-station.service';
 
 @Crud({
@@ -8,7 +14,7 @@ import { TrainStationService } from 'services/train-station.service';
     type: Station,
   },
   routes: {
-    only: ['getOneBase', 'replaceOneBase', 'createOneBase', 'getManyBase'],
+    only: ['getOneBase', 'updateOneBase', 'createOneBase', 'getManyBase'],
   },
   params: {
     id: {
@@ -20,20 +26,14 @@ import { TrainStationService } from 'services/train-station.service';
   query: {
     limit: 10,
     alwaysPaginate: true,
-    join: {
-      fields: {
-        eager: true,
-      },
-      geometry: {
-        eager: true,
-      },
-      'fields.geo_shape': {
-        eager: true,
-      },
-    },
   },
 })
 @Controller('stations')
 export class TrainStationController implements CrudController<Station> {
   constructor(readonly service: TrainStationService) {}
+
+  @Override()
+  getOne(@ParsedRequest() req: CrudRequest): Promise<Station> {
+    return this.service.getOneDetail(req);
+  }
 }
