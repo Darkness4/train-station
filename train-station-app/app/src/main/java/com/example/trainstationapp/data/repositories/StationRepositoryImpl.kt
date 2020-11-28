@@ -27,6 +27,13 @@ class StationRepositoryImpl @Inject constructor(
 
     @ExperimentalPagingApi
     override fun watch(search: String): Flow<PagingData<Station>> {
+        val pagingSourceFactory = {
+            if (search.isNotEmpty()) {
+                database.stationDao().watchAsPagingSource(search)
+            } else {
+                database.stationDao().watchAsPagingSource()
+            }
+        }
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
@@ -37,7 +44,7 @@ class StationRepositoryImpl @Inject constructor(
                 service = trainStationDataSource,
                 database = database,
             ),
-            pagingSourceFactory = { database.stationDao().watchAsPagingSource(search) }
+            pagingSourceFactory = pagingSourceFactory
         ).flow
             .map {
                 it.map { model -> model.asEntity() }
@@ -45,8 +52,7 @@ class StationRepositoryImpl @Inject constructor(
     }
 
     override fun watchOne(station: Station): Flow<Result<Station>> {
-        return database.stationDao().watchById(station.recordid).map {
-            model ->
+        return database.stationDao().watchById(station.recordid).map { model ->
             Result.Success(model.asEntity())
         }.catch<Result<Station>> {
             emit(Result.Failure(it))

@@ -1,15 +1,10 @@
 package com.example.trainstationapp.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.trainstationapp.domain.repositories.StationRepository
 
-class MainViewModel(private val stationRepository: StationRepository) : ViewModel() {
-
-    class Factory(private val stationRepository: StationRepository) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MainViewModel(stationRepository) as T
-        }
-    }
+class MainViewModel : ViewModel() {
+    // TODO: 1. Ici mettre une action "refreshManually" (LiveData<Unit> + méthode action + méthode réinitialisation)
+    // TODO: 2. Binder l'action avec un bouton refresh de l'action bar
+    // TODO: 3. Faire que dans StationListFragment, on observer l'action
+    // TODO: 4. Rafraîchir en lançant la méthode fetch de StationListFragment
 }

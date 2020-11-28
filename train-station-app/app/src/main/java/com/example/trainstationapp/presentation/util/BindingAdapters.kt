@@ -47,3 +47,13 @@ fun showTextOnLoadStateError(
         textView.text = loadState.error.localizedMessage
     }
 }
+
+@BindingAdapter("bool")
+fun boolToText(
+    textView: TextView,
+    boolean: Boolean?,
+) {
+    boolean?.let {
+        textView.text = boolean.toString()
+    }
+}

@@ -7,6 +7,7 @@ object TestUtils {
         recordid = id,
         datasetid = "datasetid",
         isFavorite = false,
+        libelle = "libelle",
         fields = Station.Fields(
             id = 1,
             commune = "commune",

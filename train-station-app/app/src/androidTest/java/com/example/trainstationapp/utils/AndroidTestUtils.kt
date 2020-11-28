@@ -7,6 +7,7 @@ object AndroidTestUtils {
         recordid = id,
         datasetid = "datasetid",
         isFavorite = false,
+        libelle = "libelle",
         fields = StationModel.FieldsModel(
             id = 1,
             commune = "commune",

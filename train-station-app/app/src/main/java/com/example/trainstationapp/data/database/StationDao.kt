@@ -19,8 +19,11 @@ interface StationDao {
     @Query("SELECT * FROM stations WHERE recordid = :id")
     fun watchById(id: String): Flow<StationModel>
 
-    @Query("SELECT * FROM stations WHERE libelle LIKE :search ORDER BY libelle")
+    @Query("SELECT * FROM stations WHERE libelle LIKE '%' || :search || '%' ORDER BY libelle, recordid")
     fun watchAsPagingSource(search: String): PagingSource<Int, StationModel>
+
+    @Query("SELECT * FROM stations ORDER BY libelle, recordid")
+    fun watchAsPagingSource(): PagingSource<Int, StationModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<StationModel>)
