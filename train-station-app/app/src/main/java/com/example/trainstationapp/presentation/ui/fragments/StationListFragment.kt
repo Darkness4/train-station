@@ -1,6 +1,5 @@
 package com.example.trainstationapp.presentation.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -16,9 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.trainstationapp.databinding.FragmentStationListBinding
-import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
-import com.example.trainstationapp.presentation.ui.DetailsActivity
 import com.example.trainstationapp.presentation.ui.adapters.StationsAdapter
 import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAdapter
 import com.example.trainstationapp.presentation.viewmodels.MainViewModel
@@ -29,7 +26,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class StationListFragment : Fragment() {

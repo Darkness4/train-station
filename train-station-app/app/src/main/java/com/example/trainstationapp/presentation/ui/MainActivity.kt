@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             }
         }.attach()
 
-        viewModel.showDetails.observe(this){
+        viewModel.showDetails.observe(this) {
             it?.let {
                 startDetailsActivity(it)
                 viewModel.showDetailsDone()
@@ -85,6 +85,4 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val STATION_MESSAGE = "com.example.trainstationapp.STATION_MESSAGE"
     }
-
-
 }

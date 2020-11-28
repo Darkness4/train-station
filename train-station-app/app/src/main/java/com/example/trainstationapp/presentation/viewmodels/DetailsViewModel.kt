@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-    initialStation : Station,
+    initialStation: Station,
     private val stationRepository: StationRepository
 ) : ViewModel() {
     init {
@@ -20,7 +20,7 @@ class DetailsViewModel(
     }
 
     val station = stationRepository.watchOne(initialStation).filter { it.isSuccess }.map { it.valueOrNull() }.asLiveData(viewModelScope.coroutineContext + Dispatchers.Default)
-    private fun fetch (station: Station) = viewModelScope.launch(Dispatchers.Main) { stationRepository.findOne(station) }
+    private fun fetch(station: Station) = viewModelScope.launch(Dispatchers.Main) { stationRepository.findOne(station) }
 
     class Factory(private val initialStation: Station, private val repository: StationRepository) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")

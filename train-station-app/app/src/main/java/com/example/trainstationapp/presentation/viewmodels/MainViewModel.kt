@@ -31,6 +31,4 @@ class MainViewModel : ViewModel() {
     fun showDetailsDone() {
         _showDetails.value = null
     }
-
-
 }
