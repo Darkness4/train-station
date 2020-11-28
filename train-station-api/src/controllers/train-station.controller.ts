@@ -26,6 +26,12 @@ import { TrainStationService } from 'services/train-station.service';
   query: {
     limit: 10,
     alwaysPaginate: true,
+    sort: [
+      {
+        field: 'libelle',
+        order: 'ASC',
+      },
+    ],
   },
 })
 @Controller('stations')
