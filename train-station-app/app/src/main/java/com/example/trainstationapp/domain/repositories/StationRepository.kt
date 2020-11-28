@@ -6,7 +6,9 @@ import com.example.trainstationapp.domain.entities.Station
 import kotlinx.coroutines.flow.Flow
 
 interface StationRepository {
-    fun watch(): Flow<PagingData<Station>>
+    fun watch(search: String): Flow<PagingData<Station>>
+    fun watchOne(station: Station): Flow<Result<Station>>
+    suspend fun findOne(station: Station): Result<Station>
     suspend fun createOne(station: Station): Result<Unit>
-    suspend fun replaceOne(station: Station): Result<Unit>
+    suspend fun updateOne(station: Station): Result<Unit>
 }

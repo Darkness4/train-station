@@ -15,7 +15,10 @@ import com.example.trainstationapp.domain.entities.Station
  * The `PagingDataAdapter` gets notified whenever the `PagingData` content is loaded and then it
  * signals the `RecyclerView` to update.
  */
-class StationsAdapter(private val onClick: OnClickListener) :
+class StationsAdapter(
+    private val onFavorite: OnClickListener,
+    private val onClick: OnClickListener,
+) :
     PagingDataAdapter<Station, StationsAdapter.ViewHolder>(Comparator) {
 
     object Comparator : DiffUtil.ItemCallback<Station>() {
@@ -36,6 +39,7 @@ class StationsAdapter(private val onClick: OnClickListener) :
             parent,
             false
         ),
+        onFavorite,
         onClick,
     )
 
@@ -45,13 +49,17 @@ class StationsAdapter(private val onClick: OnClickListener) :
 
     class ViewHolder(
         private val binding: StationItemBinding, // station_item.xml
-        private val onClickListener: OnClickListener,
+        private val onFavorite: OnClickListener,
+        private val onClick: OnClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(station: Station) {
             binding.station = station
-            binding.root.setOnClickListener { // TODO: May want to change root to a card...
-                onClickListener.onClick(station)
+            binding.root.setOnClickListener { // TODO: May want to change root to a favorite button...
+                onFavorite.onClick(station)
             }
+            // binding.root.setOnClickListener { // TODO: May want to change root to a card...
+            //     onClick.onClick(station)
+            // }
             binding.executePendingBindings()
         }
     }

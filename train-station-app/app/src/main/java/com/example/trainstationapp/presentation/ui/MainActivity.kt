@@ -29,7 +29,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var stationRepository: StationRepository
     private lateinit var binding: ActivityMainBinding
 
-    private val adapter = StationsAdapter(onClick = { Timber.i(it.toString()) })
+    private val adapter = StationsAdapter(
+        onFavorite = { station ->
+            lifecycleScope.launch {
+                stationRepository.updateOne(station.toggleFavorite())
+            }
+        },
+        onClick = { station ->
+            Timber.i("TODO: Lancer une activity et faire passer station")
+        }
+    )
 
     private val viewModel by viewModels<StationViewModel> {
         StationViewModel.Factory(stationRepository)
@@ -42,16 +51,36 @@ class MainActivity : AppCompatActivity() {
      *
      * This method is the bridge between the repository and the `RecyclerView`.
      */
-    private fun fetch() {
+    private fun fetch(search: String) {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
-            viewModel.watch().collectLatest {
+            viewModel.watch(search).collectLatest {
                 adapter.submitData(it)
             }
         }
     }
 
-    private fun scrollToTopOnRefresh() {
+    private fun initSearchUi() {
+        /*binding.searchRepo.setText(query)
+
+        binding.searchRepo.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                updateRepoListFromInput()
+                true
+            } else {
+                false
+            }
+        }
+        binding.searchRepo.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                updateRepoListFromInput()
+                true
+            } else {
+                false
+            }
+        }*/
+
+        // Scroll to top when the list is refreshed from network.
         lifecycleScope.launch {
             adapter.loadStateFlow
                 // Only emit when REFRESH LoadState for RemoteMediator changes.
@@ -101,7 +130,21 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         // Fetch data
-        fetch()
-        scrollToTopOnRefresh()
+        val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
+        fetch(query)
+        initSearchUi()
+    }
+
+    private fun updateRepoListFromInput() {
+        /*binding.searchRepo.text.trim().let {
+            if (it.isNotEmpty()) {
+                search(it.toString())
+            }
+        }*/
+    }
+
+    companion object {
+        private const val LAST_SEARCH_QUERY: String = "last_search_query"
+        private const val DEFAULT_QUERY = ""
     }
 }

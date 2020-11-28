@@ -4,8 +4,8 @@ import com.example.trainstationapp.data.models.Paginated
 import com.example.trainstationapp.data.models.StationModel
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -35,6 +35,6 @@ interface TrainStationDataSource {
     @GET("stations/{id}")
     suspend fun findById(@Path("id") id: String): StationModel?
 
-    @PUT("stations/{id}")
-    suspend fun replaceById(@Path("id") id: String, @Body body: StationModel): StationModel?
+    @PATCH("stations/{id}")
+    suspend fun updateById(@Path("id") id: String, @Body body: StationModel): StationModel?
 }

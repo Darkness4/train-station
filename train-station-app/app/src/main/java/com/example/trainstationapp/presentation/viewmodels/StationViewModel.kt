@@ -18,19 +18,20 @@ class StationViewModel(private val repository: StationRepository) : ViewModel() 
      * the ViewModel.
      */
     private var station: Flow<PagingData<Station>>? = null
+    private var searchValue: String? = null
 
     /**
      * Fetch the `PagingData`.
      */
-    fun watch(): Flow<PagingData<Station>> {
+    fun watch(search: String): Flow<PagingData<Station>> {
         val lastResult = station
 
         // If already fetched
-        if (lastResult != null) {
+        if (search == searchValue && lastResult != null) {
             return lastResult
         }
-
-        val newResult: Flow<PagingData<Station>> = repository.watch()
+        searchValue = search
+        val newResult: Flow<PagingData<Station>> = repository.watch(search)
             .cachedIn(viewModelScope) // Cache the content in a CoroutineScope
         station = newResult
         return newResult

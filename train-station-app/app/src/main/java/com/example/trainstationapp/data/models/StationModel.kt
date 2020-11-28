@@ -16,8 +16,9 @@ data class StationModel(
     val recordid: String,
     val datasetid: String,
     @ColumnInfo(name = "is_favorite") @SerialName("is_favorite") val isFavorite: Boolean,
-    @Embedded(prefix = "fields_") val fields: FieldsModel,
-    @Embedded(prefix = "geometry_") val geometry: GeometryModel,
+    val libelle: String,
+    @Embedded(prefix = "fields_") val fields: FieldsModel? = null,
+    @Embedded(prefix = "geometry_") val geometry: GeometryModel? = null,
     @ColumnInfo(name = "record_timestamp") @SerialName("record_timestamp") val recordTimestamp: String,
 ) : EntityMappable<Station> {
 
@@ -81,8 +82,9 @@ data class StationModel(
         recordid,
         datasetid,
         isFavorite,
-        fields.asEntity(),
-        geometry.asEntity(),
+        libelle,
+        fields?.asEntity(),
+        geometry?.asEntity(),
         recordTimestamp
     )
 }

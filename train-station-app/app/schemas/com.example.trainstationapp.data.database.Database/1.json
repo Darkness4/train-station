@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4f71b55ced5fee06c3f1e3fbee5f10b7",
+    "identityHash": "9397eaefdb3c4ad5d907824bcd05e28e",
     "entities": [
       {
         "tableName": "stations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recordid` TEXT NOT NULL, `datasetid` TEXT NOT NULL, `is_favorite` INTEGER NOT NULL, `record_timestamp` TEXT NOT NULL, `fields_id` INTEGER NOT NULL, `fields_commune` TEXT NOT NULL, `fields_y_wgs84` REAL NOT NULL, `fields_x_wgs84` REAL NOT NULL, `fields_libelle` TEXT NOT NULL, `fields_idgaia` TEXT NOT NULL, `fields_voyageurs` TEXT NOT NULL, `fields_geo_point_2d` TEXT NOT NULL, `fields_code_ligne` TEXT NOT NULL, `fields_x_l93` REAL NOT NULL, `fields_c_geo` TEXT NOT NULL, `fields_rg_troncon` INTEGER NOT NULL, `fields_pk` TEXT NOT NULL, `fields_idreseau` INTEGER NOT NULL, `fields_departemen` TEXT NOT NULL, `fields_y_l93` REAL NOT NULL, `fields_fret` TEXT NOT NULL, `fields_geo_shape_id` TEXT NOT NULL, `fields_geo_shape_type` TEXT NOT NULL, `fields_geo_shape_coordinates` TEXT NOT NULL, `geometry_id` TEXT NOT NULL, `geometry_type` TEXT NOT NULL, `geometry_coordinates` TEXT NOT NULL, PRIMARY KEY(`recordid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recordid` TEXT NOT NULL, `datasetid` TEXT NOT NULL, `is_favorite` INTEGER NOT NULL, `libelle` TEXT NOT NULL, `record_timestamp` TEXT NOT NULL, `fields_id` INTEGER, `fields_commune` TEXT, `fields_y_wgs84` REAL, `fields_x_wgs84` REAL, `fields_libelle` TEXT, `fields_idgaia` TEXT, `fields_voyageurs` TEXT, `fields_geo_point_2d` TEXT, `fields_code_ligne` TEXT, `fields_x_l93` REAL, `fields_c_geo` TEXT, `fields_rg_troncon` INTEGER, `fields_pk` TEXT, `fields_idreseau` INTEGER, `fields_departemen` TEXT, `fields_y_l93` REAL, `fields_fret` TEXT, `fields_geo_shape_id` TEXT, `fields_geo_shape_type` TEXT, `fields_geo_shape_coordinates` TEXT, `geometry_id` TEXT, `geometry_type` TEXT, `geometry_coordinates` TEXT, PRIMARY KEY(`recordid`))",
         "fields": [
           {
             "fieldPath": "recordid",
@@ -27,6 +27,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "libelle",
+            "columnName": "libelle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "recordTimestamp",
             "columnName": "record_timestamp",
             "affinity": "TEXT",
@@ -36,139 +42,139 @@
             "fieldPath": "fields.id",
             "columnName": "fields_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.commune",
             "columnName": "fields_commune",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.yWgs84",
             "columnName": "fields_y_wgs84",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.xWgs84",
             "columnName": "fields_x_wgs84",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.libelle",
             "columnName": "fields_libelle",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.idgaia",
             "columnName": "fields_idgaia",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.voyageurs",
             "columnName": "fields_voyageurs",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.geoPoint2d",
             "columnName": "fields_geo_point_2d",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.codeLigne",
             "columnName": "fields_code_ligne",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.xL93",
             "columnName": "fields_x_l93",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.cGeo",
             "columnName": "fields_c_geo",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.rgTroncon",
             "columnName": "fields_rg_troncon",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.pk",
             "columnName": "fields_pk",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.idreseau",
             "columnName": "fields_idreseau",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.departemen",
             "columnName": "fields_departemen",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.yL93",
             "columnName": "fields_y_l93",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.fret",
             "columnName": "fields_fret",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.geoShape.id",
             "columnName": "fields_geo_shape_id",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.geoShape.type",
             "columnName": "fields_geo_shape_type",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "fields.geoShape.coordinates",
             "columnName": "fields_geo_shape_coordinates",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "geometry.id",
             "columnName": "geometry_id",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "geometry.type",
             "columnName": "geometry_type",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "geometry.coordinates",
             "columnName": "geometry_coordinates",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -216,7 +222,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4f71b55ced5fee06c3f1e3fbee5f10b7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9397eaefdb3c4ad5d907824bcd05e28e')"
     ]
   }
 }

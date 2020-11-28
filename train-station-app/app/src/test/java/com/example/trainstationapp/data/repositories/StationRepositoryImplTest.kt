@@ -64,33 +64,33 @@ class StationRepositoryImplTest : WordSpec({
         }
     }
 
-    "replaceOne" should {
-        "replace" {
+    "updateOne" should {
+        "update" {
             // Arrange
             val slot = slot<StationModel>()
-            coEvery { remote.replaceById(any(), capture(slot)) } coAnswers { slot.captured }
+            coEvery { remote.updateById(any(), capture(slot)) } coAnswers { slot.captured }
             coEvery { stationDao.insert(any<StationModel>()) } just Runs
             val station = TestUtils.createStation("0")
 
             // Act
-            val result = repository.replaceOne(station)
+            val result = repository.updateOne(station)
 
             // Assert
-            coVerify { remote.replaceById(station.recordid, station.asModel()) }
+            coVerify { remote.updateById(station.recordid, station.asModel()) }
             coVerify { stationDao.insert(station.asModel()) }
             result.isSuccess.shouldBeTrue()
         }
 
         "return Failure on null" {
             // Arrange
-            coEvery { remote.replaceById(any(), any()) } returns null
+            coEvery { remote.updateById(any(), any()) } returns null
             val station = TestUtils.createStation("0")
 
             // Act
-            val result = repository.replaceOne(station)
+            val result = repository.updateOne(station)
 
             // Assert
-            coVerify { remote.replaceById(station.recordid, station.asModel()) }
+            coVerify { remote.updateById(station.recordid, station.asModel()) }
             verify { stationDao wasNot Called }
             result.isFailure.shouldBeTrue()
         }
@@ -98,7 +98,7 @@ class StationRepositoryImplTest : WordSpec({
         "return Failure on throw" {
             // Arrange
             val error = Exception("An Error")
-            coEvery { remote.replaceById(any(), any()) } throws error
+            coEvery { remote.updateById(any(), any()) } throws error
             val station = TestUtils.createStation("0")
 
             // Act

@@ -9,6 +9,9 @@ import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
 import com.example.trainstationapp.data.models.RemoteKeys
 import com.example.trainstationapp.data.models.StationModel
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonObject
 import retrofit2.HttpException
 import java.io.IOException
 import java.io.InvalidObjectException
@@ -20,6 +23,7 @@ import java.io.InvalidObjectException
  */
 @ExperimentalPagingApi
 class StationRemoteMediator(
+    private val search: String,
     private val service: TrainStationDataSource,
     private val database: Database,
 ) : RemoteMediator<Int, StationModel>() {
@@ -71,7 +75,17 @@ class StationRemoteMediator(
         }
 
         try {
-            val response = service.find(page = page, limit = state.config.pageSize)
+            val response = if (search.isNotEmpty()) {
+                val apiQuery = buildJsonObject {
+                    putJsonObject("libelle") {
+                        put("\$cont", search)
+                    }
+                }
+
+                service.find(s = apiQuery.toString(), page = page, limit = state.config.pageSize)
+            } else {
+                service.find(page = page, limit = state.config.pageSize)
+            }
 
             val items = response.data
             val endOfPaginationReached = items.isEmpty()

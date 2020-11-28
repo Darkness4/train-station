@@ -12,8 +12,9 @@ data class Station(
     val recordid: String,
     val datasetid: String,
     var isFavorite: Boolean,
-    val fields: Fields,
-    val geometry: Geometry,
+    val libelle: String,
+    val fields: Fields?,
+    val geometry: Geometry?,
     val recordTimestamp: String,
 ) : ModelMappable<StationModel>, Parcelable {
 
@@ -85,8 +86,9 @@ data class Station(
         recordid,
         datasetid,
         isFavorite,
-        fields.asModel(),
-        geometry.asModel(),
+        libelle,
+        fields?.asModel(),
+        geometry?.asModel(),
         recordTimestamp
     )
 }
