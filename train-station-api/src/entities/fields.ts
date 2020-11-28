@@ -59,7 +59,6 @@ export class Fields {
 
   @ApiProperty()
   @OneToOne(() => Geometry, {
-    eager: true,
     cascade: true,
     nullable: true,
   })

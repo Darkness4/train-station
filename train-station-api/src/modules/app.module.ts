@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm/dist';
 import { AppController } from 'controllers/app.controller';
-import { Fields } from 'models/fields';
-import { Geometry } from 'models/geometry';
-import { Station } from 'models/station';
+import { Fields } from 'entities/fields';
+import { Geometry } from 'entities/geometry';
+import { Station } from 'entities/station';
 import { AppService } from 'services/app.service';
 import { TrainStationModule } from './train-station.module';
 
