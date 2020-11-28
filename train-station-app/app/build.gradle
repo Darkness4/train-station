@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlinx-serialization'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.android.gms.oss-licenses-plugin'
     id "com.diffplug.spotless" version "5.8.2"
 }
 
@@ -153,6 +154,9 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
+
+    // Licensing
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
     def kotest_version = '4.3.1'
     testImplementation "io.mockk:mockk:1.10.0"

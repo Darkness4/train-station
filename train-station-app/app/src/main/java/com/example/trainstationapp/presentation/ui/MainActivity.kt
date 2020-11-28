@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.trainstationapp.R
 import com.example.trainstationapp.databinding.ActivityMainBinding
 import com.example.trainstationapp.domain.entities.Station
+import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.ui.adapters.MainPagerViewAdapter
 import com.example.trainstationapp.presentation.ui.fragments.AboutFragment
 import com.example.trainstationapp.presentation.ui.fragments.StationListFragment
@@ -19,16 +20,20 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val viewModel by viewModels<MainViewModel>()
+    @Inject
+    lateinit var stationRepository: StationRepository
+
+    private val viewModel by viewModels<MainViewModel> {
+        MainViewModel.Factory(stationRepository)
+    }
 
     private lateinit var binding: ActivityMainBinding
-
-    @Inject
-    lateinit var stationListFragmentFactory: StationListFragment.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
@@ -36,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         binding.pager.adapter = MainPagerViewAdapter(
             this,
             listOf(
-                stationListFragmentFactory.newInstance(),
+                StationListFragment.newInstance(),
                 AboutFragment.newInstance()
             )
         )

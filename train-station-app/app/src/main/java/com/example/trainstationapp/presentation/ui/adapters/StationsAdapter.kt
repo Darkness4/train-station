@@ -54,7 +54,7 @@ class StationsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(station: Station) {
             binding.station = station
-            binding.favoriteButton.setOnClickListener { // TODO: May want to change root to a favorite button...
+            binding.favoriteButton.setOnClickListener {
                 onFavorite.onClick(station)
             }
             binding.root.setOnClickListener {

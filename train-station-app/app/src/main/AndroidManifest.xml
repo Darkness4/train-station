@@ -31,9 +31,9 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".presentation.ui.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".presentation.ui.DetailsActivity" />
+            android:name=".presentation.ui.DetailsActivity"
+            android:label="@string/title_activity_details"
+            android:theme="@style/Theme.TrainStationApp.NoActionBar" />
         <activity
             android:name=".presentation.ui.MainActivity"
             android:label="@string/title_activity_main"

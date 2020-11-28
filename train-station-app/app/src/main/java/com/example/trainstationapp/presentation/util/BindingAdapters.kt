@@ -3,10 +3,12 @@ package com.example.trainstationapp.presentation.util
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.paging.LoadState
 import com.example.trainstationapp.R
+import com.google.android.material.button.MaterialButton
 
 @BindingAdapter("showOnLoadStateLoading")
 fun showOnLoadStateLoading(
@@ -50,16 +52,6 @@ fun showTextOnLoadStateError(
     }
 }
 
-@BindingAdapter("bool")
-fun boolToText(
-    textView: TextView,
-    boolean: Boolean?,
-) {
-    boolean?.let {
-        textView.text = boolean.toString()
-    }
-}
-
 @BindingAdapter("favorite")
 fun boolToImageView(
     imageView: ImageView,
@@ -67,5 +59,18 @@ fun boolToImageView(
 ) {
     boolean?.let {
         imageView.setImageResource(if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24)
+    }
+}
+
+@BindingAdapter("favorite")
+fun boolToMaterialButton(
+    button: MaterialButton,
+    boolean: Boolean?,
+) {
+    boolean?.let {
+        button.icon = ContextCompat.getDrawable(
+            button.context,
+            if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24
+        )
     }
 }

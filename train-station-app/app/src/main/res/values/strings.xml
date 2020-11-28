@@ -1,19 +1,33 @@
 <resources>
     <string name="app_name">TrainStationApp</string>
-    <string name="title_activity_main">MainActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="title_activity_main">SNCF Train Station Locator</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="retry">Retry</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_train_station_hint">Search a train station…</string>
     <string name="refresh_the_page">Refresh the page</string>
     <string name="refresh">Refresh</string>
     <string name="title_activity_maps">Map</string>
+    <string name="favorite_icon_description">Favorite Icon</string>
+    <string name="departement_label">Département :</string>
+    <string name="commune_label">Commune :</string>
+    <string name="title_activity_details">Details</string>
+    <string name="about">
+        Une application créée par Marc NGUYEN et JB RUBIO dans le cadre du projet Web + Android.
+    </string>
+    <string name="project_url">https://github.com/Darkness4/train-station</string>
+    <string name="source_code">Source code</string>
+    <string name="licences">Licences</string>
+    <string name="api_endpoints_description">
+        L\'URL de l\'API utilisé est sur <a href="https://train-station.cleverapps.io/">train-station.cleverapps.io</a>.\n
+        Où les points de sorties sont :\n
+        \t<b>GET / POST /stations</b>\n
+        \t<b>GET / PATCH /stations/:recordid</b>
+    </string>
+    <string name="data_description">
+        Les données affichées dans la liste est le nom de la station  de train (libellé) et leur identifiant unique.\n
+        \n
+        Les données affichées dans les détails sont la position sur Google Maps, le libellé, le département et la commune de la station de train.
+    </string>
+    <string name="latitude_label">Latitude :</string>
+    <string name="longitude_label">Longitude :</string>
 </resources>

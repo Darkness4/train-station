@@ -1,6 +1,9 @@
 package com.example.trainstationapp.presentation.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trainstationapp.R
@@ -37,7 +40,17 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         this.viewModel = viewModel
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        viewModel.networkStatus.observe(this) {
+            it?.doOnFailure { e ->
+                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
+            }
+        }
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -48,14 +61,28 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel.station.observe(this) {
             it?.let {
                 // Add a marker in Sydney and move the camera
-                val position = LatLng(it.fields!!.yWgs84, it.fields!!.xWgs84)
+                val position = LatLng(it.fields!!.yWgs84, it.fields.xWgs84)
                 map.addMarker(
                     MarkerOptions()
                         .position(position)
-                        .title("Marker in dunno")
+                        .title(it.libelle)
                 )
-                map.moveCamera(CameraUpdateFactory.newLatLng(position))
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 15.0f))
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return true
     }
 }

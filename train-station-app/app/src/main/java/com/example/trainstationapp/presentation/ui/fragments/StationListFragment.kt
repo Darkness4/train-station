@@ -10,45 +10,33 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.trainstationapp.databinding.FragmentStationListBinding
-import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.ui.adapters.StationsAdapter
 import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAdapter
 import com.example.trainstationapp.presentation.viewmodels.MainViewModel
-import com.example.trainstationapp.presentation.viewmodels.StationViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class StationListFragment : Fragment() {
-    private val activityViewModel: MainViewModel by activityViewModels()
-
-    private lateinit var stationRepository: StationRepository
+    private val activityViewModel by activityViewModels<MainViewModel>()
 
     private lateinit var binding: FragmentStationListBinding
 
     private val adapter = StationsAdapter(
         onFavorite = { station ->
-            lifecycleScope.launch {
-                stationRepository.updateOne(station.toggleFavorite())
-            }
+            activityViewModel.update(station.toggleFavorite())
         },
         onClick = { station ->
             activityViewModel.showDetails(station)
         }
     )
-
-    private val viewModel by viewModels<StationViewModel> {
-        StationViewModel.Factory(stationRepository)
-    }
 
     private var fetchJob: Job? = null
 
@@ -60,7 +48,7 @@ class StationListFragment : Fragment() {
     private fun fetch(search: String) {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
-            viewModel.watch(search).collectLatest {
+            activityViewModel.watch(search).collectLatest {
                 adapter.submitData(it)
             }
         }
@@ -135,12 +123,19 @@ class StationListFragment : Fragment() {
             binding.retryButton.setOnClickListener { adapter.retry() }
         }
 
+        activityViewModel.networkStatus.observe(viewLifecycleOwner) {
+            it?.doOnFailure { e ->
+                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
+            }
+        }
+
         // Fetch data
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         fetch(query)
         initSearchUi(query)
         activityViewModel.refreshManually.observe(viewLifecycleOwner) {
             it?.let {
+
                 fetch(DEFAULT_QUERY)
                 activityViewModel.refreshManuallyDone()
             }
@@ -161,15 +156,8 @@ class StationListFragment : Fragment() {
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
         private const val DEFAULT_QUERY = ""
-    }
 
-    // Since we have dependencies. Better use a Factory class instead of Factory method.
-    // Fragment args will go to the method. Dependencies will go to the class constructor.
-    class Factory @Inject constructor(private val stationRepository: StationRepository) {
-        fun newInstance(): StationListFragment {
-            val fragment = StationListFragment()
-            fragment.stationRepository = stationRepository
-            return fragment
-        }
+        @JvmStatic
+        fun newInstance() = StationListFragment()
     }
 }
