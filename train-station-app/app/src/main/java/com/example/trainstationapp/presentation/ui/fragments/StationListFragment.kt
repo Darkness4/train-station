@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 class StationListFragment internal constructor(private val stationRepository: StationRepository) : Fragment() {
     private val activityViewModel: MainViewModel by activityViewModels()
@@ -157,7 +158,7 @@ class StationListFragment internal constructor(private val stationRepository: St
 
     // Since we have dependencies. Better use a Factory class instead of Factory method.
     // Fragment args will go to the method. Dependencies will go to the class constructor.
-    class Factory(private val stationRepository: StationRepository) {
+    class Factory @Inject constructor(private val stationRepository: StationRepository) {
         fun newInstance(): StationListFragment {
             return StationListFragment(stationRepository)
         }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trainstationapp.databinding.ActivityMainBinding
-import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.ui.adapters.MainPagerViewAdapter
 import com.example.trainstationapp.presentation.ui.fragments.AboutFragment
 import com.example.trainstationapp.presentation.ui.fragments.StationListFragment
@@ -20,8 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     @Inject
-    lateinit var stationRepository: StationRepository
-    private val stationListFragmentFactory = StationListFragment.Factory(stationRepository)
+    lateinit var stationListFragmentFactory: StationListFragment.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
