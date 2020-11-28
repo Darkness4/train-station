@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { StationModel } from 'models/station.model';
 import {
   BaseEntity,
   Column,
@@ -25,8 +26,11 @@ export class Station extends BaseEntity {
   is_favorite: boolean;
 
   @ApiProperty()
+  @Column('varchar', { length: 255 })
+  libelle: string;
+
+  @ApiProperty()
   @OneToOne(() => Fields, {
-    eager: true,
     cascade: true,
     nullable: true,
   })
@@ -35,7 +39,6 @@ export class Station extends BaseEntity {
 
   @ApiProperty()
   @OneToOne(() => Geometry, {
-    eager: true,
     cascade: true,
     nullable: true,
   })
@@ -45,4 +48,15 @@ export class Station extends BaseEntity {
   @ApiProperty()
   @Column('varchar', { length: 255, nullable: true })
   record_timestamp?: string;
+
+  static fromModel(model: StationModel): Station {
+    let entity = new Station();
+    entity.recordid = model.recordid;
+    entity.datasetid = model.datasetid;
+    entity.libelle = model.fields.libelle;
+    entity.fields = model.fields;
+    entity.geometry = model.geometry;
+    entity.record_timestamp = model.record_timestamp;
+    return entity;
+  }
 }
