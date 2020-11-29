@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { mergeMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { StationModel } from 'models/station.model';
-import { CrudRequest } from '@nestjsx/crud';
+import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
 
 @Injectable()
 export class TrainStationService extends TypeOrmCrudService<Station> {
@@ -40,6 +40,15 @@ export class TrainStationService extends TypeOrmCrudService<Station> {
             'TrainStationService',
           ),
       );
+  }
+
+  async getManySummary(
+    req: CrudRequest,
+  ): Promise<GetManyDefaultResponse<Station> | Station[]> {
+    const { parsed, options } = req;
+    options.query.join = {};
+    const builder = await this.createBuilder(parsed, options);
+    return this.doGetMany(builder, parsed, options);
   }
 
   getOneDetail(req: CrudRequest): Promise<Station> {

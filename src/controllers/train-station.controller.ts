@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { Override } from '@nestjsx/crud';
+import { GetManyDefaultResponse, Override } from '@nestjsx/crud';
 import {
   Crud,
   CrudController,
@@ -41,5 +41,12 @@ export class TrainStationController implements CrudController<Station> {
   @Override()
   getOne(@ParsedRequest() req: CrudRequest): Promise<Station> {
     return this.service.getOneDetail(req);
+  }
+
+  @Override()
+  getMany(
+    @ParsedRequest() req: CrudRequest,
+  ): Promise<GetManyDefaultResponse<Station> | Station[]> {
+    return this.service.getManySummary(req);
   }
 }
