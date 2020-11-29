@@ -27,7 +27,6 @@ data class Station(
     @SuppressLint("ParcelCreator")
     @Parcelize
     data class Fields(
-        val id: Int,
         val commune: String,
         val yWgs84: Double,
         val xWgs84: Double,
@@ -47,7 +46,6 @@ data class Station(
         val fret: String,
     ) : ModelMappable<StationModel.FieldsModel>, Parcelable {
         override fun asModel() = StationModel.FieldsModel(
-            id,
             commune,
             yWgs84,
             xWgs84,
@@ -71,12 +69,10 @@ data class Station(
     @SuppressLint("ParcelCreator")
     @Parcelize
     data class Geometry(
-        val id: String,
         val type: String,
         val coordinates: List<Double>,
     ) : ModelMappable<StationModel.GeometryModel>, Parcelable {
         override fun asModel() = StationModel.GeometryModel(
-            id,
             type,
             coordinates,
         )

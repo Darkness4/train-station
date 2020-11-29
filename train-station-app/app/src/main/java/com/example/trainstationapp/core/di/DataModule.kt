@@ -6,35 +6,39 @@ import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeysDao
 import com.example.trainstationapp.data.database.StationDao
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
-    @ExperimentalSerializationApi
     @Provides
     @Singleton
-    fun provideTrainStationDataSource(): TrainStationDataSource {
+    fun provideTrainStationDataSource(client: OkHttpClient): TrainStationDataSource {
         return Retrofit.Builder()
             .baseUrl(TrainStationDataSource.BASE_URL)
-            .addConverterFactory(
-                Json { ignoreUnknownKeys = true; isLenient = true }.asConverterFactory(
-                    TrainStationDataSource.CONTENT_TYPE.toMediaType()
-                )
-            )
+            .addConverterFactory(MoshiConverterFactory.create().asLenient())
+            .client(client)
             .build()
             .create(TrainStationDataSource::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHttpClient(): OkHttpClient {
+        // val interceptor = HttpLoggingInterceptor()
+        //     .setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder()
+            // .addInterceptor(interceptor)
+            .build()
     }
 
     @Singleton

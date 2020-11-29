@@ -9,7 +9,6 @@ object TestUtils {
         isFavorite = false,
         libelle = "libelle",
         fields = Station.Fields(
-            id = 1,
             commune = "commune",
             yWgs84 = 1.0,
             xWgs84 = 1.0,
@@ -22,7 +21,6 @@ object TestUtils {
             cGeo = listOf(1.0),
             rgTroncon = 1,
             geoShape = Station.Geometry(
-                id = "id",
                 type = "type",
                 coordinates = listOf(1.0),
             ),
@@ -33,7 +31,6 @@ object TestUtils {
             fret = "fret",
         ),
         geometry = Station.Geometry(
-            id = "id",
             type = "type",
             coordinates = listOf(1.0),
         ),

@@ -3,7 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id 'kotlinx-serialization'
     id 'dagger.hilt.android.plugin'
     id 'com.google.android.gms.oss-licenses-plugin'
     id "com.diffplug.spotless" version "5.8.2"
@@ -102,7 +101,6 @@ android {
 dependencies {
     // Kotlin Core
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 
     // Coroutines
     def coroutines = '1.4.1'
@@ -150,10 +148,15 @@ dependencies {
     // Paging
     implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha09'
 
+    // JSON Serialization
+    implementation "com.squareup.moshi:moshi:1.11.0"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.11.0"
+
     // Retrofit for networking
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
     // Licensing
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'

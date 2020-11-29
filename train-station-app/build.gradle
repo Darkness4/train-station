@@ -13,7 +13,6 @@ buildscript {
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.2'
         classpath "com.android.tools.build:gradle:$android_gradle_plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
 }

@@ -9,7 +9,6 @@ object AndroidTestUtils {
         isFavorite = false,
         libelle = "libelle",
         fields = StationModel.FieldsModel(
-            id = 1,
             commune = "commune",
             yWgs84 = 1.0,
             xWgs84 = 1.0,
@@ -22,7 +21,6 @@ object AndroidTestUtils {
             cGeo = listOf(1.0),
             rgTroncon = 1,
             geoShape = StationModel.GeometryModel(
-                id = "id",
                 type = "type",
                 coordinates = listOf(1.0),
             ),
@@ -33,7 +31,6 @@ object AndroidTestUtils {
             fret = "fret",
         ),
         geometry = StationModel.GeometryModel(
-            id = "id",
             type = "type",
             coordinates = listOf(1.0),
         ),
