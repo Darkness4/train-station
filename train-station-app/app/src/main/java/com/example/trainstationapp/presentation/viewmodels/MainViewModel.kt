@@ -15,12 +15,20 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: StationRepository) : ViewModel() {
-    private val _refreshManually = MutableLiveData<Unit?>()
-    val refreshManually: LiveData<Unit?>
+    enum class RefreshMode {
+        Normal,
+        WithScrollToTop,
+    }
+    private val _refreshManually = MutableLiveData<RefreshMode?>()
+    val refreshManually: LiveData<RefreshMode?>
         get() = _refreshManually
 
-    fun refreshManually() {
-        _refreshManually.value = Unit
+    private fun refreshManually() {
+        _refreshManually.value = RefreshMode.Normal
+    }
+
+    fun refreshManuallyAndScrollToTop() {
+        _refreshManually.value = RefreshMode.WithScrollToTop
     }
 
     fun refreshManuallyDone() {
@@ -71,7 +79,8 @@ class MainViewModel(private val repository: StationRepository) : ViewModel() {
 
     fun update(station: Station) {
         viewModelScope.launch(Dispatchers.Main) {
-            _networkStatus.value = repository.updateOne(station.toggleFavorite()).map { }
+            _networkStatus.value = repository.updateOne(station.copy().toggleFavorite()).map { }
+            refreshManually()
         }
     }
 

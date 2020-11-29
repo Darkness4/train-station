@@ -9,6 +9,6 @@ interface StationRepository {
     fun watch(search: String): Flow<PagingData<Station>>
     fun watchOne(station: Station): Flow<Result<Station>>
     suspend fun findOne(station: Station): Result<Station>
-    suspend fun createOne(station: Station): Result<Unit>
-    suspend fun updateOne(station: Station): Result<Unit>
+    suspend fun createOne(station: Station): Result<Station>
+    suspend fun updateOne(station: Station): Result<Station>
 }

@@ -71,22 +71,22 @@ class StationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createOne(station: Station): Result<Unit> {
+    override suspend fun createOne(station: Station): Result<Station> {
         return try {
             val model = trainStationDataSource.create(station.asModel())
             database.stationDao().insert(model)
-            Result.Success(Unit)
+            Result.Success(model.asEntity())
         } catch (e: Throwable) {
             Result.Failure(e)
         }
     }
 
-    override suspend fun updateOne(station: Station): Result<Unit> {
+    override suspend fun updateOne(station: Station): Result<Station> {
         return try {
             val model = trainStationDataSource.updateById(station.recordid, station.asModel())
             model?.let {
                 database.stationDao().insert(model)
-                Result.Success(Unit)
+                Result.Success(model.asEntity())
             } ?: Result.Failure(Exception("Element not found."))
         } catch (e: Throwable) {
             Result.Failure(e)

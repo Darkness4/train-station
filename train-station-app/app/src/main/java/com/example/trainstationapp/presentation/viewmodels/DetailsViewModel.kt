@@ -10,6 +10,7 @@ import com.example.trainstationapp.core.result.Result
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 
@@ -27,7 +28,8 @@ class DetailsViewModel(
 
     val station =
         stationRepository.watchOne(initialStation)
-            .mapNotNull { it.valueOrNull() }
+            .mapNotNull { it.valueOrNull() } // Only take successful values
+            .filter { it.fields != null && it.geometry != null } // Make sure data is joined
             .asLiveData(viewModelScope.coroutineContext + Dispatchers.Default)
 
     private fun fetch(station: Station) {

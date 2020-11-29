@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.refresh_button -> {
-            viewModel.refreshManually()
+            viewModel.refreshManuallyAndScrollToTop()
             true
         }
 

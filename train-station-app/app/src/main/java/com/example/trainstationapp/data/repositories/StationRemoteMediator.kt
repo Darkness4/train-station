@@ -9,12 +9,9 @@ import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
 import com.example.trainstationapp.data.models.RemoteKeys
 import com.example.trainstationapp.data.models.StationModel
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
-import kotlinx.serialization.json.putJsonObject
+import org.json.JSONObject
 import retrofit2.HttpException
 import java.io.IOException
-import java.io.InvalidObjectException
 
 /**
  * This `StationRemoteMediator` handles paging from a layered data source.
@@ -60,28 +57,21 @@ class StationRemoteMediator(
                 // so we should have been able to get remote keys
                 // If the remoteKeys are null, then we're an invalid state and we have a bug
                 val remoteKeys = getRemoteKeyForFirstItem(state)
-                    ?: throw InvalidObjectException("Remote key and the prevKey should not be null")
+                    ?: return MediatorResult.Success(endOfPaginationReached = true)
                 // If the previous key is null, then we can't request more data
                 remoteKeys.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
                 remoteKeys.prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                if (remoteKeys?.nextKey == null) {
-                    throw InvalidObjectException("Remote key should not be null for $loadType")
-                }
+                remoteKeys?.nextKey ?: return MediatorResult.Success(endOfPaginationReached = true)
                 remoteKeys.nextKey
             }
         }
 
         try {
             val response = if (search.isNotEmpty()) {
-                val apiQuery = buildJsonObject {
-                    putJsonObject("libelle") {
-                        put("\$cont", search)
-                    }
-                }
-
+                val apiQuery = JSONObject(mapOf("libelle" to mapOf("\$cont" to search)))
                 service.find(s = apiQuery.toString(), page = page, limit = state.config.pageSize)
             } else {
                 service.find(page = page, limit = state.config.pageSize)

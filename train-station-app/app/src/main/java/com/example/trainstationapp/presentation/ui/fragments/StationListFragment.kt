@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class StationListFragment : Fragment() {
     private val activityViewModel by activityViewModels<MainViewModel>()
@@ -31,7 +32,7 @@ class StationListFragment : Fragment() {
 
     private val adapter = StationsAdapter(
         onFavorite = { station ->
-            activityViewModel.update(station.toggleFavorite())
+            activityViewModel.update(station)
         },
         onClick = { station ->
             activityViewModel.showDetails(station)
@@ -100,8 +101,6 @@ class StationListFragment : Fragment() {
         )
 
         adapter.addLoadStateListener { loadState ->
-            // Only show the list if refresh succeeds.
-            binding.list.isVisible = loadState.source.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
             binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
@@ -123,9 +122,27 @@ class StationListFragment : Fragment() {
             binding.retryButton.setOnClickListener { adapter.retry() }
         }
 
+        // Watch for network errors
         activityViewModel.networkStatus.observe(viewLifecycleOwner) {
             it?.doOnFailure { e ->
                 Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
+                Timber.e(e)
+            }
+        }
+        // Watch for refresh action
+        activityViewModel.refreshManually.observe(viewLifecycleOwner) {
+            it?.let {
+                when (it) {
+                    MainViewModel.RefreshMode.Normal -> fetch(
+                        binding.searchBar.text!!.trim().toString()
+                    )
+                    MainViewModel.RefreshMode.WithScrollToTop -> {
+                        fetch(DEFAULT_QUERY)
+                        initSearchUi(DEFAULT_QUERY)
+                    }
+                }
+
+                activityViewModel.refreshManuallyDone()
             }
         }
 
@@ -133,13 +150,6 @@ class StationListFragment : Fragment() {
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         fetch(query)
         initSearchUi(query)
-        activityViewModel.refreshManually.observe(viewLifecycleOwner) {
-            it?.let {
-
-                fetch(DEFAULT_QUERY)
-                activityViewModel.refreshManuallyDone()
-            }
-        }
 
         return binding.root
     }
