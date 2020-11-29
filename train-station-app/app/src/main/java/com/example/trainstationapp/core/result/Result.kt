@@ -41,4 +41,11 @@ sealed class Result<out T> {
             is Failure -> onFailure(throwable)
         }
     }
+
+    fun <R> map(transform: (value: T) -> R): Result<R> {
+        return when (this) {
+            is Success -> Success(transform(value))
+            is Failure -> Failure(throwable)
+        }
+    }
 }
