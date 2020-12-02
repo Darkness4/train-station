@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
+        // Add the fragments to the PagerView
         binding.pager.adapter = MainPagerViewAdapter(
             this,
             listOf(
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
+        // Link the TabLayout and the PagerView
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Stations"
@@ -54,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             }
         }.attach()
 
+        // Watch for the "show details" action
         viewModel.showDetails.observe(this) {
             it?.let {
                 startDetailsActivity(it)
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startDetailsActivity(station: Station) {
         val intent = Intent(this, DetailsActivity::class.java).apply {
-            putExtra(STATION_MESSAGE, station)
+            putExtra(DetailsActivity.STATION_MESSAGE, station)
         }
         startActivity(intent)
     }
@@ -75,19 +78,11 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        else -> {
-            // If we got here, the user's action was not recognized.
-            // Invoke the superclass to handle it.
-            super.onOptionsItemSelected(item)
-        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
-    }
-
-    companion object {
-        const val STATION_MESSAGE = "com.example.trainstationapp.STATION_MESSAGE"
     }
 }

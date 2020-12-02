@@ -6,6 +6,9 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import java.lang.reflect.Type
 
+/**
+ * Converters for `List` to `String` to be able to store `List` in `Room`.
+ */
 class ListConverters {
     private val moshi = Moshi.Builder().build()
     private val listOfDouble: Type = Types.newParameterizedType(

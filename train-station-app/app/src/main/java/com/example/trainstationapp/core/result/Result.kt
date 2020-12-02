@@ -1,5 +1,8 @@
 package com.example.trainstationapp.core.result
 
+/**
+ * This class is used for basic state management (success/failure)
+ */
 sealed class Result<out T> {
     data class Success<out T>(val value: T) : Result<T>()
     data class Failure<out T>(val throwable: Throwable) : Result<T>()
