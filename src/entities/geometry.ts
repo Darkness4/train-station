@@ -10,7 +10,7 @@ export class Geometry {
   @Column('varchar', { length: 255, nullable: true })
   type?: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Geographical coordinates' })
   @Column('simple-array', { nullable: true })
   coordinates?: number[];
 }

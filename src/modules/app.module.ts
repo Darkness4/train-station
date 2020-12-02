@@ -4,7 +4,6 @@ import { AppController } from 'controllers/app.controller';
 import { Fields } from 'entities/fields';
 import { Geometry } from 'entities/geometry';
 import { Station } from 'entities/station';
-import { AppService } from 'services/app.service';
 import { TrainStationModule } from './train-station.module';
 
 @Module({
@@ -18,6 +17,5 @@ import { TrainStationModule } from './train-station.module';
     TrainStationModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
