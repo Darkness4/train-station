@@ -18,9 +18,7 @@ import com.example.trainstationapp.domain.entities.Station
 class StationsAdapter(
     private val onFavorite: OnClickListener,
     private val onClick: OnClickListener,
-) :
-    PagingDataAdapter<Station, StationsAdapter.ViewHolder>(Comparator) {
-
+) : PagingDataAdapter<Station, StationsAdapter.ViewHolder>(Comparator) {
     object Comparator : DiffUtil.ItemCallback<Station>() {
         override fun areItemsTheSame(oldItem: Station, newItem: Station) =
             oldItem.recordid == newItem.recordid

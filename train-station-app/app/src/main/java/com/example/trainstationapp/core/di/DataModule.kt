@@ -6,7 +6,6 @@ import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeysDao
 import com.example.trainstationapp.data.database.StationDao
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
-import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,13 +52,13 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideStationDao(database: Lazy<Database>): StationDao {
-        return database.get().stationDao()
+    fun provideStationDao(database: Database): StationDao {
+        return database.stationDao()
     }
 
     @Singleton
     @Provides
-    fun provideRemoteKeysDao(database: Lazy<Database>): RemoteKeysDao {
-        return database.get().remoteKeysDao()
+    fun provideRemoteKeysDao(database: Database): RemoteKeysDao {
+        return database.remoteKeysDao()
     }
 }

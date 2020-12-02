@@ -42,14 +42,14 @@ class StationListFragment : Fragment() {
     private var fetchJob: Job? = null
 
     /**
-     * Call `viewModel.watch()`, collect the `PagingData` result and pass to the `StationAdapter`.
+     * Call `viewModel.watchPages()`, collect the `PagingData` result and pass to the `StationAdapter`.
      *
      * This method is the bridge between the repository and the `RecyclerView`.
      */
     private fun fetch(search: String) {
         fetchJob?.cancel()
         fetchJob = lifecycleScope.launch {
-            activityViewModel.watch(search).collectLatest {
+            activityViewModel.watchPages(search).collectLatest {
                 adapter.submitData(it)
             }
         }
@@ -92,12 +92,15 @@ class StationListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentStationListBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(decoration)
+
+        // Add the adapter for the PagingData, with footer and header.
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = StationsLoadStateAdapter(onClick = { adapter.retry() }),
-            footer = StationsLoadStateAdapter(onClick = { adapter.retry() })
+            header = StationsLoadStateAdapter(onRetry = { adapter.retry() }),
+            footer = StationsLoadStateAdapter(onRetry = { adapter.retry() })
         )
 
         adapter.addLoadStateListener { loadState ->
@@ -159,6 +162,9 @@ class StationListFragment : Fragment() {
         outState.putString(LAST_SEARCH_QUERY, binding.searchBar.text!!.trim().toString())
     }
 
+    /**
+     * On key board presses, fetch data.
+     */
     private fun updateListFromInput() {
         fetch(binding.searchBar.text!!.trim().toString())
     }
