@@ -19,7 +19,7 @@ spotless {
     }
     kotlin {
         target '**/*.kt'
-        ktlint('0.39.0')
+        ktlint('0.40.0')
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()
@@ -41,7 +41,7 @@ spotless {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     buildFeatures {
         dataBinding true
@@ -58,7 +58,6 @@ android {
             file("../secure.properties")?.withInputStream { secureProps.load(it) }
         }
         resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "")
-
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -103,7 +102,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // Coroutines
-    def coroutines = '1.4.1'
+    def coroutines = '1.4.2'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
@@ -131,7 +130,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha06'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-beta01'
     implementation 'com.google.maps.android:maps-ktx:2.2.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:2.0.3'
@@ -146,7 +145,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Paging
-    implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha09'
+    implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha10'
 
     // JSON Serialization
     implementation "com.squareup.moshi:moshi:1.11.0"
