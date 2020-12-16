@@ -29,7 +29,7 @@ class DetailsViewModel(
     val station =
         stationRepository.watchOne(initialStation)
             .mapNotNull { it.valueOrNull() } // Only take successful values
-            .filter { it.fields != null && it.geometry != null } // Make sure data is joined
+            .filter { it.fields != null && it.geometry != null } // Make sure data is complete
             .asLiveData(viewModelScope.coroutineContext + Dispatchers.Default)
 
     private fun fetch(station: Station) {

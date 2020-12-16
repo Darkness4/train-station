@@ -2,15 +2,17 @@
 
 Par Marc NGUYEN et JB Rubio dans le cadre du projet Web + Android 2020.
 
+[TOC]
+
 ## Objectifs et Spécifications
 
 ### API NestJS
 
 - API REST
 
-- Déployé sur CleverCloud
+- Déployé sur CleverCloud : [train-station.cleverapps.io](https://train-station.cleverapps.io/)
 
-- GET /stations (Récupérer un résumé de toutes les données (i.e. seulement les infos les plus importantes pour l’affichage dans une liste + favori ou non))
+- **GET /stations** (Récupérer un résumé de toutes les données (i.e. seulement les infos les plus importantes pour l’affichage dans une liste + favori ou non))
 
   - Query Params : page : number
 
@@ -35,11 +37,11 @@ Par Marc NGUYEN et JB Rubio dans le cadre du projet Web + Android 2020.
       }
       ```
 
-- (Bonus) POST /stations (Créer de nouvelles données)
+- (Bonus) **POST /stations** (Créer de nouvelles données) **NOTE: Cet API n'est pas utilisé dans l'application.**
 
   - Post-data : Station
 
-- GET /stations/:recordid (pour l’affichage dans l’écran de détails)
+- **GET /stations/:recordid** (pour l’affichage dans l’écran de détails)
 
   - Exemple :
 
@@ -92,12 +94,11 @@ Par Marc NGUYEN et JB Rubio dans le cadre du projet Web + Android 2020.
       }
       ```
 
-- PATCH /stations/:recordid (Mettre une donnée en favori ou non) (on n'utilisera pas PUT, car contraire aux [normes HTTP](https://tools.ietf.org/html/rfc5789))
+- **PATCH /stations/:recordid** (Mettre une donnée en favori ou non) (On n'utilisera pas PUT, car contraire aux [normes HTTP](https://tools.ietf.org/html/rfc5789). On souhaite mettre à jour, et non remplacer.)
 
   - Post-data (replace): Station(partiel)
 
 - (Bonus) Au lieu de stocker des données dans un fichier JSON, faire une requête au démarrage de l’API pour récupérer les données
-
 
 ## App Android
 
@@ -126,11 +127,11 @@ Par Marc NGUYEN et JB Rubio dans le cadre du projet Web + Android 2020.
 
 ![Screenshot_20201129-053140](assets/Screenshot_20201129-053140.png) ![Screenshot_20201129-053208](assets/Screenshot_20201129-053208.png) ![Screenshot_20201129-053214](assets/Screenshot_20201129-053214.png) ![Screenshot_20201129-053223](assets/Screenshot_20201129-053223.png)
 
-## Documentation
+# Documentation
 
-### API
+## API
 
-#### Compiler et lancer
+### Compiler et lancer
 
 ```sh
 npm run build
@@ -139,7 +140,7 @@ npm run start:prod
 npm run start:nest
 ```
 
-#### Déployer sur CleverCloud
+### Déployer sur CleverCloud
 
 Le déploiement est automatisé par Github Actions.
 
@@ -147,9 +148,9 @@ A chaque commit, l'API NestJS est testé puis déployé sur une branche Github `
 
 La branche `release/api` est synchronisé sur CleverCloud, et permet de déployer un Docker qui compile et lance l'API.
 
-#### Fonctionnement de l'API
+### Fonctionnement de l'API
 
-##### Entités
+#### Entités
 
 Les entités sont pratiquement les même que sur le [JSON de la SNCF](https://ressources.data.sncf.com/explore/dataset/liste-des-gares/download/?format=json).
 
@@ -158,7 +159,7 @@ Les seules différences sont dans le fichier [station.ts](./train-station-api/sr
 - `is_favorite` : Si la station est le favoris de l'utilisateur.
 - `libelle` : Qui correspond au champ `fields.libelle`. Nous l'avons copié de `fields` pour l'afficher sur la liste.
 
-##### Repositories et Services
+#### Repositories et Services
 
 Nous utilisons TypeORM pour stocker les Stations dans l'API.
 
@@ -207,7 +208,7 @@ this.subscription = client
       .subscribe();
 ```
 
-##### Controllers
+#### Controllers
 
 Encore une fois, avec **[nestjsx/crud](https://github.com/nestjsx/crud)**, nous exposons uniquement les points d'entrées de notre API et activons la pagination.
 
@@ -215,23 +216,31 @@ L'API est paginé grâce aux paramètres de requête `limit` et `page`. Exemple 
 
 L'API possède également une barre de recherche avec le paramètre de requête `s`. Voir [documentation du paquet](https://github.com/nestjsx/crud/wiki/Requests#search).
 
-Nous écrasons la méthode `getOne` par la notre afin d'utiliser la méthode de notre service `getOneDetail` au lieu de `getOneBase` du paquet.
+Nous écrasons la méthode `getOne` par la notre afin d'utiliser la méthode de notre service `getOneDetail`. De même pour `getMany`.
 
 ```typescript
 @Controller('stations')
 export class TrainStationController implements CrudController<Station> {
   constructor(readonly service: TrainStationService) {}
 
+
   @Override()
   getOne(@ParsedRequest() req: CrudRequest): Promise<Station> {
     return this.service.getOneDetail(req);
   }
+
+  @Override()
+  getMany(
+    @ParsedRequest() req: CrudRequest,
+  ): Promise<GetManyDefaultResponse<Station> | Station[]> {
+    return this.service.getManySummary(req);
+  }
 }
 ```
 
-##### Autres
+#### Autres
 
-L'API est basé sur Fastify.
+L'API est basé sur la plateforme Fastify.
 
 L'API limite également le nombre de requêtes par minute.
 
@@ -239,13 +248,13 @@ L'API redirige `/` vers `/api`, où il y a un client Swagger pour tester l'API.
 
 ![image-20201128030150536](assets/image-20201128030150536.png)
 
-### Android App
+## Android App
 
-#### Architecture
+### Architecture
 
 ![image-20201129022715761](assets/image-20201129022715761.png)
 
-Voici l'architecture de l'application.
+Voici l'architecture de l'application (en terme de réception de données).
 
 Dans la couche **Data** :
 
@@ -258,11 +267,11 @@ Dans la couche **Data** :
   - *Room* exécute les requêtes dans une coroutine Kotlin dans le [thread IO](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
 - *Retrofit* est le client HTTP
   - Le client HTTP fournit des `Paginated<StationModel>` (des `List<StationModel>` par page).
-  - Le client HTTP exécute les requêtes dans une coroutine Kotlin dans le [thread IO](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
+  - Le client HTTP exécute les requêtes dans une coroutine Kotlin
 - `StationRemoteMediator` charge les pages issues du cache ou les réponses HTTP selon la connectivité. 
   - La logique peut se résumer à la suivante :
     - Il charge la page suivante/précédente/initiale en lançant une requête HTTP
-    - Il **met en cache les `StationModel` de la réponse**. Il met également la position des `StationModel` en cache.
+    - Il **met en cache les `StationModel` de la réponse HTTP**.
   - Il implémente [`RemoteMediator`](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator), médiateur entre la source local et la source distante.
 - `StationRepositoryImpl` implémente `StationRepository` et exécute les méthodes CRUD.
   - Pour les actions asynchrones, les `StationModel` de la réponse sont mise en cache et sont retournés.
@@ -293,12 +302,13 @@ Dans la couche **Presentation** :
 - Dans les deux pages :
   - Le résultat d'une action **asynchrone** est observable en tant que `networkStatus: LiveData<Result<Unit>>`. Selon le résultat, on affichera un [*Toast*](https://developer.android.com/guide/topics/ui/notifiers/toasts) en cas d'erreur.
 
-#### Technologies Utilisées
+### Technologies Utilisées
 
-##### Android spécifique
+#### Android spécifique
 
 - Room, en tant que cache
 - Retrofit, en tant que client HTTP
+- Data Binding, pour le data et view binding bidirectionnel
 - ViewModel et LiveData, pour faire du MVVM et éviter les problèmes de lifecycle des fragments/activities
 - ViewPager 2, en tant que hôte de navigation horizontale
 - Paging 3, en tant que solution pour les données paginées
@@ -306,8 +316,55 @@ Dans la couche **Presentation** :
 - Hilt, pour l'injection de dépendances
 - Google Maps SDK for Android
 
-##### Kotlin en général
+#### Kotlin en général
 
 - Kotlin Coroutines + Kotlin Flow, pour l'asynchrone
 - Moshi, pour la serialisation en JSON
+
+### Références
+
+Voici les documentations et formations que nous avons utilisées.
+
+#### Codelabs
+
+- [Kotlin Android Fundamentals](https://developer.android.com/courses/kotlin-android-fundamentals/overview)
+- [Android Paging](https://developer.android.com/codelabs/android-paging)
+- [Use Kotlin Coroutines in your Android App](https://developer.android.com/codelabs/kotlin-coroutines)
+
+#### Documentations
+
+- [Android KTX](https://developer.android.com/kotlin/ktx)
+- [Data Binding](https://developer.android.com/topic/libraries/data-binding)
+- [Guide to App Architecture](https://developer.android.com/jetpack/guide)
+- [Android Hilt](https://developer.android.com/training/dependency-injection/hilt-android) / [Dagger Hilt](https://dagger.dev/hilt/)
+- [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
+- [Google Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk/overview)
+- [Create swipe views with tabs using ViewPager2](https://developer.android.com/guide/navigation/navigation-swipe-view-2)
+- [Paging 3 Overview](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
+
+# LICENSE
+
+```
+MIT License
+
+Copyright (c) 2020 Marc NGUYEN, Jean-Baptiste RUBIO
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 

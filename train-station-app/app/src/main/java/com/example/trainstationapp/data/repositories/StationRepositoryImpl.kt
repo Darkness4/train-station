@@ -25,8 +25,14 @@ class StationRepositoryImpl @Inject constructor(
         private const val NETWORK_PAGE_SIZE = 20
     }
 
+    /**
+     * Fetch the whole `StationModel` cache as a `PagingData`.
+     *
+     * Receive a `PagingData` for each page. This is a snapshot of the cache.
+     * To refresh the `PagingData`, call the method again.
+     */
     @ExperimentalPagingApi
-    override fun watch(search: String): Flow<PagingData<Station>> {
+    override fun watchPages(search: String): Flow<PagingData<Station>> {
         val pagingSourceFactory = {
             if (search.isNotEmpty()) {
                 database.stationDao().watchAsPagingSource(search)
@@ -51,6 +57,9 @@ class StationRepositoryImpl @Inject constructor(
             }.flowOn(Dispatchers.Default)
     }
 
+    /**
+     * Observe one station in the cache.
+     */
     override fun watchOne(station: Station): Flow<Result<Station>> {
         return database.stationDao().watchById(station.recordid).map { model ->
             Result.Success(model.asEntity())
@@ -59,6 +68,9 @@ class StationRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     * Find one station in the API and cache it.
+     */
     override suspend fun findOne(station: Station): Result<Station> {
         return try {
             val model = trainStationDataSource.findById(station.recordid)
@@ -71,6 +83,9 @@ class StationRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     * Create one station in the API and cache it.
+     */
     override suspend fun createOne(station: Station): Result<Station> {
         return try {
             val model = trainStationDataSource.create(station.asModel())
@@ -81,6 +96,9 @@ class StationRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     * Update one station in the API and cache it.
+     */
     override suspend fun updateOne(station: Station): Result<Station> {
         return try {
             val model = trainStationDataSource.updateById(station.recordid, station.asModel())

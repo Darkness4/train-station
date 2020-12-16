@@ -22,9 +22,15 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
+    companion object {
+        const val STATION_MESSAGE = "com.example.trainstationapp.STATION_MESSAGE"
+    }
+
     private lateinit var binding: ActivityDetailsBinding
-    private lateinit var initialStation: Station
-    private lateinit var viewModel: DetailsViewModel
+    private val initialStation: Station by lazy { intent.getParcelableExtra(STATION_MESSAGE)!! }
+    private val viewModel by viewModels<DetailsViewModel> {
+        DetailsViewModel.Factory(initialStation, stationRepository)
+    }
     private lateinit var map: GoogleMap
 
     @Inject
@@ -32,12 +38,7 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initialStation = intent.getParcelableExtra(MainActivity.STATION_MESSAGE)!!
         binding = ActivityDetailsBinding.inflate(layoutInflater)
-        val viewModel by viewModels<DetailsViewModel> {
-            DetailsViewModel.Factory(initialStation, stationRepository)
-        }
-        this.viewModel = viewModel
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -45,19 +46,19 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        // Watch for errors
         viewModel.networkStatus.observe(this) {
             it?.doOnFailure { e ->
                 Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
             }
         }
 
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
+    override fun onMapReady(map: GoogleMap) {
+        this.map = map
         viewModel.station.observe(this) {
             it?.let {
                 // Add a marker in Sydney and move the camera

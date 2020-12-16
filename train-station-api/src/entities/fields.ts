@@ -13,19 +13,19 @@ export class Fields {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Commune de France' })
   @Column('varchar', { length: 255, nullable: true })
   commune?: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Latitude' })
   @Column({ nullable: true })
   y_wgs84?: number;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Longitude' })
   @Column({ nullable: true })
   x_wgs84?: number;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Name of the station' })
   @Column('varchar', { length: 255, nullable: true })
   libelle?: string;
 
@@ -49,7 +49,7 @@ export class Fields {
   @Column({ nullable: true })
   x_l93?: number;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Geographical coordinates' })
   @Column('simple-array', { nullable: true })
   c_geo?: number[];
 

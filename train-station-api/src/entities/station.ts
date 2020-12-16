@@ -21,7 +21,9 @@ export class Station extends BaseEntity {
   @Column('varchar', { length: 255 })
   datasetid: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'This station is one of the favorite of our lovely user.',
+  })
   @Column({ default: false })
   is_favorite: boolean;
 

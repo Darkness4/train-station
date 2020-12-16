@@ -59,7 +59,7 @@ class MainViewModel(private val repository: StationRepository) : ViewModel() {
     /**
      * Fetch the `PagingData`.
      */
-    fun watch(search: String): Flow<PagingData<Station>> {
+    fun watchPages(search: String): Flow<PagingData<Station>> {
         val lastResult = station
 
         // If already fetched
@@ -67,7 +67,7 @@ class MainViewModel(private val repository: StationRepository) : ViewModel() {
             return lastResult
         }
         searchValue = search
-        val newResult: Flow<PagingData<Station>> = repository.watch(search)
+        val newResult: Flow<PagingData<Station>> = repository.watchPages(search)
             .cachedIn(viewModelScope) // Cache the content in a CoroutineScope
         station = newResult
         return newResult
