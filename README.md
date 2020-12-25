@@ -127,6 +127,12 @@ Par Marc NGUYEN et JB Rubio dans le cadre du projet Web + Android 2020.
 
 ![Screenshot_20201129-053140](assets/Screenshot_20201129-053140.png) ![Screenshot_20201129-053208](assets/Screenshot_20201129-053208.png) ![Screenshot_20201129-053214](assets/Screenshot_20201129-053214.png) ![Screenshot_20201129-053223](assets/Screenshot_20201129-053223.png)
 
+# Modern Android Development (MAD)
+
+[madscorecard.withgoogle.com/scorecard/share/1635480592/](https://madscorecard.withgoogle.com/scorecard/share/1635480592/)
+
+![summary](assets/summary.png)
+
 # Documentation
 
 ## API
