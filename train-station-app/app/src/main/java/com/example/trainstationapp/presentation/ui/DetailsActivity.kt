@@ -1,14 +1,13 @@
 package com.example.trainstationapp.presentation.ui
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.navArgs
 import com.example.trainstationapp.R
 import com.example.trainstationapp.databinding.ActivityDetailsBinding
-import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.viewmodels.DetailsViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,14 +21,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
-    companion object {
-        const val STATION_MESSAGE = "com.example.trainstationapp.STATION_MESSAGE"
-    }
-
     private lateinit var binding: ActivityDetailsBinding
-    private val initialStation: Station by lazy { intent.getParcelableExtra(STATION_MESSAGE)!! }
+    private val args: DetailsActivityArgs by navArgs()
     private val viewModel by viewModels<DetailsViewModel> {
-        DetailsViewModel.Factory(initialStation, stationRepository)
+        DetailsViewModel.Factory(args.station, stationRepository)
     }
     private lateinit var map: GoogleMap
 
@@ -81,9 +76,5 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return true
     }
 }

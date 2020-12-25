@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.trainstationapp.databinding.FragmentStationListBinding
@@ -146,6 +147,15 @@ class StationListFragment : Fragment() {
                 }
 
                 activityViewModel.refreshManuallyDone()
+            }
+        }
+        // Watch for the "show details" action
+        activityViewModel.showDetails.observe(viewLifecycleOwner) {
+            it?.let {
+                findNavController().navigate(
+                    StationListFragmentDirections.actionStationListFragmentToDetailsActivity(it)
+                )
+                activityViewModel.showDetailsDone()
             }
         }
 
