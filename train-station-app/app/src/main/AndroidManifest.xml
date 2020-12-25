@@ -33,7 +33,8 @@
         <activity
             android:name=".presentation.ui.DetailsActivity"
             android:label="@string/title_activity_details"
-            android:theme="@style/Theme.TrainStationApp.NoActionBar" />
+            android:theme="@style/Theme.TrainStationApp.NoActionBar"
+            android:parentActivityName=".presentation.ui.MainActivity" />
         <activity
             android:name=".presentation.ui.MainActivity"
             android:label="@string/title_activity_main"
