@@ -5,7 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.example.trainstationapp.core.result.Result
+import com.example.trainstationapp.core.result.State
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
 import com.example.trainstationapp.domain.entities.Station
@@ -60,54 +60,54 @@ class StationRepositoryImpl @Inject constructor(
     /**
      * Observe one station in the cache.
      */
-    override fun watchOne(station: Station): Flow<Result<Station>> {
+    override fun watchOne(station: Station): Flow<State<Station>> {
         return database.stationDao().watchById(station.recordid).map { model ->
-            Result.Success(model.asEntity())
-        }.catch<Result<Station>> {
-            emit(Result.Failure(it))
+            State.Success(model.asEntity())
+        }.catch<State<Station>> {
+            emit(State.Failure(it))
         }
     }
 
     /**
      * Find one station in the API and cache it.
      */
-    override suspend fun findOne(station: Station): Result<Station> {
+    override suspend fun findOne(station: Station): State<Station> {
         return try {
             val model = trainStationDataSource.findById(station.recordid)
             model?.let {
                 database.stationDao().insert(model)
-                Result.Success(model.asEntity())
-            } ?: Result.Failure(Exception("Element not found."))
+                State.Success(model.asEntity())
+            } ?: State.Failure(Exception("Element not found."))
         } catch (e: Throwable) {
-            Result.Failure(e)
+            State.Failure(e)
         }
     }
 
     /**
      * Create one station in the API and cache it.
      */
-    override suspend fun createOne(station: Station): Result<Station> {
+    override suspend fun createOne(station: Station): State<Station> {
         return try {
             val model = trainStationDataSource.create(station.asModel())
             database.stationDao().insert(model)
-            Result.Success(model.asEntity())
+            State.Success(model.asEntity())
         } catch (e: Throwable) {
-            Result.Failure(e)
+            State.Failure(e)
         }
     }
 
     /**
      * Update one station in the API and cache it.
      */
-    override suspend fun updateOne(station: Station): Result<Station> {
+    override suspend fun updateOne(station: Station): State<Station> {
         return try {
             val model = trainStationDataSource.updateById(station.recordid, station.asModel())
             model?.let {
                 database.stationDao().insert(model)
-                Result.Success(model.asEntity())
-            } ?: Result.Failure(Exception("Element not found."))
+                State.Success(model.asEntity())
+            } ?: State.Failure(Exception("Element not found."))
         } catch (e: Throwable) {
-            Result.Failure(e)
+            State.Failure(e)
         }
     }
 }

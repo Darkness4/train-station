@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.trainstationapp.core.result.Result
+import com.example.trainstationapp.core.result.State
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +22,8 @@ class DetailsViewModel(
         fetch(initialStation)
     }
 
-    private val _networkStatus = MutableLiveData<Result<Unit>>()
-    val networkStatus: LiveData<Result<Unit>>
+    private val _networkStatus = MutableLiveData<State<Unit>>()
+    val networkStatus: LiveData<State<Unit>>
         get() = _networkStatus
 
     val station =

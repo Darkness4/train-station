@@ -3,9 +3,9 @@ package com.example.trainstationapp.core.result
 /**
  * This class is used for basic state management (success/failure)
  */
-sealed class Result<out T> {
-    data class Success<out T>(val value: T) : Result<T>()
-    data class Failure<out T>(val throwable: Throwable) : Result<T>()
+sealed class State<out T> {
+    data class Success<out T>(val value: T) : State<T>()
+    data class Failure<out T>(val throwable: Throwable) : State<T>()
     val isSuccess: Boolean
         get() = this is Success
     val isFailure: Boolean
@@ -45,7 +45,7 @@ sealed class Result<out T> {
         }
     }
 
-    fun <R> map(transform: (value: T) -> R): Result<R> {
+    fun <R> map(transform: (value: T) -> R): State<R> {
         return when (this) {
             is Success -> Success(transform(value))
             is Failure -> Failure(throwable)

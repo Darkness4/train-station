@@ -99,9 +99,6 @@ android {
 }
 
 dependencies {
-    // Kotlin Core
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     // Coroutines
     def coroutines = '1.4.2'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
@@ -164,6 +161,8 @@ dependencies {
 
     // Licensing
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
 
     def kotest_version = '4.3.1'
     testImplementation "io.mockk:mockk:1.10.0"

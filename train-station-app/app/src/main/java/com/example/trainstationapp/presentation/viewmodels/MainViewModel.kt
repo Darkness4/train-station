@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.trainstationapp.core.result.Result
+import com.example.trainstationapp.core.result.State
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import kotlinx.coroutines.Dispatchers
@@ -73,8 +73,8 @@ class MainViewModel(private val repository: StationRepository) : ViewModel() {
         return newResult
     }
 
-    private val _networkStatus = MutableLiveData<Result<Unit>>()
-    val networkStatus: LiveData<Result<Unit>>
+    private val _networkStatus = MutableLiveData<State<Unit>>()
+    val networkStatus: LiveData<State<Unit>>
         get() = _networkStatus
 
     fun update(station: Station) {
