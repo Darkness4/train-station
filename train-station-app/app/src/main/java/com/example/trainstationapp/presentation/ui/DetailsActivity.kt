@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
 import com.example.trainstationapp.R
+import com.example.trainstationapp.core.result.doOnFailure
 import com.example.trainstationapp.databinding.ActivityDetailsBinding
 import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.viewmodels.DetailsViewModel

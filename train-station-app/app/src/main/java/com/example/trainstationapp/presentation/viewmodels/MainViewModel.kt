@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.trainstationapp.core.result.State
+import com.example.trainstationapp.core.result.map
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import kotlinx.coroutines.Dispatchers

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.trainstationapp.core.result.State
+import com.example.trainstationapp.core.result.map
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,7 @@ class DetailsViewModel(
 
     val station =
         stationRepository.watchOne(initialStation)
-            .mapNotNull { it.valueOrNull() } // Only take successful values
+            .mapNotNull { it.getOrNull() } // Only take successful values
             .filter { it.fields != null && it.geometry != null } // Make sure data is complete
             .asLiveData(viewModelScope.coroutineContext + Dispatchers.Default)
 

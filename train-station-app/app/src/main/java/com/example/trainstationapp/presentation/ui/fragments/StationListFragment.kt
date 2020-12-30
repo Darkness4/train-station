@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.trainstationapp.core.result.doOnFailure
 import com.example.trainstationapp.databinding.FragmentStationListBinding
 import com.example.trainstationapp.presentation.ui.adapters.StationsAdapter
 import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAdapter
