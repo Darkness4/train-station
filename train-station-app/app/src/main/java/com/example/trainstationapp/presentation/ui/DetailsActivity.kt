@@ -11,6 +11,7 @@ import com.example.trainstationapp.core.result.doOnFailure
 import com.example.trainstationapp.databinding.ActivityDetailsBinding
 import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.viewmodels.DetailsViewModel
+import com.example.trainstationapp.presentation.viewmodels.provideFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,8 +25,11 @@ import javax.inject.Inject
 class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityDetailsBinding
     private val args: DetailsActivityArgs by navArgs()
+
+    @Inject
+    lateinit var assisted: DetailsViewModel.AssistedFactory
     private val viewModel by viewModels<DetailsViewModel> {
-        DetailsViewModel.Factory(args.station, stationRepository)
+        assisted.provideFactory(args.station)
     }
     private lateinit var map: GoogleMap
 

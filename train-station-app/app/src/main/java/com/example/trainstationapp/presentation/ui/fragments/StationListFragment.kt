@@ -183,8 +183,5 @@ class StationListFragment : Fragment() {
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
         private const val DEFAULT_QUERY = ""
-
-        @JvmStatic
-        fun newInstance() = StationListFragment()
     }
 }
