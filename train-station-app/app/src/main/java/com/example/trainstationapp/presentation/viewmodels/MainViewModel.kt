@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.trainstationapp.core.result.State
-import com.example.trainstationapp.core.result.map
+import com.example.trainstationapp.core.state.State
+import com.example.trainstationapp.core.state.map
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

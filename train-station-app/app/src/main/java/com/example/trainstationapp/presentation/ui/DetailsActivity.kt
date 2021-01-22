@@ -7,11 +7,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
 import com.example.trainstationapp.R
-import com.example.trainstationapp.core.result.doOnFailure
+import com.example.trainstationapp.core.state.doOnFailure
 import com.example.trainstationapp.databinding.ActivityDetailsBinding
 import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.viewmodels.DetailsViewModel
-import com.example.trainstationapp.presentation.viewmodels.provideFactory
+import com.example.trainstationapp.presentation.viewmodels.DetailsViewModel.Companion.provideFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

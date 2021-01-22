@@ -1,4 +1,4 @@
-package com.example.trainstationapp.core.result
+package com.example.trainstationapp.core.state
 
 /**
  * This class is used for basic state management (success/failure)

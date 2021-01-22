@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.trainstationapp.core.result.State
-import com.example.trainstationapp.core.result.map
+import com.example.trainstationapp.core.state.State
+import com.example.trainstationapp.core.state.map
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.assisted.Assisted
@@ -45,15 +45,17 @@ class DetailsViewModel @AssistedInject constructor(
     fun interface AssistedFactory {
         fun create(initialStation: Station): DetailsViewModel
     }
-}
 
-fun DetailsViewModel.AssistedFactory.provideFactory(initialStation: Station): ViewModelProvider.Factory {
-    val assisted = this
+    companion object {
+        fun AssistedFactory.provideFactory(initialStation: Station): ViewModelProvider.Factory {
+            val assisted = this
 
-    return object : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return assisted.create(initialStation) as T
+            return object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    return assisted.create(initialStation) as T
+                }
+            }
         }
     }
 }
