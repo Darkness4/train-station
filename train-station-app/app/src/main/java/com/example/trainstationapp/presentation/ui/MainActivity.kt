@@ -8,24 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.example.trainstationapp.R
 import com.example.trainstationapp.databinding.ActivityMainBinding
-import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.ui.adapters.MainPagerViewAdapter
 import com.example.trainstationapp.presentation.ui.fragments.AboutFragment
 import com.example.trainstationapp.presentation.viewmodels.MainViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var stationRepository: StationRepository
-
-    private val viewModel by viewModels<MainViewModel> {
-        MainViewModel.Factory(stationRepository)
-    }
-
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

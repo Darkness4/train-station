@@ -6,18 +6,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.trainstationapp.core.result.State
-import com.example.trainstationapp.core.result.map
+import com.example.trainstationapp.core.state.State
+import com.example.trainstationapp.core.state.map
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 
-class DetailsViewModel(
-    initialStation: Station,
-    private val stationRepository: StationRepository
+class DetailsViewModel @AssistedInject constructor(
+    private val stationRepository: StationRepository,
+    @Assisted initialStation: Station,
 ) : ViewModel() {
     init {
         fetch(initialStation)
@@ -39,11 +41,21 @@ class DetailsViewModel(
         }
     }
 
-    class Factory(private val initialStation: Station, private val repository: StationRepository) :
-        ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return DetailsViewModel(initialStation, repository) as T
+    @dagger.assisted.AssistedFactory
+    fun interface AssistedFactory {
+        fun create(initialStation: Station): DetailsViewModel
+    }
+
+    companion object {
+        fun AssistedFactory.provideFactory(initialStation: Station): ViewModelProvider.Factory {
+            val assisted = this
+
+            return object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    return assisted.create(initialStation) as T
+                }
+            }
         }
     }
 }

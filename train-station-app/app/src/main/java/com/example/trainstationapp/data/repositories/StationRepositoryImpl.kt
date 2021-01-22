@@ -5,7 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.example.trainstationapp.core.result.State
+import com.example.trainstationapp.core.state.State
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
 import com.example.trainstationapp.domain.entities.Station

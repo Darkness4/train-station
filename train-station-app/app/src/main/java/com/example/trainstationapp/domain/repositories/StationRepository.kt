@@ -1,7 +1,7 @@
 package com.example.trainstationapp.domain.repositories
 
 import androidx.paging.PagingData
-import com.example.trainstationapp.core.result.State
+import com.example.trainstationapp.core.state.State
 import com.example.trainstationapp.domain.entities.Station
 import kotlinx.coroutines.flow.Flow
 

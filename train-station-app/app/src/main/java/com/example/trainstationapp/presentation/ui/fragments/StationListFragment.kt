@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.example.trainstationapp.core.result.doOnFailure
+import com.example.trainstationapp.core.state.doOnFailure
 import com.example.trainstationapp.databinding.FragmentStationListBinding
 import com.example.trainstationapp.presentation.ui.adapters.StationsAdapter
 import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAdapter
@@ -183,8 +183,5 @@ class StationListFragment : Fragment() {
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
         private const val DEFAULT_QUERY = ""
-
-        @JvmStatic
-        fun newInstance() = StationListFragment()
     }
 }
