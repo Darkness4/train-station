@@ -47,15 +47,12 @@ class DetailsViewModel @AssistedInject constructor(
     }
 
     companion object {
-        fun AssistedFactory.provideFactory(initialStation: Station): ViewModelProvider.Factory {
-            val assisted = this
-
-            return object : ViewModelProvider.Factory {
+        fun AssistedFactory.provideFactory(initialStation: Station): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return assisted.create(initialStation) as T
+                    return this@provideFactory.create(initialStation) as T
                 }
             }
-        }
     }
 }
