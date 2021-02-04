@@ -53,23 +53,16 @@ class StationRemoteMediator(
                 remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
             }
             LoadType.PREPEND -> {
-                // The LoadType is PREPEND so some data was loaded before,
-                // so we should have been able to get remote keys
-                // If the remoteKeys are null, then we're an invalid state and we have a bug
                 val remoteKeys = getRemoteKeyForFirstItem(state)
-                    ?: return MediatorResult.Success(endOfPaginationReached = true)
-                // If the previous key is null, then we can't request more data
-                remoteKeys.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
-                remoteKeys.prevKey
+                remoteKeys?.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
                 remoteKeys?.nextKey ?: return MediatorResult.Success(endOfPaginationReached = true)
-                remoteKeys.nextKey
             }
         }
 
-        try {
+        return try {
             val response = if (search.isNotEmpty()) {
                 val apiQuery = JSONObject(mapOf("libelle" to mapOf("\$cont" to search)))
                 service.find(s = apiQuery.toString(), page = page, limit = state.config.pageSize)
@@ -93,11 +86,11 @@ class StationRemoteMediator(
                 database.remoteKeysDao().insert(keys)
                 database.stationDao().insert(items)
             }
-            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+            MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
-            return MediatorResult.Error(exception)
+            MediatorResult.Error(exception)
         } catch (exception: HttpException) {
-            return MediatorResult.Error(exception)
+            MediatorResult.Error(exception)
         }
     }
 

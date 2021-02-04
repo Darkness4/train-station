@@ -23,6 +23,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
+    private companion object {
+        const val DEFAULT_ZOOM_LEVEL = 15.0f
+    }
+
     private lateinit var binding: ActivityDetailsBinding
     private val args: DetailsActivityArgs by navArgs()
 
@@ -61,14 +65,13 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         this.map = map
         viewModel.station.observe(this) {
             it?.let {
-                // Add a marker in Sydney and move the camera
                 val position = LatLng(it.fields!!.yWgs84, it.fields.xWgs84)
                 map.addMarker(
                     MarkerOptions()
                         .position(position)
                         .title(it.libelle)
                 )
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 15.0f))
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM_LEVEL))
             }
         }
     }
