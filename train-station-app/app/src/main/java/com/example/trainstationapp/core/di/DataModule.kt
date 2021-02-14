@@ -6,7 +6,9 @@ import com.example.trainstationapp.BuildConfig
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeysDao
 import com.example.trainstationapp.data.database.StationDao
+import com.example.trainstationapp.data.database.converters.ListConverters
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,11 +52,15 @@ object DataModule {
     @Singleton
     @Provides
     fun provideRoomDatabase(@ApplicationContext context: Context): Database {
+        val moshi = Moshi.Builder().build()
+        val listConverters = ListConverters.create(moshi)
         return Room.databaseBuilder(
             context,
             Database::class.java,
             "cache.db"
-        ).build()
+        )
+            .addTypeConverter(listConverters)
+            .build()
     }
 
     @Singleton

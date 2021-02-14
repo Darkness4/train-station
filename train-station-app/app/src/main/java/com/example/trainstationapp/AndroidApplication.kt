@@ -8,6 +8,9 @@ import timber.log.Timber
 class AndroidApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } // You may want to plant a Crashlytics Tree in the else body
     }
 }

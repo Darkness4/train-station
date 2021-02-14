@@ -22,37 +22,34 @@ import com.example.trainstationapp.databinding.StationsLoadStateFooterViewItemBi
  * our `PagingSource` implementation for the right page. The response will be automatically
  * propagated via `Flow<PagingData>`.
  */
-class StationsLoadStateAdapter(private val onRetry: OnClickListener) :
+class StationsLoadStateAdapter(private val onRetry: () -> Unit) :
     LoadStateAdapter<StationsLoadStateAdapter.ViewHolder>() {
-    override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
-        holder.bind(loadState)
-    }
+    override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) = holder.bind(loadState)
 
-    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ViewHolder {
-        return ViewHolder(
-            StationsLoadStateFooterViewItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ),
-            onRetry
-        )
-    }
-
-    fun interface OnClickListener {
-        fun onClick()
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState) =
+        ViewHolder.create(parent, onRetry)
 
     class ViewHolder(
         private val binding: StationsLoadStateFooterViewItemBinding,
-        private val retry: OnClickListener
+        private val retry: () -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(loadState: LoadState) {
             binding.loadState = loadState
-            binding.retryButton.setOnClickListener { retry.onClick() }
+            binding.retryButton.setOnClickListener { retry() }
             binding.executePendingBindings()
+        }
+
+        companion object {
+            fun create(parent: ViewGroup, onRetry: () -> Unit) = ViewHolder(
+                StationsLoadStateFooterViewItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                onRetry
+            )
         }
     }
 }

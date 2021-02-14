@@ -22,6 +22,7 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
         Normal,
         WithScrollToTop,
     }
+
     private val _refreshManually = MutableLiveData<RefreshMode?>()
     val refreshManually: LiveData<RefreshMode?>
         get() = _refreshManually
@@ -80,10 +81,8 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
     val networkStatus: LiveData<State<Unit>>
         get() = _networkStatus
 
-    fun update(station: Station) {
-        viewModelScope.launch(Dispatchers.Main) {
-            _networkStatus.value = repository.updateOne(station.copy().toggleFavorite()).map { }
-            refreshManually()
-        }
+    fun update(station: Station) = viewModelScope.launch(Dispatchers.Main) {
+        _networkStatus.value = repository.updateOne(station.copy().toggleFavorite()).map { }
+        refreshManually()
     }
 }

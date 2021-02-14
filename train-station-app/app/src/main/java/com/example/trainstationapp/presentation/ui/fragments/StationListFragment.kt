@@ -33,12 +33,8 @@ class StationListFragment : Fragment() {
     private lateinit var binding: FragmentStationListBinding
 
     private val adapter = StationsAdapter(
-        onFavorite = { station ->
-            activityViewModel.update(station)
-        },
-        onClick = { station ->
-            activityViewModel.showDetails(station)
-        }
+        onFavorite = activityViewModel::update,
+        onClick = activityViewModel::showDetails
     )
 
     private var fetchJob: Job? = null
@@ -101,8 +97,8 @@ class StationListFragment : Fragment() {
 
         // Add the adapter for the PagingData, with footer and header.
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = StationsLoadStateAdapter(onRetry = { adapter.retry() }),
-            footer = StationsLoadStateAdapter(onRetry = { adapter.retry() })
+            header = StationsLoadStateAdapter(onRetry = adapter::retry),
+            footer = StationsLoadStateAdapter(onRetry = adapter::retry)
         )
 
         adapter.addLoadStateListener { loadState ->
