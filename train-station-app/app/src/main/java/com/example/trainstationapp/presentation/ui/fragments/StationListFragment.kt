@@ -30,7 +30,9 @@ import timber.log.Timber
 class StationListFragment : Fragment() {
     private val activityViewModel by activityViewModels<MainViewModel>()
 
-    private lateinit var binding: FragmentStationListBinding
+    private var _binding: FragmentStationListBinding? = null
+    private val binding: FragmentStationListBinding
+        get() = _binding!!
 
     private val adapter = StationsAdapter(
         onFavorite = activityViewModel::update,
@@ -89,7 +91,7 @@ class StationListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStationListBinding.inflate(inflater, container, false)
+        _binding = FragmentStationListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
@@ -179,5 +181,10 @@ class StationListFragment : Fragment() {
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
         private const val DEFAULT_QUERY = ""
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
