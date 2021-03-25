@@ -8,6 +8,8 @@ import { ValidationPipe } from '@nestjs/common';
 import compression from 'fastify-compress';
 import rateLimit from 'fastify-rate-limit';
 
+declare const module: any;
+
 async function bootstrap() {
   const host = process.env.HOST || '0.0.0.0';
   const port = parseInt(<string>process.env.PORT, 10) || 8080;
@@ -36,5 +38,10 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(port, host);
+
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 }
 bootstrap();
