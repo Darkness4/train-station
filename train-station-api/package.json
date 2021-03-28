@@ -38,7 +38,7 @@
     "fastify-swagger": "^4.4.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.5.4",
+    "rxjs": "^6.6.7",
     "sqlite3": "^5.0.0",
     "typeorm": "^0.2.28"
   },
