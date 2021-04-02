@@ -150,7 +150,7 @@ dependencies {
     implementation 'androidx.paging:paging-runtime-ktx:3.0.0-beta03'
 
     // JSON Serialization
-    def moshi_version = '1.11.0'
+    def moshi_version = '1.12.0'
     implementation "com.squareup.moshi:moshi:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
