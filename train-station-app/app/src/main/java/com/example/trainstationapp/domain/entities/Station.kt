@@ -2,7 +2,6 @@ package com.example.trainstationapp.domain.entities
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
-import com.example.trainstationapp.core.mappers.ModelMappable
 import com.example.trainstationapp.data.models.StationModel
 import kotlinx.parcelize.Parcelize
 
@@ -16,7 +15,7 @@ data class Station(
     val fields: Fields?,
     val geometry: Geometry?,
     val recordTimestamp: String,
-) : ModelMappable<StationModel>, Parcelable {
+) : Parcelable {
 
     fun toggleFavorite(): Station {
         isFavorite = !isFavorite
@@ -44,8 +43,8 @@ data class Station(
         val departemen: String,
         val yL93: Double,
         val fret: String,
-    ) : ModelMappable<StationModel.FieldsModel>, Parcelable {
-        override fun asModel() = StationModel.FieldsModel(
+    ) : Parcelable {
+        fun asModel() = StationModel.FieldsModel(
             commune,
             yWgs84,
             xWgs84,
@@ -71,14 +70,14 @@ data class Station(
     data class Geometry(
         val type: String,
         val coordinates: List<Double>,
-    ) : ModelMappable<StationModel.GeometryModel>, Parcelable {
-        override fun asModel() = StationModel.GeometryModel(
+    ) : Parcelable {
+        fun asModel() = StationModel.GeometryModel(
             type,
             coordinates,
         )
     }
 
-    override fun asModel() = StationModel(
+    fun asModel() = StationModel(
         recordid,
         datasetid,
         isFavorite,
