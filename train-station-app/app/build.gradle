@@ -100,7 +100,7 @@ android {
 
 dependencies {
     // Coroutines
-    def coroutines = '1.4.3'
+    def coroutines = '1.4.3-native-mt'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
