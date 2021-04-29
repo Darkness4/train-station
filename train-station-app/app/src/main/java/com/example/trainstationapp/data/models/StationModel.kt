@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.trainstationapp.core.mappers.EntityMappable
 import com.example.trainstationapp.domain.entities.Station
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -20,7 +19,7 @@ data class StationModel(
     @Embedded(prefix = "fields_") val fields: FieldsModel? = null,
     @Embedded(prefix = "geometry_") val geometry: GeometryModel? = null,
     @ColumnInfo(name = "record_timestamp") @field:Json(name = "record_timestamp") val recordTimestamp: String,
-) : EntityMappable<Station> {
+) {
 
     @JsonClass(generateAdapter = true)
     data class FieldsModel(
@@ -41,8 +40,8 @@ data class StationModel(
         val departemen: String,
         @ColumnInfo(name = "y_l93") @field:Json(name = "y_l93") val yL93: Double,
         val fret: String,
-    ) : EntityMappable<Station.Fields> {
-        override fun asEntity() = Station.Fields(
+    ) {
+        fun asEntity() = Station.Fields(
             commune,
             yWgs84,
             xWgs84,
@@ -67,14 +66,14 @@ data class StationModel(
     data class GeometryModel(
         val type: String,
         val coordinates: List<Double>,
-    ) : EntityMappable<Station.Geometry> {
-        override fun asEntity() = Station.Geometry(
+    ) {
+        fun asEntity() = Station.Geometry(
             type,
             coordinates,
         )
     }
 
-    override fun asEntity() = Station(
+    fun asEntity() = Station(
         recordid,
         datasetid,
         isFavorite,

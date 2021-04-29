@@ -1,0 +1,48 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/train-station-app"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - Darkness4
+  assignees:
+  - Darkness4
+  ignore:
+  - dependency-name: androidx.room:room-compiler
+    versions:
+    - ">= 2.4.a, < 2.5"
+  - dependency-name: androidx.room:room-ktx
+    versions:
+    - ">= 2.4.a, < 2.5"
+  - dependency-name: androidx.room:room-runtime
+    versions:
+    - ">= 2.4.a, < 2.5"
+  - dependency-name: com.google.maps.android:android-maps-utils
+    versions:
+    - 2.2.1
+- package-ecosystem: npm
+  directory: "/train-station-api"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - Darkness4
+  assignees:
+  - Darkness4
+  ignore:
+  - dependency-name: webpack
+    versions:
+    - 5.34.0
+    - 5.35.1
+    - 5.36.0
+  - dependency-name: "@types/node"
+    versions:
+    - 15.0.0
+  - dependency-name: ts-loader
+    versions:
+    - 9.0.0
+    - 9.0.2
