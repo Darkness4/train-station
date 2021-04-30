@@ -17,11 +17,7 @@ data class Station(
     val recordTimestamp: String,
 ) : Parcelable {
 
-    fun toggleFavorite(): Station {
-        isFavorite = !isFavorite
-
-        return this
-    }
+    fun toggleFavorite() = apply { isFavorite = !isFavorite }
 
     @SuppressLint("ParcelCreator")
     @Parcelize
