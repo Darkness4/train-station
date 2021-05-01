@@ -1,11 +1,11 @@
 package com.example.trainstationapp.data.models
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
 /**
  * Pagination model from the API.
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class Paginated<out T>(
     val data: List<T>,
     val count: Int,
