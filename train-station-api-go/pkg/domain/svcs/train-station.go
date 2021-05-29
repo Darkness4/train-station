@@ -23,10 +23,10 @@ func NewTrainStationService(repo *db.StationRepository) *TrainStationService {
 }
 
 func (svc *TrainStationService) GetManyAndCount(s string, limit int, page int) ([]entities.Station, int64, error) {
-	if limit == 0 {
+	if limit <= 0 {
 		limit = 10
 	}
-	if page == 0 {
+	if page <= 0 {
 		page = 1
 	}
 	models, count, err := svc.repo.FindManyAndCount(s, limit, page)
@@ -75,4 +75,8 @@ func (svc *TrainStationService) UpdateOne(id string, station entities.Station) (
 
 	entity := newModel.Entity()
 	return &entity, nil
+}
+
+func (svc *TrainStationService) Total() (int64, error) {
+	return svc.repo.Count()
 }

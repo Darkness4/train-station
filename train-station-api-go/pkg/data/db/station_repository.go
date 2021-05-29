@@ -62,3 +62,14 @@ func (repo *StationRepository) FindManyAndCount(s string, limit int, page int) (
 	}
 	return m, result.RowsAffected, nil
 }
+
+func (repo *StationRepository) Count() (int64, error) {
+	var count int64
+
+	result := repo.db.Model(&models.StationModel{}).Count(&count)
+	if result.Error != nil {
+		return 0, result.Error
+	}
+
+	return count, nil
+}

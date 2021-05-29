@@ -51,8 +51,8 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	s := string(args.Peek("s"))
 
 	limitStr := string(args.Peek("limit"))
-	limit := 0
-	if limitStr != "" {
+	limit := 10
+	if limitStr != "" && limitStr != "0" {
 		newLimit, err := strconv.Atoi(limitStr)
 		if err != nil {
 			return ctx.JSONResponse(dtos.Error{
@@ -83,12 +83,22 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 			Message:    err.Error(),
 		}, 401)
 	}
+	total, err := ctrl.trainStationSvc.Total()
+	if err != nil {
+		return ctx.JSONResponse(dtos.Error{
+			StatusCode: 401,
+			Message:    err.Error(),
+		}, 401)
+	}
+	pageCount := total/int64(limit) + 1
 
 	// Output
 	response := dtos.PaginatedStation{
-		Data:  stations,
-		Count: count,
-		Page:  page,
+		Data:      stations,
+		Count:     count,
+		Total:     total,
+		Page:      page,
+		PageCount: pageCount,
 	}
 	return ctx.JSONResponse(response, 200)
 }
