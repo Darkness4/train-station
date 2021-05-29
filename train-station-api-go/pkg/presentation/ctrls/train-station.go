@@ -7,6 +7,7 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"github.com/Darkness4/train-station-api/pkg/domain/repos"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
+	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/queryargs"
 	"github.com/Darkness4/train-station-api/pkg/presentation/filters"
 	"github.com/go-playground/validator/v10"
 	"github.com/savsgio/atreugo/v11"
@@ -52,29 +53,31 @@ func (ctrl *TrainStationController) buildRoutes() {
 func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	// Input
 	args := ctx.QueryArgs()
-	s := string(args.Peek("s"))
+	sRaw := args.Peek("s")
+	s := queryargs.SearchLibelle{
+		Libelle: queryargs.ContainType{
+			Contain: "",
+		},
+	}
+	json.Unmarshal(sRaw, &s)
 
 	limitStr := string(args.Peek("limit"))
 	limit := 10
 	if limitStr != "" && limitStr != "0" {
-		newLimit, err := strconv.Atoi(limitStr)
-		if err != nil {
-			return err
-		}
-		limit = newLimit
+		if newLimit, err := strconv.Atoi(limitStr); err == nil && newLimit >= 0 {
+			limit = newLimit
+		} // Ignore error
 	}
 	pageStr := string(args.Peek("page"))
 	page := 1
 	if pageStr != "" {
-		newPage, err := strconv.Atoi(pageStr)
-		if err != nil {
-			return err
-		}
-		page = newPage
+		if newPage, err := strconv.Atoi(pageStr); err == nil && newPage >= 0 {
+			page = newPage
+		} // Ignore error
 	}
 
 	// Process
-	stations, count, err := ctrl.repo.GetManyAndCount(s, limit, page)
+	stations, count, err := ctrl.repo.GetManyAndCount(s.Libelle.Contain, limit, page)
 	if err != nil {
 		return err
 	}

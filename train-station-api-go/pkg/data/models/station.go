@@ -47,6 +47,7 @@ func (m StationModel) Entity() (*entities.Station, error) {
 		DatasetID:       m.DatasetID,
 		IsFavorite:      m.IsFavorite,
 		RecordTimestamp: m.RecordTimestamp,
+		Libelle:         m.Libelle,
 	}
 	if m.Fields != nil {
 		if fields, err := m.Fields.Entity(); err == nil {
