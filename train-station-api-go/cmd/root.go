@@ -31,7 +31,10 @@ var (
 			}
 
 			// Spawn service locator
-			sl := core.NewServiceLocator()
+			sl, err := core.NewServiceLocator()
+			if err != nil {
+				panic(err)
+			}
 
 			// Spawn the server
 			server := atreugo.New(config)

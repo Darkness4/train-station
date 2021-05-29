@@ -2,6 +2,7 @@ package ctrls
 
 import (
 	"encoding/json"
+	"strconv"
 
 	"github.com/Darkness4/train-station-api/pkg/ctrls/dtos"
 	"github.com/Darkness4/train-station-api/pkg/domain/svcs"
@@ -31,22 +32,51 @@ func NewTrainStationController(
 func (ctrl *TrainStationController) buildRoutes() {
 	stations := ctrl.api.NewGroupPath("/stations")
 	stations.GET("/", func(ctx *atreugo.RequestCtx) error {
-		return ctrl.getManyStations(ctx)
+		return ctrl.getMany(ctx)
 	})
 	stations.GET("/{id}", func(ctx *atreugo.RequestCtx) error {
-		return ctrl.getOneStation(ctx)
+		return ctrl.getOne(ctx)
 	})
 	stations.PATCH("/{id}", func(ctx *atreugo.RequestCtx) error {
-		return ctrl.updateOneStation(ctx)
+		return ctrl.updateOne(ctx)
 	})
 	stations.POST("/", func(ctx *atreugo.RequestCtx) error {
-		return ctrl.createOneStation(ctx)
+		return ctrl.createOne(ctx)
 	})
 }
 
-func (ctrl *TrainStationController) getManyStations(ctx *atreugo.RequestCtx) error {
+func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
+	// Input
+	args := ctx.QueryArgs()
+	s := string(args.Peek("s"))
+
+	limitStr := string(args.Peek("limit"))
+	limit := 0
+	if limitStr != "" {
+		newLimit, err := strconv.Atoi(limitStr)
+		if err != nil {
+			return ctx.JSONResponse(dtos.Error{
+				StatusCode: 401,
+				Message:    err.Error(),
+			}, 401)
+		}
+		limit = newLimit
+	}
+	pageStr := string(args.Peek("page"))
+	page := 1
+	if pageStr != "" {
+		newPage, err := strconv.Atoi(pageStr)
+		if err != nil {
+			return ctx.JSONResponse(dtos.Error{
+				StatusCode: 401,
+				Message:    err.Error(),
+			}, 401)
+		}
+		page = newPage
+	}
+
 	// Process
-	stations, err := ctrl.trainStationSvc.GetManyStations()
+	stations, count, err := ctrl.trainStationSvc.GetManyAndCount(s, limit, page)
 	if err != nil {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,
@@ -55,15 +85,20 @@ func (ctrl *TrainStationController) getManyStations(ctx *atreugo.RequestCtx) err
 	}
 
 	// Output
-	return ctx.JSONResponse(stations, 200)
+	response := dtos.PaginatedStation{
+		Data:  stations,
+		Count: count,
+		Page:  page,
+	}
+	return ctx.JSONResponse(response, 200)
 }
 
-func (ctrl *TrainStationController) getOneStation(ctx *atreugo.RequestCtx) error {
+func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
 	// Input
 	id := ctx.UserValue("id").(string)
 
 	// Process
-	station, err := ctrl.trainStationSvc.GetOneStation(id)
+	station, err := ctrl.trainStationSvc.GetOne(id)
 	if err != nil {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,
@@ -75,7 +110,7 @@ func (ctrl *TrainStationController) getOneStation(ctx *atreugo.RequestCtx) error
 	return ctx.JSONResponse(station, 200)
 }
 
-func (ctrl *TrainStationController) createOneStation(ctx *atreugo.RequestCtx) error {
+func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 	// Input
 	dto := dtos.CreateStation{}
 	json.Unmarshal(ctx.PostBody(), &dto)
@@ -88,7 +123,7 @@ func (ctrl *TrainStationController) createOneStation(ctx *atreugo.RequestCtx) er
 			Message:    err.Error(),
 		}, 401)
 	}
-	newStation, err := ctrl.trainStationSvc.CreateOneStation(*station)
+	newStation, err := ctrl.trainStationSvc.CreateOne(*station)
 	if err != nil {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,
@@ -100,21 +135,14 @@ func (ctrl *TrainStationController) createOneStation(ctx *atreugo.RequestCtx) er
 	return ctx.JSONResponse(newStation, 201)
 }
 
-func (ctrl *TrainStationController) updateOneStation(ctx *atreugo.RequestCtx) error {
+func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	// Input
-	dto := dtos.UpdateStation{}
+	dto := make(map[string]interface{})
 	json.Unmarshal(ctx.PostBody(), &dto)
 	id := ctx.UserValue("id").(string)
 
 	// Process
-	options, err := dto.Entity()
-	if err != nil {
-		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 401,
-			Message:    err.Error(),
-		}, 401)
-	}
-	newStation, err := ctrl.trainStationSvc.UpdateOneStation(id, *options)
+	newStation, err := ctrl.trainStationSvc.UpdateOne(id, dto)
 	if err != nil {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,

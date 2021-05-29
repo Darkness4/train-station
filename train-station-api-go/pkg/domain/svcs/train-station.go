@@ -1,59 +1,74 @@
 package svcs
 
 import (
-	"fmt"
-
+	"github.com/Darkness4/train-station-api/pkg/data/db"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 )
 
 type TrainStationService struct {
-	mockDb map[string]models.StationModel
+	repo *db.StationRepository
 }
 
-func NewTrainStationService() *TrainStationService {
-	svc := TrainStationService{}
-	svc.mockDb = make(map[string]models.StationModel)
+func NewTrainStationService(repo *db.StationRepository) *TrainStationService {
+	if repo == nil {
+		panic("TrainStationService: repo is nil")
+	}
+	svc := TrainStationService{
+		repo: repo,
+	}
 	return &svc
 }
 
-func (svc *TrainStationService) GetManyStations() ([]entities.Station, error) {
-	values := make([]entities.Station, 0, len(svc.mockDb))
-	for _, val := range svc.mockDb {
+func (svc *TrainStationService) GetManyAndCount(s string, limit int, page int) ([]entities.Station, int64, error) {
+	if limit == 0 {
+		limit = 10
+	}
+	if page == 0 {
+		page = 1
+	}
+	models, count, err := svc.repo.FindManyAndCount(s, limit, page)
+	if err != nil {
+		// TODO: Better error handling
+		return nil, count, err
+	}
+
+	// Map
+	values := make([]entities.Station, 0, len(models))
+	for _, val := range models {
 		values = append(values, val.Entity())
 	}
 
-	return values, nil
+	return values, count, nil
 }
 
-func (svc *TrainStationService) GetOneStation(id string) (*entities.Station, error) {
-	if val, ok := svc.mockDb[id]; ok {
-		entity := val.Entity()
-		return &entity, nil
-	} else {
-		return nil, fmt.Errorf("entity with id %s doesn't exists", id)
+func (svc *TrainStationService) GetOne(id string) (*entities.Station, error) {
+	model, err := svc.repo.FindOne(id)
+	if err != nil {
+		return nil, err
 	}
+
+	entity := model.Entity()
+	return &entity, nil
 }
 
-func (svc *TrainStationService) CreateOneStation(station entities.Station) (*entities.Station, error) {
-	if _, ok := svc.mockDb[station.RecordID]; !ok {
-		svc.mockDb[station.RecordID] = models.NewStationModelFromEntity(station)
-
-		entity := svc.mockDb[station.RecordID].Entity()
-		return &entity, nil
-	} else {
-		return nil, fmt.Errorf("entity with id %s already exists", station.RecordID)
+func (svc *TrainStationService) CreateOne(station entities.Station) (*entities.Station, error) {
+	model := models.NewStationModelFromEntity(station)
+	newModel, err := svc.repo.Create(&model)
+	if err != nil {
+		return nil, err
 	}
+
+	entity := newModel.Entity()
+	return &entity, nil
 }
 
-func (svc *TrainStationService) UpdateOneStation(id string, options entities.StationOptions) (*entities.Station, error) {
-	if old, ok := svc.mockDb[id]; ok {
-		new := old.Merge(options)
-		svc.mockDb[id] = new
-
-		entity := svc.mockDb[id].Entity()
-		return &entity, nil
-	} else {
-		return nil, fmt.Errorf("entity with id %s doesn't exists", id)
+func (svc *TrainStationService) UpdateOne(id string, options map[string]interface{}) (*entities.Station, error) {
+	model, err := svc.repo.Update(options)
+	if err != nil {
+		return nil, err
 	}
+
+	entity := model.Entity()
+	return &entity, nil
 }

@@ -1,9 +1,11 @@
 package models
 
-import "github.com/Darkness4/train-station-api/pkg/domain/entities"
+import (
+	"github.com/Darkness4/train-station-api/pkg/domain/entities"
+)
 
 type StationModel struct {
-	RecordID        string
+	RecordID        string `gorm:"primarykey"`
 	DatasetID       string
 	Favorite        bool
 	Libelle         string
@@ -12,11 +14,11 @@ type StationModel struct {
 
 func NewStationModelFromEntity(entity entities.Station) StationModel {
 	return StationModel{
-		entity.RecordID,
-		entity.DatasetID,
-		entity.Favorite,
-		entity.Libelle,
-		entity.RecordTimestamp,
+		RecordID:        entity.RecordID,
+		DatasetID:       entity.DatasetID,
+		Favorite:        entity.Favorite,
+		Libelle:         entity.Libelle,
+		RecordTimestamp: entity.RecordTimestamp,
 	}
 }
 
@@ -32,9 +34,6 @@ func (m StationModel) Entity() entities.Station {
 
 func (m StationModel) Merge(o entities.StationOptions) StationModel {
 	copy := m
-	if o.RecordID != nil {
-		copy.RecordID = *o.RecordID
-	}
 	if o.DatasetID != nil {
 		copy.DatasetID = *o.DatasetID
 	}
@@ -48,24 +47,4 @@ func (m StationModel) Merge(o entities.StationOptions) StationModel {
 		copy.RecordTimestamp = *o.RecordTimestamp
 	}
 	return copy
-}
-
-func (m StationModel) GetRecordID() string {
-	return m.RecordID
-}
-
-func (m StationModel) GetDatasetID() string {
-	return m.DatasetID
-}
-
-func (m StationModel) IsFavorite() bool {
-	return m.Favorite
-}
-
-func (m StationModel) GetLibelle() string {
-	return m.Libelle
-}
-
-func (m StationModel) GetRecordTimestamp() string {
-	return m.RecordTimestamp
 }
