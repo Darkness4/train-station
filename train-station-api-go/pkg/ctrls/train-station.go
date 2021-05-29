@@ -137,12 +137,20 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 
 func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	// Input
-	dto := make(map[string]interface{})
+	dto := dtos.UpdateStation{}
 	json.Unmarshal(ctx.PostBody(), &dto)
 	id := ctx.UserValue("id").(string)
 
+	options, err := dto.Entity()
+	if err != nil {
+		return ctx.JSONResponse(dtos.Error{
+			StatusCode: 401,
+			Message:    err.Error(),
+		}, 401)
+	}
+
 	// Process
-	newStation, err := ctrl.trainStationSvc.UpdateOne(id, dto)
+	newStation, err := ctrl.trainStationSvc.UpdateOne(id, options)
 	if err != nil {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,

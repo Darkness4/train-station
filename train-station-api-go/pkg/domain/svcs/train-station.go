@@ -63,8 +63,8 @@ func (svc *TrainStationService) CreateOne(station entities.Station) (*entities.S
 	return &entity, nil
 }
 
-func (svc *TrainStationService) UpdateOne(id string, options map[string]interface{}) (*entities.Station, error) {
-	model, err := svc.repo.Update(options)
+func (svc *TrainStationService) UpdateOne(id string, station entities.Station) (*entities.Station, error) {
+	model, err := svc.repo.Update(id, station)
 	if err != nil {
 		return nil, err
 	}
