@@ -15,12 +15,20 @@ func NewStationRepository(db *gorm.DB) *StationRepository {
 	if db == nil {
 		panic("StationRepository: db is nil")
 	}
-	db.AutoMigrate(&models.StationModel{})
 	return &StationRepository{db}
 }
 
 func (repo *StationRepository) Create(m *models.StationModel) (*models.StationModel, error) {
 	result := repo.db.Create(m)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return m, nil
+}
+
+func (repo *StationRepository) CreateMany(m []models.StationModel) ([]models.StationModel, error) {
+	result := repo.db.CreateInBatches(&m, 100)
 
 	if result.Error != nil {
 		return nil, result.Error

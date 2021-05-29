@@ -1,4 +1,2 @@
 TODO: Better error handling.
-TODO: Use models from the domain.
 TODO: Use ?s= like in nestjs
-TODO: Initial Database from SNCF.

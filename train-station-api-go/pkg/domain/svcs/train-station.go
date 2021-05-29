@@ -1,8 +1,6 @@
 package svcs
 
 import (
-	"fmt"
-
 	"github.com/Darkness4/train-station-api/pkg/data/db"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
@@ -38,7 +36,11 @@ func (svc *TrainStationService) GetManyAndCount(s string, limit int, page int) (
 	// Map
 	values := make([]entities.Station, 0, len(models))
 	for _, val := range models {
-		values = append(values, val.Entity())
+		e, err := val.Entity()
+		if err != nil {
+			return nil, count, err
+		}
+		values = append(values, *e)
 	}
 
 	return values, count, nil
@@ -50,31 +52,74 @@ func (svc *TrainStationService) GetOne(id string) (*entities.Station, error) {
 		return nil, err
 	}
 
-	entity := model.Entity()
-	return &entity, nil
+	entity, err := model.Entity()
+	if err != nil {
+		return nil, err
+	}
+	return entity, nil
 }
 
 func (svc *TrainStationService) CreateOne(station entities.Station) (*entities.Station, error) {
-	model := models.NewStationModelFromEntity(station)
-	newModel, err := svc.repo.Create(&model)
+	model, err := models.NewStationModelFromEntity(station)
+	if err != nil {
+		return nil, err
+	}
+	newModel, err := svc.repo.Create(model)
 	if err != nil {
 		return nil, err
 	}
 
-	entity := newModel.Entity()
-	return &entity, nil
+	entity, err := newModel.Entity()
+	if err != nil {
+		return nil, err
+	}
+	return entity, nil
+}
+
+func (svc *TrainStationService) CreateMany(stations []entities.Station) ([]entities.Station, error) {
+	// Map
+	values := make([]models.StationModel, 0, len(stations))
+	for _, val := range stations {
+		model, err := models.NewStationModelFromEntity(val)
+		if err != nil {
+			return nil, err
+		}
+
+		values = append(values, *model)
+	}
+
+	result, err := svc.repo.CreateMany(values)
+	if err != nil {
+		return nil, err
+	}
+
+	// Map
+	newValues := make([]entities.Station, 0, len(result))
+	for _, val := range result {
+		e, err := val.Entity()
+		if err != nil {
+			return nil, err
+		}
+		newValues = append(newValues, *e)
+	}
+
+	return newValues, nil
 }
 
 func (svc *TrainStationService) UpdateOne(id string, station entities.Station) (*entities.Station, error) {
-	fmt.Printf("%+v\n", station)
-	model := models.NewStationModelFromEntity(station)
-	newModel, err := svc.repo.Update(id, &model)
+	model, err := models.NewStationModelFromEntity(station)
 	if err != nil {
 		return nil, err
 	}
-
-	entity := newModel.Entity()
-	return &entity, nil
+	newModel, err := svc.repo.Update(id, model)
+	if err != nil {
+		return nil, err
+	}
+	entity, err := newModel.Entity()
+	if err != nil {
+		return nil, err
+	}
+	return entity, nil
 }
 
 func (svc *TrainStationService) Total() (int64, error) {
