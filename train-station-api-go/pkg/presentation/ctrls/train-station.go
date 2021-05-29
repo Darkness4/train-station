@@ -7,6 +7,7 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"github.com/Darkness4/train-station-api/pkg/domain/svcs"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
+	"github.com/Darkness4/train-station-api/pkg/presentation/filters"
 	"github.com/go-playground/validator/v10"
 	"github.com/savsgio/atreugo/v11"
 )
@@ -34,16 +35,17 @@ func NewTrainStationController(
 func (ctrl *TrainStationController) buildRoutes() {
 	stations := ctrl.api.NewGroupPath("/stations")
 	stations.GET("/", func(ctx *atreugo.RequestCtx) error {
-		return ctrl.getMany(ctx)
+		return filters.ExceptionFilter(ctx, ctrl.getMany(ctx))
 	})
 	stations.GET("/{id}", func(ctx *atreugo.RequestCtx) error {
-		return ctrl.getOne(ctx)
+		return filters.ExceptionFilter(ctx, ctrl.getOne(ctx))
 	})
 	stations.PATCH("/{id}", func(ctx *atreugo.RequestCtx) error {
-		return ctrl.updateOne(ctx)
+
+		return filters.ExceptionFilter(ctx, ctrl.updateOne(ctx))
 	})
 	stations.POST("/", func(ctx *atreugo.RequestCtx) error {
-		return ctrl.createOne(ctx)
+		return filters.ExceptionFilter(ctx, ctrl.createOne(ctx))
 	})
 }
 
@@ -57,10 +59,7 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	if limitStr != "" && limitStr != "0" {
 		newLimit, err := strconv.Atoi(limitStr)
 		if err != nil {
-			return ctx.JSONResponse(dtos.Error{
-				StatusCode: 401,
-				Message:    err.Error(),
-			}, 401)
+			return err
 		}
 		limit = newLimit
 	}
@@ -69,10 +68,7 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	if pageStr != "" {
 		newPage, err := strconv.Atoi(pageStr)
 		if err != nil {
-			return ctx.JSONResponse(dtos.Error{
-				StatusCode: 401,
-				Message:    err.Error(),
-			}, 401)
+			return err
 		}
 		page = newPage
 	}
@@ -80,17 +76,11 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	// Process
 	stations, count, err := ctrl.trainStationSvc.GetManyAndCount(s, limit, page)
 	if err != nil {
-		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 401,
-			Message:    err.Error(),
-		}, 401)
+		return err
 	}
 	total, err := ctrl.trainStationSvc.Total()
 	if err != nil {
-		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 401,
-			Message:    err.Error(),
-		}, 401)
+		return err
 	}
 	pageCount := total/int64(limit) + 1
 
@@ -112,10 +102,7 @@ func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
 	// Process
 	station, err := ctrl.trainStationSvc.GetOne(id)
 	if err != nil {
-		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 401,
-			Message:    err.Error(),
-		}, 401)
+		return err
 	}
 
 	// Output
@@ -130,19 +117,13 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 	// Validate
 	validate := validator.New()
 	if err := validate.Struct(&dto); err != nil {
-		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 401,
-			Message:    err.Error(),
-		}, 401)
+		return err
 	}
 
 	// Process
 	newStation, err := ctrl.trainStationSvc.CreateOne(dto)
 	if err != nil {
-		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 401,
-			Message:    err.Error(),
-		}, 401)
+		return err
 	}
 
 	// Output
@@ -158,10 +139,7 @@ func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	// Process
 	newStation, err := ctrl.trainStationSvc.UpdateOne(id, dto)
 	if err != nil {
-		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 401,
-			Message:    err.Error(),
-		}, 401)
+		return err
 	}
 
 	// Output
