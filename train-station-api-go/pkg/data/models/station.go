@@ -31,20 +31,3 @@ func (m StationModel) Entity() entities.Station {
 		RecordTimestamp: m.RecordTimestamp,
 	}
 }
-
-func (m StationModel) Merge(o entities.StationOptions) StationModel {
-	copy := m
-	if o.DatasetID != nil {
-		copy.DatasetID = *o.DatasetID
-	}
-	if o.Favorite != nil {
-		copy.Favorite = *o.Favorite
-	}
-	if o.Libelle != nil {
-		copy.Libelle = *o.Libelle
-	}
-	if o.RecordTimestamp != nil {
-		copy.RecordTimestamp = *o.RecordTimestamp
-	}
-	return copy
-}
