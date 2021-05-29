@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/Darkness4/train-station-api/pkg/ctrls/dtos"
+	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"github.com/Darkness4/train-station-api/pkg/domain/svcs"
+	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
+	"github.com/go-playground/validator/v10"
 	"github.com/savsgio/atreugo/v11"
 )
 
@@ -122,18 +124,20 @@ func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
 
 func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 	// Input
-	dto := dtos.CreateStation{}
+	dto := entities.Station{}
 	json.Unmarshal(ctx.PostBody(), &dto)
 
-	// Process
-	station, err := dto.Entity()
-	if err != nil {
+	// Validate
+	validate := validator.New()
+	if err := validate.Struct(&dto); err != nil {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,
 			Message:    err.Error(),
 		}, 401)
 	}
-	newStation, err := ctrl.trainStationSvc.CreateOne(*station)
+
+	// Process
+	newStation, err := ctrl.trainStationSvc.CreateOne(dto)
 	if err != nil {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,
@@ -147,20 +151,12 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 
 func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	// Input
-	dto := dtos.UpdateStation{}
+	dto := entities.Station{}
 	json.Unmarshal(ctx.PostBody(), &dto)
 	id := ctx.UserValue("id").(string)
 
-	options, err := dto.Entity()
-	if err != nil {
-		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 401,
-			Message:    err.Error(),
-		}, 401)
-	}
-
 	// Process
-	newStation, err := ctrl.trainStationSvc.UpdateOne(id, options)
+	newStation, err := ctrl.trainStationSvc.UpdateOne(id, dto)
 	if err != nil {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,

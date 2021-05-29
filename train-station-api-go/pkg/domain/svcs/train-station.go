@@ -60,7 +60,7 @@ func (svc *TrainStationService) GetOne(id string) (*entities.Station, error) {
 }
 
 func (svc *TrainStationService) CreateOne(station entities.Station) (*entities.Station, error) {
-	model, err := models.NewStationModelFromEntity(station)
+	model, err := models.NewStationModelFromEntity(&station)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (svc *TrainStationService) CreateMany(stations []entities.Station) ([]entit
 	// Map
 	values := make([]models.StationModel, 0, len(stations))
 	for _, val := range stations {
-		model, err := models.NewStationModelFromEntity(val)
+		model, err := models.NewStationModelFromEntity(&val)
 		if err != nil {
 			return nil, err
 		}
@@ -107,7 +107,7 @@ func (svc *TrainStationService) CreateMany(stations []entities.Station) ([]entit
 }
 
 func (svc *TrainStationService) UpdateOne(id string, station entities.Station) (*entities.Station, error) {
-	model, err := models.NewStationModelFromEntity(station)
+	model, err := models.NewStationModelFromEntity(&station)
 	if err != nil {
 		return nil, err
 	}

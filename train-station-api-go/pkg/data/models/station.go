@@ -14,42 +14,54 @@ type StationModel struct {
 	Geometry        *GeometryModel `gorm:"embedded;embeddedPrefix:geo_shape_"`
 }
 
-func NewStationModelFromEntity(e entities.Station) (*StationModel, error) {
-	fields, err := NewFieldsModelFromEntity(*e.Fields)
-	if err != nil {
-		return nil, err
-	}
-	geometry, err := NewGeometryModelFromEntity(*e.Geometry)
-	if err != nil {
-		return nil, err
-	}
-	return &StationModel{
+func NewStationModelFromEntity(e *entities.Station) (*StationModel, error) {
+	m := &StationModel{
 		RecordID:        e.RecordID,
 		DatasetID:       e.DatasetID,
 		IsFavorite:      e.IsFavorite,
-		Libelle:         (*e.Fields).Libelle,
 		RecordTimestamp: e.RecordTimestamp,
-		Geometry:        geometry,
-		Fields:          fields,
-	}, nil
+	}
+	if e.Fields != nil {
+		if fields, err := NewFieldsModelFromEntity(e.Fields); err == nil {
+			m.Fields = fields
+		} else {
+			return nil, err
+		}
+
+		m.Libelle = (*e.Fields).Libelle
+	}
+	if e.Geometry != nil {
+		if geometry, err := NewGeometryModelFromEntity(e.Geometry); err == nil {
+			m.Geometry = geometry
+		} else {
+			return nil, err
+		}
+	}
+
+	return m, nil
 }
 
 func (m StationModel) Entity() (*entities.Station, error) {
-	fields, err := m.Fields.Entity()
-	if err != nil {
-		return nil, err
-	}
-	geometry, err := m.Geometry.Entity()
-	if err != nil {
-		return nil, err
-	}
-	return &entities.Station{
+	e := &entities.Station{
 		RecordID:        m.RecordID,
 		DatasetID:       m.DatasetID,
 		IsFavorite:      m.IsFavorite,
-		Libelle:         m.Libelle,
 		RecordTimestamp: m.RecordTimestamp,
-		Geometry:        geometry,
-		Fields:          fields,
-	}, nil
+	}
+	if m.Fields != nil {
+		if fields, err := m.Fields.Entity(); err == nil {
+			e.Fields = fields
+		} else {
+			return nil, err
+		}
+	}
+	if m.Geometry != nil {
+		if geometry, err := m.Geometry.Entity(); err == nil {
+			e.Geometry = geometry
+		} else {
+			return nil, err
+		}
+	}
+
+	return e, nil
 }

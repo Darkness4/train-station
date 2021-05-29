@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/Darkness4/train-station-api/pkg/core"
-	"github.com/Darkness4/train-station-api/pkg/ctrls"
+	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls"
 	"github.com/savsgio/atreugo/v11"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"

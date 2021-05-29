@@ -25,71 +25,78 @@ type FieldsModel struct {
 	Fret       string
 }
 
-func NewFieldsModelFromEntity(e entities.Fields) (*FieldsModel, error) {
-	geoshape, err := NewGeometryModelFromEntity(*e.GeoShape)
-	if err != nil {
-		return nil, err
-	}
-	geoPoint2D, err := converters.CoordinatesToString(e.GeoPoint2D)
-	if err != nil {
-		return nil, err
-	}
-	cGeo, err := converters.CoordinatesToString(e.CGeo)
-	if err != nil {
-		return nil, err
-	}
-
-	return &FieldsModel{
+func NewFieldsModelFromEntity(e *entities.Fields) (*FieldsModel, error) {
+	m := &FieldsModel{
 		Commune:    e.Commune,
 		YWgs84:     e.YWgs84,
 		XWgs84:     e.XWgs84,
 		Libelle:    e.Libelle,
 		IDGaia:     e.IDGaia,
 		Voyageurs:  e.Voyageurs,
-		GeoPoint2D: geoPoint2D,
 		CodeLigne:  e.CodeLigne,
 		XL93:       e.XL93,
-		CGeo:       cGeo,
 		RgTroncon:  e.RgTroncon,
-		GeoShape:   geoshape,
 		PK:         e.PK,
 		IDreseau:   e.IDreseau,
 		Departemen: e.Departemen,
 		YL93:       e.YL93,
 		Fret:       e.Fret,
-	}, nil
+	}
+	if e.GeoShape != nil {
+		if geoShape, err := NewGeometryModelFromEntity(e.GeoShape); err == nil {
+			m.GeoShape = geoShape
+		} else {
+			return nil, err
+		}
+	}
+	if geoPoint2D, err := converters.CoordinatesToString(e.GeoPoint2D); err == nil {
+		m.GeoPoint2D = geoPoint2D
+	} else {
+		return nil, err
+	}
+	if cGeo, err := converters.CoordinatesToString(e.CGeo); err == nil {
+		m.CGeo = cGeo
+	} else {
+		return nil, err
+	}
+
+	return m, nil
 }
 
 func (m FieldsModel) Entity() (*entities.Fields, error) {
-	geoshape, err := m.GeoShape.Entity()
-	if err != nil {
-		return nil, err
-	}
-	geoPoint2D, err := converters.StringToCoordinates(m.GeoPoint2D)
-	if err != nil {
-		return nil, err
-	}
-	cGeo, err := converters.StringToCoordinates(m.CGeo)
-	if err != nil {
-		return nil, err
-	}
-	return &entities.Fields{
+	e := &entities.Fields{
 		Commune:    m.Commune,
 		YWgs84:     m.YWgs84,
 		XWgs84:     m.XWgs84,
 		Libelle:    m.Libelle,
 		IDGaia:     m.IDGaia,
 		Voyageurs:  m.Voyageurs,
-		GeoPoint2D: geoPoint2D,
 		CodeLigne:  m.CodeLigne,
 		XL93:       m.XL93,
-		CGeo:       cGeo,
 		RgTroncon:  m.RgTroncon,
-		GeoShape:   geoshape,
 		PK:         m.PK,
 		IDreseau:   m.IDreseau,
 		Departemen: m.Departemen,
 		YL93:       m.YL93,
 		Fret:       m.Fret,
-	}, nil
+	}
+	if m.GeoShape != nil {
+		if geoShape, err := m.GeoShape.Entity(); err == nil {
+			e.GeoShape = geoShape
+		} else {
+			return nil, err
+		}
+	}
+	if geoPoint2D, err := converters.StringToCoordinates(m.GeoPoint2D); err == nil {
+		e.GeoPoint2D = geoPoint2D
+	} else {
+		return nil, err
+	}
+	if cGeo, err := converters.StringToCoordinates(m.CGeo); err == nil {
+		e.CGeo = cGeo
+	} else {
+		return nil, err
+	}
+
+	return e, nil
 }

@@ -50,7 +50,7 @@ func (repo *StationRepository) Update(id string, station *models.StationModel) (
 
 func (repo *StationRepository) FindOne(id string) (*models.StationModel, error) {
 	m := &models.StationModel{}
-	result := repo.db.First(m, id)
+	result := repo.db.Where("record_id = ?", id).First(m)
 
 	if result.Error != nil {
 		return nil, result.Error
@@ -63,7 +63,13 @@ func (repo *StationRepository) FindManyAndCount(s string, limit int, page int) (
 
 	var m []models.StationModel
 
-	result := repo.db.Limit(limit).Offset(offset).Where("libelle LIKE ?", fmt.Sprintf("%%%s%%", s)).Find(&m)
+	result := repo.db.Select(
+		"record_id",
+		"dataset_id",
+		"is_favorite",
+		"libelle",
+		"record_timestamp",
+	).Limit(limit).Offset(offset).Where("libelle LIKE ?", fmt.Sprintf("%%%s%%", s)).Find(&m)
 
 	if result.Error != nil {
 		return nil, result.RowsAffected, result.Error

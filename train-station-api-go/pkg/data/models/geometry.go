@@ -10,7 +10,7 @@ type GeometryModel struct {
 	Coordinates string
 }
 
-func NewGeometryModelFromEntity(e entities.Geometry) (*GeometryModel, error) {
+func NewGeometryModelFromEntity(e *entities.Geometry) (*GeometryModel, error) {
 	coordinates, err := converters.CoordinatesToString(e.Coordinates)
 	if err != nil {
 		return nil, err
