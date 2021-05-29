@@ -7,26 +7,27 @@ import (
 type StationModel struct {
 	RecordID        string `gorm:"primarykey"`
 	DatasetID       string
-	Favorite        bool
+	IsFavorite      *bool
 	Libelle         string
 	RecordTimestamp string
 }
 
 func NewStationModelFromEntity(entity entities.Station) StationModel {
-	return StationModel{
+	model := StationModel{
 		RecordID:        entity.RecordID,
 		DatasetID:       entity.DatasetID,
-		Favorite:        entity.Favorite,
+		IsFavorite:      entity.IsFavorite,
 		Libelle:         entity.Libelle,
 		RecordTimestamp: entity.RecordTimestamp,
 	}
+	return model
 }
 
 func (m StationModel) Entity() entities.Station {
 	return entities.Station{
 		RecordID:        m.RecordID,
 		DatasetID:       m.DatasetID,
-		Favorite:        m.Favorite,
+		IsFavorite:      m.IsFavorite,
 		Libelle:         m.Libelle,
 		RecordTimestamp: m.RecordTimestamp,
 	}

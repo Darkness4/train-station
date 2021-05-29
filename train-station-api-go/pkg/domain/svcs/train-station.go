@@ -1,6 +1,8 @@
 package svcs
 
 import (
+	"fmt"
+
 	"github.com/Darkness4/train-station-api/pkg/data/db"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
@@ -64,11 +66,13 @@ func (svc *TrainStationService) CreateOne(station entities.Station) (*entities.S
 }
 
 func (svc *TrainStationService) UpdateOne(id string, station entities.Station) (*entities.Station, error) {
-	model, err := svc.repo.Update(id, station)
+	fmt.Printf("%+v\n", station)
+	model := models.NewStationModelFromEntity(station)
+	newModel, err := svc.repo.Update(id, &model)
 	if err != nil {
 		return nil, err
 	}
 
-	entity := model.Entity()
+	entity := newModel.Entity()
 	return &entity, nil
 }

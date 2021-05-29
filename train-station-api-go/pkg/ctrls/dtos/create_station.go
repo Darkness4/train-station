@@ -10,7 +10,7 @@ import (
 type CreateStation struct {
 	RecordID        *string `json:"recordid"`
 	DatasetID       *string `json:"datasetid"`
-	Favorite        *bool   `json:"is_favorite"`
+	IsFavorite      *bool   `json:"is_favorite"`
 	Libelle         *string `json:"libelle"`
 	RecordTimestamp *string `json:"record_timestamp"`
 }
@@ -23,7 +23,7 @@ func (dto *CreateStation) Entity() (*entities.Station, error) {
 	if dto.DatasetID == nil {
 		errsb = append(errsb, "The field datasetid is null.")
 	}
-	if dto.Favorite == nil {
+	if dto.IsFavorite == nil {
 		errsb = append(errsb, "The field is_favorite is null.")
 	}
 	if dto.Libelle == nil {
@@ -40,7 +40,7 @@ func (dto *CreateStation) Entity() (*entities.Station, error) {
 	station := entities.Station{
 		RecordID:        *dto.RecordID,
 		DatasetID:       *dto.DatasetID,
-		Favorite:        *dto.Favorite,
+		IsFavorite:      dto.IsFavorite,
 		Libelle:         *dto.Libelle,
 		RecordTimestamp: *dto.RecordTimestamp,
 	}

@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/Darkness4/train-station-api/pkg/data/models"
-	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"gorm.io/gorm"
 )
 
@@ -29,7 +28,7 @@ func (repo *StationRepository) Create(m *models.StationModel) (*models.StationMo
 	return m, nil
 }
 
-func (repo *StationRepository) Update(id string, station entities.Station) (*models.StationModel, error) {
+func (repo *StationRepository) Update(id string, station *models.StationModel) (*models.StationModel, error) {
 	m := &models.StationModel{
 		RecordID: id,
 	}
