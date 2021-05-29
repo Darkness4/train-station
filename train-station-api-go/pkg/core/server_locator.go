@@ -3,11 +3,13 @@ package core
 import (
 	"encoding/json"
 	"log"
+	"os"
 
 	"github.com/Darkness4/train-station-api/pkg/data/db"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
+	repoimpl "github.com/Darkness4/train-station-api/pkg/data/repos"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
-	"github.com/Darkness4/train-station-api/pkg/domain/svcs"
+	"github.com/Darkness4/train-station-api/pkg/domain/repos"
 	"github.com/valyala/fasthttp"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -16,14 +18,18 @@ import (
 type ServiceLocator struct {
 	// Data
 	DB                *gorm.DB
-	StationRepository *db.StationRepository
+	StationDataSource db.StationDataSource
 
 	// Domain
-	TrainStationService *svcs.TrainStationService
+	StationRepository repos.StationRepository
 }
 
 func NewServiceLocator() (*ServiceLocator, error) {
 	// Data
+	err := os.Remove("cache.sqlite3")
+	if err != nil && !os.IsNotExist(err) {
+		return nil, err
+	}
 	database, err := gorm.Open(sqlite.Open("cache.sqlite3"), &gorm.Config{})
 	if err != nil {
 		return nil, err
@@ -32,21 +38,21 @@ func NewServiceLocator() (*ServiceLocator, error) {
 		&models.StationModel{},
 	)
 
-	stationRepository := db.NewStationRepository(database)
+	stationDS := db.NewStationDataSource(database)
 
 	// Domain
-	trainStationService := svcs.NewTrainStationService(stationRepository)
-	go initializeDatabase(trainStationService)
+	stationRepo := repoimpl.NewStationRepository(stationDS)
+	go initializeDatabase(stationRepo)
 
 	// Output
 	return &ServiceLocator{
-		DB:                  database,
-		StationRepository:   stationRepository,
-		TrainStationService: trainStationService,
+		DB:                database,
+		StationDataSource: stationDS,
+		StationRepository: stationRepo,
 	}, nil
 }
 
-func initializeDatabase(trainStationService *svcs.TrainStationService) {
+func initializeDatabase(stationRepo repos.StationRepository) {
 	statusCode, body, err := fasthttp.Get(nil, "https://ressources.data.sncf.com/explore/dataset/liste-des-gares/download/?format=json")
 	if statusCode != 200 {
 		log.Printf("InitializeDatabase: Status code wasn't 200, it was %d\n", statusCode)
@@ -59,7 +65,7 @@ func initializeDatabase(trainStationService *svcs.TrainStationService) {
 	var data []entities.Station
 	json.Unmarshal(body, &data)
 
-	result, err := trainStationService.CreateMany(data)
+	result, err := stationRepo.CreateMany(data)
 	if err != nil {
 		log.Printf("InitializeDatabase: Error %s\n", err.Error())
 		return

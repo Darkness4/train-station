@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
-	"github.com/Darkness4/train-station-api/pkg/domain/svcs"
+	"github.com/Darkness4/train-station-api/pkg/domain/repos"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
 	"github.com/Darkness4/train-station-api/pkg/presentation/filters"
 	"github.com/go-playground/validator/v10"
@@ -13,21 +13,21 @@ import (
 )
 
 type TrainStationController struct {
-	api             *atreugo.Router
-	trainStationSvc *svcs.TrainStationService
+	api  *atreugo.Router
+	repo repos.StationRepository
 }
 
 func NewTrainStationController(
 	api *atreugo.Router,
-	trainStationService *svcs.TrainStationService,
+	repo repos.StationRepository,
 ) *TrainStationController {
 	if api == nil {
 		panic("NewTrainStationController: api is nil")
 	}
-	if api == nil {
-		panic("NewTrainStationController: trainStationSvc is nil")
+	if repo == nil {
+		panic("NewTrainStationController: repo is nil")
 	}
-	ctrl := TrainStationController{api, trainStationService}
+	ctrl := TrainStationController{api, repo}
 	ctrl.buildRoutes()
 	return &ctrl
 }
@@ -74,11 +74,11 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	}
 
 	// Process
-	stations, count, err := ctrl.trainStationSvc.GetManyAndCount(s, limit, page)
+	stations, count, err := ctrl.repo.GetManyAndCount(s, limit, page)
 	if err != nil {
 		return err
 	}
-	total, err := ctrl.trainStationSvc.Total()
+	total, err := ctrl.repo.Total()
 	if err != nil {
 		return err
 	}
@@ -100,7 +100,7 @@ func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
 	id := ctx.UserValue("id").(string)
 
 	// Process
-	station, err := ctrl.trainStationSvc.GetOne(id)
+	station, err := ctrl.repo.GetOne(id)
 	if err != nil {
 		return err
 	}
@@ -121,7 +121,7 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 	}
 
 	// Process
-	newStation, err := ctrl.trainStationSvc.CreateOne(dto)
+	newStation, err := ctrl.repo.CreateOne(dto)
 	if err != nil {
 		return err
 	}
@@ -137,7 +137,7 @@ func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	id := ctx.UserValue("id").(string)
 
 	// Process
-	newStation, err := ctrl.trainStationSvc.UpdateOne(id, dto)
+	newStation, err := ctrl.repo.UpdateOne(id, dto)
 	if err != nil {
 		return err
 	}

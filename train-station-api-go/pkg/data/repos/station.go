@@ -1,4 +1,4 @@
-package svcs
+package repos
 
 import (
 	"github.com/Darkness4/train-station-api/pkg/data/db"
@@ -6,30 +6,29 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 )
 
-type TrainStationService struct {
-	repo *db.StationRepository
+type StationRepositoryImpl struct {
+	ds db.StationDataSource
 }
 
-func NewTrainStationService(repo *db.StationRepository) *TrainStationService {
-	if repo == nil {
+func NewStationRepository(ds db.StationDataSource) *StationRepositoryImpl {
+	if ds == nil {
 		panic("TrainStationService: repo is nil")
 	}
-	svc := TrainStationService{
-		repo: repo,
+	repo := StationRepositoryImpl{
+		ds: ds,
 	}
-	return &svc
+	return &repo
 }
 
-func (svc *TrainStationService) GetManyAndCount(s string, limit int, page int) ([]entities.Station, int64, error) {
+func (repo *StationRepositoryImpl) GetManyAndCount(s string, limit int, page int) ([]entities.Station, int64, error) {
 	if limit <= 0 {
 		limit = 10
 	}
 	if page <= 0 {
 		page = 1
 	}
-	models, count, err := svc.repo.FindManyAndCount(s, limit, page)
+	models, count, err := repo.ds.FindManyAndCount(s, limit, page)
 	if err != nil {
-		// TODO: Better error handling
 		return nil, count, err
 	}
 
@@ -46,8 +45,8 @@ func (svc *TrainStationService) GetManyAndCount(s string, limit int, page int) (
 	return values, count, nil
 }
 
-func (svc *TrainStationService) GetOne(id string) (*entities.Station, error) {
-	model, err := svc.repo.FindOne(id)
+func (repo *StationRepositoryImpl) GetOne(id string) (*entities.Station, error) {
+	model, err := repo.ds.FindOne(id)
 	if err != nil {
 		return nil, err
 	}
@@ -59,12 +58,12 @@ func (svc *TrainStationService) GetOne(id string) (*entities.Station, error) {
 	return entity, nil
 }
 
-func (svc *TrainStationService) CreateOne(station entities.Station) (*entities.Station, error) {
+func (repo *StationRepositoryImpl) CreateOne(station entities.Station) (*entities.Station, error) {
 	model, err := models.NewStationModelFromEntity(&station)
 	if err != nil {
 		return nil, err
 	}
-	newModel, err := svc.repo.Create(model)
+	newModel, err := repo.ds.Create(model)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +75,7 @@ func (svc *TrainStationService) CreateOne(station entities.Station) (*entities.S
 	return entity, nil
 }
 
-func (svc *TrainStationService) CreateMany(stations []entities.Station) ([]entities.Station, error) {
+func (repo *StationRepositoryImpl) CreateMany(stations []entities.Station) ([]entities.Station, error) {
 	// Map
 	values := make([]models.StationModel, 0, len(stations))
 	for _, val := range stations {
@@ -88,7 +87,7 @@ func (svc *TrainStationService) CreateMany(stations []entities.Station) ([]entit
 		values = append(values, *model)
 	}
 
-	result, err := svc.repo.CreateMany(values)
+	result, err := repo.ds.CreateMany(values)
 	if err != nil {
 		return nil, err
 	}
@@ -106,12 +105,12 @@ func (svc *TrainStationService) CreateMany(stations []entities.Station) ([]entit
 	return newValues, nil
 }
 
-func (svc *TrainStationService) UpdateOne(id string, station entities.Station) (*entities.Station, error) {
+func (repo *StationRepositoryImpl) UpdateOne(id string, station entities.Station) (*entities.Station, error) {
 	model, err := models.NewStationModelFromEntity(&station)
 	if err != nil {
 		return nil, err
 	}
-	newModel, err := svc.repo.Update(id, model)
+	newModel, err := repo.ds.Update(id, model)
 	if err != nil {
 		return nil, err
 	}
@@ -122,6 +121,6 @@ func (svc *TrainStationService) UpdateOne(id string, station entities.Station) (
 	return entity, nil
 }
 
-func (svc *TrainStationService) Total() (int64, error) {
-	return svc.repo.Count()
+func (repo *StationRepositoryImpl) Total() (int64, error) {
+	return repo.ds.Count()
 }

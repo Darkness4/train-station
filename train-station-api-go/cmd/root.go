@@ -40,7 +40,7 @@ var (
 			server := atreugo.New(config)
 			api := server.NewGroupPath("/api")
 			ctrls.NewRootController(server)
-			ctrls.NewTrainStationController(api, sl.TrainStationService)
+			ctrls.NewTrainStationController(api, sl.StationRepository)
 
 			// Run
 			if err := server.ListenAndServe(); err != nil {
