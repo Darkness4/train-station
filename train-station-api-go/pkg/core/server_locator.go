@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/Darkness4/train-station-api/pkg/data/db"
+	"github.com/Darkness4/train-station-api/pkg/data/ds"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	repoimpl "github.com/Darkness4/train-station-api/pkg/data/repos"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
@@ -18,7 +18,7 @@ import (
 type ServiceLocator struct {
 	// Data
 	DB                *gorm.DB
-	StationDataSource db.StationDataSource
+	StationDataSource ds.StationDataSource
 
 	// Domain
 	StationRepository repos.StationRepository
@@ -38,7 +38,7 @@ func NewServiceLocator() (*ServiceLocator, error) {
 		&models.StationModel{},
 	)
 
-	stationDS := db.NewStationDataSource(database)
+	stationDS := ds.NewStationDataSource(database)
 
 	// Domain
 	stationRepo := repoimpl.NewStationRepository(stationDS)

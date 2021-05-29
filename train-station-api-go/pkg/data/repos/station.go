@@ -1,16 +1,16 @@
 package repos
 
 import (
-	"github.com/Darkness4/train-station-api/pkg/data/db"
+	"github.com/Darkness4/train-station-api/pkg/data/ds"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 )
 
 type StationRepositoryImpl struct {
-	ds db.StationDataSource
+	ds ds.StationDataSource
 }
 
-func NewStationRepository(ds db.StationDataSource) *StationRepositoryImpl {
+func NewStationRepository(ds ds.StationDataSource) *StationRepositoryImpl {
 	if ds == nil {
 		panic("TrainStationService: repo is nil")
 	}
