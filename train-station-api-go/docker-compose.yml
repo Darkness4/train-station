@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  train-station:
+    build: ./
+    container_name: train-station
+    ports:
+      - 38080:8080
