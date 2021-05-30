@@ -96,5 +96,5 @@ jobs:
 
       - name: Deploy
         run: |
-          docker push ghcr.io/Darkness4/train-station-api:latest
-          docker push ghcr.io/Darkness4/train-station-api:arm64
+          docker push ghcr.io/darkness4/train-station-api:latest
+          docker push ghcr.io/darkness4/train-station-api:arm64
