@@ -26,7 +26,7 @@ jobs:
           file: ./train-station-api-go/Dockerfile
           platforms: linux/amd64
           outputs: type=docker,dest=/tmp/image-amd64.tar
-          tags: ghcr.io/Darkness4/train-station-api:latest
+          tags: ghcr.io/darkness4/train-station-api:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
@@ -56,7 +56,7 @@ jobs:
           file: ./train-station-api-go/Dockerfile
           platforms: linux/arm64
           outputs: type=docker,dest=/tmp/image-arm64.tar
-          tags: ghcr.io/Darkness4/train-station-api:arm64
+          tags: ghcr.io/darkness4/train-station-api:arm64
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
