@@ -20,6 +20,13 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
 
+    private val fragments by lazy {
+        listOf(
+            NavHostFragment.create(R.navigation.station_list_nav_graph),
+            AboutFragment.newInstance()
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,13 +37,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         // Add the fragments to the PagerView
-        binding.pager.adapter = MainPagerViewAdapter(
-            this,
-            listOf(
-                NavHostFragment.create(R.navigation.station_list_nav_graph),
-                AboutFragment.newInstance()
-            )
-        )
+        binding.pager.adapter = MainPagerViewAdapter(this, fragments)
 
         // Link the TabLayout and the PagerView
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->

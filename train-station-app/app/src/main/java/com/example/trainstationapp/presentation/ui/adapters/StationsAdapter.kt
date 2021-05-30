@@ -28,7 +28,7 @@ class StationsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val station = getItem(position)
-        station?.let(holder::bind)
+        station?.let { holder.bind(it) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.create(
