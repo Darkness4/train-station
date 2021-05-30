@@ -1,8 +1,6 @@
 package ds
 
 import (
-	"fmt"
-
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"gorm.io/gorm"
 )
@@ -78,7 +76,7 @@ func (ds *StationDataSourceImpl) FindManyAndCount(s string, limit int, page int)
 		"is_favorite",
 		"libelle",
 		"record_timestamp",
-	).Limit(limit).Offset(offset).Where("libelle LIKE ?", fmt.Sprintf("%%%s%%", s)).Find(&m)
+	).Limit(limit).Offset(offset).Where("libelle LIKE '%'||?||'%'", s).Find(&m)
 
 	if result.Error != nil {
 		return nil, result.RowsAffected, result.Error
