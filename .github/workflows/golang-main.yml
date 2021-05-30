@@ -3,14 +3,14 @@ name: Go CI
 on:
   push:
     branches:
-      - '!main'
+      - 'main'
 
 defaults:
   run:
     working-directory: train-station-api-go
 
 jobs:
-  build-go:
+  build-and-deploy-go:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,12 +29,12 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build
+      - name: Build and deploy
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: false
+          push: true
           tags: Darkness4/train-station-api:latest
 
       - name: Image digest
