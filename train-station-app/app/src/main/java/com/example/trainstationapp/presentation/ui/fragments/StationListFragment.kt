@@ -35,8 +35,8 @@ class StationListFragment : Fragment() {
         get() = _binding!!
 
     private val adapter = StationsAdapter(
-        onFavorite = activityViewModel::update,
-        onClick = activityViewModel::showDetails
+        onFavorite = { activityViewModel.update(it) },
+        onClick = { activityViewModel.showDetails(it) },
     )
 
     private var fetchJob: Job? = null
@@ -117,7 +117,7 @@ class StationListFragment : Fragment() {
             errorState?.let {
                 Toast.makeText(
                     context,
-                    "\uD83D\uDE28 Wooops ${it.error}",
+                    "\uD83D\uDE28 Whooops ${it.error}",
                     Toast.LENGTH_LONG
                 ).show()
             }

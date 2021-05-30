@@ -151,7 +151,7 @@ dependencies {
     implementation 'androidx.paging:paging-runtime-ktx:3.0.0'
 
     // JSON Serialization
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
 
     // Retrofit for networking
     def retrofit_version = '2.9.0'
