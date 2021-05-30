@@ -76,7 +76,7 @@ func (ds *StationDataSourceImpl) FindManyAndCount(s string, limit int, page int)
 		"is_favorite",
 		"libelle",
 		"record_timestamp",
-	).Limit(limit).Offset(offset).Where("libelle LIKE '%'||?||'%'", s).Find(&m)
+	).Where("libelle LIKE '%'||?||'%'", s).Limit(limit).Offset(offset).Order("libelle").Find(&m)
 
 	if result.Error != nil {
 		return nil, result.RowsAffected, result.Error
