@@ -81,16 +81,23 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: image-amd64
+          path: /tmp
 
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
           name: image-arm64
+          path: /tmp
+
+      - name: Display structure of downloaded files
+        run: |
+          ls -R
+          ls- R /tmp
 
       - name: Load image
         run: |
-          docker load --input image-arm64.tar
-          docker load --input image-amd64.tar
+          docker load --input /tmp/image-arm64.tar
+          docker load --input /tmp/image-amd64.tar
           docker image ls -a
 
       - name: Login to GitHub Packages Docker Registry
