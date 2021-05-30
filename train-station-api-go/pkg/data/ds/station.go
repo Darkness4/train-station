@@ -43,21 +43,25 @@ func (ds *StationDataSourceImpl) CreateMany(m []models.StationModel) ([]models.S
 	return m, nil
 }
 
-func (ds *StationDataSourceImpl) Update(id string, station *models.StationModel) (*models.StationModel, error) {
-	m := &models.StationModel{
+func (ds *StationDataSourceImpl) Update(id string, m *models.StationModel) (*models.StationModel, error) {
+	new := models.StationModel{
 		RecordID: id,
 	}
-	result := ds.db.Model(m).Updates(station)
+	ds.db.First(&new)
+
+	result := ds.db.Model(&new).Updates(m)
 
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return m, nil
+	return &new, nil
 }
 
 func (ds *StationDataSourceImpl) FindOne(id string) (*models.StationModel, error) {
-	m := &models.StationModel{}
-	result := ds.db.Where("record_id = ?", id).First(m)
+	m := &models.StationModel{
+		RecordID: id,
+	}
+	result := ds.db.First(m)
 
 	if result.Error != nil {
 		return nil, result.Error
