@@ -2,10 +2,6 @@ name: Go CI
 
 on: push
 
-defaults:
-  run:
-    working-directory: train-station-api-go
-
 jobs:
   build-amd64-go:
     runs-on: ubuntu-latest
