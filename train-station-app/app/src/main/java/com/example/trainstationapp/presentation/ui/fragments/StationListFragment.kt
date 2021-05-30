@@ -35,8 +35,8 @@ class StationListFragment : Fragment() {
         get() = _binding!!
 
     private val adapter = StationsAdapter(
-        onFavorite = activityViewModel::update,
-        onClick = activityViewModel::showDetails
+        onFavorite = { activityViewModel.update(it) },
+        onClick = { activityViewModel.showDetails(it) },
     )
 
     private var fetchJob: Job? = null
@@ -99,8 +99,8 @@ class StationListFragment : Fragment() {
 
         // Add the adapter for the PagingData, with footer and header.
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = StationsLoadStateAdapter(onRetry = adapter::retry),
-            footer = StationsLoadStateAdapter(onRetry = adapter::retry)
+            header = StationsLoadStateAdapter(onRetry = { adapter.retry() }),
+            footer = StationsLoadStateAdapter(onRetry = { adapter.retry() })
         )
 
         adapter.addLoadStateListener { loadState ->
@@ -117,7 +117,7 @@ class StationListFragment : Fragment() {
             errorState?.let {
                 Toast.makeText(
                     context,
-                    "\uD83D\uDE28 Wooops ${it.error}",
+                    "\uD83D\uDE28 Whooops ${it.error}",
                     Toast.LENGTH_LONG
                 ).show()
             }

@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface TrainStationDataSource {
     companion object {
-        const val BASE_URL = "https://train-station.cleverapps.io/"
+        const val BASE_URL = "https://train.the-end-is-never-the-end.pw/api/"
         const val CONTENT_TYPE = "application/json"
     }
 
@@ -22,14 +22,14 @@ interface TrainStationDataSource {
      * @param limit Limit amount of resources.
      * @param page Page portion of resources.
      */
-    @GET("stations")
+    @GET("stations/")
     suspend fun find(
         @Query("s") s: String? = null,
         @Query("limit") limit: Int? = null,
         @Query("page") page: Int? = null,
     ): Paginated<StationModel>
 
-    @POST("stations")
+    @POST("stations/")
     suspend fun create(@Body body: StationModel): StationModel
 
     @GET("stations/{id}")

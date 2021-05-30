@@ -9,7 +9,9 @@ import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
 import com.example.trainstationapp.data.models.RemoteKeys
 import com.example.trainstationapp.data.models.StationModel
-import org.json.JSONObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonObject
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -26,6 +28,14 @@ class StationRemoteMediator(
 ) : RemoteMediator<Int, StationModel>() {
     companion object {
         private const val STARTING_PAGE_INDEX = 1
+    }
+
+    override suspend fun initialize(): InitializeAction {
+        // Launch remote refresh as soon as paging starts and do not trigger remote prepend or
+        // append until refresh has succeeded. In cases where we don't mind showing out-of-date,
+        // cached offline data, we can return SKIP_INITIAL_REFRESH instead to prevent paging
+        // triggering remote refresh.
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
     /**
@@ -47,24 +57,30 @@ class StationRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, StationModel>
     ): MediatorResult {
-        val page: Int = when (loadType) {
+        val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                 remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
-                remoteKeys?.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
+                remoteKeys?.prevKey
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                remoteKeys?.nextKey ?: return MediatorResult.Success(endOfPaginationReached = true)
+                remoteKeys?.nextKey
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
             }
         }
 
         return try {
             val response = if (search.isNotEmpty()) {
-                val apiQuery = JSONObject(mapOf("libelle" to mapOf("\$cont" to search)))
+                val apiQuery = buildJsonObject {
+                    putJsonObject("libelle") {
+                        put("\$cont", search)
+                    }
+                }
                 service.find(s = apiQuery.toString(), page = page, limit = state.config.pageSize)
             } else {
                 service.find(page = page, limit = state.config.pageSize)
