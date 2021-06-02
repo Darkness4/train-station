@@ -11,7 +11,7 @@ require (
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.6.1 // indirect
-	github.com/valyala/fasthttp v1.25.0
+	github.com/valyala/fasthttp v1.26.0
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.10
