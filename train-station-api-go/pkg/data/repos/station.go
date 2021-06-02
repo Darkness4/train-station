@@ -20,7 +20,7 @@ func NewStationRepository(ds ds.StationDataSource) *StationRepositoryImpl {
 	return &repo
 }
 
-func (repo *StationRepositoryImpl) GetManyAndCount(s string, limit int, page int) ([]entities.Station, int64, error) {
+func (repo *StationRepositoryImpl) GetManyAndCount(s string, limit int, page int) ([]*entities.Station, int64, error) {
 	if limit <= 0 {
 		limit = 10
 	}
@@ -33,13 +33,13 @@ func (repo *StationRepositoryImpl) GetManyAndCount(s string, limit int, page int
 	}
 
 	// Map
-	values := make([]entities.Station, 0, len(models))
+	values := make([]*entities.Station, 0, len(models))
 	for _, val := range models {
 		e, err := val.Entity()
 		if err != nil {
 			return nil, count, err
 		}
-		values = append(values, *e)
+		values = append(values, e)
 	}
 
 	return values, count, nil
@@ -58,8 +58,8 @@ func (repo *StationRepositoryImpl) GetOne(id string) (*entities.Station, error) 
 	return entity, nil
 }
 
-func (repo *StationRepositoryImpl) CreateOne(station entities.Station) (*entities.Station, error) {
-	model, err := models.NewStationModelFromEntity(&station)
+func (repo *StationRepositoryImpl) CreateOne(station *entities.Station) (*entities.Station, error) {
+	model, err := models.NewStationModelFromEntity(station)
 	if err != nil {
 		return nil, err
 	}
@@ -75,16 +75,16 @@ func (repo *StationRepositoryImpl) CreateOne(station entities.Station) (*entitie
 	return entity, nil
 }
 
-func (repo *StationRepositoryImpl) CreateMany(stations []entities.Station) ([]entities.Station, error) {
+func (repo *StationRepositoryImpl) CreateMany(stations []*entities.Station) ([]*entities.Station, error) {
 	// Map
-	values := make([]models.StationModel, 0, len(stations))
+	values := make([]*models.StationModel, 0, len(stations))
 	for _, val := range stations {
-		model, err := models.NewStationModelFromEntity(&val)
+		model, err := models.NewStationModelFromEntity(val)
 		if err != nil {
 			return nil, err
 		}
 
-		values = append(values, *model)
+		values = append(values, model)
 	}
 
 	result, err := repo.ds.CreateMany(values)
@@ -93,20 +93,20 @@ func (repo *StationRepositoryImpl) CreateMany(stations []entities.Station) ([]en
 	}
 
 	// Map
-	newValues := make([]entities.Station, 0, len(result))
+	newValues := make([]*entities.Station, 0, len(result))
 	for _, val := range result {
 		e, err := val.Entity()
 		if err != nil {
 			return nil, err
 		}
-		newValues = append(newValues, *e)
+		newValues = append(newValues, e)
 	}
 
 	return newValues, nil
 }
 
-func (repo *StationRepositoryImpl) UpdateOne(id string, station entities.Station) (*entities.Station, error) {
-	model, err := models.NewStationModelFromEntity(&station)
+func (repo *StationRepositoryImpl) UpdateOne(id string, station *entities.Station) (*entities.Station, error) {
+	model, err := models.NewStationModelFromEntity(station)
 	if err != nil {
 		return nil, err
 	}

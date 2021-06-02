@@ -7,10 +7,10 @@ import (
 
 type StationDataSource interface {
 	Create(m *models.StationModel) (*models.StationModel, error)
-	CreateMany(m []models.StationModel) ([]models.StationModel, error)
+	CreateMany(m []*models.StationModel) ([]*models.StationModel, error)
 	Update(id string, station *models.StationModel) (*models.StationModel, error)
 	FindOne(id string) (*models.StationModel, error)
-	FindManyAndCount(s string, limit int, page int) ([]models.StationModel, int64, error)
+	FindManyAndCount(s string, limit int, page int) ([]*models.StationModel, int64, error)
 	Count() (int64, error)
 }
 
@@ -34,7 +34,7 @@ func (ds *StationDataSourceImpl) Create(m *models.StationModel) (*models.Station
 	return m, nil
 }
 
-func (ds *StationDataSourceImpl) CreateMany(m []models.StationModel) ([]models.StationModel, error) {
+func (ds *StationDataSourceImpl) CreateMany(m []*models.StationModel) ([]*models.StationModel, error) {
 	result := ds.db.CreateInBatches(&m, 100)
 
 	if result.Error != nil {
@@ -69,10 +69,10 @@ func (ds *StationDataSourceImpl) FindOne(id string) (*models.StationModel, error
 	return m, nil
 }
 
-func (ds *StationDataSourceImpl) FindManyAndCount(s string, limit int, page int) ([]models.StationModel, int64, error) {
+func (ds *StationDataSourceImpl) FindManyAndCount(s string, limit int, page int) ([]*models.StationModel, int64, error) {
 	offset := (page - 1) * limit
 
-	var m []models.StationModel
+	var m []*models.StationModel
 
 	result := ds.db.Select(
 		"record_id",

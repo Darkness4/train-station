@@ -62,7 +62,7 @@ func initializeDatabase(stationRepo repos.StationRepository) {
 		log.Printf("InitializeDatabase: Error %s\n", err.Error())
 		return
 	}
-	var data []entities.Station
+	var data []*entities.Station
 	json.Unmarshal(body, &data)
 
 	result, err := stationRepo.CreateMany(data)

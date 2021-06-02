@@ -124,7 +124,7 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 	}
 
 	// Process
-	newStation, err := ctrl.repo.CreateOne(dto)
+	newStation, err := ctrl.repo.CreateOne(&dto)
 	if err != nil {
 		return err
 	}
@@ -140,7 +140,7 @@ func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	id := ctx.UserValue("id").(string)
 
 	// Process
-	newStation, err := ctrl.repo.UpdateOne(id, dto)
+	newStation, err := ctrl.repo.UpdateOne(id, &dto)
 	if err != nil {
 		return err
 	}
