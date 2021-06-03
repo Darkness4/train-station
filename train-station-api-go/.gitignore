@@ -18,7 +18,7 @@
 *.sqlite3
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
 ### Go Patch ###
 /vendor/
