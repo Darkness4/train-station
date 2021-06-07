@@ -38,6 +38,11 @@ var (
 
 			// Spawn the server
 			server := atreugo.New(config)
+			server.UseBefore(func(ctx *atreugo.RequestCtx) error {
+				ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+
+				return ctx.Next()
+			})
 			api := server.NewGroupPath("/api")
 			ctrls.NewRootController(server)
 			ctrls.NewTrainStationController(api, sl.StationRepository)
