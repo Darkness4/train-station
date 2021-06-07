@@ -40,6 +40,7 @@ var (
 			server := atreugo.New(config)
 			server.UseBefore(func(ctx *atreugo.RequestCtx) error {
 				ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+				ctx.Request.Header.Set("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, HEAD")
 
 				return ctx.Next()
 			})
