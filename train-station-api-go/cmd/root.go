@@ -6,6 +6,7 @@ import (
 
 	"github.com/Darkness4/train-station-api/pkg/core"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls"
+	"github.com/atreugo/cors"
 	"github.com/savsgio/atreugo/v11"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -38,12 +39,13 @@ var (
 
 			// Spawn the server
 			server := atreugo.New(config)
-			server.UseBefore(func(ctx *atreugo.RequestCtx) error {
-				ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
-				ctx.Request.Header.Set("Access-Control-Allow-Methods", "GET, PATCH, PUT, OPTIONS, POST, DELETE, HEAD")
-
-				return ctx.Next()
-			})
+			corsConfig := cors.Config{
+				AllowedOrigins: []string{"*"},
+				AllowedMethods: []string{"GET", "PATCH", "OPTIONS", "POST"},
+				AllowedHeaders: []string{"Access-Control-Allow-Origin", "Content-Type", "Accept", "Accept-Language", "Origin", "User-Agent"},
+				AllowMaxAge:    3600,
+			}
+			server.UseAfter(cors.New(corsConfig))
 			api := server.NewGroupPath("/api")
 			ctrls.NewRootController(server)
 			ctrls.NewTrainStationController(api, sl.StationRepository)
