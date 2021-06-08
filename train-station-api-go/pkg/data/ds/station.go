@@ -47,9 +47,12 @@ func (ds *StationDataSourceImpl) Update(id string, m *models.StationModel) (*mod
 	new := models.StationModel{
 		RecordID: id,
 	}
-	ds.db.First(&new)
+	result := ds.db.First(&new)
+	if result.Error != nil {
+		return nil, result.Error
+	}
 
-	result := ds.db.Model(&new).Updates(m)
+	result = ds.db.Model(&new).Updates(m)
 
 	if result.Error != nil {
 		return nil, result.Error

@@ -12,10 +12,10 @@ type FieldsModel struct {
 	Libelle    string
 	IDGaia     string
 	Voyageurs  string
-	GeoPoint2D string
+	GeoPoint2D string `gorm:"check:geo_shape_geo_point2_d <> ''"`
 	CodeLigne  string
 	XL93       float64
-	CGeo       string
+	CGeo       string `gorm:"check:geo_shape_c_geo <> ''"`
 	RgTroncon  int64
 	GeoShape   *GeometryModel `gorm:"embedded;embeddedPrefix:geo_shape_"`
 	PK         string

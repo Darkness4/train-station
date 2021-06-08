@@ -7,7 +7,7 @@ import (
 
 type GeometryModel struct {
 	Type        string
-	Coordinates string
+	Coordinates string `gorm:"check:geo_shape_coordinates <> ''"`
 }
 
 func NewGeometryModelFromEntity(e *entities.Geometry) (*GeometryModel, error) {

@@ -5,11 +5,11 @@ import (
 )
 
 type StationModel struct {
-	RecordID        string `gorm:"primaryKey;autoIncrement:false"`
-	DatasetID       string
-	IsFavorite      *bool `gorm:"default:false"`
-	Libelle         string
-	RecordTimestamp string
+	RecordID        string         `gorm:"primaryKey;autoIncrement:false"`
+	DatasetID       string         `gorm:"check:dataset_id <> ''"`
+	IsFavorite      *bool          `gorm:"default:false"`
+	Libelle         string         `gorm:"check:libelle <> ''"`
+	RecordTimestamp string         `gorm:"check:record_timestamp <> ''"`
 	Fields          *FieldsModel   `gorm:"embedded;embeddedPrefix:geo_shape_"`
 	Geometry        *GeometryModel `gorm:"embedded;embeddedPrefix:geo_shape_"`
 }

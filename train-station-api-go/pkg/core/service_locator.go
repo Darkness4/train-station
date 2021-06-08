@@ -34,9 +34,12 @@ func NewServiceLocator() (*ServiceLocator, error) {
 	if err != nil {
 		return nil, err
 	}
-	database.AutoMigrate(
+	err = database.AutoMigrate(
 		&models.StationModel{},
 	)
+	if err != nil {
+		return nil, err
+	}
 
 	stationDS := ds.NewStationDataSource(database)
 
