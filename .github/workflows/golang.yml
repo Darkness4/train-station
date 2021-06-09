@@ -12,6 +12,7 @@ jobs:
         with:
           go-version: '1.16'
       - name: Run tests
+        working-directory: ./train-station-api-go
         run: go test -short ./...
 
   build-amd64-go:
