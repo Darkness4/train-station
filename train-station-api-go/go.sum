@@ -90,6 +90,8 @@ github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7
 github.com/fasthttp/router v1.3.12/go.mod h1:u+cTxz7conAkhUqSYx0em5kfYwDaslNehUyES/MTydU=
 github.com/fasthttp/router v1.3.14 h1:Pyii7A6dipkgMQjl2EJ4tV+9ZiqaCXyNoKBY4fYwcUQ=
 github.com/fasthttp/router v1.3.14/go.mod h1:pZyneNm2U+H+yixWetyr9YSmeQYW/evX4lG8bJ+Guzc=
+github.com/fasthttp/router v1.4.0 h1:sWMk0q7M6Qj73eLIolh/934mKTNZIWDrEPDhZUF1pAg=
+github.com/fasthttp/router v1.4.0/go.mod h1:uTM3xaLINfEk/uqId8rv8tzwr47+HZuxopzUWfwD4qg=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
 github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=
@@ -297,9 +299,13 @@ github.com/ryanuber/columnize v0.0.0-20160712163229-9b3edd62028f/go.mod h1:sm1tb
 github.com/savsgio/atreugo/v11 v11.7.0/go.mod h1:D63HcCIA+8EpI6m49C8i/Oh0i5rEDV5O88EP3atgABI=
 github.com/savsgio/atreugo/v11 v11.7.2 h1:Z4oSirXyR2Wmjb80K/zEV1+u6fmIOImGqmelpcWDvx4=
 github.com/savsgio/atreugo/v11 v11.7.2/go.mod h1:VATApwVvGSQa0moD+IiWILczGj9BVC45ymEWEBZpVdo=
+github.com/savsgio/atreugo/v11 v11.8.0 h1:KLriIm3/9+KRu5BJvovrQxn/G76b90hEQfi+PDRJ+aE=
+github.com/savsgio/atreugo/v11 v11.8.0/go.mod h1:RmTutpeAjADoHBr+aCvb2aINViZOXLBDRO+4yugAEyc=
 github.com/savsgio/gotils v0.0.0-20210316171653-c54912823645/go.mod h1:CN0/b5o0sSBi9K8fZTUamBG5NZXO0I64vTh9L3Mzhn0=
 github.com/savsgio/gotils v0.0.0-20210520110740-c57c45b83e0a h1:qqVWOiLdFpxFLRYQARGO71XanQ+9nYNCl5S/FLOnLP0=
 github.com/savsgio/gotils v0.0.0-20210520110740-c57c45b83e0a/go.mod h1:dmPawKuiAeG/aFYVs2i+Dyosoo7FNcm+Pi8iK6ZUrX8=
+github.com/savsgio/gotils v0.0.0-20210617111740-97865ed5a873 h1:N3Af8f13ooDKcIhsmFT7Z05CStZWu4C7Md0uDEy4q6o=
+github.com/savsgio/gotils v0.0.0-20210617111740-97865ed5a873/go.mod h1:dmPawKuiAeG/aFYVs2i+Dyosoo7FNcm+Pi8iK6ZUrX8=
 github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529/go.mod h1:DxrIzT+xaE7yg65j358z/aeFdxmN0P9QXhEzd20vsDc=
 github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
