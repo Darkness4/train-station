@@ -35,7 +35,7 @@
     "fastify": "3.18.1",
     "fastify-compress": "3.6.0",
     "fastify-rate-limit": "5.5.0",
-    "fastify-swagger": "4.8.1",
+    "fastify-swagger": "4.8.2",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.1.0",
