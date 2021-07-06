@@ -46,7 +46,7 @@
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
     "@nestjs/testing": "7.6.18",
-    "@types/jest": "26.0.23",
+    "@types/jest": "26.0.24",
     "@types/node": "16.0.0",
     "@types/supertest": "2.0.11",
     "@typescript-eslint/eslint-plugin": "4.28.2",
