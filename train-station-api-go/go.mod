@@ -6,7 +6,7 @@ require (
 	github.com/andybalholm/brotli v1.0.3 // indirect
 	github.com/atreugo/cors v1.0.5
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
-	github.com/go-playground/validator/v10 v10.6.1
+	github.com/go-playground/validator/v10 v10.7.0
 	github.com/klauspost/compress v1.13.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
