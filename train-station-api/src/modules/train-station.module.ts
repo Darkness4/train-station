@@ -1,4 +1,5 @@
-import { HttpModule, Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
 import { TrainStationController } from 'controllers/train-station.controller';
 import { Station } from 'entities/station';

@@ -1,5 +1,4 @@
 import {
-  HttpService,
   Injectable,
   Logger,
   OnModuleDestroy,
@@ -13,11 +12,13 @@ import { mergeMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { StationModel } from 'models/station.model';
 import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class TrainStationService
   extends TypeOrmCrudService<Station>
-  implements OnModuleInit, OnModuleDestroy {
+  implements OnModuleInit, OnModuleDestroy
+{
   subscription?: Subscription = null;
 
   constructor(
@@ -38,18 +39,18 @@ export class TrainStationService
           Promise.all(response.data.map((e) => Station.fromModel(e).save())),
         ),
       )
-      .subscribe(
-        (array) =>
+      .subscribe({
+        next: (array) =>
           Logger.log(
             `Database initialized. Total: ${array.length} rows.`,
             'TrainStationService',
           ),
-        (reason) =>
+        error: (reason) =>
           Logger.error(
             `Couldn't download the initial data. ${reason}`,
             'TrainStationService',
           ),
-      );
+      });
   }
 
   async getManySummary(
