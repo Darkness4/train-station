@@ -35,13 +35,13 @@ const StationRepository = {
 	},
 
 	async findById(id: string): Promise<Station> {
-		const r = await trainStationApi.get<Station>(`/stations/${id}/`);
+		const r = await trainStationApi.get<Station>(`/stations/${id}`);
 
 		return r.data;
 	},
 
 	async updateById(id: string, body: Station): Promise<Station> {
-		const r = await trainStationApi.patch<Station>(`/stations/${id}/`, body);
+		const r = await trainStationApi.patch<Station>(`/stations/${id}`, body);
 
 		return r.data;
 	}
