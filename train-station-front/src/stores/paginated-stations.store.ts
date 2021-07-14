@@ -11,16 +11,12 @@ export const initialState: Paginated<Station> = {
 	total: 0
 };
 function createPaginatedStationsStore() {
-	const { subscribe, update, set } = writable<Paginated<Station>>({ ...initialState });
+	const { subscribe, set } = writable<Paginated<Station>>({ ...initialState });
 
 	return {
 		subscribe,
-		refresh: async () => {
-			const result = await StationRepository.find();
-			set(result);
-		},
-		load: async (page: number) => {
-			const result = await StationRepository.find({ page: page });
+		load: async (params?: { s?: string | null; page?: number | null }) => {
+			const result = await StationRepository.find(params);
 			set(result);
 		}
 	};

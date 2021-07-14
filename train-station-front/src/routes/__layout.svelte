@@ -1,5 +1,7 @@
 <script>
-	import '../app.postcss';
+	import '../app.scss';
 </script>
 
-<slot />
+<div class="container">
+	<slot />
+</div>

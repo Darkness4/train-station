@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+	import DetailStation from '$components/detail-station.component.svelte';
 	import { stationStore } from '$stores/station.store';
 	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
 
@@ -19,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<title>{id}</title>
+	<title>Station {id}</title>
 </svelte:head>
 
-<p>{$stationStore?.recordid ?? 'Object is null'}</p>
+<DetailStation station={$stationStore} />

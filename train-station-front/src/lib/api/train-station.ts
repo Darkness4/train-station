@@ -10,7 +10,11 @@ const trainStationApi = axios.create({
 });
 
 const StationRepository = {
-	async find(options?: { s?: string; limit?: number; page?: number }): Promise<Paginated<Station>> {
+	async find(options?: {
+		s?: string | null;
+		limit?: number | null;
+		page?: number | null;
+	}): Promise<Paginated<Station>> {
 		const apiQuery = JSON.stringify({
 			libelle: {
 				$cont: options?.s ?? ''
