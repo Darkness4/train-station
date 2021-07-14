@@ -26,7 +26,7 @@
     "@nestjs/common": "8.0.2",
     "@nestjs/core": "8.0.2",
     "@nestjs/platform-fastify": "8.0.2",
-    "@nestjs/swagger": "5.0.1",
+    "@nestjs/swagger": "5.0.3",
     "@nestjs/typeorm": "8.0.1",
     "@nestjsx/crud": "4.6.2",
     "@nestjsx/crud-typeorm": "4.6.2",
