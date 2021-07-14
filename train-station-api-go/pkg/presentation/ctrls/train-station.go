@@ -85,7 +85,7 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	if err != nil {
 		return err
 	}
-	pageCount := total/int64(limit) + 1
+	pageCount := count/int64(limit) + 1
 
 	// Output
 	response := dtos.PaginatedStation{
