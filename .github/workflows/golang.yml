@@ -81,7 +81,7 @@ jobs:
       - build-arm64-go
       - build-amd64-go
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v2
       - name: Set up Docker Buildx
