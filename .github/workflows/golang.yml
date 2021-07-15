@@ -109,5 +109,8 @@ jobs:
 
       - name: Deploy
         run: |
-          docker push ghcr.io/darkness4/train-station-api:latest
-          docker push ghcr.io/darkness4/train-station-api:arm64
+          if echo "$GITHUB_REF" | grep -q 'refs/tags/'; then
+            docker tag ghcr.io/darkness4/train-station-api:latest "ghcr.io/darkness4/train-station-api:${GITHUB_REF#refs/*/}"
+            docker tag ghcr.io/darkness4/train-station-api:arm64 "ghcr.io/darkness4/train-station-api:arm64-${GITHUB_REF#refs/*/}"
+          fi
+          docker push ghcr.io/darkness4/train-station-api --all-tags

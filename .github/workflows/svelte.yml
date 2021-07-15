@@ -1,4 +1,4 @@
-name: Nest CI
+name: Svelte CI
 
 on: push
 
@@ -22,7 +22,7 @@ jobs:
           file: ./train-station-front/Dockerfile
           platforms: linux/amd64
           outputs: type=docker,dest=/tmp/image-amd64.tar
-          tags: ghcr.io/darkness4/train-station-front:0.0.1
+          tags: ghcr.io/darkness4/train-station-front:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
@@ -60,4 +60,7 @@ jobs:
 
       - name: Deploy
         run: |
-          docker push ghcr.io/darkness4/train-station-front:latest
+          if echo "$GITHUB_REF" | grep -q 'refs/tags/'; then
+            docker tag ghcr.io/darkness4/train-station-front:latest "ghcr.io/darkness4/train-station-front:${GITHUB_REF#refs/*/}"
+          fi
+          docker push ghcr.io/darkness4/train-station-front --all-tags
