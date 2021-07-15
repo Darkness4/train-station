@@ -121,6 +121,6 @@ func (repo *StationRepositoryImpl) UpdateOne(id string, station *entities.Statio
 	return entity, nil
 }
 
-func (repo *StationRepositoryImpl) Total() (int64, error) {
-	return repo.ds.Count()
+func (repo *StationRepositoryImpl) Count(s string) (int64, error) {
+	return repo.ds.Count(s)
 }

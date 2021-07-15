@@ -11,7 +11,7 @@ type StationDataSource interface {
 	Update(id string, station *models.StationModel) (*models.StationModel, error)
 	FindOne(id string) (*models.StationModel, error)
 	FindManyAndCount(s string, limit int, page int) ([]*models.StationModel, int64, error)
-	Count() (int64, error)
+	Count(s string) (int64, error)
 }
 
 type StationDataSourceImpl struct {
@@ -91,10 +91,10 @@ func (ds *StationDataSourceImpl) FindManyAndCount(s string, limit int, page int)
 	return m, result.RowsAffected, nil
 }
 
-func (ds *StationDataSourceImpl) Count() (int64, error) {
+func (ds *StationDataSourceImpl) Count(s string) (int64, error) {
 	var count int64
 
-	result := ds.db.Model(&models.StationModel{}).Count(&count)
+	result := ds.db.Model(&models.StationModel{}).Where("libelle LIKE '%'||?||'%'", s).Count(&count)
 	if result.Error != nil {
 		return 0, result.Error
 	}

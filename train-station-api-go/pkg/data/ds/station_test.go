@@ -397,13 +397,35 @@ func TestCount(t *testing.T) {
 
 	// Tests
 	t.Run("Count should work", func(t *testing.T) {
-		count, err := ds.Count()
+		count, err := ds.Count("")
 		if err != nil {
 			t.Errorf("Got err on Count: %v\n", err)
 		}
 
 		if count != 1 {
 			t.Errorf("Count != 1 when fetching: count: %v\n", count)
+		}
+	})
+
+	t.Run("Count should work with cont filter", func(t *testing.T) {
+		count, err := ds.Count("libelle")
+		if err != nil {
+			t.Errorf("Got err on Count: %v\n", err)
+		}
+
+		if count != 1 {
+			t.Errorf("Count != 1 when fetching: count: %v\n", count)
+		}
+	})
+
+	t.Run("Count should work with not cont filter", func(t *testing.T) {
+		count, err := ds.Count("notlib")
+		if err != nil {
+			t.Errorf("Got err on Count: %v\n", err)
+		}
+
+		if count != 0 {
+			t.Errorf("Count != 0 when fetching: count: %v\n", count)
 		}
 	})
 }

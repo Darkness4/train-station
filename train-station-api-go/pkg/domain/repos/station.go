@@ -10,5 +10,5 @@ type StationRepository interface {
 	CreateOne(station *entities.Station) (*entities.Station, error)
 	CreateMany(stations []*entities.Station) ([]*entities.Station, error)
 	UpdateOne(id string, station *entities.Station) (*entities.Station, error)
-	Total() (int64, error)
+	Count(s string) (int64, error)
 }
