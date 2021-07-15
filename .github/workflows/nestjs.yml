@@ -61,6 +61,6 @@ jobs:
       - name: Deploy
         run: |
           if echo "$GITHUB_REF" | grep -q 'refs/tags/'; then
-            docker tag ghcr.io/darkness4/train-station-api:nestjs "ghcr.io/darkness4/train-station-api:nestjs-${GITHUB_REF#refs/*/}"
+            docker tag ghcr.io/darkness4/train-station-api:nestjs "ghcr.io/darkness4/train-station-api:${GITHUB_REF#refs/*/}-nestjs"
           fi
           docker push ghcr.io/darkness4/train-station-api --all-tags
