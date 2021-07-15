@@ -5,12 +5,14 @@
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
 		"preview": "svelte-kit preview",
+		"start:prod": "node build",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
+		"@sveltejs/adapter-node": "^1.0.0-next.33",
 		"@sveltejs/kit": "next",
 		"@typescript-eslint/eslint-plugin": "4.28.3",
 		"@typescript-eslint/parser": "4.28.3",

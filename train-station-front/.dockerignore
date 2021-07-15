@@ -1,0 +1,13 @@
+README.md
+
+.vscode
+**/.gitignore
+
+docker-compose.yml
+Dockerfile
+
+.DS_Store
+node_modules
+.svelte-kit
+package
+build
