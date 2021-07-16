@@ -48,11 +48,15 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
       - name: Import keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
+          DECRYPT_SHARED_KEY: ${{ secrets.DECRYPT_SHARED_KEY }}
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" > app/keystore.jks.asc
-          gpg -d --passphrase "${{ secrets.DECRYPT_SHARED_KEY }}" --batch app/keystore.jks.asc >> app/keystore.jks
-          echo "${{ secrets.KEY_PROPERTIES }}" > key.properties.asc
-          gpg -d --passphrase "${{ secrets.DECRYPT_SHARED_KEY }}" --batch key.properties.asc >> key.properties
+          echo "$KEYSTORE_BASE64" > app/keystore.jks.asc
+          gpg -d --passphrase "DECRYPT_SHARED_KEY" --batch app/keystore.jks.asc >> app/keystore.jks
+          echo "secrets.KEY_PROPERTIES" > key.properties.asc
+          gpg -d --passphrase "$DECRYPT_SHARED_KEY" --batch key.properties.asc >> key.properties
 
       - name: Package with Gradle
         run: |
@@ -74,6 +78,16 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
+      - name: Import keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
+          DECRYPT_SHARED_KEY: ${{ secrets.DECRYPT_SHARED_KEY }}
+        run: |
+          echo "$KEYSTORE_BASE64" > app/keystore.jks.asc
+          gpg -d --passphrase "DECRYPT_SHARED_KEY" --batch app/keystore.jks.asc >> app/keystore.jks
+          echo "secrets.KEY_PROPERTIES" > key.properties.asc
+          gpg -d --passphrase "$DECRYPT_SHARED_KEY" --batch key.properties.asc >> key.properties
       - name: Bundle with Gradle
         run: |
           chmod +x gradlew
