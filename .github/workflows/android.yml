@@ -54,7 +54,7 @@ jobs:
           DECRYPT_SHARED_KEY: ${{ secrets.DECRYPT_SHARED_KEY }}
         run: |
           echo "$KEYSTORE_BASE64" > app/keystore.jks.asc
-          gpg -d --passphrase "DECRYPT_SHARED_KEY" --batch app/keystore.jks.asc >> app/keystore.jks
+          gpg -d --passphrase "$DECRYPT_SHARED_KEY" --batch app/keystore.jks.asc >> app/keystore.jks
           echo "$KEY_PROPERTIES" > key.properties.asc
           gpg -d --passphrase "$DECRYPT_SHARED_KEY" --batch key.properties.asc >> key.properties
 
@@ -85,7 +85,7 @@ jobs:
           DECRYPT_SHARED_KEY: ${{ secrets.DECRYPT_SHARED_KEY }}
         run: |
           echo "$KEYSTORE_BASE64" > app/keystore.jks.asc
-          gpg -d --passphrase "DECRYPT_SHARED_KEY" --batch app/keystore.jks.asc >> app/keystore.jks
+          gpg -d --passphrase "$DECRYPT_SHARED_KEY" --batch app/keystore.jks.asc >> app/keystore.jks
           echo "$KEY_PROPERTIES" > key.properties.asc
           gpg -d --passphrase "$DECRYPT_SHARED_KEY" --batch key.properties.asc >> key.properties
       - name: Bundle with Gradle
