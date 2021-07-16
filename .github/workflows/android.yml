@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app-apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: train-station-app/app/build/outputs/apk/release/app-release.apk
 
   package-aab-android:
     runs-on: ubuntu-latest
@@ -106,7 +106,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app-aab
-          path: app/build/outputs/bundle/release/app-release.aab
+          path: train-station-app/app/build/outputs/bundle/release/app-release.aab
 
   deploy-android:
     needs:
