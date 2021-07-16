@@ -17,6 +17,16 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
+      - name: Import keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
+          DECRYPT_SHARED_KEY: ${{ secrets.DECRYPT_SHARED_KEY }}
+        run: |
+          echo "$KEYSTORE_BASE64" > app/keystore.jks.asc
+          gpg -d --passphrase "$DECRYPT_SHARED_KEY" --batch app/keystore.jks.asc >> app/keystore.jks
+          echo "$KEY_PROPERTIES" > key.properties.asc
+          gpg -d --passphrase "$DECRYPT_SHARED_KEY" --batch key.properties.asc >> key.properties
       - name: Build with Gradle
         run: |
           chmod +x gradlew
@@ -116,6 +126,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: app-aab
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -123,5 +138,6 @@ jobs:
           files: |
             app-release.apk
             app-release.aab
+          body: ${{ steps.github_release.outputs.changelog }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
