@@ -16,6 +16,7 @@ type StationDataSource interface {
 }
 
 type StationDataSourceImpl struct {
+	StationDataSource
 	db *gorm.DB
 }
 
@@ -23,7 +24,9 @@ func NewStationDataSource(db *gorm.DB) *StationDataSourceImpl {
 	if db == nil {
 		panic("StationRepository: db is nil")
 	}
-	return &StationDataSourceImpl{db}
+	return &StationDataSourceImpl{
+		db: db,
+	}
 }
 
 func (ds *StationDataSourceImpl) CreateStation(m *models.StationModel) (*models.StationModel, error) {

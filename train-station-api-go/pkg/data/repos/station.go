@@ -4,9 +4,11 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/data/ds"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
+	"github.com/Darkness4/train-station-api/pkg/domain/repos"
 )
 
 type StationRepositoryImpl struct {
+	repos.StationRepository
 	ds ds.StationDataSource
 }
 

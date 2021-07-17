@@ -1,32 +1,51 @@
 package core
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"os"
 
+	firebase "firebase.google.com/go/v4"
+	"firebase.google.com/go/v4/auth"
 	"github.com/Darkness4/train-station-api/pkg/data/ds"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	repoimpl "github.com/Darkness4/train-station-api/pkg/data/repos"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"github.com/Darkness4/train-station-api/pkg/domain/repos"
+	"github.com/Darkness4/train-station-api/pkg/domain/services"
 	"github.com/valyala/fasthttp"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
 type ServiceLocator struct {
+	// Firebase
+	FirebaseApp *firebase.App
+	AuthClient  *auth.Client
+
 	// Data
 	DB                *gorm.DB
 	StationDataSource ds.StationDataSource
 
 	// Domain
 	StationRepository repos.StationRepository
+	AuthService       services.AuthService
 }
 
 func NewServiceLocator() (*ServiceLocator, error) {
+	// Firebase
+	app, err := firebase.NewApp(context.Background(), nil)
+	if err != nil {
+		return nil, err
+	}
+	client, err := app.Auth(context.Background())
+	if err != nil {
+		return nil, err
+	}
+
 	// Data
-	err := os.Remove("cache.sqlite3")
+	err = os.Remove("cache.sqlite3")
 	if err != nil && !os.IsNotExist(err) {
 		return nil, err
 	}
@@ -52,11 +71,16 @@ func NewServiceLocator() (*ServiceLocator, error) {
 	stationRepo := repoimpl.NewStationRepository(stationDS)
 	go initializeDatabase(stationRepo)
 
+	authService := services.NewAuthService(client)
+
 	// Output
 	return &ServiceLocator{
+		FirebaseApp:       app,
+		AuthClient:        client,
 		DB:                database,
 		StationDataSource: stationDS,
 		StationRepository: stationRepo,
+		AuthService:       authService,
 	}, nil
 }
 

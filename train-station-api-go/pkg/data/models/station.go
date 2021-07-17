@@ -41,10 +41,12 @@ func NewStationModelFromEntity(e *entities.Station) (*StationModel, error) {
 }
 
 func (m StationModel) Entity(userId string) (*entities.Station, error) {
+	// TODO: Prefer join
 	isFavorite := false
 	for _, favorite := range m.IsFavorites {
 		if favorite.UserID == userId {
 			isFavorite = true
+			break
 		}
 	}
 

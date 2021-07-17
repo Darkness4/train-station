@@ -7,7 +7,6 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 func TestNewStationDataSource(t *testing.T) {
@@ -467,9 +466,7 @@ func TestCountStation(t *testing.T) {
 
 func TestCreateIsFavorite(t *testing.T) {
 	// Setup
-	database, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	})
+	database, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
 	if err != nil {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}

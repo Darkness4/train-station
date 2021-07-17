@@ -2,10 +2,13 @@ package ctrls
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"github.com/Darkness4/train-station-api/pkg/domain/repos"
+	"github.com/Darkness4/train-station-api/pkg/domain/services"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/queryargs"
 	"github.com/Darkness4/train-station-api/pkg/presentation/filters"
@@ -16,11 +19,13 @@ import (
 type TrainStationController struct {
 	api  *atreugo.Router
 	repo repos.StationRepository
+	auth services.AuthService
 }
 
 func NewTrainStationController(
 	api *atreugo.Router,
 	repo repos.StationRepository,
+	auth services.AuthService,
 ) *TrainStationController {
 	if api == nil {
 		panic("NewTrainStationController: api is nil")
@@ -28,7 +33,10 @@ func NewTrainStationController(
 	if repo == nil {
 		panic("NewTrainStationController: repo is nil")
 	}
-	ctrl := TrainStationController{api, repo}
+	if auth == nil {
+		panic("NewTrainStationController: auth is nil")
+	}
+	ctrl := TrainStationController{api, repo, auth}
 	ctrl.buildRoutes()
 	return &ctrl
 }
@@ -52,6 +60,16 @@ func (ctrl *TrainStationController) buildRoutes() {
 
 func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	// Input
+	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
+	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
+	if idToken == "" {
+		return fmt.Errorf("ID Token is invalid")
+	}
+	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
+	if err != nil {
+		return err
+	}
+
 	args := ctx.QueryArgs()
 	sRaw := args.Peek("s")
 	s := queryargs.SearchLibelle{
@@ -77,7 +95,7 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	}
 
 	// Process
-	stations, count, err := ctrl.repo.GetManyAndCount(s.Libelle.Contain, limit, page)
+	stations, count, err := ctrl.repo.GetManyAndCount(s.Libelle.Contain, limit, page, uid)
 	if err != nil {
 		return err
 	}
@@ -100,10 +118,20 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 
 func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
 	// Input
+	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
+	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
+	if idToken == "" {
+		return fmt.Errorf("ID Token is invalid")
+	}
+	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
+	if err != nil {
+		return err
+	}
+
 	id := ctx.UserValue("id").(string)
 
 	// Process
-	station, err := ctrl.repo.GetOne(id)
+	station, err := ctrl.repo.GetOne(id, uid)
 	if err != nil {
 		return err
 	}
@@ -114,6 +142,16 @@ func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
 
 func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 	// Input
+	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
+	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
+	if idToken == "" {
+		return fmt.Errorf("ID Token is invalid")
+	}
+	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
+	if err != nil {
+		return err
+	}
+
 	dto := entities.Station{}
 	json.Unmarshal(ctx.PostBody(), &dto)
 
@@ -124,7 +162,7 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 	}
 
 	// Process
-	newStation, err := ctrl.repo.CreateOne(&dto)
+	newStation, err := ctrl.repo.CreateOne(&dto, uid)
 	if err != nil {
 		return err
 	}
@@ -135,12 +173,22 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 
 func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	// Input
+	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
+	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
+	if idToken == "" {
+		return fmt.Errorf("ID Token is invalid")
+	}
+	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
+	if err != nil {
+		return err
+	}
+
 	dto := entities.Station{}
 	json.Unmarshal(ctx.PostBody(), &dto)
 	id := ctx.UserValue("id").(string)
 
 	// Process
-	newStation, err := ctrl.repo.UpdateOne(id, &dto)
+	newStation, err := ctrl.repo.UpdateOne(id, &dto, uid)
 	if err != nil {
 		return err
 	}
