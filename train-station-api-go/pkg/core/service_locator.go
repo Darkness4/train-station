@@ -41,6 +41,10 @@ func NewServiceLocator() (*ServiceLocator, error) {
 	if err != nil {
 		return nil, err
 	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		return nil, result.Error
+	}
 
 	stationDS := ds.NewStationDataSource(database)
 

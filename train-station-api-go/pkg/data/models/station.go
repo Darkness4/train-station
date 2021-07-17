@@ -11,7 +11,7 @@ type StationModel struct {
 	RecordTimestamp string             `gorm:"check:record_timestamp <> ''"`
 	Fields          *FieldsModel       `gorm:"embedded;embeddedPrefix:geo_shape_"`
 	Geometry        *GeometryModel     `gorm:"embedded;embeddedPrefix:geo_shape_"`
-	IsFavorites     []*IsFavoriteModel `gorm:"foreignKey:StationID;references:RecordID"`
+	IsFavorites     []*IsFavoriteModel `gorm:"foreignKey:StationID;references:RecordID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 }
 
 func NewStationModelFromEntity(e *entities.Station) (*StationModel, error) {

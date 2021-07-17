@@ -7,6 +7,7 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func TestNewStationDataSource(t *testing.T) {
@@ -47,6 +48,10 @@ func TestCreateStation(t *testing.T) {
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
+	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
 	ds := NewStationDataSource(database)
 	t.Cleanup(func() {
@@ -125,6 +130,10 @@ func TestCreateManyStation(t *testing.T) {
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
 	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
+	}
 	ds := NewStationDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
@@ -177,6 +186,10 @@ func TestUpdateStation(t *testing.T) {
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
 	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
+	}
 	mock := models.StationModel{
 		RecordID:        "recordid",
 		DatasetID:       "datasetid",
@@ -193,7 +206,7 @@ func TestUpdateStation(t *testing.T) {
 			Coordinates: "[]",
 		},
 	}
-	result := database.Create(&mock)
+	result = database.Create(&mock)
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
@@ -244,6 +257,10 @@ func TestFindOneStation(t *testing.T) {
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
 	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
+	}
 	mock := models.StationModel{
 		RecordID:        "recordid",
 		DatasetID:       "datasetid",
@@ -261,7 +278,7 @@ func TestFindOneStation(t *testing.T) {
 			Coordinates: "[]",
 		},
 	}
-	result := database.Create(&mock)
+	result = database.Create(&mock)
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
@@ -300,6 +317,10 @@ func TestFindManyAndCountStation(t *testing.T) {
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
 	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
+	}
 	mock := models.StationModel{
 		RecordID:        "recordid",
 		DatasetID:       "datasetid",
@@ -317,13 +338,13 @@ func TestFindManyAndCountStation(t *testing.T) {
 			Coordinates: "[]",
 		},
 	}
-	result := database.Create(&mock)
+	result = database.Create(&mock)
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
 	mockIsFavorite := models.IsFavoriteModel{
-		UserID:  "userId",
-		Station: &mock,
+		UserID:    "userId",
+		StationID: mock.RecordID,
 	}
 	result = database.Create(&mockIsFavorite)
 	if result.Error != nil {
@@ -376,6 +397,10 @@ func TestCountStation(t *testing.T) {
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
 	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
+	}
 	mock := models.StationModel{
 		RecordID:        "recordid",
 		DatasetID:       "datasetid",
@@ -392,7 +417,7 @@ func TestCountStation(t *testing.T) {
 			Coordinates: "[]",
 		},
 	}
-	result := database.Create(&mock)
+	result = database.Create(&mock)
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
@@ -442,7 +467,9 @@ func TestCountStation(t *testing.T) {
 
 func TestCreateIsFavorite(t *testing.T) {
 	// Setup
-	database, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
+	database, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
@@ -453,64 +480,92 @@ func TestCreateIsFavorite(t *testing.T) {
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
 	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
+	}
 	ds := NewStationDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 		database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
 	})
 
-	// Tests
-	t.Run("CreateIsFavorite should work", func(t *testing.T) {
-		station := models.StationModel{
-			RecordID:        "recordid",
-			DatasetID:       "datasetid",
-			Libelle:         "libelle",
-			RecordTimestamp: "record_timestamp",
-			Fields: &models.FieldsModel{
-				GeoPoint2D: "[]",
-				CGeo:       "[]",
-				GeoShape: &models.GeometryModel{
+	var workingTable = []struct {
+		name string
+		mock *models.StationModel
+		in   *models.IsFavoriteModel
+	}{
+		{"CreateIsFavorite with StationID only",
+			&models.StationModel{
+				RecordID:        "recordid",
+				DatasetID:       "datasetid",
+				Libelle:         "libelle",
+				RecordTimestamp: "record_timestamp",
+				Fields: &models.FieldsModel{
+					GeoPoint2D: "[]",
+					CGeo:       "[]",
+					GeoShape: &models.GeometryModel{
+						Coordinates: "[]",
+					},
+				},
+				Geometry: &models.GeometryModel{
 					Coordinates: "[]",
 				},
 			},
-			Geometry: &models.GeometryModel{
-				Coordinates: "[]",
+			&models.IsFavoriteModel{
+				UserID:    "userId",
+				StationID: "recordid",
 			},
-		}
+		},
+	}
 
-		newModel, err := ds.CreateStation(&station)
-		if err != nil {
-			t.Errorf("Got err on CreateStation: %v\n", err)
-		}
+	// Tests
+	for _, tt := range workingTable {
+		t.Run(fmt.Sprintf("%s should work", tt.name), func(t *testing.T) {
+			t.Cleanup(func() {
+				database.Where("1 = 1").Delete(&models.StationModel{})
+				database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
+			})
 
-		in := models.IsFavoriteModel{
-			UserID:  "userId",
-			Station: newModel,
-		}
+			_, err := ds.CreateStation(tt.mock)
+			if err != nil {
+				t.Errorf("Got err on CreateStation: %v\n", err)
+				t.FailNow()
+			}
 
-		_, err = ds.CreateIsFavorite(&in)
-		if err != nil {
-			t.Errorf("Got err on CreateIsFavorite: %v\n", err)
-		}
+			got, err := ds.CreateIsFavorite(tt.in)
+			if err != nil {
+				t.Errorf("Got err on CreateIsFavorite: %v\n", err)
+				t.FailNow()
+			}
 
-		var count int64
-		database.Model(&models.IsFavoriteModel{}).Count(&count)
-		if count != 1 {
-			t.Errorf("Data wasn't stored: count %d\n", count)
-		}
+			if got.StationID != tt.mock.RecordID {
+				t.Errorf("got.StationID != newModel.RecordID: got %v\n", got)
+				t.FailNow()
+			}
 
-		testModel := models.StationModel{
-			RecordID: "recordid",
-		}
-		database.Preload("IsFavorites").First(&testModel)
-		if len(testModel.IsFavorites) != 1 && (*testModel.IsFavorites[0]).UserID == "userId" {
-			t.Errorf("Relation with IsFavorites between station not found: station %v\n", testModel)
-		}
+			var count int64
+			database.Model(&models.IsFavoriteModel{}).Count(&count)
+			if count != 1 {
+				t.Errorf("Data wasn't stored: count %d\n", count)
+				t.FailNow()
+			}
 
-		if (*testModel.IsFavorites[0]).UserID != "userId" {
-			t.Errorf("Relation with IsFavorites between station doesn't correspond: testModel.IsFavorites[0] %v\n", (*testModel.IsFavorites[0]))
-		}
-	})
+			testModel := models.StationModel{
+				RecordID: "recordid",
+			}
+			database.Preload("IsFavorites").First(&testModel)
+			if len(testModel.IsFavorites) != 1 && (*testModel.IsFavorites[0]).UserID == "userId" {
+				t.Errorf("Relation with IsFavorites between station not found: station %v\n", testModel)
+				t.FailNow()
+			}
+
+			if (*testModel.IsFavorites[0]).UserID != "userId" {
+				t.Errorf("Relation with IsFavorites between station doesn't correspond: testModel.IsFavorites[0] %v\n", (*testModel.IsFavorites[0]))
+				t.FailNow()
+			}
+		})
+	}
 
 	var nonWorkingTable = []struct {
 		name string
@@ -518,19 +573,19 @@ func TestCreateIsFavorite(t *testing.T) {
 	}{
 		{"Empty Object", &models.IsFavoriteModel{}},
 		{"Non existing relation", &models.IsFavoriteModel{
-			UserID:  "fakeid",
-			Station: &models.StationModel{},
+			UserID:    "fakeid",
+			StationID: "fakerelation",
 		}},
 	}
 
 	for _, tt := range nonWorkingTable {
 		t.Run(fmt.Sprintf("%s should not work", tt.name), func(t *testing.T) {
-			_, err := ds.CreateIsFavorite(tt.in)
+			got, err := ds.CreateIsFavorite(tt.in)
 			if err != nil {
 				t.Logf("Got expected err on CreateIsFavorite: %v\n", err)
 				return
 			}
-			t.Error("Continuation error. Eror was expected.")
+			t.Errorf("Continuation error. Eror was expected. Got: %v\n", got)
 		})
 	}
 }

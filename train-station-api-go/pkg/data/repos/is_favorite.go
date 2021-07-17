@@ -20,16 +20,11 @@ func NewIsFavoriteRepository(ds ds.StationDataSource) *IsFavoriteRepositoryImpl 
 }
 
 func (repo *IsFavoriteRepositoryImpl) CreateOne(stationRecordId string, userId string) error {
-	station, err := repo.ds.FindOneStation(stationRecordId)
-	if err != nil {
-		return err
-	}
 	model := &models.IsFavoriteModel{
 		UserID:    userId,
-		StationID: station.RecordID,
-		Station:   station,
+		StationID: stationRecordId,
 	}
-	_, err = repo.ds.CreateIsFavorite(model)
+	_, err := repo.ds.CreateIsFavorite(model)
 	if err != nil {
 		return err
 	}
