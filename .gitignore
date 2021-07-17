@@ -1,0 +1,2 @@
+# ignore crypted files
+**/*.asc

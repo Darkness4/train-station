@@ -15,6 +15,7 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/domain/repos"
 	"github.com/Darkness4/train-station-api/pkg/domain/services"
 	"github.com/valyala/fasthttp"
+	"google.golang.org/api/option"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -35,7 +36,8 @@ type ServiceLocator struct {
 
 func NewServiceLocator() (*ServiceLocator, error) {
 	// Firebase
-	app, err := firebase.NewApp(context.Background(), nil)
+	opt := option.WithCredentialsFile("service-account.json")
+	app, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		return nil, err
 	}
