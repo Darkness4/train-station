@@ -5,10 +5,10 @@ import (
 )
 
 type StationRepository interface {
-	GetManyAndCount(s string, limit int, page int) ([]*entities.Station, int64, error)
-	GetOne(id string) (*entities.Station, error)
-	CreateOne(station *entities.Station) (*entities.Station, error)
-	CreateMany(stations []*entities.Station) ([]*entities.Station, error)
-	UpdateOne(id string, station *entities.Station) (*entities.Station, error)
+	GetManyAndCount(s string, limit int, page int, userId string) ([]*entities.Station, int64, error)
+	GetOne(id string, userId string) (*entities.Station, error)
+	CreateOne(station *entities.Station, userId string) (*entities.Station, error)
+	CreateMany(stations []*entities.Station, userId string) ([]*entities.Station, error)
+	UpdateOne(id string, station *entities.Station, userId string) (*entities.Station, error)
 	Count(s string) (int64, error)
 }

@@ -36,6 +36,7 @@ func NewServiceLocator() (*ServiceLocator, error) {
 	}
 	err = database.AutoMigrate(
 		&models.StationModel{},
+		&models.IsFavoriteModel{},
 	)
 	if err != nil {
 		return nil, err
@@ -68,7 +69,7 @@ func initializeDatabase(stationRepo repos.StationRepository) {
 	var data []*entities.Station
 	json.Unmarshal(body, &data)
 
-	result, err := stationRepo.CreateMany(data)
+	result, err := stationRepo.CreateMany(data, "0")
 	if err != nil {
 		log.Printf("InitializeDatabase: Error %s\n", err.Error())
 		return
