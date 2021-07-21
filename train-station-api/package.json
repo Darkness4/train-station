@@ -35,7 +35,7 @@
     "class-validator": "0.13.1",
     "fastify": "3.19.1",
     "fastify-compress": "3.6.0",
-    "fastify-rate-limit": "5.5.0",
+    "fastify-rate-limit": "5.6.0",
     "fastify-swagger": "4.8.3",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
