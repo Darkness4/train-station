@@ -17,7 +17,7 @@ specifiers:
   postcss-load-config: 3.1.0
   prettier: 2.2.1
   prettier-plugin-svelte: 2.3.1
-  sass: 1.35.2
+  sass: 1.36.0
   svelte: 3.40.2
   svelte-check: 2.2.3
   svelte-preprocess: 4.7.4
@@ -41,10 +41,10 @@ devDependencies:
   postcss-load-config: 3.1.0
   prettier: 2.2.1
   prettier-plugin-svelte: 2.3.1_prettier@2.2.1+svelte@3.40.2
-  sass: 1.35.2
+  sass: 1.36.0
   svelte: 3.40.2
-  svelte-check: 2.2.3_33ad3059bd6365be507020fc7c708205
-  svelte-preprocess: 4.7.4_4a52bbd5f8db368ba041e4e8a59839d3
+  svelte-check: 2.2.3_b45d46d15654d9f2b0e49dbe73bb25d8
+  svelte-preprocess: 4.7.4_5ebeb723ce679c176ba8ddb5a1cad52d
   tslib: 2.3.0
   typescript: 4.3.5
 
@@ -1842,8 +1842,8 @@ packages:
       mri: 1.1.6
     dev: true
 
-  /sass/1.35.2:
-    resolution: {integrity: sha512-jhO5KAR+AMxCEwIH3v+4zbB2WB0z67V1X0jbapfVwQQdjHZUGUyukpnoM6+iCMfsIUC016w9OPKQ5jrNOS9uXw==}
+  /sass/1.36.0:
+    resolution: {integrity: sha512-fQzEjipfOv5kh930nu3Imzq3ie/sGDc/4KtQMJlt7RRdrkQSfe37Bwi/Rf/gfuYHsIuE1fIlDMvpyMcEwjnPvg==}
     engines: {node: '>=8.9.0'}
     hasBin: true
     dependencies:
@@ -1964,7 +1964,7 @@ packages:
       has-flag: 4.0.0
     dev: true
 
-  /svelte-check/2.2.3_33ad3059bd6365be507020fc7c708205:
+  /svelte-check/2.2.3_b45d46d15654d9f2b0e49dbe73bb25d8:
     resolution: {integrity: sha512-mqe/lgF0Ew+54YI4bPW5D26sMolh+MofQiz41U0c1GvUsP3bKsLLH0mjs4P4Xc+ajUFJtvGBo5PWaf0dd46sIQ==}
     hasBin: true
     peerDependencies:
@@ -1978,7 +1978,7 @@ packages:
       sade: 1.7.4
       source-map: 0.7.3
       svelte: 3.40.2
-      svelte-preprocess: 4.7.4_4a52bbd5f8db368ba041e4e8a59839d3
+      svelte-preprocess: 4.7.4_5ebeb723ce679c176ba8ddb5a1cad52d
       typescript: 4.3.5
     transitivePeerDependencies:
       - '@babel/core'
@@ -2001,7 +2001,7 @@ packages:
       svelte: 3.40.2
     dev: true
 
-  /svelte-preprocess/4.7.4_4a52bbd5f8db368ba041e4e8a59839d3:
+  /svelte-preprocess/4.7.4_5ebeb723ce679c176ba8ddb5a1cad52d:
     resolution: {integrity: sha512-mDAmaltQl6e5zU2VEtoWEf7eLTfuOTGr9zt+BpA3AGHo8MIhKiNSPE9OLTCTOMgj0vj/uL9QBbaNmpG4G1CgIA==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -2047,7 +2047,7 @@ packages:
       detect-indent: 6.1.0
       postcss: 8.3.6
       postcss-load-config: 3.1.0
-      sass: 1.35.2
+      sass: 1.36.0
       strip-indent: 3.0.0
       svelte: 3.40.2
       typescript: 4.3.5
