@@ -2,7 +2,7 @@
 	export let startPage: number;
 	export let pageCount: number;
 	export let page: number;
-	export let goto: (page: number) => void;
+	export let goto: (page: number) => any;
 	$: nextPage = page + 1;
 	$: prevPage = page - 1;
 

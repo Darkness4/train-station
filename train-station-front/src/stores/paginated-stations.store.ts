@@ -15,8 +15,8 @@ function createPaginatedStationsStore() {
 
 	return {
 		subscribe,
-		load: async (params?: { s?: string | null; page?: number | null }) => {
-			const result = await StationRepository.find(params);
+		load: async (token: string, params?: { s?: string | null; page?: number | null }) => {
+			const result = await StationRepository.find(token, params);
 			set(result);
 		}
 	};

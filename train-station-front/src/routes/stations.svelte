@@ -23,7 +23,10 @@
 	import Search from '$components/search.component.svelte';
 	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
 	import Pager from '$components/pager.component.svelte';
-
+	import firebase from 'firebase/app';
+	import 'firebase/auth';
+	import type { Station } from '$lib/entities/station';
+	import StationRepository from '$lib/api/train-station';
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;
 
@@ -31,17 +34,38 @@
 
 	async function loadData(s: string, page: number) {
 		try {
-			await paginatedStationsStore.load({
-				s: s,
-				page: page
-			});
+			const user = firebase.auth().currentUser;
+			if (user !== null) {
+				const token = await user.getIdToken();
+				await paginatedStationsStore.load(token, {
+					s: s,
+					page: page
+				});
+			}
 		} catch (e) {
 			console.error(e);
 		}
 	}
 
 	function search(newPage: number) {
-		goto(`${$page.path}?s=${searchQuery}&page=${newPage}`);
+		return goto(`${$page.path}?s=${searchQuery}&page=${newPage}`);
+	}
+
+	function onClick(station: Station) {
+		return goto(`/stations/${station.recordid}`);
+	}
+
+	async function onFavorite(station: Station) {
+		try {
+			const user = firebase.auth().currentUser;
+			if (user !== null) {
+				const token = await user.getIdToken();
+				station.is_favorite = !station.is_favorite;
+				return StationRepository.updateById(station.recordid, station, token);
+			}
+		} catch (e) {
+			console.error(e);
+		}
 	}
 </script>
 
@@ -59,7 +83,7 @@
 		goto={search}
 	/>
 
-	<PaginatedStations stations={$paginatedStationsStore} />
+	<PaginatedStations stations={$paginatedStationsStore} {onClick} {onFavorite} />
 
 	<Pager
 		bind:page={pageNumber}

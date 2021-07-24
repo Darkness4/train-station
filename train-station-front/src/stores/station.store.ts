@@ -8,8 +8,8 @@ function createStationStore() {
 
 	return {
 		subscribe,
-		load: async (id: string) => {
-			const result = await StationRepository.findById(id);
+		load: async (id: string, token: string) => {
+			const result = await StationRepository.findById(id, token);
 			set(result);
 		}
 	};
