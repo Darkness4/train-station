@@ -1,23 +1,21 @@
 <script lang="ts">
-	import firebase from 'firebase/app';
+	import 'firebaseui/dist/firebaseui.css';
+
+	import firebase from 'firebase';
+import type { auth } from 'firebaseui';
+import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 
-	import 'firebaseui/dist/firebaseui.css';
-	import { onDestroy, onMount } from 'svelte';
-
-	const auth = firebase.auth();
-
-	const unsubcribe = auth.onAuthStateChanged((user) => {
+	const unsubcribe = firebase.auth().onAuthStateChanged((user) => {
 		if (user) {
 			goto('/stations');
 			unsubcribe();
 		}
 	});
-	let ui: firebaseui.auth.AuthUI;
 
+	let ui: auth.AuthUI;
 	onMount(async () => {
 		const firebaseui = await import('firebaseui');
-
 		ui = new firebaseui.auth.AuthUI(firebase.auth());
 		ui.start('#firebaseui-auth-container', {
 			signInSuccessUrl: '/stations',
@@ -27,7 +25,6 @@
 			]
 		});
 	});
-
 	onDestroy(async () => {
 		await ui?.delete();
 	});

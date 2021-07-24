@@ -1,6 +1,6 @@
-import preprocess from 'svelte-preprocess';
-import path from 'path';
 import adapter from '@sveltejs/adapter-node';
+import path from 'path';
+import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

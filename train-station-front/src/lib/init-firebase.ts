@@ -1,9 +1,10 @@
-import firebase from 'firebase/app';
 import 'firebase/auth';
 
-export function initializeFirebase() {
+import firebase from 'firebase';
+
+export function initializeFirebase(): void {
 	if (firebase.apps.length === 0) {
-		var firebaseConfig = {
+		const firebaseConfig = {
 			apiKey: 'AIzaSyCykbKgBSkPtdVhsPShv59Lb5hMgWkwa6s',
 			authDomain: 'train-station-app.firebaseapp.com',
 			projectId: 'train-station-app',

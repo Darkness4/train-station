@@ -1,6 +1,7 @@
+import axios from 'axios';
+
 import type { Paginated } from '$lib/entities/paginated';
 import type { Station } from '$lib/entities/station';
-import axios from 'axios';
 
 const DEFAULT_LIMIT = 20;
 const DEFAULT_PAGE = 1;

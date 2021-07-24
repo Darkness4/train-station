@@ -1,10 +1,12 @@
 <script lang="ts" context="module">
+	import '../app.scss';
+
+	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
+	import firebase from 'firebase';
+	import { onDestroy } from 'svelte';
+
 	import { goto } from '$app/navigation';
 	import { initializeFirebase } from '$lib/init-firebase';
-	import type { LoadOutput, LoadInput } from '@sveltejs/kit';
-	import firebase from 'firebase/app';
-	import { onDestroy, onMount } from 'svelte';
-	import '../app.scss';
 
 	initializeFirebase();
 

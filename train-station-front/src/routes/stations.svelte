@@ -6,27 +6,29 @@
 
 	export async function load({ page }: LoadInput): Promise<LoadOutput> {
 		initialPageNumber = 1;
-		if (page.query.get('page') != null) {
-			initialPageNumber = parseInt(page.query.get('page')!!);
+		const queryPage = page.query.get('page');
+		if (queryPage !== null) {
+			initialPageNumber = parseInt(queryPage);
 		}
-
 		initialSearchQuery = page.query.get('s') ?? '';
-
 		return {};
 	}
 </script>
 
 <script lang="ts">
-	import { page } from '$app/stores';
+	import 'firebase/auth';
+
+	import firebase from 'firebase';
+
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import Pager from '$components/pager.component.svelte';
 	import PaginatedStations from '$components/paginated-stations.component.svelte';
 	import Search from '$components/search.component.svelte';
-	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
-	import Pager from '$components/pager.component.svelte';
-	import firebase from 'firebase/app';
-	import 'firebase/auth';
-	import type { Station } from '$lib/entities/station';
 	import StationRepository from '$lib/api/train-station';
+	import type { Station } from '$lib/entities/station';
+	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
+
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;
 
