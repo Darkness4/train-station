@@ -44,7 +44,7 @@ spotless {
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    keystorePropertiesFile?.withInputStream { keystoreProperties.load(it) }
 }
 
 android {
