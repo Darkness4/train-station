@@ -48,7 +48,7 @@ var (
 			server.UseAfter(cors.New(corsConfig))
 			api := server.NewGroupPath("/api")
 			ctrls.NewRootController(server)
-			ctrls.NewTrainStationController(api, sl.StationRepository)
+			ctrls.NewTrainStationController(api, sl.StationRepository, sl.AuthService)
 
 			// Run
 			if err := server.ListenAndServe(); err != nil {
