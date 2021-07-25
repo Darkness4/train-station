@@ -16,8 +16,6 @@
 </script>
 
 <script lang="ts">
-	import 'firebase/auth';
-
 	import firebase from 'firebase';
 
 	import { goto } from '$app/navigation';
@@ -29,6 +27,8 @@
 	import type { Station } from '$lib/entities/station';
 	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
 
+	const auth = firebase.auth();
+
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;
 
@@ -36,7 +36,7 @@
 
 	async function loadData(s: string, page: number) {
 		try {
-			const user = firebase.auth().currentUser;
+			const user = auth.currentUser;
 			if (user !== null) {
 				const token = await user.getIdToken();
 				await paginatedStationsStore.load(token, {
@@ -59,7 +59,7 @@
 
 	async function onFavorite(station: Station) {
 		try {
-			const user = firebase.auth().currentUser;
+			const user = auth.currentUser;
 			if (user !== null) {
 				const token = await user.getIdToken();
 				station.is_favorite = !station.is_favorite;

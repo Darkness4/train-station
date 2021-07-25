@@ -1,12 +1,8 @@
 <script lang="ts" context="module">
-	import '../app.scss';
-
 	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
-	import firebase from 'firebase';
-	import { onDestroy } from 'svelte';
 
-	import { goto } from '$app/navigation';
 	import { initializeFirebase } from '$lib/init-firebase';
+	import firebase from 'firebase';
 
 	initializeFirebase();
 
@@ -24,8 +20,14 @@
 </script>
 
 <script lang="ts">
-	let userOrNull: firebase.User | null = null;
-	const unsubscribe = firebase.auth().onAuthStateChanged((user) => (userOrNull = user));
+	import '../app.scss';
+
+	import { onDestroy } from 'svelte';
+
+	import { goto } from '$app/navigation';
+
+	let userOrNull: any | null = null;
+	const unsubscribe = auth.onAuthStateChanged((user) => (userOrNull = user));
 
 	async function logOut() {
 		if (userOrNull !== null) {

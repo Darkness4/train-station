@@ -1,5 +1,3 @@
-import 'firebase/auth';
-
 import firebase from 'firebase';
 
 export function initializeFirebase(): void {
