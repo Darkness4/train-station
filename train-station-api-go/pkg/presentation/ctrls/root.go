@@ -17,8 +17,13 @@ func NewRootController(server *atreugo.Atreugo) *RootController {
 
 func (ctrl *RootController) buildRoutes() {
 	ctrl.server.GET("/", getRoot)
+	ctrl.server.GET("/healthz", getHealthz)
 }
 
 func getRoot(ctx *atreugo.RequestCtx) error {
 	return ctx.RedirectResponse("/api", 302)
+}
+
+func getHealthz(ctx *atreugo.RequestCtx) error {
+	return ctx.JSONResponse(&map[string]string{"status": "OK"}, 200)
 }
