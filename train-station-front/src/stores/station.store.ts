@@ -1,15 +1,16 @@
+import { writable } from 'svelte/store';
+
 import StationRepository from '$lib/api/train-station';
 import type { Station } from '$lib/entities/station';
-import { writable } from 'svelte/store';
 
 export const initialState: Station | null = null;
 function createStationStore() {
-	const { subscribe, update, set } = writable<Station | null>(initialState);
+	const { subscribe, set } = writable<Station | null>(initialState);
 
 	return {
 		subscribe,
-		load: async (id: string) => {
-			const result = await StationRepository.findById(id);
+		load: async (id: string, token: string) => {
+			const result = await StationRepository.findById(id, token);
 			set(result);
 		}
 	};

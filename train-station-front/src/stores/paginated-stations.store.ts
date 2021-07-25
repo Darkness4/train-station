@@ -1,7 +1,8 @@
+import { writable } from 'svelte/store';
+
 import StationRepository from '$lib/api/train-station';
 import type { Paginated } from '$lib/entities/paginated';
 import type { Station } from '$lib/entities/station';
-import { writable } from 'svelte/store';
 
 export const initialState: Paginated<Station> = {
 	count: 0,
@@ -15,8 +16,8 @@ function createPaginatedStationsStore() {
 
 	return {
 		subscribe,
-		load: async (params?: { s?: string | null; page?: number | null }) => {
-			const result = await StationRepository.find(params);
+		load: async (token: string, params?: { s?: string | null; page?: number | null }) => {
+			const result = await StationRepository.find(token, params);
 			set(result);
 		}
 	};

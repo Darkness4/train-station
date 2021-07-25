@@ -1,6 +1,7 @@
+import axios from 'axios';
+
 import type { Paginated } from '$lib/entities/paginated';
 import type { Station } from '$lib/entities/station';
-import axios from 'axios';
 
 const DEFAULT_LIMIT = 20;
 const DEFAULT_PAGE = 1;
@@ -10,11 +11,14 @@ const trainStationApi = axios.create({
 });
 
 const StationRepository = {
-	async find(options?: {
-		s?: string | null;
-		limit?: number | null;
-		page?: number | null;
-	}): Promise<Paginated<Station>> {
+	async find(
+		token: string,
+		options?: {
+			s?: string | null;
+			limit?: number | null;
+			page?: number | null;
+		}
+	): Promise<Paginated<Station>> {
 		const apiQuery = JSON.stringify({
 			libelle: {
 				$cont: options?.s ?? ''
@@ -26,26 +30,33 @@ const StationRepository = {
 				s: apiQuery,
 				limit: options?.limit ?? DEFAULT_LIMIT,
 				page: options?.page ?? DEFAULT_PAGE
-			}
+			},
+			headers: { Authorization: `Bearer ${token}` }
 		});
 
 		return r.data;
 	},
 
-	async create(body: Station): Promise<Station> {
-		const r = await trainStationApi.post<Station>('/stations/', body);
+	async create(body: Station, token: string): Promise<Station> {
+		const r = await trainStationApi.post<Station>('/stations/', body, {
+			headers: { Authorization: `Bearer ${token}` }
+		});
 
 		return r.data;
 	},
 
-	async findById(id: string): Promise<Station> {
-		const r = await trainStationApi.get<Station>(`/stations/${id}`);
+	async findById(id: string, token: string): Promise<Station> {
+		const r = await trainStationApi.get<Station>(`/stations/${id}`, {
+			headers: { Authorization: `Bearer ${token}` }
+		});
 
 		return r.data;
 	},
 
-	async updateById(id: string, body: Station): Promise<Station> {
-		const r = await trainStationApi.patch<Station>(`/stations/${id}`, body);
+	async updateById(id: string, body: Station, token: string): Promise<Station> {
+		const r = await trainStationApi.patch<Station>(`/stations/${id}`, body, {
+			headers: { Authorization: `Bearer ${token}` }
+		});
 
 		return r.data;
 	}

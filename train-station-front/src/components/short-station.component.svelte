@@ -1,19 +1,10 @@
 <script lang="ts">
 	import type { Station } from '$lib/entities/station';
-	import { goto } from '$app/navigation';
 	import 'material-design-icons/iconfont/material-icons.css';
-	import StationRepository from '$lib/api/train-station';
 
 	export let station: Station;
-
-	function onClick() {
-		goto(`/stations/${station.recordid}`);
-	}
-
-	function onFavorite() {
-		station.is_favorite = !station.is_favorite;
-		StationRepository.updateById(station.recordid, station);
-	}
+	export let onClick: () => any;
+	export let onFavorite: () => any;
 </script>
 
 <div class="block">

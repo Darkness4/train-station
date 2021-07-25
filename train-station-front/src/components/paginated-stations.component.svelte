@@ -4,6 +4,9 @@
 	import type { Station } from '$lib/entities/station';
 
 	export let stations: Paginated<Station>;
+
+	export let onClick: (station: Station) => any;
+	export let onFavorite: (station: Station) => any;
 </script>
 
 <section id="stations" class="section">
@@ -11,7 +14,11 @@
 		<h1 class="title">No data.</h1>
 	{:else}
 		{#each stations.data as station}
-			<ShortStation {station} />
+			<ShortStation
+				{station}
+				onClick={() => onClick(station)}
+				onFavorite={() => onFavorite(station)}
+			/>
 		{/each}
 	{/if}
 </section>

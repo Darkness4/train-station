@@ -6,23 +6,28 @@
 
 	export async function load({ page }: LoadInput): Promise<LoadOutput> {
 		initialPageNumber = 1;
-		if (page.query.get('page') != null) {
-			initialPageNumber = parseInt(page.query.get('page')!!);
+		const queryPage = page.query.get('page');
+		if (queryPage !== null) {
+			initialPageNumber = parseInt(queryPage);
 		}
-
 		initialSearchQuery = page.query.get('s') ?? '';
-
 		return {};
 	}
 </script>
 
 <script lang="ts">
-	import { page } from '$app/stores';
+	import firebase from 'firebase';
+
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import Pager from '$components/pager.component.svelte';
 	import PaginatedStations from '$components/paginated-stations.component.svelte';
 	import Search from '$components/search.component.svelte';
+	import StationRepository from '$lib/api/train-station';
+	import type { Station } from '$lib/entities/station';
 	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
-	import Pager from '$components/pager.component.svelte';
+
+	const auth = firebase.auth();
 
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;
@@ -31,17 +36,38 @@
 
 	async function loadData(s: string, page: number) {
 		try {
-			await paginatedStationsStore.load({
-				s: s,
-				page: page
-			});
+			const user = auth.currentUser;
+			if (user !== null) {
+				const token = await user.getIdToken();
+				await paginatedStationsStore.load(token, {
+					s: s,
+					page: page
+				});
+			}
 		} catch (e) {
 			console.error(e);
 		}
 	}
 
 	function search(newPage: number) {
-		goto(`${$page.path}?s=${searchQuery}&page=${newPage}`);
+		return goto(`${$page.path}?s=${searchQuery}&page=${newPage}`);
+	}
+
+	function onClick(station: Station) {
+		return goto(`/stations/${station.recordid}`);
+	}
+
+	async function onFavorite(station: Station) {
+		try {
+			const user = auth.currentUser;
+			if (user !== null) {
+				const token = await user.getIdToken();
+				station.is_favorite = !station.is_favorite;
+				return StationRepository.updateById(station.recordid, station, token);
+			}
+		} catch (e) {
+			console.error(e);
+		}
 	}
 </script>
 
@@ -59,7 +85,7 @@
 		goto={search}
 	/>
 
-	<PaginatedStations stations={$paginatedStationsStore} />
+	<PaginatedStations stations={$paginatedStationsStore} {onClick} {onFavorite} />
 
 	<Pager
 		bind:page={pageNumber}
