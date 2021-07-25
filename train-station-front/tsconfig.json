@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
 		"moduleResolution": "node",
-		"module": "es6",
-		"lib": ["es6"],
-		"target": "es6",
+		"module": "es2020",
+		"lib": ["es2019"],
+		"target": "es2020",
 		"strict": true,
 		/**
 			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript

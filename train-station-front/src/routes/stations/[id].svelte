@@ -2,11 +2,6 @@
 	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
 	import firebase from 'firebase';
 
-	import DetailStation from '$components/detail-station.component.svelte';
-	import { stationStore } from '$stores/station.store';
-	import type { Station } from '$lib/entities/station';
-	import { onDestroy } from 'svelte';
-
 	let id: string;
 
 	export async function load({ page }: LoadInput): Promise<LoadOutput> {
@@ -22,6 +17,15 @@
 		}
 		return {};
 	}
+</script>
+
+<script lang="ts">
+	import DetailStation from '$components/detail-station.component.svelte';
+
+	import { stationStore } from '$stores/station.store';
+	import type { Station } from '$lib/entities/station';
+
+	import { onDestroy } from 'svelte';
 
 	let station: Station | null;
 	const unsubscribe = stationStore.subscribe((it) => (station = it));
