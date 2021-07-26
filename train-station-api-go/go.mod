@@ -8,7 +8,7 @@ require (
 	firebase.google.com/go/v4 v4.6.0
 	github.com/andybalholm/brotli v1.0.3 // indirect
 	github.com/atreugo/cors v1.0.5
-	github.com/go-playground/validator/v10 v10.7.0
+	github.com/go-playground/validator/v10 v10.8.0
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/klauspost/compress v1.13.1 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
