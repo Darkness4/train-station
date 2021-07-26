@@ -58,6 +58,8 @@ const StationRepository = {
 			headers: { Authorization: `Bearer ${token}` }
 		});
 
+		console.log(r.status);
+
 		return r.data;
 	}
 };

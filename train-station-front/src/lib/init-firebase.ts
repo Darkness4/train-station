@@ -1,7 +1,7 @@
-import firebase from 'firebase';
+import { getApps, initializeApp } from 'firebase/app';
 
 export function initializeFirebase(): void {
-	if (firebase.apps.length === 0) {
+	if (getApps().length === 0) {
 		const firebaseConfig = {
 			apiKey: 'AIzaSyCykbKgBSkPtdVhsPShv59Lb5hMgWkwa6s',
 			authDomain: 'train-station-app.firebaseapp.com',
@@ -10,6 +10,6 @@ export function initializeFirebase(): void {
 			messagingSenderId: '1063974850049',
 			appId: '1:1063974850049:web:e2704ece9975248ea4ba00'
 		};
-		firebase.initializeApp(firebaseConfig);
+		initializeApp(firebaseConfig);
 	}
 }

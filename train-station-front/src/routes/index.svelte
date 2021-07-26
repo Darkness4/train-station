@@ -1,34 +1,31 @@
+<script lang="ts" context="module">
+	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
+	import { getAuth } from 'firebase/auth';
+
+	export async function load({ page }: LoadInput): Promise<LoadOutput> {
+		if (getAuth().currentUser !== null) {
+			return {
+				redirect: '/stations',
+				status: 302
+			};
+		}
+		return {};
+	}
+</script>
+
 <script lang="ts">
-	import 'firebaseui/dist/firebaseui.css';
-
-	import type { auth } from 'firebaseui';
-	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import firebase from 'firebase';
+	import AuthCard from '$components/auth/auth-card.component.svelte';
+	import { loginFormStore } from '$stores/login-form.store';
+	import { onAuthStateChanged } from 'firebase/auth';
 
-	const auth = firebase.auth();
+	const auth = getAuth();
 
-	const unsubcribe = auth.onAuthStateChanged((user) => {
+	const unsubcribe = onAuthStateChanged(auth, (user) => {
 		if (user) {
 			goto('/stations');
 			unsubcribe();
 		}
-	});
-
-	let ui: auth.AuthUI;
-	onMount(async () => {
-		const firebaseui = await import('firebaseui');
-		ui = new firebaseui.auth.AuthUI(auth);
-		ui.start('#firebaseui-auth-container', {
-			signInSuccessUrl: '/stations',
-			signInOptions: [
-				firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-				firebase.auth.EmailAuthProvider.PROVIDER_ID
-			]
-		});
-	});
-	onDestroy(async () => {
-		await ui?.delete();
 	});
 </script>
 
@@ -36,8 +33,15 @@
 	<title>Train Station Login</title>
 </svelte:head>
 
-<div class="hero is-large">
+<div class="hero is-fullheight is-primary">
 	<div class="hero-body">
-		<div id="firebaseui-auth-container" />
+		<AuthCard
+			email={$loginFormStore.email}
+			password={$loginFormStore.password}
+			onCreateAccount={loginFormStore.createAccount}
+			onLogin={loginFormStore.signIn}
+			onLoginWithGoogle={loginFormStore.signInWithGoogle}
+			onForgotPassword={loginFormStore.forgotPassword}
+		/>
 	</div>
 </div>

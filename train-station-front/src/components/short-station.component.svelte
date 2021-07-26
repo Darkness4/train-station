@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Station } from '$lib/entities/station';
-	import 'material-design-icons/iconfont/material-icons.css';
 
 	export let station: Station;
 	export let onClick: () => any;

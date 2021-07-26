@@ -1,13 +1,15 @@
 <script context="module" lang="ts">
 	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
-	import firebase from 'firebase';
+	import { getAuth } from 'firebase/auth';
+
+	const auth = getAuth();
 
 	let id: string;
 
 	export async function load({ page }: LoadInput): Promise<LoadOutput> {
 		id = page.params.id;
 		try {
-			const user = firebase.auth().currentUser;
+			const user = auth.currentUser;
 			if (user !== null) {
 				const token = await user.getIdToken();
 				await stationStore.load(page.params.id, token);

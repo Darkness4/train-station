@@ -16,7 +16,7 @@
 </script>
 
 <script lang="ts">
-	import firebase from 'firebase';
+	import { getAuth } from 'firebase/auth';
 
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -27,7 +27,7 @@
 	import type { Station } from '$lib/entities/station';
 	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
 
-	const auth = firebase.auth();
+	const auth = getAuth();
 
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;

@@ -1,12 +1,14 @@
 <script lang="ts" context="module">
+	import 'material-design-icons/iconfont/material-icons.css';
+
 	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
 
 	import { initializeFirebase } from '$lib/init-firebase';
-	import firebase from 'firebase';
+	import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 	initializeFirebase();
 
-	const auth = firebase.auth();
+	const auth = getAuth();
 
 	export async function load({ page }: LoadInput): Promise<LoadOutput> {
 		if (page.path !== '/' && auth.currentUser === null) {
@@ -27,11 +29,11 @@
 	import { goto } from '$app/navigation';
 
 	let userOrNull: any | null = null;
-	const unsubscribe = auth.onAuthStateChanged((user) => (userOrNull = user));
+	const unsubscribe = onAuthStateChanged(auth, (user) => (userOrNull = user));
 
 	async function logOut() {
 		if (userOrNull !== null) {
-			await auth.signOut();
+			await signOut(auth);
 			userOrNull = null;
 			return goto('/');
 		}
@@ -42,22 +44,31 @@
 	});
 </script>
 
-<nav class="navbar">
-	<div class="container">
-		<div id="navMenu" class="navbar-menu">
-			<div class="navbar-end">
-				<div class="navbar-item">
-					<div class="buttons">
-						{#if userOrNull}
+{#if userOrNull}
+	<nav class="navbar">
+		<div class="container">
+			<div id="navMenu" class="navbar-menu">
+				<div class="navbar-start">
+					<div class="navbar-item">
+						<div class="buttons">
+							<button on:click={() => goto('/')} class="button">Home</button>
+						</div>
+					</div>
+				</div>
+				<div class="navbar-end">
+					<div class="navbar-item">
+						<div class="buttons">
 							<button on:click={logOut} class="button is-danger">Log out</button>
-						{/if}
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</nav>
+	</nav>
 
-<div class="container">
+	<div class="container">
+		<slot />
+	</div>
+{:else}
 	<slot />
-</div>
+{/if}

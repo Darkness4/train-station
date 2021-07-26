@@ -1,6 +1,4 @@
 <script lang="ts">
-	import 'material-design-icons/iconfont/material-icons.css';
-
 	import type { Station } from '$lib/entities/station';
 
 	export let station: Station;
