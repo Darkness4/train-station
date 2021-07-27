@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@nestjs/axios": "0.0.1",
-    "@nestjs/common": "8.0.4",
-    "@nestjs/core": "8.0.4",
-    "@nestjs/platform-fastify": "8.0.4",
+    "@nestjs/common": "8.0.5",
+    "@nestjs/core": "8.0.5",
+    "@nestjs/platform-fastify": "8.0.5",
     "@nestjs/swagger": "5.0.8",
     "@nestjs/typeorm": "8.0.1",
     "@nestjsx/crud": "4.6.2",
@@ -44,9 +44,9 @@
     "typeorm": "0.2.34"
   },
   "devDependencies": {
-    "@nestjs/cli": "8.0.2",
+    "@nestjs/cli": "8.1.0",
     "@nestjs/schematics": "8.0.2",
-    "@nestjs/testing": "8.0.4",
+    "@nestjs/testing": "8.0.5",
     "@types/jest": "26.0.24",
     "@types/node": "16.3.1",
     "@types/supertest": "2.0.11",
