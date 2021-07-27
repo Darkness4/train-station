@@ -13,6 +13,7 @@ type StationDataSource interface {
 	FindManyAndCountStation(s string, limit int, page int) ([]*models.StationModel, int64, error)
 	CountStation(s string) (int64, error)
 	CreateIsFavorite(m *models.IsFavoriteModel) (*models.IsFavoriteModel, error)
+	RemoveIsFavorite(m *models.IsFavoriteModel) error
 }
 
 type StationDataSourceImpl struct {
@@ -112,4 +113,13 @@ func (ds *StationDataSourceImpl) CreateIsFavorite(m *models.IsFavoriteModel) (*m
 		return nil, result.Error
 	}
 	return m, nil
+}
+
+func (ds *StationDataSourceImpl) RemoveIsFavorite(m *models.IsFavoriteModel) error {
+	result := ds.db.Delete(m)
+
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
 }

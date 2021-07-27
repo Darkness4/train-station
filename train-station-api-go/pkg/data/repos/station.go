@@ -69,8 +69,23 @@ func (repo *StationRepositoryImpl) CreateOne(station *entities.Station, userId s
 	if err != nil {
 		return nil, err
 	}
+	if *station.IsFavorite {
+		if _, err := repo.ds.CreateIsFavorite(&models.IsFavoriteModel{
+			UserID:    userId,
+			StationID: newModel.RecordID,
+		}); err != nil {
+			return nil, err
+		}
+	} else {
+		if err := repo.ds.RemoveIsFavorite(&models.IsFavoriteModel{
+			UserID:    userId,
+			StationID: newModel.RecordID,
+		}); err != nil {
+			return nil, err
+		}
+	}
 
-	entity, err := newModel.Entity(userId)
+	entity, err := repo.GetOne(newModel.RecordID, userId)
 	if err != nil {
 		return nil, err
 	}
