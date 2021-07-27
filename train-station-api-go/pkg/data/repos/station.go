@@ -69,17 +69,17 @@ func (repo *StationRepositoryImpl) CreateOne(station *entities.Station, userId s
 	if err != nil {
 		return nil, err
 	}
-	if *station.IsFavorite {
+	if station.IsFavorite != nil && *station.IsFavorite {
 		if _, err := repo.ds.CreateIsFavorite(&models.IsFavoriteModel{
 			UserID:    userId,
-			StationID: newModel.RecordID,
+			StationID: station.RecordID,
 		}); err != nil {
 			return nil, err
 		}
-	} else {
+	} else if station.IsFavorite != nil && !*station.IsFavorite {
 		if err := repo.ds.RemoveIsFavorite(&models.IsFavoriteModel{
 			UserID:    userId,
-			StationID: newModel.RecordID,
+			StationID: station.RecordID,
 		}); err != nil {
 			return nil, err
 		}
@@ -109,6 +109,24 @@ func (repo *StationRepositoryImpl) CreateMany(stations []*entities.Station, user
 		return nil, err
 	}
 
+	for _, val := range stations {
+		if val.IsFavorite != nil && *val.IsFavorite {
+			if _, err := repo.ds.CreateIsFavorite(&models.IsFavoriteModel{
+				UserID:    userId,
+				StationID: val.RecordID,
+			}); err != nil {
+				return nil, err
+			}
+		} else if val.IsFavorite != nil && !*val.IsFavorite {
+			if err := repo.ds.RemoveIsFavorite(&models.IsFavoriteModel{
+				UserID:    userId,
+				StationID: val.RecordID,
+			}); err != nil {
+				return nil, err
+			}
+		}
+	}
+
 	// Map
 	newValues := make([]*entities.Station, 0, len(result))
 	for _, val := range result {
@@ -131,7 +149,22 @@ func (repo *StationRepositoryImpl) UpdateOne(id string, station *entities.Statio
 	if err != nil {
 		return nil, err
 	}
-	entity, err := newModel.Entity(userId)
+	if station.IsFavorite != nil && *station.IsFavorite {
+		if _, err := repo.ds.CreateIsFavorite(&models.IsFavoriteModel{
+			UserID:    userId,
+			StationID: station.RecordID,
+		}); err != nil {
+			return nil, err
+		}
+	} else if station.IsFavorite != nil && !*station.IsFavorite {
+		if err := repo.ds.RemoveIsFavorite(&models.IsFavoriteModel{
+			UserID:    userId,
+			StationID: station.RecordID,
+		}); err != nil {
+			return nil, err
+		}
+	}
+	entity, err := repo.GetOne(newModel.RecordID, userId)
 	if err != nil {
 		return nil, err
 	}
