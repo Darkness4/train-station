@@ -3,6 +3,7 @@ package filters
 import (
 	"log"
 
+	"firebase.google.com/go/v4/auth"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
 	"github.com/go-playground/validator/v10"
 	"github.com/savsgio/atreugo/v11"
@@ -31,6 +32,13 @@ func ExceptionFilter(ctx *atreugo.RequestCtx, err error) error {
 			StatusCode: 400,
 			Message:    err.Error(),
 		}, 400)
+	}
+	// By errorutils
+	if auth.IsIDTokenInvalid(err) {
+		return ctx.JSONResponse(dtos.Error{
+			StatusCode: 401,
+			Message:    "ID Token is invalid.",
+		}, 401)
 	}
 
 	// Unhandled errors

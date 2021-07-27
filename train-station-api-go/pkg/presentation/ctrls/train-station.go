@@ -2,7 +2,6 @@ package ctrls
 
 import (
 	"encoding/json"
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -62,9 +61,6 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	// Input
 	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
 	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-	if idToken == "" {
-		return fmt.Errorf("ID Token is invalid")
-	}
 	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
 	if err != nil {
 		return err
@@ -120,9 +116,6 @@ func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
 	// Input
 	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
 	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-	if idToken == "" {
-		return fmt.Errorf("ID Token is invalid")
-	}
 	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
 	if err != nil {
 		return err
@@ -144,9 +137,6 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 	// Input
 	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
 	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-	if idToken == "" {
-		return fmt.Errorf("ID Token is invalid")
-	}
 	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
 	if err != nil {
 		return err
@@ -175,9 +165,6 @@ func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	// Input
 	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
 	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-	if idToken == "" {
-		return fmt.Errorf("ID Token is invalid")
-	}
 	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
 	if err != nil {
 		return err
