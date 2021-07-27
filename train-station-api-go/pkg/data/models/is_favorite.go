@@ -1,6 +1,6 @@
 package models
 
 type IsFavoriteModel struct {
-	UserID    string `gorm:"primaryKey;autoIncrement:false;user_id:station_id <> ''"`
-	StationID string `gorm:"check:station_id <> ''"`
+	UserID    string `gorm:"primaryKey;autoIncrement:false;check:user_id <> ''"`
+	StationID string `gorm:"primaryKey;autoIncrement:false;check:station_id <> ''"`
 }
