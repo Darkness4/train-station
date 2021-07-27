@@ -40,7 +40,7 @@
 			password={$loginFormStore.password}
 			onCreateAccount={loginFormStore.createAccount}
 			onLogin={loginFormStore.signIn}
-			onLoginWithGoogle={loginFormStore.signInWithGoogle}
+			onLoginWithGoogle={async () => loginFormStore.signInWithGoogle()}
 			onForgotPassword={loginFormStore.forgotPassword}
 		/>
 	</div>

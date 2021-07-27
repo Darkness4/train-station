@@ -63,7 +63,8 @@
 			if (user !== null) {
 				const token = await user.getIdToken();
 				station.is_favorite = !station.is_favorite;
-				return StationRepository.updateById(station.recordid, station, token);
+				await StationRepository.updateById(station.recordid, station, token);
+				await loadData(searchQuery, pageNumber);
 			}
 		} catch (e) {
 			console.error(e);
