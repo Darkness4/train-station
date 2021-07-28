@@ -20,16 +20,16 @@ import javax.inject.Inject
 class MainViewModel
 @Inject
 constructor(
-  private val repository: StationRepository,
+    private val repository: StationRepository,
 ) : ViewModel() {
-  enum class RefreshMode {
-    Normal,
-    WithScrollToTop,
-  }
+    enum class RefreshMode {
+        Normal,
+        WithScrollToTop,
+    }
 
-  private val _refreshManually = MutableStateFlow<RefreshMode?>(null)
-  val refreshManually: StateFlow<RefreshMode?>
-    get() = _refreshManually
+    private val _refreshManually = MutableStateFlow<RefreshMode?>(null)
+    val refreshManually: StateFlow<RefreshMode?>
+        get() = _refreshManually
 
     private fun refreshManually() {
         _refreshManually.value = RefreshMode.Normal
@@ -64,30 +64,31 @@ constructor(
     private var station: Flow<PagingData<Station>>? = null
     private var searchValue: String? = null
 
-  /** Fetch the `PagingData`. */
+    /** Fetch the `PagingData`. */
     fun watchPages(search: String, token: String): Flow<PagingData<Station>> {
-    val lastResult = station
+        val lastResult = station
 
-    // If already fetched
-    if (search == searchValue && lastResult != null) {
-      return lastResult
+        // If already fetched
+        if (search == searchValue && lastResult != null) {
+            return lastResult
+        }
+        searchValue = search
+        val newResult: Flow<PagingData<Station>> =
+            repository
+                .watchPages(search, token)
+                .cachedIn(viewModelScope) // Cache the content in a CoroutineScope
+        station = newResult
+        return newResult
     }
-    searchValue = search
-    val newResult: Flow<PagingData<Station>> =
-      repository
-        .watchPages(search, token)
-        .cachedIn(viewModelScope) // Cache the content in a CoroutineScope
-    station = newResult
-    return newResult
-  }
 
-  private val _networkStatus = MutableStateFlow<State<Unit>?>(null)
-  val networkStatus: StateFlow<State<Unit>?>
-    get() = _networkStatus
+    private val _networkStatus = MutableStateFlow<State<Unit>?>(null)
+    val networkStatus: StateFlow<State<Unit>?>
+        get() = _networkStatus
 
-  fun update(station: Station, token: String) =
-    viewModelScope.launch(Dispatchers.Main) {
-      _networkStatus.value = repository.updateOne(station.copy().toggleFavorite(), token).map {}
-      refreshManually()
-    }
+    fun update(station: Station, token: String) =
+        viewModelScope.launch(Dispatchers.Main) {
+            _networkStatus.value =
+                repository.updateOne(station.copy().toggleFavorite(), token).map {}
+            refreshManually()
+        }
 }
