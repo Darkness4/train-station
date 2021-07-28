@@ -116,7 +116,7 @@ func (ds *StationDataSourceImpl) CreateIsFavorite(m *models.IsFavoriteModel) (*m
 }
 
 func (ds *StationDataSourceImpl) RemoveIsFavorite(m *models.IsFavoriteModel) error {
-	result := ds.db.Unscoped().Delete(m)
+	result := ds.db.Where("user_id = ? AND station_id = ?", m.UserID, m.StationID).Delete(&models.IsFavoriteModel{})
 
 	if result.Error != nil {
 		return result.Error

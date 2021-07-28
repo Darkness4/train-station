@@ -586,3 +586,90 @@ func TestCreateIsFavorite(t *testing.T) {
 		})
 	}
 }
+
+func TestRemoveIsFavorite(t *testing.T) {
+	// Setup
+	database, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
+	if err != nil {
+		t.Errorf("Received error when opening database: %v\n", err)
+	}
+	err = database.AutoMigrate(
+		&models.StationModel{},
+		&models.IsFavoriteModel{},
+	)
+	if err != nil {
+		t.Errorf("Received error when migrating database: %v\n", err)
+	}
+	result := database.Exec("PRAGMA foreign_keys = ON")
+	if result.Error != nil {
+		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
+	}
+	ds := NewStationDataSource(database)
+	t.Cleanup(func() {
+		database.Where("1 = 1").Delete(&models.StationModel{})
+		database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
+	})
+
+	var workingTable = []struct {
+		name string
+		mock *models.StationModel
+		in   *models.IsFavoriteModel
+	}{
+		{"RemoveIsFavorite with StationID only",
+			&models.StationModel{
+				RecordID:        "recordid",
+				DatasetID:       "datasetid",
+				Libelle:         "libelle",
+				RecordTimestamp: "record_timestamp",
+				Fields: &models.FieldsModel{
+					GeoPoint2D: "[]",
+					CGeo:       "[]",
+					GeoShape: &models.GeometryModel{
+						Coordinates: "[]",
+					},
+				},
+				Geometry: &models.GeometryModel{
+					Coordinates: "[]",
+				},
+			},
+			&models.IsFavoriteModel{
+				UserID:    "userId",
+				StationID: "recordid",
+			},
+		},
+	}
+
+	// Tests
+	for _, tt := range workingTable {
+		t.Run(fmt.Sprintf("%s should work", tt.name), func(t *testing.T) {
+			t.Cleanup(func() {
+				database.Where("1 = 1").Delete(&models.StationModel{})
+				database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
+			})
+
+			_, err := ds.CreateStation(tt.mock)
+			if err != nil {
+				t.Errorf("Got err on CreateStation: %v\n", err)
+				return
+			}
+
+			_, err = ds.CreateIsFavorite(tt.in)
+			if err != nil {
+				t.Errorf("Got err on CreateIsFavorite: %v\n", err)
+				return
+			}
+
+			err = ds.RemoveIsFavorite(tt.in)
+			if err != nil {
+				t.Errorf("Got err on RemoveIsFavorite: %v\n", err)
+				return
+			}
+
+			var count int64
+			if database.Model(&models.IsFavoriteModel{}).Count(&count); count != 0 {
+				t.Error("Entity not deleted")
+				return
+			}
+		})
+	}
+}
