@@ -6,9 +6,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-/**
- * Converters for `List` to `String` to be able to store `List` in `Room`.
- */
+/** Converters for `List` to `String` to be able to store `List` in `Room`. */
 @ProvidedTypeConverter
 class ListConverters private constructor(private val json: Json) {
     @TypeConverter

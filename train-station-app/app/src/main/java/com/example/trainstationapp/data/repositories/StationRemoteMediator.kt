@@ -18,13 +18,15 @@ import java.io.IOException
 /**
  * This `StationRemoteMediator` handles paging from a layered data source.
  *
- * @see [Paging 3 library overview](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
+ * @see [Paging 3 library
+ * overview](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
  */
 @ExperimentalPagingApi
 class StationRemoteMediator(
     private val search: String,
     private val service: TrainStationDataSource,
     private val database: Database,
+    private val token: String
 ) : RemoteMediator<Int, StationModel>() {
     companion object {
         private const val STARTING_PAGE_INDEX = 1
@@ -42,49 +44,58 @@ class StationRemoteMediator(
      * Load data to the database on page actions.
      *
      * Steps :
-     * 1.  Find out what page we need to load from the network, based on the LoadType.
-     * 2.  Trigger the network request.
-     * 3.  Once the network request completes, if the received list is not empty,
+     * 1. Find out what page we need to load from the network, based on the LoadType.
+     * 2. Trigger the network request.
+     * 3. Once the network request completes, if the received list is not empty,
+     * ```
      *     then do the following:
-     * 4.  We compute the RemoteKeys for every item.
-     * 5.  If this is a new query (loadType = REFRESH) then we clear the database.
-     * 6.  Save the RemoteKeys and items in the database.
-     * 7.  Return MediatorResult.Success(endOfPaginationReached = false).
-     * 8.  If the list of repos was empty then we return MediatorResult.Success(endOfPaginationReached = true).
+     * ```
+     * 4. We compute the RemoteKeys for every item.
+     * 5. If this is a new query (loadType = REFRESH) then we clear the database.
+     * 6. Save the RemoteKeys and items in the database.
+     * 7. Return MediatorResult.Success(endOfPaginationReached = false).
+     * 8. If the list of repos was empty then we return MediatorResult.Success(endOfPaginationReached
+     * = true).
+     * ```
      *     If we get an error requesting data we return MediatorResult.Error.
+     * ```
      */
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, StationModel>
     ): MediatorResult {
-        val page = when (loadType) {
-            LoadType.REFRESH -> {
-                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
+        val page =
+            when (loadType) {
+                LoadType.REFRESH -> {
+                    val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                    remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
+                }
+                LoadType.PREPEND -> {
+                    val remoteKeys = getRemoteKeyForFirstItem(state)
+                    remoteKeys?.prevKey
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                }
+                LoadType.APPEND -> {
+                    val remoteKeys = getRemoteKeyForLastItem(state)
+                    remoteKeys?.nextKey
+                        ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                }
             }
-            LoadType.PREPEND -> {
-                val remoteKeys = getRemoteKeyForFirstItem(state)
-                remoteKeys?.prevKey
-                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-            }
-            LoadType.APPEND -> {
-                val remoteKeys = getRemoteKeyForLastItem(state)
-                remoteKeys?.nextKey
-                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-            }
-        }
 
         return try {
-            val response = if (search.isNotEmpty()) {
-                val apiQuery = buildJsonObject {
-                    putJsonObject("libelle") {
-                        put("\$cont", search)
-                    }
+            val response =
+                if (search.isNotEmpty()) {
+                    val apiQuery =
+                        buildJsonObject { putJsonObject("libelle") { put("\$cont", search) } }
+                    service.find(
+                        s = apiQuery.toString(),
+                        page = page,
+                        limit = state.config.pageSize,
+                        token = token
+                    )
+                } else {
+                    service.find(page = page, limit = state.config.pageSize, token = token)
                 }
-                service.find(s = apiQuery.toString(), page = page, limit = state.config.pageSize)
-            } else {
-                service.find(page = page, limit = state.config.pageSize)
-            }
 
             val items = response.data
             val endOfPaginationReached = items.isEmpty()
@@ -96,9 +107,8 @@ class StationRemoteMediator(
                 }
                 val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
-                val keys = items.map {
-                    RemoteKeys(id = it.recordid, prevKey = prevKey, nextKey = nextKey)
-                }
+                val keys =
+                    items.map { RemoteKeys(id = it.recordid, prevKey = prevKey, nextKey = nextKey) }
                 database.remoteKeysDao().insert(keys)
                 database.stationDao().insert(items)
             }
@@ -125,20 +135,18 @@ class StationRemoteMediator(
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, StationModel>): RemoteKeys? {
         // Get the first page that was retrieved, that contained items.
         // From that first page, get the first item
-        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { item ->
-                // Get the remote keys of the first items retrieved
-                database.remoteKeysDao().findById(item.recordid)
-            }
+        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { item ->
+            // Get the remote keys of the first items retrieved
+            database.remoteKeysDao().findById(item.recordid)
+        }
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, StationModel>): RemoteKeys? {
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
-        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { item ->
-                // Get the remote keys of the last item retrieved
-                database.remoteKeysDao().findById(item.recordid)
-            }
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { item ->
+            // Get the remote keys of the last item retrieved
+            database.remoteKeysDao().findById(item.recordid)
+        }
     }
 }

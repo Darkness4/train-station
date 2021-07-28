@@ -25,24 +25,20 @@ internal class StationDaoTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(
-            context,
-            Database::class.java
-        ).build()
+        db = Room.inMemoryDatabaseBuilder(context, Database::class.java).build()
         dao = db.stationDao()
     }
 
     @Test
     fun insertAndWatch() = runBlocking {
-        val items = listOf(
-            AndroidTestUtils.createStationModel("0"),
-            AndroidTestUtils.createStationModel("1"),
-        )
+        val items =
+            listOf(
+                AndroidTestUtils.createStationModel("0"),
+                AndroidTestUtils.createStationModel("1"),
+            )
 
         // Act
-        val resultDeferred = async {
-            dao.watch().first()
-        }
+        val resultDeferred = async { dao.watch().first() }
         dao.insert(items)
 
         // Assert

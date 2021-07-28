@@ -31,7 +31,9 @@ object DataModule {
     fun provideTrainStationDataSource(client: OkHttpClient, json: Json): TrainStationDataSource {
         return Retrofit.Builder()
             .baseUrl(TrainStationDataSource.BASE_URL)
-            .addConverterFactory(json.asConverterFactory(TrainStationDataSource.CONTENT_TYPE.toMediaType()))
+            .addConverterFactory(
+                json.asConverterFactory(TrainStationDataSource.CONTENT_TYPE.toMediaType())
+            )
             .client(client)
             .build()
             .create(TrainStationDataSource::class.java)
@@ -42,11 +44,9 @@ object DataModule {
     fun provideHttpClient(): OkHttpClient {
         return when {
             BuildConfig.DEBUG -> {
-                val interceptor = HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY)
-                OkHttpClient.Builder()
-                    .addInterceptor(interceptor)
-                    .build()
+                val interceptor =
+                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+                OkHttpClient.Builder().addInterceptor(interceptor).build()
             }
             else -> OkHttpClient()
         }
@@ -60,11 +60,7 @@ object DataModule {
     @Provides
     fun provideRoomDatabase(@ApplicationContext context: Context, json: Json): Database {
         val listConverters = ListConverters.create(json)
-        return Room.databaseBuilder(
-            context,
-            Database::class.java,
-            "cache.db"
-        )
+        return Room.databaseBuilder(context, Database::class.java, "cache.db")
             .addTypeConverter(listConverters)
             .build()
     }

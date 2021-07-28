@@ -18,9 +18,9 @@ import com.example.trainstationapp.databinding.StationsLoadStateFooterViewItemBi
  * only `Loading` and `Error` states lead to items being displayed and notifies the `RecyclerView`
  * when an item is removed, inserted, or changed, depending on the `LoadState`.
  *
- * For the retry mechanism we use `adapter.retry()`. Under the hood, this method ends up calling
- * our `PagingSource` implementation for the right page. The response will be automatically
- * propagated via `Flow<PagingData>`.
+ * For the retry mechanism we use `adapter.retry()`. Under the hood, this method ends up calling our
+ * `PagingSource` implementation for the right page. The response will be automatically propagated
+ * via `Flow<PagingData>`.
  */
 class StationsLoadStateAdapter(private val onRetry: () -> Unit) :
     LoadStateAdapter<StationsLoadStateAdapter.ViewHolder>() {
@@ -32,8 +32,7 @@ class StationsLoadStateAdapter(private val onRetry: () -> Unit) :
     class ViewHolder(
         private val binding: StationsLoadStateFooterViewItemBinding,
         private val retry: () -> Unit
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(loadState: LoadState) {
             binding.loadState = loadState
@@ -42,14 +41,13 @@ class StationsLoadStateAdapter(private val onRetry: () -> Unit) :
         }
 
         companion object {
-            fun create(parent: ViewGroup, onRetry: () -> Unit) = ViewHolder(
-                StationsLoadStateFooterViewItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                ),
-                onRetry
-            )
+            fun create(parent: ViewGroup, onRetry: () -> Unit) =
+                ViewHolder(
+                    StationsLoadStateFooterViewItemBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    ),
+                    onRetry
+                )
         }
     }
 }

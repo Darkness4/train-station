@@ -7,10 +7,7 @@ import com.example.trainstationapp.data.database.converters.ListConverters
 import com.example.trainstationapp.data.models.RemoteKeys
 import com.example.trainstationapp.data.models.StationModel
 
-@Database(
-    entities = [StationModel::class, RemoteKeys::class],
-    version = 1
-)
+@Database(entities = [StationModel::class, RemoteKeys::class], version = 1)
 @TypeConverters(ListConverters::class)
 abstract class Database : RoomDatabase() {
     abstract fun stationDao(): StationDao

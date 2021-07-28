@@ -13,9 +13,4 @@ import androidx.room.PrimaryKey
  * @param nextKey Reference to the next page. `null` means id is in the last page.
  */
 @Entity(tableName = "remote_keys")
-data class RemoteKeys(
-    @PrimaryKey
-    val id: String,
-    val prevKey: Int?,
-    val nextKey: Int?
-)
+data class RemoteKeys(@PrimaryKey val id: String, val prevKey: Int?, val nextKey: Int?)

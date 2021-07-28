@@ -1,7 +1,5 @@
 package com.example.trainstationapp.presentation.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -13,18 +11,24 @@ import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: StationRepository) : ViewModel() {
+class MainViewModel
+@Inject
+constructor(
+    private val repository: StationRepository,
+) : ViewModel() {
     enum class RefreshMode {
         Normal,
         WithScrollToTop,
     }
 
-    private val _refreshManually = MutableLiveData<RefreshMode?>()
-    val refreshManually: LiveData<RefreshMode?>
+    private val _refreshManually = MutableStateFlow<RefreshMode?>(null)
+    val refreshManually: StateFlow<RefreshMode?>
         get() = _refreshManually
 
     private fun refreshManually() {
@@ -39,8 +43,8 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
         _refreshManually.value = null
     }
 
-    private val _showDetails = MutableLiveData<Station?>()
-    val showDetails: LiveData<Station?>
+    private val _showDetails = MutableStateFlow<Station?>(null)
+    val showDetails: StateFlow<Station?>
         get() = _showDetails
 
     fun showDetails(station: Station) {
@@ -54,16 +58,14 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
     /**
      * Observable train stations.
      *
-     * This flow can survives the configuration changes if cached in the CoroutineScope of
-     * the ViewModel.
+     * This flow can survives the configuration changes if cached in the CoroutineScope of the
+     * ViewModel.
      */
     private var station: Flow<PagingData<Station>>? = null
     private var searchValue: String? = null
 
-    /**
-     * Fetch the `PagingData`.
-     */
-    fun watchPages(search: String): Flow<PagingData<Station>> {
+    /** Fetch the `PagingData`. */
+    fun watchPages(search: String, token: String): Flow<PagingData<Station>> {
         val lastResult = station
 
         // If already fetched
@@ -71,18 +73,22 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
             return lastResult
         }
         searchValue = search
-        val newResult: Flow<PagingData<Station>> = repository.watchPages(search)
-            .cachedIn(viewModelScope) // Cache the content in a CoroutineScope
+        val newResult: Flow<PagingData<Station>> =
+            repository
+                .watchPages(search, token)
+                .cachedIn(viewModelScope) // Cache the content in a CoroutineScope
         station = newResult
         return newResult
     }
 
-    private val _networkStatus = MutableLiveData<State<Unit>>()
-    val networkStatus: LiveData<State<Unit>>
+    private val _networkStatus = MutableStateFlow<State<Unit>?>(null)
+    val networkStatus: StateFlow<State<Unit>?>
         get() = _networkStatus
 
-    fun update(station: Station) = viewModelScope.launch(Dispatchers.Main) {
-        _networkStatus.value = repository.updateOne(station.copy().toggleFavorite()).map { }
-        refreshManually()
-    }
+    fun update(station: Station, token: String) =
+        viewModelScope.launch(Dispatchers.Main) {
+            _networkStatus.value =
+                repository.updateOne(station.copy().toggleFavorite(), token).map {}
+            refreshManually()
+        }
 }
