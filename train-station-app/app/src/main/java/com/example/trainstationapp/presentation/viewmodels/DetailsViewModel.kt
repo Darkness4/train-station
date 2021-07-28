@@ -1,10 +1,7 @@
 package com.example.trainstationapp.presentation.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.trainstationapp.core.state.State
 import com.example.trainstationapp.core.state.map
@@ -13,8 +10,12 @@ import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class DetailsViewModel @AssistedInject constructor(
@@ -25,15 +26,15 @@ class DetailsViewModel @AssistedInject constructor(
         fetch(initialStation)
     }
 
-    private val _networkStatus = MutableLiveData<State<Unit>>()
-    val networkStatus: LiveData<State<Unit>>
+    private val _networkStatus = MutableStateFlow<State<Unit>?>(null)
+    val networkStatus: StateFlow<State<Unit>?>
         get() = _networkStatus
 
     val station =
         stationRepository.watchOne(initialStation)
             .mapNotNull { it.getOrNull() } // Only take successful values
             .filter { it.fields != null && it.geometry != null } // Make sure data is complete
-            .asLiveData(viewModelScope.coroutineContext + Dispatchers.Default)
+            .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     private fun fetch(station: Station) {
         viewModelScope.launch(Dispatchers.Main) {

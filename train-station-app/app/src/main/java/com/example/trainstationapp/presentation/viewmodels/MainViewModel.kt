@@ -1,7 +1,5 @@
 package com.example.trainstationapp.presentation.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -13,6 +11,8 @@ import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,8 +23,8 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
         WithScrollToTop,
     }
 
-    private val _refreshManually = MutableLiveData<RefreshMode?>()
-    val refreshManually: LiveData<RefreshMode?>
+    private val _refreshManually = MutableStateFlow<RefreshMode?>(null)
+    val refreshManually: StateFlow<RefreshMode?>
         get() = _refreshManually
 
     private fun refreshManually() {
@@ -39,8 +39,8 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
         _refreshManually.value = null
     }
 
-    private val _showDetails = MutableLiveData<Station?>()
-    val showDetails: LiveData<Station?>
+    private val _showDetails = MutableStateFlow<Station?>(null)
+    val showDetails: StateFlow<Station?>
         get() = _showDetails
 
     fun showDetails(station: Station) {
@@ -77,8 +77,8 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
         return newResult
     }
 
-    private val _networkStatus = MutableLiveData<State<Unit>>()
-    val networkStatus: LiveData<State<Unit>>
+    private val _networkStatus = MutableStateFlow<State<Unit>?>(null)
+    val networkStatus: StateFlow<State<Unit>?>
         get() = _networkStatus
 
     fun update(station: Station) = viewModelScope.launch(Dispatchers.Main) {

@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.example.trainstationapp.R
 import com.example.trainstationapp.core.state.doOnFailure
@@ -19,6 +20,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,6 +44,10 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     @Inject
     lateinit var stationRepository: StationRepository
 
+    // Coroutines jobs
+    private var networkStatusJob: Job? = null
+    private var stationObserverJob: Job? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
@@ -50,28 +58,37 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        // Watch for errors
-        viewModel.networkStatus.observe(this) {
-            it?.doOnFailure { e ->
-                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
-            }
-        }
-
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        // Watch for errors
+        networkStatusJob = lifecycleScope.launch {
+            viewModel.networkStatus.collect {
+                it?.doOnFailure { e ->
+                    Toast.makeText(this@DetailsActivity, e.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
     override fun onMapReady(map: GoogleMap) {
         this.map = map
-        viewModel.station.observe(this) {
-            it?.let {
-                val position = LatLng(it.fields!!.yWgs84, it.fields.xWgs84)
-                map.addMarker(
-                    MarkerOptions()
-                        .position(position)
-                        .title(it.libelle)
-                )
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM_LEVEL))
+
+        stationObserverJob = lifecycleScope.launch {
+            viewModel.station.collect {
+                it?.let {
+                    val position = LatLng(it.fields!!.yWgs84, it.fields.xWgs84)
+                    map.addMarker(
+                        MarkerOptions()
+                            .position(position)
+                            .title(it.libelle)
+                    )
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM_LEVEL))
+                }
             }
         }
     }
@@ -84,5 +101,11 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStop() {
+        networkStatusJob?.cancel()
+        stationObserverJob?.cancel()
+        super.onStop()
     }
 }

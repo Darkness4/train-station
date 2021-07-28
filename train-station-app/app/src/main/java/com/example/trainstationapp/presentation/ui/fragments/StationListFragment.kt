@@ -40,6 +40,10 @@ class StationListFragment : Fragment() {
     )
 
     private var fetchJob: Job? = null
+    private var scrollToTopJob: Job? = null
+    private var networkStatusJob: Job? = null
+    private var showDetailsJob: Job? = null
+    private var refreshManuallyJob: Job? = null
 
     /**
      * Call `viewModel.watchPages()`, collect the `PagingData` result and pass to the `StationAdapter`.
@@ -73,16 +77,6 @@ class StationListFragment : Fragment() {
             } else {
                 false
             }
-        }
-
-        // Scroll to top when the list is refreshed from network.
-        lifecycleScope.launch {
-            adapter.loadStateFlow
-                // Only emit when REFRESH LoadState for RemoteMediator changes.
-                .distinctUntilChangedBy { it.refresh }
-                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
-                .filter { it.refresh is LoadState.NotLoading }
-                .collect { binding.list.scrollToPosition(0) }
         }
     }
 
@@ -125,45 +119,67 @@ class StationListFragment : Fragment() {
             binding.retryButton.setOnClickListener { adapter.retry() }
         }
 
-        // Watch for network errors
-        activityViewModel.networkStatus.observe(viewLifecycleOwner) {
-            it?.doOnFailure { e ->
-                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
-                Timber.e(e)
-            }
-        }
-        // Watch for refresh action
-        activityViewModel.refreshManually.observe(viewLifecycleOwner) {
-            it?.let {
-                when (it) {
-                    MainViewModel.RefreshMode.Normal -> fetch(
-                        binding.searchBar.text!!.trim().toString()
-                    )
-                    MainViewModel.RefreshMode.WithScrollToTop -> {
-                        fetch(DEFAULT_QUERY)
-                        initSearchUi(DEFAULT_QUERY)
-                    }
-                }
-
-                activityViewModel.refreshManuallyDone()
-            }
-        }
-        // Watch for the "show details" action
-        activityViewModel.showDetails.observe(viewLifecycleOwner) {
-            it?.let {
-                findNavController().navigate(
-                    StationListFragmentDirections.actionStationListFragmentToDetailsActivity(it)
-                )
-                activityViewModel.showDetailsDone()
-            }
-        }
-
         // Fetch data
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         fetch(query)
         initSearchUi(query)
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Watch for network errors
+        networkStatusJob = lifecycleScope.launch {
+            activityViewModel.networkStatus.collect {
+                it?.doOnFailure { e ->
+                    Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
+                    Timber.e(e)
+                }
+            }
+        }
+
+        // Watch for refresh action
+        refreshManuallyJob = lifecycleScope.launch {
+            activityViewModel.refreshManually.collect {
+                it?.let {
+                    when (it) {
+                        MainViewModel.RefreshMode.Normal -> fetch(
+                            binding.searchBar.text!!.trim().toString()
+                        )
+                        MainViewModel.RefreshMode.WithScrollToTop -> {
+                            fetch(DEFAULT_QUERY)
+                            initSearchUi(DEFAULT_QUERY)
+                        }
+                    }
+
+                    activityViewModel.refreshManuallyDone()
+                }
+            }
+        }
+
+        // Watch for the "show details" action
+        showDetailsJob = lifecycleScope.launch {
+            activityViewModel.showDetails.collect {
+                it?.let {
+                    findNavController().navigate(
+                        StationListFragmentDirections.actionStationListFragmentToDetailsActivity(it)
+                    )
+                    activityViewModel.showDetailsDone()
+                }
+            }
+        }
+
+        // Scroll to top when the list is refreshed from network.
+        scrollToTopJob = lifecycleScope.launch {
+            adapter.loadStateFlow
+                // Only emit when REFRESH LoadState for RemoteMediator changes.
+                .distinctUntilChangedBy { it.refresh }
+                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect { binding.list.scrollToPosition(0) }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -181,6 +197,15 @@ class StationListFragment : Fragment() {
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
         private const val DEFAULT_QUERY = ""
+    }
+
+    override fun onStop() {
+        networkStatusJob?.cancel()
+        showDetailsJob?.cancel()
+        refreshManuallyJob?.cancel()
+        scrollToTopJob?.cancel()
+        fetchJob?.cancel()
+        super.onStop()
     }
 
     override fun onDestroyView() {
