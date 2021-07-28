@@ -24,7 +24,6 @@ interface TrainStationDataSource {
      * @param page Page portion of resources.
      */
     @GET("stations/")
-
     suspend fun find(
         @Query("s") s: String? = null,
         @Query("limit") limit: Int? = null,

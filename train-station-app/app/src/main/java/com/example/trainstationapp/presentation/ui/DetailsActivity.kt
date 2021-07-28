@@ -66,31 +66,34 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onStart()
 
         // Watch for errors
-        networkStatusJob = lifecycleScope.launch {
-            viewModel.networkStatus.collect {
-                it?.doOnFailure { e ->
-                    Toast.makeText(this@DetailsActivity, e.toString(), Toast.LENGTH_LONG).show()
+        networkStatusJob =
+            lifecycleScope.launch {
+                viewModel.networkStatus.collect {
+                    it?.doOnFailure { e ->
+                        Toast.makeText(this@DetailsActivity, e.toString(), Toast.LENGTH_LONG).show()
+                    }
                 }
             }
-        }
     }
 
     override fun onMapReady(map: GoogleMap) {
         this.map = map
 
-        stationObserverJob = lifecycleScope.launch {
-            viewModel.station.collect {
-                it?.let {
-                    val position = LatLng(it.fields!!.yWgs84, it.fields.xWgs84)
-                    map.addMarker(
-                        MarkerOptions()
-                            .position(position)
-                            .title(it.libelle)
-                    )
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM_LEVEL))
+        stationObserverJob =
+            lifecycleScope.launch {
+                viewModel.station.collect {
+                    it?.let {
+                        val position = LatLng(it.fields!!.yWgs84, it.fields.xWgs84)
+                        map.addMarker(MarkerOptions().position(position).title(it.libelle))
+                        map.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                position,
+                                DEFAULT_ZOOM_LEVEL
+                            )
+                        )
+                    }
                 }
             }
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

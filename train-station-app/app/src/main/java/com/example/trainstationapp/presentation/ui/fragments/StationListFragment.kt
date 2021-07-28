@@ -36,17 +36,13 @@ class StationListFragment : Fragment() {
     private val binding: FragmentStationListBinding
         get() = _binding!!
 
-    private val adapter = StationsAdapter(
-        onFavorite = {
-            authViewModel.idToken.value?.let { token ->
-                activityViewModel.update(
-                    it,
-                    token
-                )
-            }
-        },
-        onClick = { activityViewModel.showDetails(it) },
-    )
+    private val adapter =
+        StationsAdapter(
+            onFavorite = {
+                authViewModel.idToken.value?.let { token -> activityViewModel.update(it, token) }
+            },
+            onClick = { activityViewModel.showDetails(it) },
+        )
 
     private var fetchJob: Job? = null
     private var idTokenJob: Job? = null
@@ -56,18 +52,19 @@ class StationListFragment : Fragment() {
     private var refreshManuallyJob: Job? = null
 
     /**
-     * Call `viewModel.watchPages()`, collect the `PagingData` result and pass to the `StationAdapter`.
+     * Call `viewModel.watchPages()`, collect the `PagingData` result and pass to the
+     * `StationAdapter`.
      *
      * This method is the bridge between the repository and the `RecyclerView`.
      */
     private fun fetch(search: String) {
         fetchJob?.cancel()
         authViewModel.idToken.value?.let { token ->
-            fetchJob = lifecycleScope.launch {
-                activityViewModel.watchPages(search, token).collectLatest {
-                    adapter.submitData(it)
+            fetchJob =
+                lifecycleScope.launch {
+                    activityViewModel.watchPages(search, token)
+                        .collectLatest { adapter.submitData(it) }
                 }
-            }
         }
     }
 
@@ -104,10 +101,11 @@ class StationListFragment : Fragment() {
         binding.list.addItemDecoration(decoration)
 
         // Add the adapter for the PagingData, with footer and header.
-        binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = StationsLoadStateAdapter(onRetry = { adapter.retry() }),
-            footer = StationsLoadStateAdapter(onRetry = { adapter.retry() })
-        )
+        binding.list.adapter =
+            adapter.withLoadStateHeaderAndFooter(
+                header = StationsLoadStateAdapter(onRetry = { adapter.retry() }),
+                footer = StationsLoadStateAdapter(onRetry = { adapter.retry() })
+            )
 
         adapter.addLoadStateListener { loadState ->
             // Show loading spinner during initial load or refresh.
@@ -116,16 +114,13 @@ class StationListFragment : Fragment() {
             binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
 
             // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-            val errorState = loadState.source.append as? LoadState.Error
-                ?: loadState.source.prepend as? LoadState.Error
-                ?: loadState.append as? LoadState.Error
-                ?: loadState.prepend as? LoadState.Error
+            val errorState =
+                loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error ?: loadState.prepend as? LoadState.Error
             errorState?.let {
-                Toast.makeText(
-                    context,
-                    "\uD83D\uDE28 Whooops ${it.error}",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(context, "\uD83D\uDE28 Whooops ${it.error}", Toast.LENGTH_LONG)
+                    .show()
             }
 
             binding.retryButton.setOnClickListener { adapter.retry() }
@@ -143,68 +138,72 @@ class StationListFragment : Fragment() {
         super.onStart()
 
         // Watch for network errors
-        networkStatusJob = lifecycleScope.launch {
-            activityViewModel.networkStatus.collect {
-                it?.doOnFailure { e ->
-                    Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
-                    Timber.e(e)
+        networkStatusJob =
+            lifecycleScope.launch {
+                activityViewModel.networkStatus.collect {
+                    it?.doOnFailure { e ->
+                        Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
+                        Timber.e(e)
+                    }
                 }
             }
-        }
 
         // Watch for refresh action
-        refreshManuallyJob = lifecycleScope.launch {
-            activityViewModel.refreshManually.collect {
-                it?.let {
-                    when (it) {
-                        MainViewModel.RefreshMode.Normal -> fetch(
-                            binding.searchBar.text!!.trim().toString()
-                        )
-                        MainViewModel.RefreshMode.WithScrollToTop -> {
-                            fetch(DEFAULT_QUERY)
-                            initSearchUi(DEFAULT_QUERY)
+        refreshManuallyJob =
+            lifecycleScope.launch {
+                activityViewModel.refreshManually.collect {
+                    it?.let {
+                        when (it) {
+                            MainViewModel.RefreshMode.Normal ->
+                                fetch(binding.searchBar.text!!.trim().toString())
+                            MainViewModel.RefreshMode.WithScrollToTop -> {
+                                fetch(DEFAULT_QUERY)
+                                initSearchUi(DEFAULT_QUERY)
+                            }
                         }
-                    }
 
-                    activityViewModel.refreshManuallyDone()
+                        activityViewModel.refreshManuallyDone()
+                    }
                 }
             }
-        }
 
         // Watch for login changes
-        idTokenJob = lifecycleScope.launch {
-            authViewModel.idToken.collect {
-                it?.let {
-                    fetch(binding.searchBar.text!!.trim().toString())
+        idTokenJob =
+            lifecycleScope.launch {
+                authViewModel.idToken.collect {
+                    it?.let { fetch(binding.searchBar.text!!.trim().toString()) }
                 }
             }
-        }
 
         // Watch for the "show details" action
-        showDetailsJob = lifecycleScope.launch {
-            activityViewModel.showDetails.collect {
-                it?.let {
-                    authViewModel.idToken.value?.let { token ->
-                        findNavController().navigate(
-                            StationListFragmentDirections.actionStationListFragmentToDetailsActivity(
-                                it, token
-                            )
-                        )
-                        activityViewModel.showDetailsDone()
+        showDetailsJob =
+            lifecycleScope.launch {
+                activityViewModel.showDetails.collect {
+                    it?.let {
+                        authViewModel.idToken.value?.let { token ->
+                            findNavController()
+                                .navigate(
+                                    StationListFragmentDirections.actionStationListFragmentToDetailsActivity(
+                                        it, token
+                                    )
+                                )
+                            activityViewModel.showDetailsDone()
+                        }
                     }
                 }
             }
-        }
 
         // Scroll to top when the list is refreshed from network.
-        scrollToTopJob = lifecycleScope.launch {
-            adapter.loadStateFlow
-                // Only emit when REFRESH LoadState for RemoteMediator changes.
-                .distinctUntilChangedBy { it.refresh }
-                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
-                .filter { it.refresh is LoadState.NotLoading }
-                .collect { binding.list.scrollToPosition(0) }
-        }
+        scrollToTopJob =
+            lifecycleScope.launch {
+                adapter
+                    .loadStateFlow
+                    // Only emit when REFRESH LoadState for RemoteMediator changes.
+                    .distinctUntilChangedBy { it.refresh }
+                    // Only react to cases where Remote REFRESH completes i.e., NotLoading.
+                    .filter { it.refresh is LoadState.NotLoading }
+                    .collect { binding.list.scrollToPosition(0) }
+            }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -212,9 +211,7 @@ class StationListFragment : Fragment() {
         outState.putString(LAST_SEARCH_QUERY, binding.searchBar.text!!.trim().toString())
     }
 
-    /**
-     * On key board presses, fetch data.
-     */
+    /** On key board presses, fetch data. */
     private fun updateListFromInput() {
         fetch(binding.searchBar.text!!.trim().toString())
     }

@@ -11,14 +11,15 @@ import kotlinx.serialization.Serializable
 @Entity(tableName = "stations")
 @Serializable
 data class StationModel(
-    @PrimaryKey
-    val recordid: String,
+    @PrimaryKey val recordid: String,
     val datasetid: String,
     @ColumnInfo(name = "is_favorite") @SerialName("is_favorite") val isFavorite: Boolean,
     val libelle: String,
     @Embedded(prefix = "fields_") val fields: FieldsModel? = null,
     @Embedded(prefix = "geometry_") val geometry: GeometryModel? = null,
-    @ColumnInfo(name = "record_timestamp") @SerialName("record_timestamp") val recordTimestamp: String,
+    @ColumnInfo(name = "record_timestamp")
+    @SerialName("record_timestamp")
+    val recordTimestamp: String,
 ) {
 
     @Serializable
@@ -41,25 +42,26 @@ data class StationModel(
         @ColumnInfo(name = "y_l93") @SerialName("y_l93") val yL93: Double,
         val fret: String,
     ) {
-        fun asEntity() = Station.Fields(
-            commune,
-            yWgs84,
-            xWgs84,
-            libelle,
-            idgaia,
-            voyageurs,
-            geoPoint2d,
-            codeLigne,
-            xL93,
-            cGeo,
-            rgTroncon,
-            geoShape.asEntity(),
-            pk,
-            idreseau,
-            departemen,
-            yL93,
-            fret,
-        )
+        fun asEntity() =
+            Station.Fields(
+                commune,
+                yWgs84,
+                xWgs84,
+                libelle,
+                idgaia,
+                voyageurs,
+                geoPoint2d,
+                codeLigne,
+                xL93,
+                cGeo,
+                rgTroncon,
+                geoShape.asEntity(),
+                pk,
+                idreseau,
+                departemen,
+                yL93,
+                fret,
+            )
     }
 
     @Serializable
@@ -67,19 +69,21 @@ data class StationModel(
         val type: String,
         val coordinates: List<Double>,
     ) {
-        fun asEntity() = Station.Geometry(
-            type,
-            coordinates,
-        )
+        fun asEntity() =
+            Station.Geometry(
+                type,
+                coordinates,
+            )
     }
 
-    fun asEntity() = Station(
-        recordid,
-        datasetid,
-        isFavorite,
-        libelle,
-        fields?.asEntity(),
-        geometry?.asEntity(),
-        recordTimestamp
-    )
+    fun asEntity() =
+        Station(
+            recordid,
+            datasetid,
+            isFavorite,
+            libelle,
+            fields?.asEntity(),
+            geometry?.asEntity(),
+            recordTimestamp
+        )
 }

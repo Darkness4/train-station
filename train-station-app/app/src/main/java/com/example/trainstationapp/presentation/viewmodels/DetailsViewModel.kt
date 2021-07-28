@@ -18,7 +18,9 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class DetailsViewModel @AssistedInject constructor(
+class DetailsViewModel
+@AssistedInject
+constructor(
     private val stationRepository: StationRepository,
     @Assisted initialStation: Station,
     @Assisted token: String
@@ -32,14 +34,15 @@ class DetailsViewModel @AssistedInject constructor(
         get() = _networkStatus
 
     val station =
-        stationRepository.watchOne(initialStation)
+        stationRepository
+            .watchOne(initialStation)
             .mapNotNull { it.getOrNull() } // Only take successful values
             .filter { it.fields != null && it.geometry != null } // Make sure data is complete
             .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     private fun fetch(station: Station, token: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            _networkStatus.value = stationRepository.findOne(station, token).map { }
+            _networkStatus.value = stationRepository.findOne(station, token).map {}
         }
     }
 

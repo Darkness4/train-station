@@ -19,94 +19,115 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 
-class StationRepositoryImplTest : WordSpec({
-    val remote = mockk<TrainStationDataSource>()
-    val local = mockk<Database>()
-    val stationDao = mockk<StationDao>()
-    val remoteKeysDao = mockk<RemoteKeysDao>()
-    val repository = StationRepositoryImpl(remote, local)
+class StationRepositoryImplTest :
+    WordSpec({
+        val remote = mockk<TrainStationDataSource>()
+        val local = mockk<Database>()
+        val stationDao = mockk<StationDao>()
+        val remoteKeysDao = mockk<RemoteKeysDao>()
+        val repository = StationRepositoryImpl(remote, local)
 
-    beforeTest {
-        clearAllMocks()
-        every { local.stationDao() } returns stationDao
-        every { local.remoteKeysDao() } returns remoteKeysDao
-    }
-
-    "createOne" should {
-        "create" {
-            // Arrange
-            val slot = slot<StationModel>()
-            coEvery { remote.create(capture(slot), any()) } coAnswers { slot.captured }
-            coEvery { stationDao.insert(any<StationModel>()) } just Runs
-            val station = TestUtils.createStation("0")
-
-            // Act
-            val result = repository.createOne(station, "token")
-
-            // Assert
-            coVerify { remote.create(station.asModel(), "Bearer token") }
-            coVerify { stationDao.insert(station.asModel()) }
-            result.isSuccess.shouldBeTrue()
+        beforeTest {
+            clearAllMocks()
+            every { local.stationDao() } returns stationDao
+            every { local.remoteKeysDao() } returns remoteKeysDao
         }
 
-        "return Failure on throw" {
-            // Arrange
-            val error = Exception("An Error")
-            coEvery { remote.create(any(), any()) } throws error
-            val station = TestUtils.createStation("0")
+        "createOne" should
+            {
+                "create" {
+                    // Arrange
+                    val slot = slot<StationModel>()
+                    coEvery { remote.create(capture(slot), any()) } coAnswers { slot.captured }
+                    coEvery { stationDao.insert(any<StationModel>()) } just Runs
+                    val station = TestUtils.createStation("0")
 
-            // Act
-            val result = repository.createOne(station, "token")
+                    // Act
+                    val result = repository.createOne(station, "token")
 
-            // Assert
-            verify { stationDao wasNot Called }
-            result.isFailure.shouldBeTrue()
-        }
-    }
+                    // Assert
+                    coVerify { remote.create(station.asModel(), "Bearer token") }
+                    coVerify { stationDao.insert(station.asModel()) }
+                    result.isSuccess.shouldBeTrue()
+                }
 
-    "updateOne" should {
-        "update" {
-            // Arrange
-            val slot = slot<StationModel>()
-            coEvery { remote.updateById(any(), capture(slot), any()) } coAnswers { slot.captured }
-            coEvery { stationDao.insert(any<StationModel>()) } just Runs
-            val station = TestUtils.createStation("0")
+                "return Failure on throw" {
+                    // Arrange
+                    val error = Exception("An Error")
+                    coEvery { remote.create(any(), any()) } throws error
+                    val station = TestUtils.createStation("0")
 
-            // Act
-            val result = repository.updateOne(station, "token")
+                    // Act
+                    val result = repository.createOne(station, "token")
 
-            // Assert
-            coVerify { remote.updateById(station.recordid, station.asModel(), "Bearer token") }
-            coVerify { stationDao.insert(station.asModel()) }
-            result.isSuccess.shouldBeTrue()
-        }
+                    // Assert
+                    verify { stationDao wasNot Called }
+                    result.isFailure.shouldBeTrue()
+                }
+            }
 
-        "return Failure on null" {
-            // Arrange
-            coEvery { remote.updateById(any(), any(), any()) } returns null
-            val station = TestUtils.createStation("0")
+        "updateOne" should
+            {
+                "update" {
+                    // Arrange
+                    val slot = slot<StationModel>()
+                    coEvery {
+                        remote.updateById(
+                            any(),
+                            capture(slot),
+                            any()
+                        )
+                    } coAnswers { slot.captured }
+                    coEvery { stationDao.insert(any<StationModel>()) } just Runs
+                    val station = TestUtils.createStation("0")
 
-            // Act
-            val result = repository.updateOne(station, "token")
+                    // Act
+                    val result = repository.updateOne(station, "token")
 
-            // Assert
-            coVerify { remote.updateById(station.recordid, station.asModel(), "Bearer token") }
-            verify { stationDao wasNot Called }
-            result.isFailure.shouldBeTrue()
-        }
+                    // Assert
+                    coVerify {
+                        remote.updateById(
+                            station.recordid,
+                            station.asModel(),
+                            "Bearer token"
+                        )
+                    }
+                    coVerify { stationDao.insert(station.asModel()) }
+                    result.isSuccess.shouldBeTrue()
+                }
 
-        "return Failure on throw" {
-            // Arrange
-            val error = Exception("An Error")
-            coEvery { remote.updateById(any(), any(), any()) } throws error
-            val station = TestUtils.createStation("0")
+                "return Failure on null" {
+                    // Arrange
+                    coEvery { remote.updateById(any(), any(), any()) } returns null
+                    val station = TestUtils.createStation("0")
 
-            // Act
-            val result = repository.createOne(station, "token")
+                    // Act
+                    val result = repository.updateOne(station, "token")
 
-            // Assert
-            verify { stationDao wasNot Called }
-            result.isFailure.shouldBeTrue()
-        }
-    }
-})
+                    // Assert
+                    coVerify {
+                        remote.updateById(
+                            station.recordid,
+                            station.asModel(),
+                            "Bearer token"
+                        )
+                    }
+                    verify { stationDao wasNot Called }
+                    result.isFailure.shouldBeTrue()
+                }
+
+                "return Failure on throw" {
+                    // Arrange
+                    val error = Exception("An Error")
+                    coEvery { remote.updateById(any(), any(), any()) } throws error
+                    val station = TestUtils.createStation("0")
+
+                    // Act
+                    val result = repository.createOne(station, "token")
+
+                    // Assert
+                    verify { stationDao wasNot Called }
+                    result.isFailure.shouldBeTrue()
+                }
+            }
+    })

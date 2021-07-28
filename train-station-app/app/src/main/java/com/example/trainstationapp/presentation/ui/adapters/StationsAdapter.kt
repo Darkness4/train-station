@@ -11,9 +11,9 @@ import com.example.trainstationapp.domain.entities.Station
 /**
  * The `Adapter` for the paged `RecyclerView`.
  *
- * To bind `PagingData` to a `RecyclerView` (instead of a `List`), we use a `PagingDataAdapter`.
- * The `PagingDataAdapter` gets notified whenever the `PagingData` content is loaded and then it
- * signals the `RecyclerView` to update.
+ * To bind `PagingData` to a `RecyclerView` (instead of a `List`), we use a `PagingDataAdapter`. The
+ * `PagingDataAdapter` gets notified whenever the `PagingData` content is loaded and then it signals
+ * the `RecyclerView` to update.
  */
 class StationsAdapter(
     private val onFavorite: (Station) -> Unit,
@@ -31,11 +31,12 @@ class StationsAdapter(
         station?.let { holder.bind(it) }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.create(
-        parent,
-        onFavorite,
-        onClick,
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolder.create(
+            parent,
+            onFavorite,
+            onClick,
+        )
 
     class ViewHolder(
         private val binding: StationItemBinding, // station_item.xml
@@ -44,12 +45,8 @@ class StationsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(station: Station) {
             binding.station = station
-            binding.favoriteButton.setOnClickListener {
-                onFavorite(station)
-            }
-            binding.root.setOnClickListener {
-                onClick(station)
-            }
+            binding.favoriteButton.setOnClickListener { onFavorite(station) }
+            binding.root.setOnClickListener { onClick(station) }
             binding.executePendingBindings()
         }
 
@@ -61,9 +58,7 @@ class StationsAdapter(
             ) =
                 ViewHolder(
                     StationItemBinding.inflate( // station_item.xml
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
+                        LayoutInflater.from(parent.context), parent, false
                     ),
                     onFavorite,
                     onClick,

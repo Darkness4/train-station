@@ -58,7 +58,9 @@ fun boolToImageView(
     boolean: Boolean?,
 ) {
     boolean?.let {
-        imageView.setImageResource(if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24)
+        imageView.setImageResource(
+            if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24
+        )
     }
 }
 
@@ -68,9 +70,10 @@ fun boolToMaterialButton(
     boolean: Boolean?,
 ) {
     boolean?.let {
-        button.icon = ContextCompat.getDrawable(
-            button.context,
-            if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24
-        )
+        button.icon =
+            ContextCompat.getDrawable(
+                button.context,
+                if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24
+            )
     }
 }

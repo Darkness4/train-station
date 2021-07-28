@@ -38,7 +38,7 @@
         <activity
             android:name=".presentation.ui.MainActivity"
             android:label="@string/title_activity_main"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/Theme.TrainStationApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

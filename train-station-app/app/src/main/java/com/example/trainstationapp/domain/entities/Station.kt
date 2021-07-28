@@ -40,25 +40,26 @@ data class Station(
         val yL93: Double,
         val fret: String,
     ) : Parcelable {
-        fun asModel() = StationModel.FieldsModel(
-            commune,
-            yWgs84,
-            xWgs84,
-            libelle,
-            idgaia,
-            voyageurs,
-            geoPoint2d,
-            codeLigne,
-            xL93,
-            cGeo,
-            rgTroncon,
-            geoShape.asModel(),
-            pk,
-            idreseau,
-            departemen,
-            yL93,
-            fret,
-        )
+        fun asModel() =
+            StationModel.FieldsModel(
+                commune,
+                yWgs84,
+                xWgs84,
+                libelle,
+                idgaia,
+                voyageurs,
+                geoPoint2d,
+                codeLigne,
+                xL93,
+                cGeo,
+                rgTroncon,
+                geoShape.asModel(),
+                pk,
+                idreseau,
+                departemen,
+                yL93,
+                fret,
+            )
     }
 
     @SuppressLint("ParcelCreator")
@@ -67,19 +68,21 @@ data class Station(
         val type: String,
         val coordinates: List<Double>,
     ) : Parcelable {
-        fun asModel() = StationModel.GeometryModel(
-            type,
-            coordinates,
-        )
+        fun asModel() =
+            StationModel.GeometryModel(
+                type,
+                coordinates,
+            )
     }
 
-    fun asModel() = StationModel(
-        recordid,
-        datasetid,
-        isFavorite,
-        libelle,
-        fields?.asModel(),
-        geometry?.asModel(),
-        recordTimestamp
-    )
+    fun asModel() =
+        StationModel(
+            recordid,
+            datasetid,
+            isFavorite,
+            libelle,
+            fields?.asModel(),
+            geometry?.asModel(),
+            recordTimestamp
+        )
 }

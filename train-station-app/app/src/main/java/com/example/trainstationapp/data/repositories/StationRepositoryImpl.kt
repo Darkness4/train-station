@@ -17,7 +17,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class StationRepositoryImpl @Inject constructor(
+class StationRepositoryImpl
+@Inject
+constructor(
     private val trainStationDataSource: TrainStationDataSource,
     private val database: Database,
 ) : StationRepository {
@@ -28,8 +30,8 @@ class StationRepositoryImpl @Inject constructor(
     /**
      * Fetch the whole `StationModel` cache as a `PagingData`.
      *
-     * Receive a `PagingData` for each page. This is a snapshot of the cache.
-     * To refresh the `PagingData`, call the method again.
+     * Receive a `PagingData` for each page. This is a snapshot of the cache. To refresh the
+     * `PagingData`, call the method again.
      */
     @ExperimentalPagingApi
     override fun watchPages(search: String, token: String): Flow<PagingData<Station>> {
@@ -42,37 +44,31 @@ class StationRepositoryImpl @Inject constructor(
             }
         }
         return Pager(
-            config = PagingConfig(
-                pageSize = NETWORK_PAGE_SIZE,
-                enablePlaceholders = false
-            ),
-            remoteMediator = StationRemoteMediator(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            remoteMediator =
+            StationRemoteMediator(
                 search = search,
                 service = trainStationDataSource,
                 database = database,
                 token = bearer,
             ),
             pagingSourceFactory = pagingSourceFactory
-        ).flow
-            .map {
-                it.map { model -> model.asEntity() }
-            }.flowOn(Dispatchers.Default)
+        )
+            .flow
+            .map { it.map { model -> model.asEntity() } }
+            .flowOn(Dispatchers.Default)
     }
 
-    /**
-     * Observe one station in the cache.
-     */
+    /** Observe one station in the cache. */
     override fun watchOne(station: Station): Flow<State<Station>> {
-        return database.stationDao().watchById(station.recordid).map { model ->
-            State.Success(model.asEntity())
-        }.catch<State<Station>> {
-            emit(State.Failure(it))
-        }
+        return database
+            .stationDao()
+            .watchById(station.recordid)
+            .map { model -> State.Success(model.asEntity()) }
+            .catch<State<Station>> { emit(State.Failure(it)) }
     }
 
-    /**
-     * Find one station in the API and cache it.
-     */
+    /** Find one station in the API and cache it. */
     override suspend fun findOne(station: Station, token: String): State<Station> {
         val bearer = "Bearer $token"
         return try {
@@ -80,15 +76,14 @@ class StationRepositoryImpl @Inject constructor(
             model?.let {
                 database.stationDao().insert(model)
                 State.Success(model.asEntity())
-            } ?: State.Failure(Exception("Element not found."))
+            }
+                ?: State.Failure(Exception("Element not found."))
         } catch (e: Throwable) {
             State.Failure(e)
         }
     }
 
-    /**
-     * Create one station in the API and cache it.
-     */
+    /** Create one station in the API and cache it. */
     override suspend fun createOne(station: Station, token: String): State<Station> {
         val bearer = "Bearer $token"
         return try {
@@ -100,9 +95,7 @@ class StationRepositoryImpl @Inject constructor(
         }
     }
 
-    /**
-     * Update one station in the API and cache it.
-     */
+    /** Update one station in the API and cache it. */
     override suspend fun updateOne(station: Station, token: String): State<Station> {
         val bearer = "Bearer $token"
         return try {
@@ -111,7 +104,8 @@ class StationRepositoryImpl @Inject constructor(
             model?.let {
                 database.stationDao().insert(model)
                 State.Success(model.asEntity())
-            } ?: State.Failure(Exception("Element not found."))
+            }
+                ?: State.Failure(Exception("Element not found."))
         } catch (e: Throwable) {
             State.Failure(e)
         }
