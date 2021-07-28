@@ -18,6 +18,7 @@ import com.example.trainstationapp.core.state.doOnFailure
 import com.example.trainstationapp.databinding.FragmentStationListBinding
 import com.example.trainstationapp.presentation.ui.adapters.StationsAdapter
 import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAdapter
+import com.example.trainstationapp.presentation.viewmodels.AuthViewModel
 import com.example.trainstationapp.presentation.viewmodels.MainViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -29,17 +30,26 @@ import timber.log.Timber
 
 class StationListFragment : Fragment() {
     private val activityViewModel by activityViewModels<MainViewModel>()
+    private val authViewModel by activityViewModels<AuthViewModel>()
 
     private var _binding: FragmentStationListBinding? = null
     private val binding: FragmentStationListBinding
         get() = _binding!!
 
     private val adapter = StationsAdapter(
-        onFavorite = { activityViewModel.update(it) },
+        onFavorite = {
+            authViewModel.idToken.value?.let { token ->
+                activityViewModel.update(
+                    it,
+                    token
+                )
+            }
+        },
         onClick = { activityViewModel.showDetails(it) },
     )
 
     private var fetchJob: Job? = null
+    private var idTokenJob: Job? = null
     private var scrollToTopJob: Job? = null
     private var networkStatusJob: Job? = null
     private var showDetailsJob: Job? = null
@@ -52,9 +62,11 @@ class StationListFragment : Fragment() {
      */
     private fun fetch(search: String) {
         fetchJob?.cancel()
-        fetchJob = lifecycleScope.launch {
-            activityViewModel.watchPages(search).collectLatest {
-                adapter.submitData(it)
+        authViewModel.idToken.value?.let { token ->
+            fetchJob = lifecycleScope.launch {
+                activityViewModel.watchPages(search, token).collectLatest {
+                    adapter.submitData(it)
+                }
             }
         }
     }
@@ -159,14 +171,27 @@ class StationListFragment : Fragment() {
             }
         }
 
+        // Watch for login changes
+        idTokenJob = lifecycleScope.launch {
+            authViewModel.idToken.collect {
+                it?.let {
+                    fetch(binding.searchBar.text!!.trim().toString())
+                }
+            }
+        }
+
         // Watch for the "show details" action
         showDetailsJob = lifecycleScope.launch {
             activityViewModel.showDetails.collect {
                 it?.let {
-                    findNavController().navigate(
-                        StationListFragmentDirections.actionStationListFragmentToDetailsActivity(it)
-                    )
-                    activityViewModel.showDetailsDone()
+                    authViewModel.idToken.value?.let { token ->
+                        findNavController().navigate(
+                            StationListFragmentDirections.actionStationListFragmentToDetailsActivity(
+                                it, token
+                            )
+                        )
+                        activityViewModel.showDetailsDone()
+                    }
                 }
             }
         }
@@ -205,6 +230,7 @@ class StationListFragment : Fragment() {
         refreshManuallyJob?.cancel()
         scrollToTopJob?.cancel()
         fetchJob?.cancel()
+        idTokenJob?.cancel()
         super.onStop()
     }
 

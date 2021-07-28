@@ -21,9 +21,10 @@ import kotlinx.coroutines.launch
 class DetailsViewModel @AssistedInject constructor(
     private val stationRepository: StationRepository,
     @Assisted initialStation: Station,
+    @Assisted token: String
 ) : ViewModel() {
     init {
-        fetch(initialStation)
+        fetch(initialStation, token)
     }
 
     private val _networkStatus = MutableStateFlow<State<Unit>?>(null)
@@ -36,23 +37,26 @@ class DetailsViewModel @AssistedInject constructor(
             .filter { it.fields != null && it.geometry != null } // Make sure data is complete
             .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    private fun fetch(station: Station) {
+    private fun fetch(station: Station, token: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            _networkStatus.value = stationRepository.findOne(station).map { }
+            _networkStatus.value = stationRepository.findOne(station, token).map { }
         }
     }
 
     @dagger.assisted.AssistedFactory
     fun interface AssistedFactory {
-        fun create(initialStation: Station): DetailsViewModel
+        fun create(initialStation: Station, token: String): DetailsViewModel
     }
 
     companion object {
-        fun AssistedFactory.provideFactory(initialStation: Station): ViewModelProvider.Factory =
+        fun AssistedFactory.provideFactory(
+            initialStation: Station,
+            token: String
+        ): ViewModelProvider.Factory =
             object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return this@provideFactory.create(initialStation) as T
+                    return this@provideFactory.create(initialStation, token) as T
                 }
             }
     }

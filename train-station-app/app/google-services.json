@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1063974850049",
+    "project_id": "train-station-app",
+    "storage_bucket": "train-station-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063974850049:android:74ce6546f49f4ff5a4ba00",
+        "android_client_info": {
+          "package_name": "com.example.trainstationapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063974850049-7kc7u6tprd9kpnmhajd4tj1aufrjkiv3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trainstationapp",
+            "certificate_hash": "d3b2f37ef8ddb9305a948c7c26f3ae83c78243fa"
+          }
+        },
+        {
+          "client_id": "1063974850049-fkgjkijda7v1kns0kquir99na66fpio3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trainstationapp",
+            "certificate_hash": "60a670aa8a2d22a1c64b0603ae7c62251c31398f"
+          }
+        },
+        {
+          "client_id": "1063974850049-ot8hbpfudd5uft3qu00tdprfk4efoede.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP90xOZEz7zvbaie7fTYqb8shCygCnHcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063974850049-ot8hbpfudd5uft3qu00tdprfk4efoede.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

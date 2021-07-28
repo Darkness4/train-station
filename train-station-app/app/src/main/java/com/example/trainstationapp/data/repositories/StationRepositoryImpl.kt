@@ -32,7 +32,8 @@ class StationRepositoryImpl @Inject constructor(
      * To refresh the `PagingData`, call the method again.
      */
     @ExperimentalPagingApi
-    override fun watchPages(search: String): Flow<PagingData<Station>> {
+    override fun watchPages(search: String, token: String): Flow<PagingData<Station>> {
+        val bearer = "Bearer $token"
         val pagingSourceFactory = {
             if (search.isNotEmpty()) {
                 database.stationDao().watchAsPagingSource(search)
@@ -49,6 +50,7 @@ class StationRepositoryImpl @Inject constructor(
                 search = search,
                 service = trainStationDataSource,
                 database = database,
+                token = bearer,
             ),
             pagingSourceFactory = pagingSourceFactory
         ).flow
@@ -71,9 +73,10 @@ class StationRepositoryImpl @Inject constructor(
     /**
      * Find one station in the API and cache it.
      */
-    override suspend fun findOne(station: Station): State<Station> {
+    override suspend fun findOne(station: Station, token: String): State<Station> {
+        val bearer = "Bearer $token"
         return try {
-            val model = trainStationDataSource.findById(station.recordid)
+            val model = trainStationDataSource.findById(station.recordid, bearer)
             model?.let {
                 database.stationDao().insert(model)
                 State.Success(model.asEntity())
@@ -86,9 +89,10 @@ class StationRepositoryImpl @Inject constructor(
     /**
      * Create one station in the API and cache it.
      */
-    override suspend fun createOne(station: Station): State<Station> {
+    override suspend fun createOne(station: Station, token: String): State<Station> {
+        val bearer = "Bearer $token"
         return try {
-            val model = trainStationDataSource.create(station.asModel())
+            val model = trainStationDataSource.create(station.asModel(), bearer)
             database.stationDao().insert(model)
             State.Success(model.asEntity())
         } catch (e: Throwable) {
@@ -99,9 +103,11 @@ class StationRepositoryImpl @Inject constructor(
     /**
      * Update one station in the API and cache it.
      */
-    override suspend fun updateOne(station: Station): State<Station> {
+    override suspend fun updateOne(station: Station, token: String): State<Station> {
+        val bearer = "Bearer $token"
         return try {
-            val model = trainStationDataSource.updateById(station.recordid, station.asModel())
+            val model =
+                trainStationDataSource.updateById(station.recordid, station.asModel(), bearer)
             model?.let {
                 database.stationDao().insert(model)
                 State.Success(model.asEntity())

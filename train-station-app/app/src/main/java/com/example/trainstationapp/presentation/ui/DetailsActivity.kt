@@ -37,7 +37,7 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     @Inject
     lateinit var assisted: DetailsViewModel.AssistedFactory
     private val viewModel by viewModels<DetailsViewModel> {
-        assisted.provideFactory(args.station)
+        assisted.provideFactory(args.station, args.token)
     }
     private lateinit var map: GoogleMap
 

@@ -17,7 +17,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: StationRepository) : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val repository: StationRepository,
+) : ViewModel() {
     enum class RefreshMode {
         Normal,
         WithScrollToTop,
@@ -63,7 +65,7 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
     /**
      * Fetch the `PagingData`.
      */
-    fun watchPages(search: String): Flow<PagingData<Station>> {
+    fun watchPages(search: String, token: String): Flow<PagingData<Station>> {
         val lastResult = station
 
         // If already fetched
@@ -71,7 +73,7 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
             return lastResult
         }
         searchValue = search
-        val newResult: Flow<PagingData<Station>> = repository.watchPages(search)
+        val newResult: Flow<PagingData<Station>> = repository.watchPages(search, token)
             .cachedIn(viewModelScope) // Cache the content in a CoroutineScope
         station = newResult
         return newResult
@@ -81,8 +83,9 @@ class MainViewModel @Inject constructor(private val repository: StationRepositor
     val networkStatus: StateFlow<State<Unit>?>
         get() = _networkStatus
 
-    fun update(station: Station) = viewModelScope.launch(Dispatchers.Main) {
-        _networkStatus.value = repository.updateOne(station.copy().toggleFavorite()).map { }
+    fun update(station: Station, token: String) = viewModelScope.launch(Dispatchers.Main) {
+        _networkStatus.value =
+            repository.updateOne(station.copy().toggleFavorite(), token).map { }
         refreshManually()
     }
 }

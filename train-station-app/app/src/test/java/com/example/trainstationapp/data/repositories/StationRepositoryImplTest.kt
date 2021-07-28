@@ -36,15 +36,15 @@ class StationRepositoryImplTest : WordSpec({
         "create" {
             // Arrange
             val slot = slot<StationModel>()
-            coEvery { remote.create(capture(slot)) } coAnswers { slot.captured }
+            coEvery { remote.create(capture(slot), any()) } coAnswers { slot.captured }
             coEvery { stationDao.insert(any<StationModel>()) } just Runs
             val station = TestUtils.createStation("0")
 
             // Act
-            val result = repository.createOne(station)
+            val result = repository.createOne(station, "token")
 
             // Assert
-            coVerify { remote.create(station.asModel()) }
+            coVerify { remote.create(station.asModel(), "Bearer token") }
             coVerify { stationDao.insert(station.asModel()) }
             result.isSuccess.shouldBeTrue()
         }
@@ -52,11 +52,11 @@ class StationRepositoryImplTest : WordSpec({
         "return Failure on throw" {
             // Arrange
             val error = Exception("An Error")
-            coEvery { remote.create(any()) } throws error
+            coEvery { remote.create(any(), any()) } throws error
             val station = TestUtils.createStation("0")
 
             // Act
-            val result = repository.createOne(station)
+            val result = repository.createOne(station, "token")
 
             // Assert
             verify { stationDao wasNot Called }
@@ -68,29 +68,29 @@ class StationRepositoryImplTest : WordSpec({
         "update" {
             // Arrange
             val slot = slot<StationModel>()
-            coEvery { remote.updateById(any(), capture(slot)) } coAnswers { slot.captured }
+            coEvery { remote.updateById(any(), capture(slot), any()) } coAnswers { slot.captured }
             coEvery { stationDao.insert(any<StationModel>()) } just Runs
             val station = TestUtils.createStation("0")
 
             // Act
-            val result = repository.updateOne(station)
+            val result = repository.updateOne(station, "token")
 
             // Assert
-            coVerify { remote.updateById(station.recordid, station.asModel()) }
+            coVerify { remote.updateById(station.recordid, station.asModel(), "Bearer token") }
             coVerify { stationDao.insert(station.asModel()) }
             result.isSuccess.shouldBeTrue()
         }
 
         "return Failure on null" {
             // Arrange
-            coEvery { remote.updateById(any(), any()) } returns null
+            coEvery { remote.updateById(any(), any(), any()) } returns null
             val station = TestUtils.createStation("0")
 
             // Act
-            val result = repository.updateOne(station)
+            val result = repository.updateOne(station, "token")
 
             // Assert
-            coVerify { remote.updateById(station.recordid, station.asModel()) }
+            coVerify { remote.updateById(station.recordid, station.asModel(), "Bearer token") }
             verify { stationDao wasNot Called }
             result.isFailure.shouldBeTrue()
         }
@@ -98,11 +98,11 @@ class StationRepositoryImplTest : WordSpec({
         "return Failure on throw" {
             // Arrange
             val error = Exception("An Error")
-            coEvery { remote.updateById(any(), any()) } throws error
+            coEvery { remote.updateById(any(), any(), any()) } throws error
             val station = TestUtils.createStation("0")
 
             // Act
-            val result = repository.createOne(station)
+            val result = repository.createOne(station, "token")
 
             // Assert
             verify { stationDao wasNot Called }

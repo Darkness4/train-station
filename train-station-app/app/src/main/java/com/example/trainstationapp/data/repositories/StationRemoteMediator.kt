@@ -25,6 +25,7 @@ class StationRemoteMediator(
     private val search: String,
     private val service: TrainStationDataSource,
     private val database: Database,
+    private val token: String
 ) : RemoteMediator<Int, StationModel>() {
     companion object {
         private const val STARTING_PAGE_INDEX = 1
@@ -81,9 +82,14 @@ class StationRemoteMediator(
                         put("\$cont", search)
                     }
                 }
-                service.find(s = apiQuery.toString(), page = page, limit = state.config.pageSize)
+                service.find(
+                    s = apiQuery.toString(),
+                    page = page,
+                    limit = state.config.pageSize,
+                    token = token
+                )
             } else {
-                service.find(page = page, limit = state.config.pageSize)
+                service.find(page = page, limit = state.config.pageSize, token = token)
             }
 
             val items = response.data

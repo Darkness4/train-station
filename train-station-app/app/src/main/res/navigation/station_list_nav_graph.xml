@@ -13,6 +13,9 @@
         <argument
             android:name="station"
             app:argType="com.example.trainstationapp.domain.entities.Station" />
+        <argument
+            android:name="token"
+            app:argType="string" />
     </activity>
     <fragment
         android:id="@+id/stationListFragment"
