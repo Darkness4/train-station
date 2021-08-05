@@ -1,0 +1,48 @@
+graph TB
+
+  ServiceLocator -- inject --> StationDataSource
+  ServiceLocator -- inject --> StationRepository
+  ServiceLocator -- inject --> AuthService
+  ServiceLocator -- inject --> FirebaseApp
+  ServiceLocator -- inject --> AuthClient
+
+  subgraph "Externals"
+    FirebaseApp
+    AuthClient
+  end
+
+  FirebaseApp --> AuthService
+  AuthClient --> AuthService
+
+	subgraph "Core"
+    ServiceLocator
+  end
+
+  subgraph "Data"
+    StationDataSource
+    StationRepository
+    Models
+
+    StationDataSource --> StationRepository
+  end
+
+  StationRepository -. implements .-> StationRepositoryImpl
+
+  subgraph "Domain"
+    AuthService -- permits --> StationRepositoryImpl
+    StationRepositoryImpl
+
+    Entities
+  end
+
+  StationRepositoryImpl --> TrainStationController
+
+  subgraph "Presentation"
+    TrainStationController
+    RootController
+
+    DTOs
+  end
+
+  TrainStationController -- serve --> Client
+  RootController -- serve --> Client

@@ -1,7 +1,12 @@
-version: "3.9"
+version: '3.9'
 services:
-  train-station:
+  train-station-api:
     build: ./
-    container_name: train-station
     ports:
       - 38080:8080
+    volumes:
+      - ./service-account.json:/secrets/service-account.json
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /secrets/service-account.json
+      HOST: 0.0.0.0
+      PORT: 8080

@@ -1,135 +1,40 @@
 # Train Station
 
-Par Marc NGUYEN et JB Rubio dans le cadre du projet Web + Android 2020.
+By Marc Nguyen and Jeab-Baptiste Rubio.
 
 [TOC]
 
-## Objectifs et Spécifications
+## Specifications
 
-### API NestJS
+### API
 
-- API REST
+Specifications are given here: [OpenAPI](https://openapi.the-end-is-never-the-end.pw)
 
-- Déployé sur CleverCloud : [train-station.cleverapps.io](https://train-station.cleverapps.io/)
+### Android
 
-- **GET /stations** (Récupérer un résumé de toutes les données (i.e. seulement les infos les plus importantes pour l’affichage dans une liste + favori ou non))
+- Fetch data from the api and display in a list and a screen with the details
 
-  - Query Params : page : number
+- Possibility to bookmark certain items per user
 
-  - Exemple :
+- Firebase Authentication
 
-    - ```json
-      {
-          "data": [
-              {
-                  "datasetid":"liste-des-gares",
-                  "recordid":"75f37016c5e5900a1f76039bb42d982cb90b93af",
-                  "is_favorite":true,
-                  "libelle":"Mulhouse-Dornach",
-                  "record_timestamp":"2020-07-22T09:29:23.188000+00:00"
-              },
-              "..."
-          ],
-          "count": 10,
-          "total": 10,
-          "page": 10,
-          "pageCount": 20,
-      }
-      ```
-
-- (Bonus) **POST /stations** (Créer de nouvelles données) **NOTE: Cet API n'est pas utilisé dans l'application.**
-
-  - Post-data : Station
-
-- **GET /stations/:recordid** (pour l’affichage dans l’écran de détails)
-
-  - Exemple :
-
-    - ```json
-      {
-          "datasetid":"liste-des-gares",
-          "recordid":"75f37016c5e5900a1f76039bb42d982cb90b93af",
-          "is_favorite":true,
-          "libelle":"Mulhouse-Dornach",
-          "fields":{
-              "commune":"MULHOUSE",
-              "y_wgs84":47.74689819865143,
-              "x_wgs84":7.308132635705053,
-              "libelle":"Mulhouse-Dornach",
-              "idgaia":"297f12aa-dfbc-11e3-a2ff-01a464e0362d",
-              "voyageurs":"O",
-              "geo_point_2d":[
-                  47.7468981986,
-                  7.30813263571
-              ],
-              "code_ligne":"115000",
-              "x_l93":1022672.9941999987,
-              "code_uic":"87182055",
-              "c_geo":[
-                  47.74689819865143,
-                  7.308132635705053
-              ],
-              "rg_troncon":1,
-              "geo_shape":{
-                  "type":"Point",
-                  "coordinates":[
-                      7.308132635705054,
-                      47.746898198623505
-                  ]
-              },
-              "pk":"105+129",
-              "idreseau":5712,
-              "departemen":"HAUT-RHIN",
-              "y_l93":6747305.211599998,
-              "fret":"O"
-          },
-          "geometry":{
-              "type":"Point",
-              "coordinates":[
-                  7.308132635705053,
-                  47.74689819865143
-              ]
-          },
-          "record_timestamp":"2020-07-22T09:29:23.188000+00:00"
-      }
-      ```
-
-- **PATCH /stations/:recordid** (Mettre une donnée en favori ou non) (On n'utilisera pas PUT, car contraire aux [normes HTTP](https://tools.ietf.org/html/rfc5789). On souhaite mettre à jour, et non remplacer.)
-
-  - Post-data (replace): Station(partiel)
-
-- (Bonus) Au lieu de stocker des données dans un fichier JSON, faire une requête au démarrage de l’API pour récupérer les données
-
-## App Android
-
-- Récupération des données de l’api puis affichage dans une liste et un écran avec le détail
-
-- Possibilité de mettre en favori certains éléments
-
-- Maquette :
+- Mockup:
 
   ![maquette](assets/image-20201128010714763.png)
 
-- Application composée au minimum de : 
+- Implementation of a search/filter system on the displayed list
 
-  - 2 Fragment (la liste + l’ecran avec les infos)
-  - 2 Activity
+- Setting up a local database to display the item list in offline mode
 
-- Une Toolbar sera présente et permettra de rafraîchir les données récupérées et affichées
+- Usage of StateFlow
 
-- (Bonus) Mise en place d’un système de recherche/filtre sur la liste affichée
-
-- (Bonus) Mise en place d’une base de données locale pour afficher la liste d’élément en mode hors connexion
-
-- (Bonus) Utilisation de LiveData ou d’Observable pour la récupération de données dans la BDD
-
-## Captures d'écran
+## Screenshots
 
 ![Screenshot_20201129-053140](assets/Screenshot_20201129-053140.png) ![Screenshot_20201129-053208](assets/Screenshot_20201129-053208.png) ![Screenshot_20201129-053214](assets/Screenshot_20201129-053214.png) ![Screenshot_20201129-053223](assets/Screenshot_20201129-053223.png)
 
 # Modern Android Development (MAD)
 
-[madscorecard.withgoogle.com/scorecard/share/1635480592/](https://madscorecard.withgoogle.com/scorecard/share/1635480592/)
+[MAD scorecard](https://madscorecard.withgoogle.com/scorecard/share/4258311558/)
 
 ![summary](assets/summary.png)
 
@@ -137,122 +42,89 @@ Par Marc NGUYEN et JB Rubio dans le cadre du projet Web + Android 2020.
 
 ## API
 
-### Compiler et lancer
+### Setup
+
+#### Production build and deployment
+
+Use docker/kubernetes/openshift to deploy the container.
 
 ```sh
-npm run build
-npm run start:prod
-# Ou
-npm run start:nest
+docker pull ghcr.io/darkness4/train-station-api:amd64
 ```
 
-### Déployer sur CleverCloud
+Tags are formatted like this `latest` or `<arch>` or `<version>-<arch>` or `<version>`. Default version is the `latest`, default arch is `amd64`.
 
-Le déploiement est automatisé par Github Actions.
+Available arch are: `arm64` and `amd64`.
 
-A chaque commit, l'API NestJS est testé puis déployé sur une branche Github `release/api`.
+The container must have a the Google service account JSON file inside and must be located with the environment variable `GOOGLE_APPLICATION_CREDENTIALS`.
 
-La branche `release/api` est synchronisé sur CleverCloud, et permet de déployer un Docker qui compile et lance l'API.
+An example of docker-compose.yml:
 
-### Fonctionnement de l'API
-
-#### Entités
-
-Les entités sont pratiquement les même que sur le [JSON de la SNCF](https://ressources.data.sncf.com/explore/dataset/liste-des-gares/download/?format=json).
-
-Les seules différences sont dans le fichier [station.ts](./train-station-api/src/entities/station.ts) où deux champs ont été rajouté :
-
-- `is_favorite` : Si la station est le favoris de l'utilisateur.
-- `libelle` : Qui correspond au champ `fields.libelle`. Nous l'avons copié de `fields` pour l'afficher sur la liste.
-
-#### Repositories et Services
-
-Nous utilisons TypeORM pour stocker les Stations dans l'API.
-
-Nous utilisons ensuite le paquet **[nestjsx/crud](https://github.com/nestjsx/crud)** pour implémenter rapidement le CRUD notre service en héritant de `TypeOrmCrudService<Station>`.
-
-Nous ajoutons notre propre méthode `getOneDetail` qui se charge de récupérer les `Station` joint avec les autres entités.
-
-```typescript
-  getOneDetail(req: CrudRequest): Promise<Station> {
-    req.options.query.join = {
-      fields: {
-        eager: true,
-      },
-      geometry: {
-        eager: true,
-      },
-      'fields.geo_shape': {
-        eager: true,
-      },
-    };
-    return this.getOne(req);
-  }
+```sh
+version: '3.9'
+services:
+  train-station-api:
+    build: ghcr.io/darkness4/train-station-api:amd64
+    ports:
+      - 38080:8080
+    volumes:
+      - ./service-account.json:/secrets/service-account.json
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /secrets/service-account.json
+      HOST: 0.0.0.0
+      PORT: 8080
 ```
 
-Inversement, nous ajoutons également notre propre méthode `getManySummary` pour éviter de joint avec les autres entités.
+**The container cannot be configured for high availability at this time because the API does not use a remote database.**
 
-```typescript
-  async getManySummary(
-    req: CrudRequest,
-  ): Promise<GetManyDefaultResponse<Station> | Station[]> {
-    const { parsed, options } = req;
-    options.query.join = {};
-    const builder = await this.createBuilder(parsed, options);
-    return this.doGetMany(builder, parsed, options);
-  }
-```
+#### Setup a development environment
 
-Nous téléchargeons les données au démarrage de l'API avec :
+1. Install `swagger-cli` to generate the OpenAPI specification.
 
-```typescript
-this.subscription = client
-      .get<StationModel[]>('https://ressources.data.sncf.com/explore/dataset/liste-des-gares/download/?format=json')
-      .pipe(mergeMap((response) =>
-          Promise.all(response.data.map((e) => Station.fromModel(e).save())),
-      ))
-      .subscribe();
-```
+   ```sh
+   npm -g swagger-cli
+   swagger-cli bundle ./.openapi/openapi.yaml --outfile ./static/openapi.yaml --type yaml
+   ```
 
-#### Controllers
+2. Install [golang](https://golang.org) et install the dependencies
 
-Encore une fois, avec **[nestjsx/crud](https://github.com/nestjsx/crud)**, nous exposons uniquement les points d'entrées de notre API et activons la pagination.
+   ```sh
+   go get
+   ```
 
-L'API est paginé grâce aux paramètres de requête `limit` et `page`. Exemple : `GET "http://train-station.cleverapps.io/stations?limit=10&page=2"`
+3. Fetch a valid [Google Service Account JSON files with Firebase SDK for Web and Firebase Auth configured](https://firebase.google.com/docs/admin/setup) and specify the location of the JSON file with the `GOOGLE_APPLICATION_CREDENTIALS` environment variable. The default is:
 
-L'API possède également une barre de recherche avec le paramètre de requête `s`. Voir [documentation du paquet](https://github.com/nestjsx/crud/wiki/Requests#search).
+   ```sh
+   export GOOGLE_APPLICATION_CREDENTIALS=service-account.json
+   ```
 
-Nous écrasons la méthode `getOne` par la notre afin d'utiliser la méthode de notre service `getOneDetail`. De même pour `getMany`.
+4. Optionally, setup the rest of the environment variables:
 
-```typescript
-@Controller('stations')
-export class TrainStationController implements CrudController<Station> {
-  constructor(readonly service: TrainStationService) {}
+   ```sh
+   export HOST=0.0.0.0 #listening hosts
+   export POST=8080
+   ```
 
+5. ```sh
+   go run  # Run the app
+   go test ./...  # Run all the tests
+   ```
 
-  @Override()
-  getOne(@ParsedRequest() req: CrudRequest): Promise<Station> {
-    return this.service.getOneDetail(req);
-  }
+### Architecture
 
-  @Override()
-  getMany(
-    @ParsedRequest() req: CrudRequest,
-  ): Promise<GetManyDefaultResponse<Station> | Station[]> {
-    return this.service.getManySummary(req);
-  }
-}
-```
+![api-architecture](assets/api-architecture.svg)
 
-#### Autres
+### Entity relationship
 
-L'API est basé sur la plateforme Fastify.
+![erdiagram](assets/erdiagram.svg)
 
-L'API limite également le nombre de requêtes par minute.
+### Technologies used
 
-L'API redirige `/` vers `/api`, où il y a un client Swagger pour tester l'API.
-
-![image-20201128030150536](assets/image-20201128030150536.png)
+- GORM + SQLite to manage the database
+- Atreugo + fasthttp for routing and http server
+- Viper + Cobra for the CLI tooling
+- Validator for validation
+- Firebase Admin SDK for authentication
 
 ## Android App
 
@@ -260,72 +132,72 @@ L'API redirige `/` vers `/api`, où il y a un client Swagger pour tester l'API.
 
 ![image-20201129022715761](assets/image-20201129022715761.png)
 
-Voici l'architecture de l'application (en terme de réception de données).
+The **Data** layer:
 
-Dans la couche **Data** :
+- The Data layer runs under Kotlin Coroutines and Kotlin Flow.
+- _Room_ is the application's cache
+  - The cache temporarily stores the `StationModel`
+  - The cache is observable using Kotlin Flow
+  - _Room_ is able to provide a [`PagingSource`](https://developer.android.com/reference/kotlin/androidx/paging/PagingSource). The `PagingSource` is able to load pages of data stored in a [`PagingData`](https://developer.android.com/reference/kotlin/androidx/paging/PagingData).
+  - _Room_ executes requests in a Kotlin coroutine in the [IO thread](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
+- _Retrofit_ is the HTTP client
+  - The HTTP client provides `Paginated<StationModel>` (a `List<StationModel>` per page).
+  - The HTTP client executes requests in a Kotlin coroutine
+- `StationRemoteMediator` loads pages from the cache or from HTTP responses depending on connectivity.
+  - The logic can be summarised as follows:
+    - It loads the next/previous/initial page by making an HTTP request
+    - It **caches the `StationModel` of the HTTP response**.
+    - It implements [`RemoteMediator`](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator), mediating between the local and remote source.
+- The `StationRepositoryImpl` implements `StationRepository` and executes CRUD methods.
+  - For asynchronous actions, the `StationModel` of the response is cached and returned.
+  - For a watch action (`watch`/`watchOne`), we observe the cache directly **without making an HTTP request**.
+  - For paged data, we create and run the [`Pager`](https://developer.android.com/reference/kotlin/androidx/paging/Pager) to **retrieve the `PagingData` from the cache.** Depending on whether we consume the `PagingData<Station>` stream, `Pager` will contact `StationRemoteMediator` to load more page data.
+  - The `StationModel` data is transformed into a `Station` (entity). We thus separate the responsibilities between models and entities.
 
-- La couche Data fonction sous Kotlin Coroutines et Kotlin Flow.
+In the **Domain** layer:
 
-- *Room* est le cache de l'application
-  - Le cache stocke temporairement les `StationModel`
-  - Le cache est observable en utilisant Kotlin Flow
-  - *Room* est capable de fournir un [`PagingSource`](https://developer.android.com/reference/kotlin/androidx/paging/PagingSource). `PagingSource` est capable de charger des pages de données stockées dans un [`PagingData`](https://developer.android.com/reference/kotlin/androidx/paging/PagingData).
-  - *Room* exécute les requêtes dans une coroutine Kotlin dans le [thread IO](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
-- *Retrofit* est le client HTTP
-  - Le client HTTP fournit des `Paginated<StationModel>` (des `List<StationModel>` par page).
-  - Le client HTTP exécute les requêtes dans une coroutine Kotlin
-- `StationRemoteMediator` charge les pages issues du cache ou les réponses HTTP selon la connectivité. 
-  - La logique peut se résumer à la suivante :
-    - Il charge la page suivante/précédente/initiale en lançant une requête HTTP
-    - Il **met en cache les `StationModel` de la réponse HTTP**.
-  - Il implémente [`RemoteMediator`](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator), médiateur entre la source local et la source distante.
-- `StationRepositoryImpl` implémente `StationRepository` et exécute les méthodes CRUD.
-  - Pour les actions asynchrones, les `StationModel` de la réponse sont mise en cache et sont retournés.
-  - Pour une action d'observation (`watch`/`watchOne`), nous observons le cache directement **sans lancer de requête HTTP**.
-  - Pour les données paginées, nous créons et exécutons le [`Pager`](https://developer.android.com/reference/kotlin/androidx/paging/Pager) pour **récupérer les `PagingData` issue du cache.** Selon que l'on consume le flux de `PagingData<Station>`, `Pager` contactera `StationRemoteMediator` pour charger davantage de page de données.
-  - Les données `StationModel` sont transformées en `Station` (entity). Nous séparons ainsi les responsabilités entre les models et entities.
-
-Dans la couche **Domain** :
-
-- Les entités et code métiers sont définies ici. 
-- Actuellement, notre `stationRepository` satisfait la plupart des cas d'utilisation (afficher une liste de `Station`, afficher les détails d'une `Station`, mettre à jour une `Station`...). 
-- Nous ajoutons la méthode `toggleFavorite` dans l'entité `Station`.
+- Entities and business code are defined here.
+- Currently, our `stationRepository` satisfies most use cases (displaying a list of `Stations`, displaying details of a `Station`, updating a `Station`...).
+- We add the `toggleFavorite` method to the `Station` entity.
 
 Dans la couche **Presentation** :
 
-- Les données sont observables dans les `ViewModel` en tant que [`LiveData`](https://developer.android.com/reference/androidx/lifecycle/LiveData) ou [`Flow`](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/).
-- Dans la page principale :
-  - Le `MainActivity` contient un `ViewPager2` et un `TabLayout`. Le `ViewPager2` affiche les `Fragments`. Le `TabLayout` est le bandeau supérieur affichant la page (voir maquette.). Le lien entre les deux est assuré par un `TabLayoutMediator`. 
-  - Dans le `StationListFragment`, le `RecyclerView` affichant les stations possède 2 adapteurs.
-    - `StationsAdapter` qui implémente `PagingDataAdapter` et affiche les données paginées `PagingData<Station>` dans le `RecyclerView`
-    - `StationLoadStateAdapter` qui implémente `LoadStateAdapter` et permet les pages (ou afficher les erreurs de chargement d'une page)
-  - `MainViewModel` (ViewModel de la page principale) :
-    - observe les actions utilisateurs ("charger la page des détails", "rafraichir manuellement la page" et "mettre en favoris ou non")
-    - expose l'observable `Flow<PagingData<Station>>` pour pouvoir le stocker dans le `StationsAdapter` (avec la méthode `stationsAdapter.submitData`)
-- Dans la page des détails :
-  - Il y a un Google Maps qui affiche la position de la station de train
-  - `DetailsViewModel` charge les détails de la station et expose un observable `LiveData<Station>`
-- Dans les deux pages :
-  - Le résultat d'une action **asynchrone** est observable en tant que `networkStatus: LiveData<Result<Unit>>`. Selon le résultat, on affichera un [*Toast*](https://developer.android.com/guide/topics/ui/notifiers/toasts) en cas d'erreur.
+- Data is observable in the `ViewModel` as [`StateFlow`](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
+- In the main page:
+  - The `MainActivity` contains a `ViewPager2` and a `TabLayout`. The `ViewPager2` displays the `Fragments`. The `TabLayout` is the top banner displaying the page (see mockup.). The link between the two is provided by a `TabLayoutMediator`.
+  - In the `StationListFragment`, the `RecyclerView` displaying the stations has 2 adapters.
+    - The `StationsAdapter` which implements the `PagingDataAdapter` and displays the paged `PagingData<Station>` in the `RecyclerView`.
+    - `StationLoadStateAdapter` which implements the `LoadStateAdapter` and allows pages to load (or displays page load errors)
+  - The `MainViewModel` (ViewModel of the main page):
+    - observes user actions ("load details page", "manually refresh page" and "bookmark or not")
+    - exposes the `Flow<PagingData<Station>>` observable so that it can be stored in the `StationsAdapter` (with the `stationsAdapter.submitData` method)
+  - The `AuthViewModel`:
+    - allows user to login. Since, the View Model is scoped to the `MainActivity` the user session is stored.
+- In the details page:
+  - There is a Google Maps that displays the position of the train station
+  - `DetailsViewModel` loads the station details and exposes an obersable `StateFlow<Station>`
+- In both pages:
+  - The result of an **asynchronous** action is observable as `networkStatus: StateFlow<Result<Unit>`. Depending on the result, a [_Toast_](https://developer.android.com/guide/topics/ui/notifiers/toasts) will be displayed if an error occurs.
 
-### Technologies Utilisées
+### Technologies used
 
-#### Android spécifique
+#### Android dependencies and AndroidX
 
-- Room, en tant que cache
-- Retrofit, en tant que client HTTP
-- Data Binding, pour le data et view binding bidirectionnel
-- ViewModel et LiveData, pour faire du MVVM et éviter les problèmes de lifecycle des fragments/activities
-- ViewPager 2, en tant que hôte de navigation horizontale
-- Paging 3, en tant que solution pour les données paginées
-- Android KTX, pour les extensions de Kotlin, aidant l'utilisation de certaines dépendances
-- Hilt, pour l'injection de dépendances
+- Room, as a cache
+- Retrofit + OkHttp 4, as an HTTP client
+- Data Binding, for bidirectional data and view binding
+- ViewModel and StateFlow, to do MVVM and avoid fragment/activities lifecycle issues
+- ViewPager 2, as a horizontal navigation host
+- Paging 3, as a solution for paged data
+- Android KTX, for Kotlin extensions, helping to use certain dependencies
+- Hilt, for dependency injection
 - Google Maps SDK for Android
+- Firebase Auth for authentication
 
-#### Kotlin en général
+#### Kotlin in general
 
 - Kotlin Coroutines + Kotlin Flow, pour l'asynchrone
-- Moshi, pour la serialisation en JSON
+- Kotlinx.serialization, pour la serialisation en JSON
 
 ### Références
 
@@ -341,6 +213,7 @@ Voici les documentations et formations que nous avons utilisées.
 
 - [Android KTX](https://developer.android.com/kotlin/ktx)
 - [Data Binding](https://developer.android.com/topic/libraries/data-binding)
+- [StateFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
 - [Guide to App Architecture](https://developer.android.com/jetpack/guide)
 - [Android Hilt](https://developer.android.com/training/dependency-injection/hilt-android) / [Dagger Hilt](https://dagger.dev/hilt/)
 - [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
@@ -353,7 +226,7 @@ Voici les documentations et formations que nous avons utilisées.
 ```
 MIT License
 
-Copyright (c) 2020 Marc NGUYEN, Jean-Baptiste RUBIO
+Copyright (c) 2021 Marc NGUYEN, Jean-Baptiste RUBIO
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -373,4 +246,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-
