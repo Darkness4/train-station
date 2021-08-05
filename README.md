@@ -1,6 +1,6 @@
 # Train Station
 
-By Marc Nguyen and Jeab-Baptiste Rubio.
+By Marc Nguyen and Jean-Baptiste Rubio.
 
 [TOC]
 
@@ -199,9 +199,7 @@ Dans la couche **Presentation** :
 - Kotlin Coroutines + Kotlin Flow, pour l'asynchrone
 - Kotlinx.serialization, pour la serialisation en JSON
 
-### Références
-
-Voici les documentations et formations que nous avons utilisées.
+### References
 
 #### Codelabs
 
