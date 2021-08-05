@@ -1,0 +1,64 @@
+type: object
+properties:
+  commune:
+    type: string
+    example: MAREIL-SUR-MAULDRE
+  y_wgs84:
+    type: number
+    format: double
+    example: 48.8936706358685
+  x_wgs84:
+    type: number
+    format: double
+    example: 1.871552843730546
+  libelle:
+    type: string
+    example: Mareil-sur-Mauldre
+  idgaia:
+    type: string
+    example: e1b2762a-19bf-11e5-a6ff-01fc64e0362d
+  voyageurs:
+    type: string
+    example: '0'
+  geo_point_2d:
+    type: array
+    items:
+      type: number
+      format: double
+    example: [48.8936706358, 1.87155284373]
+  code_ligne:
+    type: string
+    example: '396000'
+  x_l93:
+    type: number
+    format: double
+    example: 617263.3342999965
+  c_geo:
+    type: array
+    items:
+      type: number
+      format: double
+    example: [48.8936706358685, 1.8715528437305458]
+  rg_troncon:
+    type: integer
+    format: int64
+    example: 1
+  geo_shape:
+    $ref: '../openapi.yaml#/components/schemas/Geometry'
+  pk:
+    type: string
+    example: '042+382'
+  idreseau:
+    type: integer
+    format: int64
+    example: 5359
+  departemen:
+    type: string
+    example: YVELINES
+  y_l93:
+    type: number
+    format: double
+    example: 6866553.629700001
+  fret:
+    type: string
+    example: 'N'

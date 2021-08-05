@@ -1,15 +1,15 @@
-openapi: '3.0.1'
+openapi: 3.0.3
 info:
   title: Train Station API
-  description: 'This is a sample server Train Station API.'
+  description: This is a sample server Train Station API.
   contact:
     email: nguyen_marc@live.fr
   license:
     name: MIT
-    url: https://github.com/Darkness4/train-station/blob/main/LICENSE
+    url: 'https://github.com/Darkness4/train-station/blob/main/LICENSE'
   version: 1.0.0
 servers:
-  - url: https://train.the-end-is-never-the-end.pw/
+  - url: 'https://train.the-end-is-never-the-end.pw/'
 tags:
   - name: station
     description: Operations about train stations
@@ -38,7 +38,7 @@ paths:
                       $cont:
                         type: string
                     example:
-                      $cont: 'Gardanne'
+                      $cont: Gardanne
         - name: limit
           in: query
           description: The number of items to return.
@@ -56,19 +56,19 @@ paths:
             default: 1
             example: 1
       responses:
-        200:
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedStation'
-        400:
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        401:
+        '401':
           description: Authentication exception
           content:
             application/json:
@@ -89,31 +89,31 @@ paths:
               $ref: '#/components/schemas/Station'
         required: true
       responses:
-        201:
+        '201':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Station'
-        400:
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        401:
+        '401':
           description: Authentication exception
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        404:
+        '404':
           description: Station not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        405:
+        '405':
           description: Validation exception
           content:
             application/json:
@@ -121,7 +121,7 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
         - bearerAuth: []
-  /api/station/{id}:
+  '/api/station/{id}':
     patch:
       tags:
         - station
@@ -142,31 +142,31 @@ paths:
               $ref: '#/components/schemas/Station'
         required: true
       responses:
-        200:
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Station'
-        400:
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        401:
+        '401':
           description: Authentication exception
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        404:
+        '404':
           description: Station not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        405:
+        '405':
           description: Validation exception
           content:
             application/json:
@@ -188,25 +188,25 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Station'
-        400:
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        401:
+        '401':
           description: Authentication exception
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        404:
+        '404':
           description: Station not found
           content:
             application/json:
@@ -222,7 +222,7 @@ paths:
       description: Root
       operationId: getRoot
       responses:
-        302:
+        '302':
           description: Redirect to API
           headers:
             Location:
@@ -236,7 +236,7 @@ paths:
       summary: Returns health of the server
       operationId: getHealthz
       responses:
-        200:
+        '200':
           description: Successful operation
           content:
             application/json:
@@ -245,7 +245,15 @@ paths:
                 properties:
                   status:
                     type: string
-
+  /openapi:
+    get:
+      tags:
+        - other
+      summary: Get Open API specification
+      operationId: getOpenApi
+      responses:
+        '200':
+          description: Successful operation
 components:
   schemas:
     Geometry:
@@ -253,13 +261,15 @@ components:
       properties:
         type:
           type: string
-          example: 'Point'
+          example: Point
         coordinates:
           type: array
           items:
             type: number
             format: double
-          example: [1.871552843730545, 48.89367063584661]
+          example:
+            - 1.871552843730545
+            - 48.89367063584661
     Fields:
       type: object
       properties:
@@ -288,7 +298,9 @@ components:
           items:
             type: number
             format: double
-          example: [48.8936706358, 1.87155284373]
+          example:
+            - 48.8936706358
+            - 1.87155284373
         code_ligne:
           type: string
           example: '396000'
@@ -301,7 +313,9 @@ components:
           items:
             type: number
             format: double
-          example: [48.8936706358685, 1.8715528437305458]
+          example:
+            - 48.8936706358685
+            - 1.8715528437305458
         rg_troncon:
           type: integer
           format: int64
@@ -310,7 +324,7 @@ components:
           $ref: '#/components/schemas/Geometry'
         pk:
           type: string
-          example: '042+382'
+          example: 042+382
         idreseau:
           type: integer
           format: int64
@@ -387,7 +401,6 @@ components:
         message:
           type: string
           example: Success
-
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,0 +1,15 @@
+get:
+  tags:
+    - other
+  summary: Returns health of the server
+  operationId: getHealthz
+  responses:
+    200:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string

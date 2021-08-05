@@ -14,7 +14,9 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"github.com/Darkness4/train-station-api/pkg/domain/repos"
 	"github.com/Darkness4/train-station-api/pkg/domain/services"
+	"github.com/spf13/viper"
 	"github.com/valyala/fasthttp"
+	"google.golang.org/api/option"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -35,7 +37,9 @@ type ServiceLocator struct {
 
 func NewServiceLocator() (*ServiceLocator, error) {
 	// Firebase
-	app, err := firebase.NewApp(context.Background(), nil)
+	creds := viper.GetString("GOOGLE_APPLICATION_CREDENTIALS")
+	opt := option.WithCredentialsFile(creds)
+	app, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		return nil, err
 	}

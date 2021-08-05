@@ -10,16 +10,12 @@ require (
 	github.com/go-playground/validator/v10 v10.8.0
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/klauspost/compress v1.13.1 // indirect
-	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-sqlite3 v1.14.8 // indirect
 	github.com/savsgio/atreugo/v11 v11.8.0
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
 	github.com/valyala/fasthttp v1.28.0
-	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
 	golang.org/x/net v0.0.0-20210716203947-853a461950ff // indirect
-	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
-	golang.org/x/tools v0.1.5 // indirect
 	google.golang.org/api v0.52.0
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.12
