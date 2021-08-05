@@ -29,9 +29,9 @@ func ExceptionFilter(ctx *atreugo.RequestCtx, err error) error {
 	switch err.(type) {
 	case validator.ValidationErrors:
 		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 400,
+			StatusCode: 405,
 			Message:    err.Error(),
-		}, 400)
+		}, 405)
 	}
 	// By errorutils
 	if auth.IsIDTokenInvalid(err) {
