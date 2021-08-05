@@ -18,6 +18,7 @@ func NewRootController(server *atreugo.Atreugo) *RootController {
 func (ctrl *RootController) buildRoutes() {
 	ctrl.server.GET("/", getRoot)
 	ctrl.server.GET("/healthz", getHealthz)
+	ctrl.server.GET("/openapi", getOpenApi)
 }
 
 func getRoot(ctx *atreugo.RequestCtx) error {
@@ -26,4 +27,9 @@ func getRoot(ctx *atreugo.RequestCtx) error {
 
 func getHealthz(ctx *atreugo.RequestCtx) error {
 	return ctx.JSONResponse(&map[string]string{"status": "OK"}, 200)
+}
+
+func getOpenApi(ctx *atreugo.RequestCtx) error {
+	ctx.SendFile("./static/openapi.yaml")
+	return nil
 }

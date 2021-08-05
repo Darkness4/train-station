@@ -181,5 +181,5 @@ func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
 	}
 
 	// Output
-	return ctx.JSONResponse(newStation, 201)
+	return ctx.JSONResponse(newStation, 200)
 }

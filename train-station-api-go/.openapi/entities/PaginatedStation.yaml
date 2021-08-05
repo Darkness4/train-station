@@ -1,0 +1,27 @@
+type: object
+required:
+  - data
+  - count
+  - total
+  - page
+  - pageCount
+properties:
+  data:
+    type: array
+    items:
+      $ref: '../openapi.yaml#/components/schemas/Station'
+  count:
+    type: integer
+    format: int64
+    example: 10
+  total:
+    type: integer
+    format: int64
+    example: 60
+  page:
+    type: integer
+    example: 1
+  pageCount:
+    type: integer
+    format: int64
+    example: 6

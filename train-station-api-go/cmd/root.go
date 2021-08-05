@@ -13,8 +13,9 @@ import (
 )
 
 var (
-	host string
-	port int
+	host                         string
+	port                         int
+	googleApplicationCredentials string
 
 	rootCmd = &cobra.Command{
 		Use:   "train-station-api",
@@ -68,9 +69,11 @@ func init() {
 	rootCmd.Flags().StringVar(&host, "host", "0.0.0.0", "listening host (default is 0.0.0.0)")
 	rootCmd.Flags().IntVar(&port, "port", 3000, "listening port (default is 3000)")
 	rootCmd.Flags().BoolP("debug", "d", false, "enable debug")
+	rootCmd.Flags().StringVar(&googleApplicationCredentials, "google-application-credentials", "./service-account.json", "location of google credentials (default is ./service-account.json)")
 	viper.BindPFlag("HOST", rootCmd.Flags().Lookup("host"))
 	viper.BindPFlag("PORT", rootCmd.Flags().Lookup("port"))
 	viper.BindPFlag("debug", rootCmd.Flags().Lookup("debug"))
+	viper.BindPFlag("GOOGLE_APPLICATION_CREDENTIALS", rootCmd.Flags().Lookup("google-application-credentials"))
 }
 
 func Execute() error {
