@@ -16,7 +16,7 @@ RUN apk add --no-cache tini
 WORKDIR /usr/src/app
 
 COPY package.json ./
-COPY --from=builder /usr/src/app/.svelte-kit/node/build ./build
+COPY --from=builder /usr/src/app/build ./build
 
 RUN chown node:node .
 USER node
