@@ -134,7 +134,7 @@ jobs:
         with:
           repo: Darkness4/train-station
           user: Darkness4
-          project: Train Station
+          project: train-station
           token: ${{ secrets.GITHUB_TOKEN }}
           excludeTagsRegex: ^(?!${{ env.TAG }}$).*$
 
