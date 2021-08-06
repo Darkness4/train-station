@@ -1,0 +1,53 @@
+post:
+  tags:
+    - station
+  summary: Make favorite a train station
+  operationId: makeFavoriteOneStation
+  parameters:
+    - name: id
+      in: path
+      description: ID of station to edit
+      required: true
+      schema:
+        type: string
+        example: d74d6522316a0f2e6f9e2c09165fd74a2e86718d
+  requestBody:
+    description: Station object that needs to be edited
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - is_favorite
+          properties:
+            is_favorite:
+              type: boolean
+              example: true
+    required: true
+  responses:
+    200:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '../../../../openapi.yaml#/components/schemas/Station'
+    400:
+      description: Deprecated request
+      content:
+        application/json:
+          schema:
+            $ref: '../../../../openapi.yaml#/components/schemas/Error'
+    401:
+      description: Authentication exception
+      content:
+        application/json:
+          schema:
+            $ref: '../../../../openapi.yaml#/components/schemas/Error'
+    404:
+      description: Station not found
+      content:
+        application/json:
+          schema:
+            $ref: '../../../../openapi.yaml#/components/schemas/Error'
+  security:
+    - bearerAuth: []

@@ -10,6 +10,8 @@ patch:
       required: true
       schema:
         type: string
+        example: d74d6522316a0f2e6f9e2c09165fd74a2e86718d
+  deprecated: true
   requestBody:
     description: Station object that needs to be edited
     content:
@@ -18,32 +20,8 @@ patch:
           $ref: '../../../openapi.yaml#/components/schemas/Station'
     required: true
   responses:
-    200:
-      description: Successful operation
-      content:
-        application/json:
-          schema:
-            $ref: '../../../openapi.yaml#/components/schemas/Station'
     400:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '../../../openapi.yaml#/components/schemas/Error'
-    401:
-      description: Authentication exception
-      content:
-        application/json:
-          schema:
-            $ref: '../../../openapi.yaml#/components/schemas/Error'
-    404:
-      description: Station not found
-      content:
-        application/json:
-          schema:
-            $ref: '../../../openapi.yaml#/components/schemas/Error'
-    405:
-      description: Validation exception
+      description: Deprecated request
       content:
         application/json:
           schema:
@@ -63,6 +41,7 @@ get:
       required: true
       schema:
         type: string
+        example: d74d6522316a0f2e6f9e2c09165fd74a2e86718d
   responses:
     200:
       description: Successful operation

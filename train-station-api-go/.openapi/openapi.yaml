@@ -7,7 +7,7 @@ info:
   license:
     name: MIT
     url: https://github.com/Darkness4/train-station/blob/main/LICENSE
-  version: 1.0.0
+  version: 1.1.0
 servers:
   - url: https://train.the-end-is-never-the-end.pw/
 tags:
@@ -16,10 +16,12 @@ tags:
   - name: other
     description: Other type of operations
 paths:
-  /api/station/:
-    $ref: ./routes/api/station.yaml
-  /api/station/{id}:
-    $ref: ./routes/api/station/{id}.yaml
+  /api/stations/:
+    $ref: ./routes/api/stations.yaml
+  /api/stations/{id}:
+    $ref: ./routes/api/stations/{id}.yaml
+  /api/stations/{id}/makeFavorite:
+    $ref: ./routes/api/stations/{id}/makeFavorite.yaml
   /:
     $ref: ./routes/root.yaml
   /healthz:

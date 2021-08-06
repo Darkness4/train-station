@@ -94,11 +94,5 @@ post:
         application/json:
           schema:
             $ref: '../../openapi.yaml#/components/schemas/Error'
-    405:
-      description: Validation exception
-      content:
-        application/json:
-          schema:
-            $ref: '../../openapi.yaml#/components/schemas/Error'
   security:
     - bearerAuth: []

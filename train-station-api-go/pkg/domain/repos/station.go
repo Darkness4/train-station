@@ -9,6 +9,6 @@ type StationRepository interface {
 	GetOne(id string, userId string) (*entities.Station, error)
 	CreateOne(station *entities.Station, userId string) (*entities.Station, error)
 	CreateMany(stations []*entities.Station, userId string) ([]*entities.Station, error)
-	UpdateOne(id string, station *entities.Station, userId string) (*entities.Station, error)
+	MakeFavoriteOne(id string, isFavorite bool, userId string) (*entities.Station, error)
 	Count(s string) (int64, error)
 }

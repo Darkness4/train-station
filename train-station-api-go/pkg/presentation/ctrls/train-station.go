@@ -3,7 +3,6 @@ package ctrls
 import (
 	"encoding/json"
 	"strconv"
-	"strings"
 
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"github.com/Darkness4/train-station-api/pkg/domain/repos"
@@ -16,9 +15,10 @@ import (
 )
 
 type TrainStationController struct {
-	api  *atreugo.Router
-	repo repos.StationRepository
-	auth services.AuthService
+	api        *atreugo.Router
+	repo       repos.StationRepository
+	authFilter filters.AuthenticationFilter
+	validate   *validator.Validate
 }
 
 func NewTrainStationController(
@@ -35,7 +35,12 @@ func NewTrainStationController(
 	if auth == nil {
 		panic("NewTrainStationController: auth is nil")
 	}
-	ctrl := TrainStationController{api, repo, auth}
+	ctrl := TrainStationController{
+		api,
+		repo,
+		*filters.NewAuthenticationFilter(auth),
+		validator.New(),
+	}
 	ctrl.buildRoutes()
 	return &ctrl
 }
@@ -43,29 +48,42 @@ func NewTrainStationController(
 func (ctrl *TrainStationController) buildRoutes() {
 	stations := ctrl.api.NewGroupPath("/stations")
 	stations.GET("/", func(ctx *atreugo.RequestCtx) error {
-		return filters.ExceptionFilter(ctx, ctrl.getMany(ctx))
+		return filters.ExceptionFilter(ctx,
+			ctrl.authFilter.Apply(ctx,
+				ctrl.getMany,
+			),
+		)
 	})
 	stations.GET("/{id}", func(ctx *atreugo.RequestCtx) error {
-		return filters.ExceptionFilter(ctx, ctrl.getOne(ctx))
+		return filters.ExceptionFilter(ctx,
+			ctrl.authFilter.Apply(ctx,
+				ctrl.getOne,
+			),
+		)
 	})
 	stations.PATCH("/{id}", func(ctx *atreugo.RequestCtx) error {
-
-		return filters.ExceptionFilter(ctx, ctrl.updateOne(ctx))
+		return filters.ExceptionFilter(ctx,
+			ctrl.updateOne(ctx),
+		)
 	})
 	stations.POST("/", func(ctx *atreugo.RequestCtx) error {
-		return filters.ExceptionFilter(ctx, ctrl.createOne(ctx))
+		return filters.ExceptionFilter(ctx,
+			ctrl.authFilter.Apply(ctx,
+				ctrl.createOne,
+			),
+		)
+	})
+	stations.POST("/{id}/makeFavorite", func(ctx *atreugo.RequestCtx) error {
+		return filters.ExceptionFilter(ctx,
+			ctrl.authFilter.Apply(ctx,
+				ctrl.makeFavoriteOne,
+			),
+		)
 	})
 }
 
-func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
+func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx, uid string) error {
 	// Input
-	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
-	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
-	if err != nil {
-		return err
-	}
-
 	args := ctx.QueryArgs()
 	sRaw := args.Peek("s")
 	s := queryargs.SearchLibelle{
@@ -73,7 +91,7 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 			Contain: "",
 		},
 	}
-	json.Unmarshal(sRaw, &s)
+	json.Unmarshal(sRaw, &s) // Ignore error
 
 	limitStr := string(args.Peek("limit"))
 	limit := 10
@@ -112,15 +130,8 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx) error {
 	return ctx.JSONResponse(response, 200)
 }
 
-func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
+func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx, uid string) error {
 	// Input
-	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
-	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
-	if err != nil {
-		return err
-	}
-
 	id := ctx.UserValue("id").(string)
 
 	// Process
@@ -133,21 +144,13 @@ func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx) error {
 	return ctx.JSONResponse(station, 200)
 }
 
-func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
+func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx, uid string) error {
 	// Input
-	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
-	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
-	if err != nil {
-		return err
-	}
-
 	dto := entities.Station{}
 	json.Unmarshal(ctx.PostBody(), &dto)
 
-	// Validate
-	validate := validator.New()
-	if err := validate.Struct(&dto); err != nil {
+	// Validate DTO
+	if err := ctrl.validate.Struct(&dto); err != nil {
 		return err
 	}
 
@@ -162,20 +165,24 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx) error {
 }
 
 func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
-	// Input
-	authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
-	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-	uid, err := ctrl.auth.VerifyIDToken(ctx, idToken)
-	if err != nil {
-		return err
-	}
+	return ctx.JSONResponse(&dtos.Error{
+		StatusCode: 400,
+		Message:    "The operation PATCH is deprecated.",
+	}, 400)
+}
 
-	dto := entities.Station{}
+func (ctrl *TrainStationController) makeFavoriteOne(ctx *atreugo.RequestCtx, uid string) (err error) {
+	// Input
+	dto := dtos.MakeFavorite{}
 	json.Unmarshal(ctx.PostBody(), &dto)
 	id := ctx.UserValue("id").(string)
 
-	// Process
-	newStation, err := ctrl.repo.UpdateOne(id, &dto, uid)
+	// Validate DTO
+	if err := ctrl.validate.Struct(&dto); err != nil {
+		return err
+	}
+
+	newStation, err := ctrl.repo.MakeFavoriteOne(id, *dto.IsFavorite, uid)
 	if err != nil {
 		return err
 	}
