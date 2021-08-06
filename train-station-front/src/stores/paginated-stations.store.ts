@@ -12,13 +12,21 @@ export const initialState: Paginated<Station> = {
 	total: 0
 };
 function createPaginatedStationsStore() {
-	const { subscribe, set } = writable<Paginated<Station>>({ ...initialState });
+	const { subscribe, update, set } = writable<Paginated<Station>>({ ...initialState });
 
 	return {
 		subscribe,
 		load: async (token: string, params?: { s?: string | null; page?: number | null }) => {
 			const result = await StationRepository.find(token, params);
 			set(result);
+		},
+		makeFavorite: async (id: string, value: boolean, token: string) => {
+			const result = await StationRepository.makeFavoriteById(id, { is_favorite: value }, token);
+			update((state) => {
+				const index = state.data.findIndex((value) => value.recordid === result.recordid);
+				state.data[index] = result;
+				return state;
+			});
 		}
 	};
 }

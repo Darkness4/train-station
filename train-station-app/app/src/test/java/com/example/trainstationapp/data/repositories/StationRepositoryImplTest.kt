@@ -4,6 +4,7 @@ import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeysDao
 import com.example.trainstationapp.data.database.StationDao
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
+import com.example.trainstationapp.data.models.MakeFavoriteModel
 import com.example.trainstationapp.data.models.StationModel
 import com.example.trainstationapp.utils.TestUtils
 import io.kotest.core.spec.style.WordSpec
@@ -66,49 +67,52 @@ class StationRepositoryImplTest :
                 }
             }
 
-        "updateOne" should
+        "makeFavoriteOne" should
             {
-                "update" {
+                "make one favorite" {
                     // Arrange
-                    val slot = slot<StationModel>()
+                    val slot = slot<MakeFavoriteModel>()
+                    val mock = TestUtils.createStation("0").asModel()
                     coEvery {
-                        remote.updateById(
+                        remote.makeFavoriteById(
                             any(),
                             capture(slot),
                             any()
                         )
-                    } coAnswers { slot.captured }
+                    } coAnswers { mock }
                     coEvery { stationDao.insert(any<StationModel>()) } just Runs
                     val station = TestUtils.createStation("0")
 
                     // Act
-                    val result = repository.updateOne(station, "token")
+                    val result =
+                        repository.makeFavoriteOne(station.recordid, !station.isFavorite, "token")
 
                     // Assert
                     coVerify {
-                        remote.updateById(
+                        remote.makeFavoriteById(
                             station.recordid,
-                            station.asModel(),
+                            MakeFavoriteModel(!station.isFavorite),
                             "Bearer token"
                         )
                     }
-                    coVerify { stationDao.insert(station.asModel()) }
+                    coVerify { stationDao.insert(mock) }
                     result.isSuccess.shouldBeTrue()
                 }
 
                 "return Failure on null" {
                     // Arrange
-                    coEvery { remote.updateById(any(), any(), any()) } returns null
+                    coEvery { remote.makeFavoriteById(any(), any(), any()) } returns null
                     val station = TestUtils.createStation("0")
 
                     // Act
-                    val result = repository.updateOne(station, "token")
+                    val result =
+                        repository.makeFavoriteOne(station.recordid, station.isFavorite, "token")
 
                     // Assert
                     coVerify {
-                        remote.updateById(
+                        remote.makeFavoriteById(
                             station.recordid,
-                            station.asModel(),
+                            MakeFavoriteModel(station.isFavorite),
                             "Bearer token"
                         )
                     }
@@ -119,11 +123,12 @@ class StationRepositoryImplTest :
                 "return Failure on throw" {
                     // Arrange
                     val error = Exception("An Error")
-                    coEvery { remote.updateById(any(), any(), any()) } throws error
+                    coEvery { remote.makeFavoriteById(any(), any(), any()) } throws error
                     val station = TestUtils.createStation("0")
 
                     // Act
-                    val result = repository.createOne(station, "token")
+                    val result =
+                        repository.makeFavoriteOne(station.recordid, station.isFavorite, "token")
 
                     // Assert
                     verify { stationDao wasNot Called }

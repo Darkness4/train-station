@@ -20,22 +20,22 @@ graph TB
 
   subgraph "Data"
     StationDataSource
-    StationRepository
+    StationRepositoryImpl
     Models
 
-    StationDataSource --> StationRepository
+    StationDataSource --> StationRepositoryImpl
   end
 
-  StationRepository -. implements .-> StationRepositoryImpl
+  StationRepositoryImpl -. implements .-> StationRepository
 
   subgraph "Domain"
-    AuthService -- permits --> StationRepositoryImpl
-    StationRepositoryImpl
+    AuthService -- permits --> StationRepository
+    StationRepository
 
     Entities
   end
 
-  StationRepositoryImpl --> TrainStationController
+  StationRepository --> TrainStationController
 
   subgraph "Presentation"
     TrainStationController

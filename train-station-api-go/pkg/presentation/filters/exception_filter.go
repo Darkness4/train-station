@@ -2,6 +2,7 @@ package filters
 
 import (
 	"log"
+	"strings"
 
 	"firebase.google.com/go/v4/auth"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
@@ -29,16 +30,23 @@ func ExceptionFilter(ctx *atreugo.RequestCtx, err error) error {
 	switch err.(type) {
 	case validator.ValidationErrors:
 		return ctx.JSONResponse(dtos.Error{
-			StatusCode: 405,
+			StatusCode: 400,
 			Message:    err.Error(),
-		}, 405)
+		}, 400)
 	}
 	// By errorutils
 	if auth.IsIDTokenInvalid(err) {
 		return ctx.JSONResponse(dtos.Error{
 			StatusCode: 401,
-			Message:    "ID Token is invalid.",
+			Message:    "ID Token is invalid",
 		}, 401)
+	}
+	// By string
+	if strings.Contains(err.Error(), "FOREIGN KEY constraint failed") {
+		return ctx.JSONResponse(dtos.Error{
+			StatusCode: 400,
+			Message:    "One of the references does not exist",
+		}, 400)
 	}
 
 	// Unhandled errors

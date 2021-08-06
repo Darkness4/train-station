@@ -8,6 +8,7 @@ import androidx.paging.map
 import com.example.trainstationapp.core.state.State
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.datasources.TrainStationDataSource
+import com.example.trainstationapp.data.models.MakeFavoriteModel
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import kotlinx.coroutines.Dispatchers
@@ -96,11 +97,15 @@ constructor(
     }
 
     /** Update one station in the API and cache it. */
-    override suspend fun updateOne(station: Station, token: String): State<Station> {
+    override suspend fun makeFavoriteOne(
+        id: String,
+        value: Boolean,
+        token: String
+    ): State<Station> {
         val bearer = "Bearer $token"
         return try {
             val model =
-                trainStationDataSource.updateById(station.recordid, station.asModel(), bearer)
+                trainStationDataSource.makeFavoriteById(id, MakeFavoriteModel(value), bearer)
             model?.let {
                 database.stationDao().insert(model)
                 State.Success(model.asEntity())

@@ -39,7 +39,13 @@ class StationListFragment : Fragment() {
     private val adapter =
         StationsAdapter(
             onFavorite = {
-                authViewModel.idToken.value?.let { token -> activityViewModel.update(it, token) }
+                authViewModel.idToken.value?.let { token ->
+                    activityViewModel.makeFavorite(
+                        it.recordid,
+                        !it.isFavorite,
+                        token
+                    )
+                }
             },
             onClick = { activityViewModel.showDetails(it) },
         )

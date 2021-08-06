@@ -140,34 +140,27 @@ func (repo *StationRepositoryImpl) CreateMany(stations []*entities.Station, user
 	return newValues, nil
 }
 
-func (repo *StationRepositoryImpl) UpdateOne(id string, station *entities.Station, userId string) (*entities.Station, error) {
-	model, err := models.NewStationModelFromEntity(station)
-	if err != nil {
-		return nil, err
-	}
-	newModel, err := repo.ds.UpdateStation(id, model)
-	if err != nil {
-		return nil, err
-	}
-	if station.IsFavorite != nil && *station.IsFavorite {
+func (repo *StationRepositoryImpl) MakeFavoriteOne(id string, isFavorite bool, userId string) (*entities.Station, error) {
+	if isFavorite {
 		if _, err := repo.ds.CreateIsFavorite(&models.IsFavoriteModel{
 			UserID:    userId,
-			StationID: station.RecordID,
+			StationID: id,
 		}); err != nil {
 			return nil, err
 		}
-	} else if station.IsFavorite != nil && !*station.IsFavorite {
+	} else {
 		if err := repo.ds.RemoveIsFavorite(&models.IsFavoriteModel{
 			UserID:    userId,
-			StationID: station.RecordID,
+			StationID: id,
 		}); err != nil {
 			return nil, err
 		}
 	}
-	entity, err := repo.GetOne(newModel.RecordID, userId)
+	entity, err := repo.GetOne(id, userId)
 	if err != nil {
 		return nil, err
 	}
+
 	return entity, nil
 }
 

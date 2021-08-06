@@ -10,5 +10,5 @@ interface StationRepository {
     fun watchOne(station: Station): Flow<State<Station>>
     suspend fun findOne(station: Station, token: String): State<Station>
     suspend fun createOne(station: Station, token: String): State<Station>
-    suspend fun updateOne(station: Station, token: String): State<Station>
+    suspend fun makeFavoriteOne(id: String, value: Boolean, token: String): State<Station>
 }
