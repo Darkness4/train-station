@@ -136,7 +136,7 @@ jobs:
           user: Darkness4
           project: Train Station
           token: ${{ secrets.GITHUB_TOKEN }}
-          sinceTag: ${{ env.TAG }}
+          excludeTagsRegex: ^(?!${{ env.TAG }}$).*$
 
       - name: Release
         uses: softprops/action-gh-release@v1
