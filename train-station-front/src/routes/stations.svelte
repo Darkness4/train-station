@@ -62,9 +62,7 @@
 			const user = auth.currentUser;
 			if (user !== null) {
 				const token = await user.getIdToken();
-				station.is_favorite = !station.is_favorite;
-				await StationRepository.updateById(station.recordid, station, token);
-				await loadData(searchQuery, pageNumber);
+				await paginatedStationsStore.makeFavorite(station.recordid, !station.is_favorite, token);
 			}
 		} catch (e) {
 			console.error(e);

@@ -53,8 +53,12 @@ const StationRepository = {
 		return r.data;
 	},
 
-	async updateById(id: string, body: Station, token: string): Promise<Station> {
-		const r = await trainStationApi.patch<Station>(`/stations/${id}`, body, {
+	async makeFavoriteById(
+		id: string,
+		body: { is_favorite: boolean },
+		token: string
+	): Promise<Station> {
+		const r = await trainStationApi.post<Station>(`/stations/${id}/makeFavorite`, body, {
 			headers: { Authorization: `Bearer ${token}` }
 		});
 
