@@ -1,11 +1,11 @@
 package com.example.trainstationapp.data.datasources
 
+import com.example.trainstationapp.data.models.MakeFavoriteModel
 import com.example.trainstationapp.data.models.Paginated
 import com.example.trainstationapp.data.models.StationModel
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -43,10 +43,10 @@ interface TrainStationDataSource {
         @Header("Authorization") token: String
     ): StationModel?
 
-    @PATCH("stations/{id}")
-    suspend fun updateById(
+    @POST("stations/{id}/makeFavorite")
+    suspend fun makeFavoriteById(
         @Path("id") id: String,
-        @Body body: StationModel,
+        @Body body: MakeFavoriteModel,
         @Header("Authorization") token: String
     ): StationModel?
 }

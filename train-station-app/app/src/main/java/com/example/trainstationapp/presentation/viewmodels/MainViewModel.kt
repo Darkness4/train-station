@@ -85,10 +85,10 @@ constructor(
     val networkStatus: StateFlow<State<Unit>?>
         get() = _networkStatus
 
-    fun update(station: Station, token: String) =
+    fun makeFavorite(id: String, value: Boolean, token: String) =
         viewModelScope.launch(Dispatchers.Main) {
             _networkStatus.value =
-                repository.updateOne(station.copy().toggleFavorite(), token).map {}
+                repository.makeFavoriteOne(id, value, token).map {}
             refreshManually()
         }
 }
