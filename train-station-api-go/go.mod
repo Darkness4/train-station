@@ -18,5 +18,5 @@ require (
 	golang.org/x/net v0.0.0-20210716203947-853a461950ff // indirect
 	google.golang.org/api v0.52.0
 	gorm.io/driver/sqlite v1.1.4
-	gorm.io/gorm v1.21.12
+	gorm.io/gorm v1.21.13
 )
