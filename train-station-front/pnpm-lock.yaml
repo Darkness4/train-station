@@ -22,12 +22,12 @@ specifiers:
   svelte: 3.42.1
   svelte-check: 2.2.4
   svelte-preprocess: 4.7.4
-  tslib: 2.3.0
+  tslib: 2.3.1
   typescript: 4.3.5
 
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.39
-  '@sveltejs/kit': 1.0.0-next.144_svelte@3.42.1
+  '@sveltejs/kit': 1.0.0-next.146_svelte@3.42.1
   '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
   '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
   axios: 0.21.1
@@ -47,7 +47,7 @@ devDependencies:
   svelte: 3.42.1
   svelte-check: 2.2.4_sass@1.37.5+svelte@3.42.1
   svelte-preprocess: 4.7.4_1ced6683a6cc370029bbe34719c2dc36
-  tslib: 2.3.0
+  tslib: 2.3.1
   typescript: 4.3.5
 
 packages:
@@ -640,8 +640,8 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.144_svelte@3.42.1:
-    resolution: {integrity: sha512-c+UX7Xp3PUzkGvXgkXAJpM8+zbouTMukhWIIqehUUFMXJlRlbRiO1YkiZRWFqbb7aV80d8klCWGprFXQVcwlbw==}
+  /@sveltejs/kit/1.0.0-next.146_svelte@3.42.1:
+    resolution: {integrity: sha512-MSatcaCRfjl88Prd5mW4pNOJ3Gsr525+Vjr24MoKtyTt6PZQmTfQsDVwyP93exn/6w2xl9uMCW6cFpDVBu7jSg==}
     engines: {node: ^12.20 || >=14.13}
     hasBin: true
     peerDependencies:
@@ -2628,6 +2628,10 @@ packages:
 
   /tslib/2.3.0:
     resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+    dev: true
+
+  /tslib/2.3.1:
+    resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: true
 
   /tsutils/3.21.0_typescript@4.3.5:
