@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@sveltejs/adapter-node': 1.0.0-next.39
+  '@sveltejs/adapter-node': 1.0.0-next.40
   '@sveltejs/kit': next
   '@typescript-eslint/eslint-plugin': 4.29.1
   '@typescript-eslint/parser': 4.29.1
@@ -26,8 +26,8 @@ specifiers:
   typescript: 4.3.5
 
 devDependencies:
-  '@sveltejs/adapter-node': 1.0.0-next.39
-  '@sveltejs/kit': 1.0.0-next.146_svelte@3.42.1
+  '@sveltejs/adapter-node': 1.0.0-next.40
+  '@sveltejs/kit': 1.0.0-next.147_svelte@3.42.1
   '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
   '@typescript-eslint/parser': 4.29.1_eslint@7.32.0+typescript@4.3.5
   axios: 0.21.1
@@ -633,21 +633,21 @@ packages:
       picomatch: 2.3.0
     dev: true
 
-  /@sveltejs/adapter-node/1.0.0-next.39:
-    resolution: {integrity: sha512-5esWwnomzO3Oq6Ie5HQ64lpTTESvlPfN/MS9DtyjkVEna2pgNp2/Pi+6eIunAYyPzkvaq2Ac6ngqQJ3QU1ESEA==}
+  /@sveltejs/adapter-node/1.0.0-next.40:
+    resolution: {integrity: sha512-1FPqp7+PBLhlA29ND25lsOrxOlWKbeeRMNjR3WFPFUwi6147eZ4/TYOk0rgVZ3MzT9iqf5BYKuHwaI/BpgO0Yg==}
     dependencies:
       esbuild: 0.12.16
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.146_svelte@3.42.1:
-    resolution: {integrity: sha512-MSatcaCRfjl88Prd5mW4pNOJ3Gsr525+Vjr24MoKtyTt6PZQmTfQsDVwyP93exn/6w2xl9uMCW6cFpDVBu7jSg==}
+  /@sveltejs/kit/1.0.0-next.147_svelte@3.42.1:
+    resolution: {integrity: sha512-rAABsKlC1K/B4VfqT2SaVO29t+OV8deseSJ9l+hV7j9zkswTwiJ7h37tZ5SfnvMgCHemcNjXg8Gzg+0U1MCfEA==}
     engines: {node: ^12.20 || >=14.13}
     hasBin: true
     peerDependencies:
       svelte: ^3.34.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.14_svelte@3.42.1+vite@2.4.3
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.17_svelte@3.42.1+vite@2.4.3
       cheap-watch: 1.0.3
       sade: 1.7.4
       svelte: 3.42.1
@@ -657,8 +657,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.14_svelte@3.42.1+vite@2.4.3:
-    resolution: {integrity: sha512-46IKPtoGcdo6YLyUhvsXyC1Dg3m2HlbgreZqxM/h5DzavgUa75c/WHT5cIxxLppG+gxtct7V08/WNEdpFdmM3Q==}
+  /@sveltejs/vite-plugin-svelte/1.0.0-next.17_svelte@3.42.1+vite@2.4.3:
+    resolution: {integrity: sha512-Xh/YYqBMDJnDheutnGHk/I5TO6w9gZ2GMgvG+qQm/gpIRkaTLts6Mw5xDe6cac/nH/aVPPVPibhq2pf26d44fA==}
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
     peerDependencies:
       diff-match-patch: ^1.0.5
