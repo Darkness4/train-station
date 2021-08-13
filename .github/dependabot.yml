@@ -1,0 +1,50 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "[github-actions]"
+    labels:
+      - "github-actions"
+      - "dependencies"
+    reviewers:
+      - "Darkness4"
+
+
+  - package-ecosystem: "gradle"
+    directory: "/train-station-app"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "[gradle]"
+    labels:
+      - "gradle"
+      - "dependencies"
+    reviewers:
+      - "Darkness4"
+
+  - package-ecosystem: "docker"
+    directory: "/train-station-api-go"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "[docker]"
+    labels:
+      - "docker"
+      - "dependencies"
+    reviewers:
+      - "Darkness4"
+
+  - package-ecosystem: "docker"
+    directory: "/train-station-front"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "[docker]"
+    labels:
+      - "docker"
+      - "dependencies"
+    reviewers:
+      - "Darkness4"
