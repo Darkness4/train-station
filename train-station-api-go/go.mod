@@ -16,7 +16,7 @@ require (
 	github.com/spf13/viper v1.8.1
 	github.com/valyala/fasthttp v1.28.0
 	golang.org/x/net v0.0.0-20210716203947-853a461950ff // indirect
-	google.golang.org/api v0.53.0
+	google.golang.org/api v0.54.0
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.13
 )
