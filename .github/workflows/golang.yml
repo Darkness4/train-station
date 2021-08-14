@@ -11,9 +11,12 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16'
+      - name: Get dependencies
+        working-directory: ./train-station-api-go
+        run: go get -d -v
       - name: Run tests
         working-directory: ./train-station-api-go
-        run: go test -short ./...
+        run: go test ./...
 
   build-amd64-go:
     runs-on: ubuntu-latest
