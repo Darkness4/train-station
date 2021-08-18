@@ -16,7 +16,7 @@ require (
 	github.com/spf13/cast v1.4.0 // indirect
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
-	github.com/valyala/fasthttp v1.28.0
+	github.com/valyala/fasthttp v1.29.0
 	golang.org/x/crypto v0.0.0-20210813211128-0a44fdfbc16e // indirect
 	golang.org/x/mod v0.5.0 // indirect
 	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d // indirect
