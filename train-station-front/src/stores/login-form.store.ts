@@ -3,8 +3,8 @@ import {
 	getAuth,
 	GoogleAuthProvider,
 	sendPasswordResetEmail,
-	signInWithEmailAndPassword
-	// signInWithPopup
+	signInWithEmailAndPassword,
+	signInWithPopup
 } from 'firebase/auth';
 import { writable } from 'svelte/store';
 
@@ -28,8 +28,8 @@ function createLoginFormStore() {
 			createUserWithEmailAndPassword(auth, email, password),
 		signIn: (email: string, password: string) => signInWithEmailAndPassword(auth, email, password),
 		signInWithGoogle: () => {
-			// const provider = new GoogleAuthProvider();
-			// return signInWithPopup(auth, provider);
+			const provider = new GoogleAuthProvider();
+			return signInWithPopup(auth, provider);
 		},
 		forgotPassword: (email: string) => sendPasswordResetEmail(auth, email)
 	};
