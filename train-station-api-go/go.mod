@@ -12,7 +12,7 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/klauspost/compress v1.13.4 // indirect
 	github.com/mattn/go-sqlite3 v1.14.8 // indirect
-	github.com/savsgio/atreugo/v11 v11.8.1
+	github.com/savsgio/atreugo/v11 v11.8.2
 	github.com/spf13/cast v1.4.0 // indirect
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
