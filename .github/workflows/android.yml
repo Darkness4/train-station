@@ -185,7 +185,7 @@ jobs:
         with:
           name: app-aab
       - name: Get the tag name
-        run: echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+        run: echo "TAG=$(git tag --sort=creatordate | tail -2 | head -1)" >> $GITHUB_ENV
       - name: Build Changelog
         id: github_release
         uses: heinrichreimer/github-changelog-generator-action@v2.2
@@ -194,7 +194,7 @@ jobs:
           user: Darkness4
           project: train-station
           token: ${{ secrets.GITHUB_TOKEN }}
-          excludeTagsRegex: ^(?!${{ env.TAG }}$).*$
+          sinceTag: ${{ env.TAG }}
 
       - name: Release
         uses: softprops/action-gh-release@v1
