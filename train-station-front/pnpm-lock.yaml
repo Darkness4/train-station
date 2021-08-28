@@ -17,7 +17,7 @@ specifiers:
   firebase: 9.0.0
   material-design-icons: 3.0.1
   prettier: 2.3.2
-  prettier-plugin-svelte: 2.3.1
+  prettier-plugin-svelte: 2.4.0
   sass: 1.38.1
   svelte: 3.42.4
   svelte-check: 2.2.5
@@ -42,7 +42,7 @@ devDependencies:
   firebase: 9.0.0
   material-design-icons: 3.0.1
   prettier: 2.3.2
-  prettier-plugin-svelte: 2.3.1_prettier@2.3.2+svelte@3.42.4
+  prettier-plugin-svelte: 2.4.0_prettier@2.3.2+svelte@3.42.4
   sass: 1.38.1
   svelte: 3.42.4
   svelte-check: 2.2.5_sass@1.38.1+svelte@3.42.4
@@ -2156,8 +2156,8 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
-  /prettier-plugin-svelte/2.3.1_prettier@2.3.2+svelte@3.42.4:
-    resolution: {integrity: sha512-F1/r6OYoBq8Zgurhs1MN25tdrhPw0JW5JjioPRqpxbYdmrZ3gY/DzHGs0B6zwd4DLyRsfGB2gqhxUCbHt/D1fw==}
+  /prettier-plugin-svelte/2.4.0_prettier@2.3.2+svelte@3.42.4:
+    resolution: {integrity: sha512-JwJ9bOz4XHLQtiLnX4mTSSDUdhu12WH8sTwy/XTDCSyPlah6IcV7NWeYBZscPEcceu2YnW8Y9sJCP40Z2UH9GA==}
     peerDependencies:
       prettier: ^1.16.4 || ^2.0.0
       svelte: ^3.2.0
