@@ -29,7 +29,7 @@
 		"firebase": "9.0.0",
 		"material-design-icons": "3.0.1",
 		"prettier": "2.3.2",
-		"prettier-plugin-svelte": "2.3.1",
+		"prettier-plugin-svelte": "2.4.0",
 		"sass": "1.38.1",
 		"svelte": "3.42.4",
 		"svelte-check": "2.2.5",
