@@ -18,7 +18,7 @@ specifiers:
   material-design-icons: 3.0.1
   prettier: 2.3.2
   prettier-plugin-svelte: 2.4.0
-  sass: 1.38.1
+  sass: 1.38.2
   svelte: 3.42.4
   svelte-check: 2.2.5
   svelte-preprocess: 4.8.0
@@ -43,10 +43,10 @@ devDependencies:
   material-design-icons: 3.0.1
   prettier: 2.3.2
   prettier-plugin-svelte: 2.4.0_prettier@2.3.2+svelte@3.42.4
-  sass: 1.38.1
+  sass: 1.38.2
   svelte: 3.42.4
-  svelte-check: 2.2.5_sass@1.38.1+svelte@3.42.4
-  svelte-preprocess: 4.8.0_8263a2b20bc36ab1e21ceb6b7202b96e
+  svelte-check: 2.2.5_sass@1.38.2+svelte@3.42.4
+  svelte-preprocess: 4.8.0_8a0bb1926ae4dcaca0b728854934be85
   tslib: 2.3.1
   typescript: 4.3.5
 
@@ -2329,8 +2329,8 @@ packages:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
     dev: true
 
-  /sass/1.38.1:
-    resolution: {integrity: sha512-Lj8nPaSYOuRhgqdyShV50fY5jKnvaRmikUNalMPmbH+tKMGgEKVkltI/lP30PEfO2T1t6R9yc2QIBLgOc3uaFw==}
+  /sass/1.38.2:
+    resolution: {integrity: sha512-Bz1fG6qiyF0FX6m/I+VxtdVKz1Dfmg/e9kfDy2PhWOkq3T384q2KxwIfP0fXpeI+EyyETdOauH+cRHQDFASllA==}
     engines: {node: '>=8.9.0'}
     hasBin: true
     dependencies:
@@ -2514,7 +2514,7 @@ packages:
       has-flag: 4.0.0
     dev: true
 
-  /svelte-check/2.2.5_sass@1.38.1+svelte@3.42.4:
+  /svelte-check/2.2.5_sass@1.38.2+svelte@3.42.4:
     resolution: {integrity: sha512-EstDoqxjqWStWELh7Z0qytqUDl/ikdNEr21dveNc4fUDnhnqO2F2jHEufqoNnC3GfBji3GIUHvoXsp/I5lMbCg==}
     hasBin: true
     peerDependencies:
@@ -2528,7 +2528,7 @@ packages:
       sade: 1.7.4
       source-map: 0.7.3
       svelte: 3.42.4
-      svelte-preprocess: 4.7.4_8263a2b20bc36ab1e21ceb6b7202b96e
+      svelte-preprocess: 4.7.4_8a0bb1926ae4dcaca0b728854934be85
       typescript: 4.3.5
     transitivePeerDependencies:
       - '@babel/core'
@@ -2551,7 +2551,7 @@ packages:
       svelte: 3.42.4
     dev: true
 
-  /svelte-preprocess/4.7.4_8263a2b20bc36ab1e21ceb6b7202b96e:
+  /svelte-preprocess/4.7.4_8a0bb1926ae4dcaca0b728854934be85:
     resolution: {integrity: sha512-mDAmaltQl6e5zU2VEtoWEf7eLTfuOTGr9zt+BpA3AGHo8MIhKiNSPE9OLTCTOMgj0vj/uL9QBbaNmpG4G1CgIA==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -2595,13 +2595,13 @@ packages:
       '@types/pug': 2.0.5
       '@types/sass': 1.16.1
       detect-indent: 6.1.0
-      sass: 1.38.1
+      sass: 1.38.2
       strip-indent: 3.0.0
       svelte: 3.42.4
       typescript: 4.3.5
     dev: true
 
-  /svelte-preprocess/4.8.0_8263a2b20bc36ab1e21ceb6b7202b96e:
+  /svelte-preprocess/4.8.0_8a0bb1926ae4dcaca0b728854934be85:
     resolution: {integrity: sha512-i9Z17cwGlp+kuSSv3kJWdAdAP2L26A5yMzHHdDj8YL+86sN64Yz5/gfjQp3Xb6fiaToo4sB+wTpid/23Gz0yvw==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -2645,7 +2645,7 @@ packages:
       '@types/pug': 2.0.5
       '@types/sass': 1.16.1
       detect-indent: 6.1.0
-      sass: 1.38.1
+      sass: 1.38.2
       strip-indent: 3.0.0
       svelte: 3.42.4
       typescript: 4.3.5
