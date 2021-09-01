@@ -15,8 +15,8 @@
 	"devDependencies": {
 		"@sveltejs/adapter-node": "1.0.0-next.43",
 		"@sveltejs/kit": "next",
-		"@typescript-eslint/eslint-plugin": "4.29.3",
-		"@typescript-eslint/parser": "4.29.3",
+		"@typescript-eslint/eslint-plugin": "4.30.0",
+		"@typescript-eslint/parser": "4.30.0",
 		"axios": "0.21.1",
 		"bulma": "0.9.3",
 		"eslint": "7.32.0",
