@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-node": "1.0.0-next.43",
-		"@sveltejs/kit": "next",
+		"@sveltejs/kit": "1.0.0-next.162",
 		"@typescript-eslint/eslint-plugin": "4.30.0",
 		"@typescript-eslint/parser": "4.30.0",
 		"axios": "0.21.1",
