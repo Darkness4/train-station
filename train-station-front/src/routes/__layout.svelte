@@ -1,50 +1,51 @@
 <script lang="ts" context="module">
-	import 'material-design-icons/iconfont/material-icons.css';
-
-	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
-
 	import { initializeFirebase } from '$lib/init-firebase';
-	import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 
 	initializeFirebase();
-
-	const auth = getAuth();
-
-	export async function load({ page }: LoadInput): Promise<LoadOutput> {
-		if (page.path !== '/' && auth.currentUser === null) {
-			return {
-				redirect: '/',
-				status: 302
-			};
-		}
-		return {};
-	}
 </script>
 
 <script lang="ts">
+	import 'material-design-icons/iconfont/material-icons.css';
 	import '../app.scss';
 
-	import { onDestroy } from 'svelte';
+	import type { Auth, Unsubscribe } from 'firebase/auth';
+	import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+	import { onDestroy, onMount } from 'svelte';
 
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { authStore } from '$stores/auth.store';
 
-	let userOrNull: any | null = null;
-	const unsubscribe = onAuthStateChanged(auth, (user) => (userOrNull = user));
+	let unsubscribe: Unsubscribe;
+	let auth: Auth;
+
+	onMount(() => {
+		auth = getAuth();
+
+		unsubscribe = onAuthStateChanged(auth, (user) => {
+			authStore.set({ user });
+
+			if ($page.path !== '/' && !auth?.currentUser) {
+				goto('/');
+			}
+		});
+	});
 
 	async function logOut() {
-		if (userOrNull !== null) {
-			await signOut(auth);
-			userOrNull = null;
+		if ($authStore.user) {
+			await signOut(auth!);
 			return goto('/');
 		}
 	}
 
 	onDestroy(() => {
-		unsubscribe();
+		if (unsubscribe !== undefined) {
+			unsubscribe();
+		}
 	});
 </script>
 
-{#if userOrNull}
+{#if $authStore.user}
 	<nav class="navbar">
 		<div class="container">
 			<div id="navMenu" class="navbar-menu">

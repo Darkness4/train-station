@@ -16,18 +16,14 @@
 </script>
 
 <script lang="ts">
-	import { getAuth } from 'firebase/auth';
-
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Pager from '$components/pager.component.svelte';
 	import PaginatedStations from '$components/paginated-stations.component.svelte';
 	import Search from '$components/search.component.svelte';
-	import StationRepository from '$lib/api/train-station';
 	import type { Station } from '$lib/entities/station';
+	import { authStore } from '$stores/auth.store';
 	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
-
-	const auth = getAuth();
 
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;
@@ -36,8 +32,8 @@
 
 	async function loadData(s: string, page: number) {
 		try {
-			const user = auth.currentUser;
-			if (user !== null) {
+			const user = $authStore.user;
+			if (user) {
 				const token = await user.getIdToken();
 				await paginatedStationsStore.load(token, {
 					s: s,
@@ -59,8 +55,8 @@
 
 	async function onFavorite(station: Station) {
 		try {
-			const user = auth.currentUser;
-			if (user !== null) {
+			const user = $authStore.user;
+			if (user) {
 				const token = await user.getIdToken();
 				await paginatedStationsStore.makeFavorite(station.recordid, !station.is_favorite, token);
 			}

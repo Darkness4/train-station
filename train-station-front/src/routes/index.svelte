@@ -1,32 +1,12 @@
-<script lang="ts" context="module">
-	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
-	import { getAuth } from 'firebase/auth';
-
-	export async function load({ page }: LoadInput): Promise<LoadOutput> {
-		if (getAuth().currentUser !== null) {
-			return {
-				redirect: '/stations',
-				status: 302
-			};
-		}
-		return {};
-	}
-</script>
-
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import AuthCard from '$components/auth/auth-card.component.svelte';
+	import { authStore } from '$stores/auth.store';
 	import { loginFormStore } from '$stores/login-form.store';
-	import { onAuthStateChanged } from 'firebase/auth';
 
-	const auth = getAuth();
-
-	const unsubcribe = onAuthStateChanged(auth, (user) => {
-		if (user) {
-			goto('/stations');
-			unsubcribe();
-		}
-	});
+	$: if ($authStore.user) {
+		goto('/stations');
+	}
 </script>
 
 <svelte:head>

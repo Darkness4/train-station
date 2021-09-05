@@ -13,8 +13,6 @@ export type LoginFormState = {
 	password: string;
 };
 
-const auth = getAuth();
-
 export const initialState: LoginFormState = {
 	email: '',
 	password: ''
@@ -25,13 +23,14 @@ function createLoginFormStore() {
 	return {
 		subscribe,
 		createAccount: (email: string, password: string) =>
-			createUserWithEmailAndPassword(auth, email, password),
-		signIn: (email: string, password: string) => signInWithEmailAndPassword(auth, email, password),
+			createUserWithEmailAndPassword(getAuth(), email, password),
+		signIn: (email: string, password: string) =>
+			signInWithEmailAndPassword(getAuth(), email, password),
 		signInWithGoogle: () => {
 			const provider = new GoogleAuthProvider();
-			return signInWithPopup(auth, provider);
+			return signInWithPopup(getAuth(), provider);
 		},
-		forgotPassword: (email: string) => sendPasswordResetEmail(auth, email)
+		forgotPassword: (email: string) => sendPasswordResetEmail(getAuth(), email)
 	};
 }
 export const loginFormStore = createLoginFormStore();
