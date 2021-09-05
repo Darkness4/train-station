@@ -191,6 +191,16 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           onlyLastTag: "true"
+          issues: true
+          issuesWoLabels: true
+          pullRequests: true
+          prWoLabels: true
+          filterByMilestone: true
+          author: true
+          unreleased: true
+          compareLink: true
+          httpCache: true
+          verbose: true
       - name: Echo changelog
         env:
           CHANGELOG: ${{ steps.github_release.outputs.changelog }}
