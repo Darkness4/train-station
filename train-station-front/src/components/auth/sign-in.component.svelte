@@ -6,7 +6,7 @@
 	export let email: string;
 	export let password: string;
 	let confirmPassword: string;
-	let error: Error | null = null;
+	let error: any;
 
 	export let onLogin: (email: string, password: string) => Promise<any>;
 	export let onLoginWithGoogle: () => Promise<any>;

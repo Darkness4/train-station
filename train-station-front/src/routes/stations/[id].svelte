@@ -1,38 +1,16 @@
-<script context="module" lang="ts">
-	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
-	import { getAuth } from 'firebase/auth';
-
-	const auth = getAuth();
-
-	let id: string;
-
-	export async function load({ page }: LoadInput): Promise<LoadOutput> {
-		id = page.params.id;
-		try {
-			const user = auth.currentUser;
-			if (user !== null) {
-				const token = await user.getIdToken();
-				await stationStore.load(page.params.id, token);
-			}
-		} catch (e) {
-			return { error: e };
-		}
-		return {};
-	}
-</script>
-
 <script lang="ts">
+	import { page } from '$app/stores';
 	import DetailStation from '$components/detail-station.component.svelte';
-
+	import { authStore } from '$stores/auth.store';
 	import { stationStore } from '$stores/station.store';
-	import type { Station } from '$lib/entities/station';
 
-	import { onDestroy } from 'svelte';
+	$: id = $page.params.id;
+	$: $authStore.user
+		?.getIdToken()
+		?.then((token) => stationStore.load(id, token))
+		?.catch((e) => console.error(e));
 
-	let station: Station | null;
-	const unsubscribe = stationStore.subscribe((it) => (station = it));
-
-	onDestroy(unsubscribe);
+	$: station = $stationStore;
 </script>
 
 <svelte:head>

@@ -4,7 +4,7 @@
 	export let onForgotPassword: (email: string) => Promise<any>;
 
 	export let email: string;
-	let error: Error | null = null;
+	let error: any;
 
 	async function _onForgotPassword() {
 		try {
