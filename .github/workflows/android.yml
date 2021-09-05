@@ -186,17 +186,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: app-aab
-      - name: Get the tag name
-        run: echo "TAG=$(git tag --sort=creatordate | tail -2 | head -1)" >> $GITHUB_ENV
       - name: Build Changelog
         id: github_release
         uses: heinrichreimer/github-changelog-generator-action@v2.2
         with:
-          repo: Darkness4/train-station
-          user: Darkness4
-          project: train-station
           token: ${{ secrets.GITHUB_TOKEN }}
-          sinceTag: ${{ env.TAG }}
+          onlyLastTag: "true"
 
       - name: Release
         uses: softprops/action-gh-release@v1
