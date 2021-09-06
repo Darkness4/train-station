@@ -1,5 +1,44 @@
 # Changelog
 
+## [Unreleased](https://github.com/Darkness4/train-station/tree/HEAD)
+
+[Full Changelog](https://github.com/Darkness4/train-station/compare/1.3.6...HEAD)
+
+**Merged pull requests:**
+
+- \[renovate\] Update plugin com.diffplug.spotless to v5.15.0 [\#506](https://github.com/Darkness4/train-station/pull/506) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency @sveltejs/kit to v1.0.0-next.163 [\#505](https://github.com/Darkness4/train-station/pull/505) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency svelte-preprocess to v4.9.1 [\#504](https://github.com/Darkness4/train-station/pull/504) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency axios to v0.21.4 [\#503](https://github.com/Darkness4/train-station/pull/503) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [1.3.6](https://github.com/Darkness4/train-station/tree/1.3.6) (2021-09-05)
+
+[Full Changelog](https://github.com/Darkness4/train-station/compare/1.3.5...1.3.6)
+
+**Merged pull requests:**
+
+- \[svelte\] Fix svelte kit dependencies [\#502](https://github.com/Darkness4/train-station/pull/502) ([Darkness4](https://github.com/Darkness4))
+- \[renovate\] Update coroutines to v1.5.2 [\#501](https://github.com/Darkness4/train-station/pull/501) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency com.android.tools.build:gradle to v7.0.2 [\#497](https://github.com/Darkness4/train-station/pull/497) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update typescript-eslint monorepo to v4.30.0 [\#495](https://github.com/Darkness4/train-station/pull/495) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update module google.golang.org/api to v0.56.0 [\#494](https://github.com/Darkness4/train-station/pull/494) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency com.google.firebase:firebase-bom to v28.4.0 [\#493](https://github.com/Darkness4/train-station/pull/493) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency firebase to v9.0.1 [\#492](https://github.com/Darkness4/train-station/pull/492) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency typescript to v4.4.2 [\#490](https://github.com/Darkness4/train-station/pull/490) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency sass to v1.38.2 [\#489](https://github.com/Darkness4/train-station/pull/489) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency svelte-preprocess to v4.8.0 [\#488](https://github.com/Darkness4/train-station/pull/488) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency prettier-plugin-svelte to v2.4.0 [\#487](https://github.com/Darkness4/train-station/pull/487) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency prettier to v2.3.2 [\#486](https://github.com/Darkness4/train-station/pull/486) ([renovate[bot]](https://github.com/apps/renovate))
+- \[renovate\] Update dependency svelte to v3.42.4 [\#485](https://github.com/Darkness4/train-station/pull/485) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [1.3.5](https://github.com/Darkness4/train-station/tree/1.3.5) (2021-08-27)
+
+[Full Changelog](https://github.com/Darkness4/train-station/compare/1.3.4...1.3.5)
+
+## [1.3.4](https://github.com/Darkness4/train-station/tree/1.3.4) (2021-08-27)
+
+[Full Changelog](https://github.com/Darkness4/train-station/compare/1.3.3...1.3.4)
+
 ## [1.3.3](https://github.com/Darkness4/train-station/tree/1.3.3) (2021-08-27)
 
 [Full Changelog](https://github.com/Darkness4/train-station/compare/1.3.2...1.3.3)
