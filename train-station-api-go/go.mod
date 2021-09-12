@@ -23,6 +23,6 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/api v0.56.0
 	google.golang.org/grpc v1.40.0 // indirect
-	gorm.io/driver/sqlite v1.1.4
-	gorm.io/gorm v1.21.14
+	gorm.io/driver/sqlite v1.1.5
+	gorm.io/gorm v1.21.15
 )
