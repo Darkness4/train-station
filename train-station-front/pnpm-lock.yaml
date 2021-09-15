@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@sveltejs/adapter-node': 1.0.0-next.47
-  '@sveltejs/kit': 1.0.0-next.166
+  '@sveltejs/kit': 1.0.0-next.167
   '@typescript-eslint/eslint-plugin': 4.31.0
   '@typescript-eslint/parser': 4.31.0
   axios: 0.21.4
@@ -27,7 +27,7 @@ specifiers:
 
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.47
-  '@sveltejs/kit': 1.0.0-next.166_svelte@3.42.5
+  '@sveltejs/kit': 1.0.0-next.167_svelte@3.42.5
   '@typescript-eslint/eslint-plugin': 4.31.0_d9c1bc16c4e2aea4e8e177a5961dd3bf
   '@typescript-eslint/parser': 4.31.0_eslint@7.32.0+typescript@4.4.3
   axios: 0.21.4
@@ -638,14 +638,14 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.166_svelte@3.42.5:
-    resolution: {integrity: sha512-TQWtWbgyc5+eJY1/RZvCc4gHLssnW+PfKh0dGxbysR0r1vahBgLDUELNlc1dktg/jUJm4eEFl4cqDqKsvU84tQ==}
+  /@sveltejs/kit/1.0.0-next.167_svelte@3.42.5:
+    resolution: {integrity: sha512-VQSxZ2hFh36dgb/EkFs22bFsGgkctX2YgFPdt0enuZTlu08SVXubiEWPGWUg2S/gi5Biq4lvzaa+4JoYqU9B+A==}
     engines: {node: ^12.20 || >=14.13}
     hasBin: true
     peerDependencies:
       svelte: ^3.39.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.23_svelte@3.42.5+vite@2.5.7
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.24_svelte@3.42.5+vite@2.5.7
       cheap-watch: 1.0.3
       sade: 1.7.4
       svelte: 3.42.5
@@ -655,8 +655,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.23_svelte@3.42.5+vite@2.5.7:
-    resolution: {integrity: sha512-zmguJ9OYYsvZUhzPA3ZeYana2qx/ORadI0LVjzDIuXEXcR7AKj9qJgGCWe5Wi2Z/xg9PsKMHTTCHgiiplphIYg==}
+  /@sveltejs/vite-plugin-svelte/1.0.0-next.24_svelte@3.42.5+vite@2.5.7:
+    resolution: {integrity: sha512-b+n3jcLpk2j/25APQbk5ejCyd0faYTB2bOxR3gY0LX3MFGgdiL8zdf3/aawcPSxLdbL73YVlxNBIATGuvq03uQ==}
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
     peerDependencies:
       diff-match-patch: ^1.0.5
