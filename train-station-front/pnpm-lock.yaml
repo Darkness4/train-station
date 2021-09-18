@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@sveltejs/adapter-node': 1.0.0-next.48
+  '@sveltejs/adapter-node': 1.0.0-next.49
   '@sveltejs/kit': 1.0.0-next.168
   '@typescript-eslint/eslint-plugin': 4.31.1
   '@typescript-eslint/parser': 4.31.1
@@ -26,7 +26,7 @@ specifiers:
   typescript: 4.4.3
 
 devDependencies:
-  '@sveltejs/adapter-node': 1.0.0-next.48
+  '@sveltejs/adapter-node': 1.0.0-next.49
   '@sveltejs/kit': 1.0.0-next.168_svelte@3.42.6
   '@typescript-eslint/eslint-plugin': 4.31.1_e2d3c88d378335c4183365c112128ce9
   '@typescript-eslint/parser': 4.31.1_eslint@7.32.0+typescript@4.4.3
@@ -631,10 +631,10 @@ packages:
       picomatch: 2.3.0
     dev: true
 
-  /@sveltejs/adapter-node/1.0.0-next.48:
-    resolution: {integrity: sha512-j50GruX7OPVhtDRikTqGbQVZ5+jmF0kxr32EkMjXxdG1MU//37ChYsxps06/L1hLvULXEVZwRs0WUQE0VYZ7IQ==}
+  /@sveltejs/adapter-node/1.0.0-next.49:
+    resolution: {integrity: sha512-0v70tnoWOJoYql9g+P92aF+rfhqJ+y9wAyuAV62F7+kSgTBqzTCohuwQwRzLDXKfvxou7G9hfWo7RV1zo7tNKw==}
     dependencies:
-      esbuild: 0.12.25
+      esbuild: 0.12.28
       tiny-glob: 0.2.9
     dev: true
 
@@ -1168,6 +1168,12 @@ packages:
 
   /esbuild/0.12.25:
     resolution: {integrity: sha512-woie0PosbRSoN8gQytrdCzUbS2ByKgO8nD1xCZkEup3D9q92miCze4PqEI9TZDYAuwn6CruEnQpJxgTRWdooAg==}
+    hasBin: true
+    requiresBuild: true
+    dev: true
+
+  /esbuild/0.12.28:
+    resolution: {integrity: sha512-pZ0FrWZXlvQOATlp14lRSk1N9GkeJ3vLIwOcUoo3ICQn9WNR4rWoNi81pbn6sC1iYUy7QPqNzI3+AEzokwyVcA==}
     hasBin: true
     requiresBuild: true
     dev: true
