@@ -18,7 +18,7 @@ specifiers:
   material-design-icons: 3.0.1
   prettier: 2.4.1
   prettier-plugin-svelte: 2.4.0
-  sass: 1.39.2
+  sass: 1.41.1
   svelte: 3.42.6
   svelte-check: 2.2.6
   svelte-preprocess: 4.9.4
@@ -43,10 +43,10 @@ devDependencies:
   material-design-icons: 3.0.1
   prettier: 2.4.1
   prettier-plugin-svelte: 2.4.0_prettier@2.4.1+svelte@3.42.6
-  sass: 1.39.2
+  sass: 1.41.1
   svelte: 3.42.6
-  svelte-check: 2.2.6_sass@1.39.2+svelte@3.42.6
-  svelte-preprocess: 4.9.4_47a0a4042b7ba1114a4615c6d99e4d74
+  svelte-check: 2.2.6_sass@1.41.1+svelte@3.42.6
+  svelte-preprocess: 4.9.4_b172ce52e03abc70908bb2e09eae78a1
   tslib: 2.3.1
   typescript: 4.4.3
 
@@ -2360,8 +2360,8 @@ packages:
       rimraf: 2.7.1
     dev: true
 
-  /sass/1.39.2:
-    resolution: {integrity: sha512-4/6Vn2RPc+qNwSclUSKvssh7dqK1Ih3FfHBW16I/GfH47b3scbYeOw65UIrYG7PkweFiKbpJjgkf5CV8EMmvzw==}
+  /sass/1.41.1:
+    resolution: {integrity: sha512-vIjX7izRxw3Wsiez7SX7D+j76v7tenfO18P59nonjr/nzCkZuoHuF7I/Fo0ZRZPKr88v29ivIdE9BqGDgQD/Nw==}
     engines: {node: '>=8.9.0'}
     hasBin: true
     dependencies:
@@ -2563,7 +2563,7 @@ packages:
       has-flag: 4.0.0
     dev: true
 
-  /svelte-check/2.2.6_sass@1.39.2+svelte@3.42.6:
+  /svelte-check/2.2.6_sass@1.41.1+svelte@3.42.6:
     resolution: {integrity: sha512-oJux/afbmcZO+N+ADXB88h6XANLie8Y2rh2qBlhgfkpr2c3t/q/T0w2JWrHqagaDL8zeNwO8a8RVFBkrRox8gg==}
     hasBin: true
     peerDependencies:
@@ -2577,7 +2577,7 @@ packages:
       sade: 1.7.4
       source-map: 0.7.3
       svelte: 3.42.6
-      svelte-preprocess: 4.9.4_47a0a4042b7ba1114a4615c6d99e4d74
+      svelte-preprocess: 4.9.4_b172ce52e03abc70908bb2e09eae78a1
       typescript: 4.4.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -2600,7 +2600,7 @@ packages:
       svelte: 3.42.6
     dev: true
 
-  /svelte-preprocess/4.9.4_47a0a4042b7ba1114a4615c6d99e4d74:
+  /svelte-preprocess/4.9.4_b172ce52e03abc70908bb2e09eae78a1:
     resolution: {integrity: sha512-Z0mUQBGtE+ZZSv/HerRSHe7ukJokxjiPeHe7iPOIXseEoRw51H3K/Vh6OMIMstetzZ11vWO9rCsXSD/uUUArmA==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -2645,7 +2645,7 @@ packages:
       '@types/sass': 1.16.1
       detect-indent: 6.1.0
       magic-string: 0.25.7
-      sass: 1.39.2
+      sass: 1.41.1
       sorcery: 0.10.0
       strip-indent: 3.0.0
       svelte: 3.42.6
