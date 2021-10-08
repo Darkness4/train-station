@@ -1,16 +1,17 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-
-	export let onForgotPassword: (email: string) => Promise<any>;
-
+	export let onForgotPassword: (email: string) => Promise<unknown>;
 	export let email: string;
-	let error: any;
-
+	let error: Error;
 	async function _onForgotPassword() {
 		try {
 			await onForgotPassword(email);
 		} catch (e) {
-			error = e;
+			if (e instanceof Error) {
+				error = e;
+			} else {
+				console.error(e);
+			}
 		}
 	}
 </script>

@@ -1,17 +1,15 @@
 <script lang="ts" context="module">
 	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
-
 	let initialSearchQuery: string;
 	let initialPageNumber: number;
-
-	export async function load({ page }: LoadInput): Promise<LoadOutput> {
+	export function load({ page }: LoadInput): Promise<LoadOutput> {
 		initialPageNumber = 1;
 		const queryPage = page.query.get('page');
 		if (queryPage !== null) {
 			initialPageNumber = parseInt(queryPage);
 		}
 		initialSearchQuery = page.query.get('s') ?? '';
-		return {};
+		return Promise.resolve({});
 	}
 </script>
 
@@ -24,40 +22,29 @@
 	import type { Station } from '$lib/entities/station';
 	import { authStore } from '$stores/auth.store';
 	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
-
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;
-
 	$: loadData(searchQuery, pageNumber);
-
 	async function loadData(s: string, page: number) {
 		try {
-			const user = $authStore.user;
-			if (user) {
-				const token = await user.getIdToken();
-				await paginatedStationsStore.load(token, {
-					s: s,
-					page: page
-				});
+			const token = $authStore.token;
+			if (token) {
+				await paginatedStationsStore.load(token, { s: s, page: page });
 			}
 		} catch (e) {
 			console.error(e);
 		}
 	}
-
 	function search(newPage: number) {
 		return goto(`${$page.path}?s=${searchQuery}&page=${newPage}`);
 	}
-
 	function onClick(station: Station) {
 		return goto(`/stations/${station.recordid}`);
 	}
-
 	async function onFavorite(station: Station) {
 		try {
-			const user = $authStore.user;
-			if (user) {
-				const token = await user.getIdToken();
+			const token = $authStore.token;
+			if (token) {
 				await paginatedStationsStore.makeFavorite(station.recordid, !station.is_favorite, token);
 			}
 		} catch (e) {

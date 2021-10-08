@@ -3,13 +3,10 @@
 	import DetailStation from '$components/detail-station.component.svelte';
 	import { authStore } from '$stores/auth.store';
 	import { stationStore } from '$stores/station.store';
-
 	$: id = $page.params.id;
-	$: $authStore.user
-		?.getIdToken()
-		?.then((token) => stationStore.load(id, token))
-		?.catch((e) => console.error(e));
-
+	$: if ($authStore.token) {
+		stationStore.load(id, $authStore.token).catch((e) => console.error(e));
+	}
 	$: station = $stationStore;
 </script>
 

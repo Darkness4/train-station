@@ -1,43 +1,34 @@
 <script lang="ts" context="module">
 	import { initializeFirebase } from '$lib/init-firebase';
-
 	initializeFirebase();
 </script>
 
 <script lang="ts">
-	import 'material-design-icons/iconfont/material-icons.css';
-	import '../app.scss';
-
-	import type { Auth, Unsubscribe } from 'firebase/auth';
-	import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-	import { onDestroy, onMount } from 'svelte';
-
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { authStore } from '$stores/auth.store';
-
+	import type { Auth, Unsubscribe } from 'firebase/auth';
+	import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+	import 'material-design-icons/iconfont/material-icons.css';
+	import { onDestroy, onMount } from 'svelte';
+	import '../app.scss';
 	let unsubscribe: Unsubscribe;
 	let auth: Auth;
-
 	onMount(() => {
 		auth = getAuth();
-
 		unsubscribe = onAuthStateChanged(auth, (user) => {
-			authStore.set({ user });
-
+			authStore.set(user);
 			if ($page.path !== '/' && !auth?.currentUser) {
 				goto('/');
 			}
 		});
 	});
-
 	async function logOut() {
 		if ($authStore.user) {
-			await signOut(auth!);
+			await signOut(auth);
 			return goto('/');
 		}
 	}
-
 	onDestroy(() => {
 		if (unsubscribe !== undefined) {
 			unsubscribe();

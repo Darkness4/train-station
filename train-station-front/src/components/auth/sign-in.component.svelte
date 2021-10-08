@@ -1,27 +1,21 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-
 	export let signUp: boolean;
-
 	export let email: string;
 	export let password: string;
 	let confirmPassword: string;
-	let error: any;
-
-	export let onLogin: (email: string, password: string) => Promise<any>;
-	export let onLoginWithGoogle: () => Promise<any>;
-	export let onCreateAccount: (email: string, password: string) => Promise<any>;
-
+	let error: Error | null;
+	export let onLogin: (email: string, password: string) => Promise<unknown>;
+	export let onLoginWithGoogle: () => Promise<unknown>;
+	export let onCreateAccount: (email: string, password: string) => Promise<unknown>;
 	export let showCreateAccount: () => void;
 	export let showSignIn: () => void;
 	export let showForgotPassword: () => void;
-
 	function validateConfirmPassword() {
 		if (password != confirmPassword) {
 			throw new Error('Passwords are not identical.');
 		}
 	}
-
 	async function _onSubmit() {
 		try {
 			if (!signUp) {
@@ -31,7 +25,11 @@
 				await onCreateAccount(email, password);
 			}
 		} catch (e) {
-			error = e;
+			if (e instanceof Error) {
+				error = e;
+			} else {
+				console.error(e);
+			}
 		}
 	}
 </script>
