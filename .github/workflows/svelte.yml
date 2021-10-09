@@ -23,6 +23,8 @@ jobs:
           platforms: linux/amd64
           outputs: type=docker,dest=/tmp/image-amd64.tar
           tags: ghcr.io/darkness4/train-station-front:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
@@ -53,6 +55,8 @@ jobs:
           platforms: linux/arm64
           outputs: type=docker,dest=/tmp/image-arm64.tar
           tags: ghcr.io/darkness4/train-station-front:arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

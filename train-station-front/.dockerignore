@@ -3,8 +3,8 @@ README.md
 .vscode
 **/.gitignore
 
-docker-compose.yml
-Dockerfile
+docker-compose*
+Dockerfile*
 
 .DS_Store
 node_modules
