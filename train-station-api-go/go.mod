@@ -12,7 +12,7 @@ require (
 	github.com/valyala/fasthttp v1.30.0
 	google.golang.org/api v0.58.0
 	gorm.io/driver/sqlite v1.1.6
-	gorm.io/gorm v1.21.15
+	gorm.io/gorm v1.21.16
 )
 
 require (
