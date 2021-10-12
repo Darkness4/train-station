@@ -9,7 +9,7 @@ require (
 	github.com/savsgio/atreugo/v11 v11.8.3
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.9.0
-	github.com/valyala/fasthttp v1.30.0
+	github.com/valyala/fasthttp v1.31.0
 	google.golang.org/api v0.58.0
 	gorm.io/driver/sqlite v1.1.6
 	gorm.io/gorm v1.21.16
