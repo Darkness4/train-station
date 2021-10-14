@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Darkness4/train-station-api/pkg/core"
 	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls"
+	"github.com/Darkness4/train-station-api/pkg/sl"
 	"github.com/atreugo/cors"
 	"github.com/savsgio/atreugo/v11"
 	"github.com/spf13/cobra"
@@ -30,12 +30,6 @@ var (
 			config := atreugo.Config{
 				Addr:  addr,
 				Debug: viper.GetBool("debug"),
-			}
-
-			// Spawn service locator
-			sl, err := core.NewServiceLocator()
-			if err != nil {
-				panic(err)
 			}
 
 			// Spawn the server

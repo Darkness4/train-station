@@ -1,4 +1,4 @@
-package core
+package sl
 
 import (
 	"context"
@@ -21,71 +21,58 @@ import (
 	"gorm.io/gorm"
 )
 
-type ServiceLocator struct {
-	// Firebase
+var (
 	FirebaseApp *firebase.App
 	AuthClient  *auth.Client
 
-	// Data
 	DB                *gorm.DB
 	StationDataSource ds.StationDataSource
 
-	// Domain
 	StationRepository repos.StationRepository
 	AuthService       services.AuthService
-}
+)
 
-func NewServiceLocator() (*ServiceLocator, error) {
+func init() {
 	// Firebase
 	creds := viper.GetString("GOOGLE_APPLICATION_CREDENTIALS")
 	opt := option.WithCredentialsFile(creds)
-	app, err := firebase.NewApp(context.Background(), nil, opt)
+	FirebaseApp, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	client, err := app.Auth(context.Background())
+	AuthClient, err = FirebaseApp.Auth(context.Background())
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
 	// Data
 	err = os.Remove("cache.sqlite3")
 	if err != nil && !os.IsNotExist(err) {
-		return nil, err
+		panic(err)
 	}
-	database, err := gorm.Open(sqlite.Open("cache.sqlite3"), &gorm.Config{})
+	DB, err = gorm.Open(sqlite.Open("cache.sqlite3"), &gorm.Config{})
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	err = database.AutoMigrate(
+	err = DB.AutoMigrate(
 		&models.StationModel{},
 		&models.IsFavoriteModel{},
 	)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	result := database.Exec("PRAGMA foreign_keys = ON")
+	result := DB.Exec("PRAGMA foreign_keys = ON")
 	if result.Error != nil {
-		return nil, result.Error
+		panic(result.Error)
 	}
 
-	stationDS := ds.NewStationDataSource(database)
+	StationDataSource = ds.NewStationDataSource(DB)
 
 	// Domain
-	stationRepo := repoimpl.NewStationRepository(stationDS)
-	go initializeDatabase(stationRepo)
+	StationRepository = repoimpl.NewStationRepository(StationDataSource)
+	go initializeDatabase(StationRepository)
 
-	authService := services.NewAuthService(client)
-
-	// Output
-	return &ServiceLocator{
-		FirebaseApp:       app,
-		AuthClient:        client,
-		DB:                database,
-		StationDataSource: stationDS,
-		StationRepository: stationRepo,
-		AuthService:       authService,
-	}, nil
+	AuthService = services.NewAuthService(AuthClient)
 }
 
 func initializeDatabase(stationRepo repos.StationRepository) {
