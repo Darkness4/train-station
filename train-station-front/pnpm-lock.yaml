@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@sveltejs/adapter-node': 1.0.0-next.54
+  '@sveltejs/adapter-node': 1.0.0-next.55
   '@sveltejs/kit': 1.0.0-next.183
   '@trivago/prettier-plugin-sort-imports': 2.0.4
   '@typescript-eslint/eslint-plugin': 5.0.0
@@ -26,7 +26,7 @@ specifiers:
   typescript: 4.4.3
 
 devDependencies:
-  '@sveltejs/adapter-node': 1.0.0-next.54
+  '@sveltejs/adapter-node': 1.0.0-next.55
   '@sveltejs/kit': 1.0.0-next.183_sass@1.42.1+svelte@3.43.2
   '@trivago/prettier-plugin-sort-imports': 2.0.4_prettier@2.4.1
   '@typescript-eslint/eslint-plugin': 5.0.0_23617e02451b63a8997d0f18b2622d8e
@@ -865,8 +865,8 @@ packages:
       picomatch: 2.3.0
     dev: true
 
-  /@sveltejs/adapter-node/1.0.0-next.54:
-    resolution: {integrity: sha512-NPmgktKJuFjUzP909hwExi9+GMiQlhGADtNtPdABEWFkAk85hqZ9OvLEpi4abbKOIJXeZz/VztrygvD7o6r/uA==}
+  /@sveltejs/adapter-node/1.0.0-next.55:
+    resolution: {integrity: sha512-Kmh8lx8kIY7W6rkqjC78y4dQTyjiAHD9D1WfmUTtYuDW1jAIG+YbZmPC9127kH5KOSGK4+tI8mpReDVB1lgf8g==}
     dependencies:
       esbuild: 0.13.4
       tiny-glob: 0.2.9
