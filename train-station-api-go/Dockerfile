@@ -1,4 +1,4 @@
-FROM node:16-alpine as openapi-builder
+FROM node:17-alpine as openapi-builder
 RUN npm install -g swagger-cli
 
 WORKDIR /openapi
