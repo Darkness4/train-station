@@ -1,4 +1,4 @@
-FROM node:16-alpine as builder
+FROM node:17-alpine as builder
 
 RUN wget -qO- https://get.pnpm.io/v6.14.js | node - add --global pnpm && \
   rm -rf /usr/local/lib/node_modules/npm/ /usr/local/bin/npm && \
@@ -10,7 +10,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm run build
 
-FROM node:16-alpine
+FROM node:17-alpine
 
 ENV NODE_ENV=production
 RUN apk add --no-cache tini
