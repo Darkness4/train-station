@@ -11,7 +11,7 @@ require (
 	github.com/spf13/viper v1.9.0
 	github.com/valyala/fasthttp v1.31.0
 	google.golang.org/api v0.60.0
-	gorm.io/driver/sqlite v1.1.6
+	gorm.io/driver/sqlite v1.2.3
 	gorm.io/gorm v1.22.2
 )
 
@@ -41,7 +41,7 @@ require (
 	github.com/klauspost/compress v1.13.4 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
-	github.com/mattn/go-sqlite3 v1.14.8 // indirect
+	github.com/mattn/go-sqlite3 v1.14.9 // indirect
 	github.com/mitchellh/mapstructure v1.4.2 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/savsgio/gotils v0.0.0-20210921075833-21a6215cb0e4 // indirect
