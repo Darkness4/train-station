@@ -3,7 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@sveltejs/adapter-node': 1.0.0-next.55
   '@sveltejs/kit': 1.0.0-next.192
-  '@trivago/prettier-plugin-sort-imports': 2.0.4
+  '@trivago/prettier-plugin-sort-imports': 3.0.0
   '@typescript-eslint/eslint-plugin': 5.2.0
   '@typescript-eslint/parser': 5.2.0
   bulma: 0.9.3
@@ -28,7 +28,7 @@ specifiers:
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.55
   '@sveltejs/kit': 1.0.0-next.192_sass@1.43.4+svelte@3.44.0
-  '@trivago/prettier-plugin-sort-imports': 2.0.4_prettier@2.4.1
+  '@trivago/prettier-plugin-sort-imports': 3.0.0_prettier@2.4.1
   '@typescript-eslint/eslint-plugin': 5.2.0_9a56ca1c5fc1d82b3da3317a5c6f9ab1
   '@typescript-eslint/parser': 5.2.0_eslint@8.1.0+typescript@4.4.4
   bulma: 0.9.3
@@ -915,8 +915,8 @@ packages:
       - supports-color
     dev: true
 
-  /@trivago/prettier-plugin-sort-imports/2.0.4_prettier@2.4.1:
-    resolution: {integrity: sha512-SCVUhQdbjn/Z4AY7b9JO00fZCeXxiVuarVxYP0n6cX2ijiQkE5HmGrOk32n0u385OebzQ9bZcrc51lAGLjXnFQ==}
+  /@trivago/prettier-plugin-sort-imports/3.0.0_prettier@2.4.1:
+    resolution: {integrity: sha512-6n+shLUWKPZpSdY25VyDO+AKc5lCAuugDLtatWNrCBB2H7dJHmO4HO9EMRALrry9P4jBNi1T1orGQ/Fxm7pkNg==}
     peerDependencies:
       prettier: 2.x
     dependencies:
