@@ -3,7 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@sveltejs/adapter-node': 1.0.0-next.55
   '@sveltejs/kit': 1.0.0-next.193
-  '@trivago/prettier-plugin-sort-imports': 3.0.0
+  '@trivago/prettier-plugin-sort-imports': 3.1.0
   '@typescript-eslint/eslint-plugin': 5.3.0
   '@typescript-eslint/parser': 5.3.0
   bulma: 0.9.3
@@ -28,7 +28,7 @@ specifiers:
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.55
   '@sveltejs/kit': 1.0.0-next.193_sass@1.43.4+svelte@3.44.1
-  '@trivago/prettier-plugin-sort-imports': 3.0.0_prettier@2.4.1
+  '@trivago/prettier-plugin-sort-imports': 3.1.0_prettier@2.4.1
   '@typescript-eslint/eslint-plugin': 5.3.0_f8873316f48f7781ccc3e081fc76e214
   '@typescript-eslint/parser': 5.3.0_eslint@8.1.0+typescript@4.4.4
   bulma: 0.9.3
@@ -234,8 +234,8 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /@babel/parser/7.13.10:
-    resolution: {integrity: sha512-0s7Mlrw9uTWkYua7xWr99Wpk2bnGa0ANleKfksYAES8LpWH4gW1OUr42vqKNf0us5UQNfru2wPqMqRITzq/SIQ==}
+  /@babel/parser/7.14.6:
+    resolution: {integrity: sha512-oG0ej7efjEXxb4UgE+klVx+3j4MVo+A2vCzm7OUN4CLo6WhQ+vSOD2yJ8m7B+DghObxtLxt3EfgMWpq+AsWehQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
     dev: true
@@ -915,14 +915,14 @@ packages:
       - supports-color
     dev: true
 
-  /@trivago/prettier-plugin-sort-imports/3.0.0_prettier@2.4.1:
-    resolution: {integrity: sha512-6n+shLUWKPZpSdY25VyDO+AKc5lCAuugDLtatWNrCBB2H7dJHmO4HO9EMRALrry9P4jBNi1T1orGQ/Fxm7pkNg==}
+  /@trivago/prettier-plugin-sort-imports/3.1.0_prettier@2.4.1:
+    resolution: {integrity: sha512-m4gzqPazpVJ7NCK2vX2YXMwuMwJg0dpqhL2bX/jItrVerdNPIsPMxw+d6RGT3spkUOOYwqfZfht0sBPVi7lkPQ==}
     peerDependencies:
       prettier: 2.x
     dependencies:
       '@babel/core': 7.13.10
       '@babel/generator': 7.13.9
-      '@babel/parser': 7.13.10
+      '@babel/parser': 7.14.6
       '@babel/traverse': 7.13.0
       '@babel/types': 7.13.0
       '@types/lodash': 4.14.168
