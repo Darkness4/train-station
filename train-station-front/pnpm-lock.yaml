@@ -11,7 +11,7 @@ specifiers:
   eslint-config-prettier: 8.3.0
   eslint-import-resolver-alias: 1.1.2
   eslint-import-resolver-typescript: 2.5.0
-  eslint-plugin-import: 2.25.2
+  eslint-plugin-import: 2.25.3
   eslint-plugin-prettier: 4.0.0
   eslint-plugin-svelte3: 3.2.1
   firebase: 9.4.0
@@ -34,9 +34,9 @@ devDependencies:
   bulma: 0.9.3
   eslint: 8.2.0
   eslint-config-prettier: 8.3.0_eslint@8.2.0
-  eslint-import-resolver-alias: 1.1.2_eslint-plugin-import@2.25.2
-  eslint-import-resolver-typescript: 2.5.0_3f013334cb52440e201498cdb6b29798
-  eslint-plugin-import: 2.25.2_eslint@8.2.0
+  eslint-import-resolver-alias: 1.1.2_eslint-plugin-import@2.25.3
+  eslint-import-resolver-typescript: 2.5.0_6e04a54c7bcd7530b1a4c2da0aa486b1
+  eslint-plugin-import: 2.25.3_eslint@8.2.0
   eslint-plugin-prettier: 4.0.0_307f015733298e29da9050ea0cee5b9e
   eslint-plugin-svelte3: 3.2.1_eslint@8.2.0+svelte@3.44.1
   firebase: 9.4.0
@@ -1591,13 +1591,13 @@ packages:
       eslint: 8.2.0
     dev: true
 
-  /eslint-import-resolver-alias/1.1.2_eslint-plugin-import@2.25.2:
+  /eslint-import-resolver-alias/1.1.2_eslint-plugin-import@2.25.3:
     resolution: {integrity: sha512-WdviM1Eu834zsfjHtcGHtGfcu+F30Od3V7I9Fi57uhBEwPkjDcii7/yW8jAT+gOhn4P/vOxxNAXbFAKsrrc15w==}
     engines: {node: '>= 4'}
     peerDependencies:
       eslint-plugin-import: '>=1.4.0'
     dependencies:
-      eslint-plugin-import: 2.25.2_eslint@8.2.0
+      eslint-plugin-import: 2.25.3_eslint@8.2.0
     dev: true
 
   /eslint-import-resolver-node/0.3.6:
@@ -1607,7 +1607,7 @@ packages:
       resolve: 1.20.0
     dev: true
 
-  /eslint-import-resolver-typescript/2.5.0_3f013334cb52440e201498cdb6b29798:
+  /eslint-import-resolver-typescript/2.5.0_6e04a54c7bcd7530b1a4c2da0aa486b1:
     resolution: {integrity: sha512-qZ6e5CFr+I7K4VVhQu3M/9xGv9/YmwsEXrsm3nimw8vWaVHRDrQRp26BgCypTxBp3vUp4o5aVEJRiy0F2DFddQ==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -1616,7 +1616,7 @@ packages:
     dependencies:
       debug: 4.3.2
       eslint: 8.2.0
-      eslint-plugin-import: 2.25.2_eslint@8.2.0
+      eslint-plugin-import: 2.25.3_eslint@8.2.0
       glob: 7.1.7
       is-glob: 4.0.1
       resolve: 1.20.0
@@ -1634,8 +1634,8 @@ packages:
       pkg-dir: 2.0.0
     dev: true
 
-  /eslint-plugin-import/2.25.2_eslint@8.2.0:
-    resolution: {integrity: sha512-qCwQr9TYfoBHOFcVGKY9C9unq05uOxxdklmBXLVvcwo68y5Hta6/GzCZEMx2zQiu0woKNEER0LE7ZgaOfBU14g==}
+  /eslint-plugin-import/2.25.3_eslint@8.2.0:
+    resolution: {integrity: sha512-RzAVbby+72IB3iOEL8clzPLzL3wpDrlwjsTBAQXgyp5SeTqqY+0bFubwuo+y/HLhNZcXV4XqTBO4LGsfyHIDXg==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8
