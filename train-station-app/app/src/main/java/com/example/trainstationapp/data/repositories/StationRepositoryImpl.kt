@@ -34,7 +34,7 @@ constructor(
      * Receive a `PagingData` for each page. This is a snapshot of the cache. To refresh the
      * `PagingData`, call the method again.
      */
-    @ExperimentalPagingApi
+    @OptIn(ExperimentalPagingApi::class)
     override fun watchPages(search: String, token: String): Flow<PagingData<Station>> {
         val bearer = "Bearer $token"
         val pagingSourceFactory = {

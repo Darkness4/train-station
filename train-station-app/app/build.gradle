@@ -22,7 +22,7 @@ spotless {
     }
     kotlin {
         target '**/*.kt'
-        ktlint('0.42.1')
+        ktlint('0.43.0')
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()
@@ -73,9 +73,9 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
-                        "room.schemaLocation"                         : "$projectDir/schemas".toString(),
-                        "room.incremental"                            : "true",
-                        "room.expandProjection"                       : "true"]
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
             }
         }
     }
@@ -109,6 +109,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
     packagingOptions {
         exclude "**/attach_hotspot_windows.dll"
