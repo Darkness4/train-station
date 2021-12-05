@@ -28,7 +28,7 @@
 		"eslint-plugin-svelte3": "3.2.1",
 		"firebase": "9.5.0",
 		"material-design-icons": "3.0.1",
-		"prettier": "2.5.0",
+		"prettier": "2.5.1",
 		"prettier-plugin-svelte": "2.5.0",
 		"sass": "1.43.5",
 		"svelte": "3.44.2",
