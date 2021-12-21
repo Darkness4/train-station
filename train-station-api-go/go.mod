@@ -3,7 +3,7 @@ module github.com/Darkness4/train-station-api
 go 1.17
 
 require (
-	firebase.google.com/go/v4 v4.6.1
+	firebase.google.com/go/v4 v4.7.0
 	github.com/atreugo/cors v1.0.5
 	github.com/go-playground/validator/v10 v10.9.0
 	github.com/savsgio/atreugo/v11 v11.8.4
