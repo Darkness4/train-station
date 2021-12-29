@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@sveltejs/adapter-node': 1.0.0-next.56
-  '@sveltejs/kit': 1.0.0-next.203
+  '@sveltejs/kit': 1.0.0-next.206
   '@trivago/prettier-plugin-sort-imports': 3.1.1
   '@typescript-eslint/eslint-plugin': 5.8.1
   '@typescript-eslint/parser': 5.8.1
@@ -27,7 +27,7 @@ specifiers:
 
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.56
-  '@sveltejs/kit': 1.0.0-next.203_sass@1.45.1+svelte@3.44.3
+  '@sveltejs/kit': 1.0.0-next.206_sass@1.45.1+svelte@3.44.3
   '@trivago/prettier-plugin-sort-imports': 3.1.1_prettier@2.5.1
   '@typescript-eslint/eslint-plugin': 5.8.1_3a47348159e115370aa4cba56aba33b6
   '@typescript-eslint/parser': 5.8.1_eslint@8.5.0+typescript@4.5.4
@@ -872,8 +872,8 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.203_sass@1.45.1+svelte@3.44.3:
-    resolution: {integrity: sha512-+bhfmkzquWMSCCFIJoh36U9D6IKC0p/NrIr4CBHMAdRpqzL9lMP0AYQm1fUDH20F/6b2tWvGxmEg+gAmHikRfA==}
+  /@sveltejs/kit/1.0.0-next.206_sass@1.45.1+svelte@3.44.3:
+    resolution: {integrity: sha512-AQEOKZLG1GKkuBfWUKKxMs9A3AzE9tSHYc4Lu+AL/4BAs4erIFdOei2ldsxak2ICxxeaCloqVRPvIOtj7UEacg==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
