@@ -194,7 +194,7 @@ dependencies {
     // Licensing
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8'
 
     def kotest_version = '5.0.3'
     testImplementation "io.mockk:mockk:1.12.2"
