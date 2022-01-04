@@ -19,7 +19,7 @@
 		"@typescript-eslint/eslint-plugin": "5.8.1",
 		"@typescript-eslint/parser": "5.8.1",
 		"bulma": "0.9.3",
-		"eslint": "8.5.0",
+		"eslint": "8.6.0",
 		"eslint-config-prettier": "8.3.0",
 		"eslint-import-resolver-alias": "1.1.2",
 		"eslint-import-resolver-typescript": "2.5.0",
