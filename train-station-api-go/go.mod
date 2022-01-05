@@ -5,7 +5,7 @@ go 1.17
 require (
 	firebase.google.com/go/v4 v4.7.0
 	github.com/atreugo/cors v1.0.5
-	github.com/go-playground/validator/v10 v10.9.0
+	github.com/go-playground/validator/v10 v10.10.0
 	github.com/savsgio/atreugo/v11 v11.8.4
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.1
