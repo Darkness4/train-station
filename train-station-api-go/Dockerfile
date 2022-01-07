@@ -5,7 +5,7 @@ WORKDIR /openapi
 COPY .openapi .
 RUN swagger-cli bundle ./openapi.yaml --outfile /build/openapi.yaml --type yaml
 
-FROM golang:1.17.5-alpine as builder
+FROM golang:1.17.6-alpine as builder
 RUN apk --no-cache add build-base
 WORKDIR /go/src/github.com/Darkness4/train-station-api/
 COPY . .
