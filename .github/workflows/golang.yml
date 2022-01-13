@@ -3,6 +3,18 @@ name: Go CI
 on: push
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: latest
+          working-directory: ./train-station-api-go
+          args: --timeout 5m
+
   test-amd64-go:
     runs-on: ubuntu-latest
 
@@ -16,7 +28,7 @@ jobs:
         run: go get -d -v
       - name: Run tests
         working-directory: ./train-station-api-go
-        run: go test ./...
+        run: go test -race -covermode=atomic -timeout=30s ./...
 
   build-amd64-go:
     runs-on: ubuntu-latest
