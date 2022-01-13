@@ -3,41 +3,36 @@ package filters
 import (
 	"strings"
 
-	"github.com/Darkness4/train-station-api/pkg/domain/services"
-	"github.com/savsgio/atreugo/v11"
-	"github.com/spf13/viper"
+	"github.com/Darkness4/train-station-api/internal"
+	"github.com/Darkness4/train-station-api/pkg/domain/auth"
+	"github.com/gofiber/fiber/v2"
 )
 
 type AuthenticationFilter struct {
-	auth services.AuthService
+	auth auth.Service
 }
 
 func NewAuthenticationFilter(
-	auth services.AuthService,
+	auth auth.Service,
 ) *AuthenticationFilter {
 	if auth == nil {
-		panic("NewAuthenticationFilter: auth is nil")
+		internal.Logger.Panic("NewAuthenticationFilter: auth is nil")
 	}
-	filter := AuthenticationFilter{auth}
-	return &filter
+	return &AuthenticationFilter{auth}
 }
 
 // Verify if the user is authenticated
 //
 // If true, returns the context with the uid. If false, returns the context with an error.
 func (f *AuthenticationFilter) Apply(
-	ctx *atreugo.RequestCtx,
-	onSuccess func(ctx *atreugo.RequestCtx, uid string) error,
+	ctx *fiber.Ctx,
+	onSuccess func(ctx *fiber.Ctx, uid string) error,
 ) error {
-	if !viper.GetBool("debug") {
-		authorization := string(ctx.RequestCtx.Request.Header.Peek("Authorization"))
-		idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
-		if uid, err := f.auth.VerifyIDToken(ctx, idToken); err == nil {
-			return onSuccess(ctx, uid)
-		} else {
-			return err
-		}
+	authorization := string(ctx.Request().Header.Peek("Authorization"))
+	idToken := strings.TrimSpace(strings.Replace(authorization, "Bearer", "", 1))
+	if uid, err := f.auth.VerifyIDToken(ctx.Context(), idToken); err == nil {
+		return onSuccess(ctx, uid)
 	} else {
-		return onSuccess(ctx, "fake_id")
+		return err
 	}
 }

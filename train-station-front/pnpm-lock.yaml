@@ -1,8 +1,8 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@sveltejs/adapter-node': 1.0.0-next.56
-  '@sveltejs/kit': 1.0.0-next.206
+  '@sveltejs/adapter-node': 1.0.0-next.61
+  '@sveltejs/kit': 1.0.0-next.225
   '@trivago/prettier-plugin-sort-imports': 3.1.1
   '@typescript-eslint/eslint-plugin': 5.9.1
   '@typescript-eslint/parser': 5.9.1
@@ -26,8 +26,8 @@ specifiers:
   typescript: 4.5.4
 
 devDependencies:
-  '@sveltejs/adapter-node': 1.0.0-next.56
-  '@sveltejs/kit': 1.0.0-next.206_sass@1.47.0+svelte@3.46.1
+  '@sveltejs/adapter-node': 1.0.0-next.61
+  '@sveltejs/kit': 1.0.0-next.225_sass@1.47.0+svelte@3.46.1
   '@trivago/prettier-plugin-sort-imports': 3.1.1_prettier@2.5.1
   '@typescript-eslint/eslint-plugin': 5.9.1_b7b2e42b32ee097737cd3e626b10847b
   '@typescript-eslint/parser': 5.9.1_eslint@8.6.0+typescript@4.5.4
@@ -865,22 +865,20 @@ packages:
       picomatch: 2.3.0
     dev: true
 
-  /@sveltejs/adapter-node/1.0.0-next.56:
-    resolution: {integrity: sha512-NY3CFUeczH/1g3rOtq9blHJ4Am99ZiUVVDibioD5GFctBH27TDVeZrpssGWngD0Ybkojpl8fXR7mTZZdOEx9qg==}
+  /@sveltejs/adapter-node/1.0.0-next.61:
+    resolution: {integrity: sha512-QiH/VBlRuQfw3x9yCrhXPqHvynqA1ai2izDlvc+ZxdWjah5vjds0P6EoP0g4VOJUFKtttQVnGNQrXMUA87T2dw==}
     dependencies:
-      esbuild: 0.13.15
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.206_sass@1.47.0+svelte@3.46.1:
-    resolution: {integrity: sha512-AQEOKZLG1GKkuBfWUKKxMs9A3AzE9tSHYc4Lu+AL/4BAs4erIFdOei2ldsxak2ICxxeaCloqVRPvIOtj7UEacg==}
+  /@sveltejs/kit/1.0.0-next.225_sass@1.47.0+svelte@3.46.1:
+    resolution: {integrity: sha512-J/f+FZVdvpTmn7nCeRKRC1L9gbcI7g1bJRaw+jMdq/MYtGqcRw/fjYrx9/xO3+1YH0wgNG1b26GwmQZE64PFIQ==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
       svelte: ^3.44.0
     dependencies:
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.32_svelte@3.46.1+vite@2.7.2
-      cheap-watch: 1.0.4
       sade: 1.7.4
       svelte: 3.46.1
       vite: 2.7.2_sass@1.47.0
@@ -1242,11 +1240,6 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-    dev: true
-
-  /cheap-watch/1.0.4:
-    resolution: {integrity: sha512-QR/9FrtRL5fjfUJBhAKCdi0lSRQ3rVRRum3GF9wDKp2TJbEIMGhUEr2yU8lORzm9Isdjx7/k9S0DFDx+z5VGtw==}
-    engines: {node: '>=8'}
     dev: true
 
   /chokidar/3.5.2:

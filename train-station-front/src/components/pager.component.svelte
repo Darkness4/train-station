@@ -34,7 +34,7 @@
 	}
 </script>
 
-<nav class="pagination" role="navigation" aria-label="pagination">
+<nav class="pagination" aria-label="pagination">
 	<button disabled={page <= startPage} on:click={goToPrevious} class="pagination-previous"
 		>Previous</button
 	>

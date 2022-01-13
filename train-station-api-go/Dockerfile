@@ -5,17 +5,25 @@ WORKDIR /openapi
 COPY .openapi .
 RUN swagger-cli bundle ./openapi.yaml --outfile /build/openapi.yaml --type yaml
 
+# ---
 FROM golang:1.17.6-alpine as builder
 RUN apk --no-cache add build-base
 WORKDIR /go/src/github.com/Darkness4/train-station-api/
-COPY . .
-RUN go get -d -v && CGO_ENABLED=1 GOOS=linux go build -a -o app .
+COPY go.mod go.sum ./
+RUN go mod download
 
-FROM alpine:latest
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o app .
+
+# ---
+FROM busybox:1.34.1-musl
 
 ENV HOST=0.0.0.0
-ENV PORT=8080
-RUN apk --no-cache add tini ca-certificates
+ENV PORT=3000
+
+ENV TINI_VERSION v0.19.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-muslc-amd64 /tini
+RUN chmod +x /tini
 
 RUN mkdir /app
 RUN addgroup -S app && adduser -S -G app app
@@ -27,7 +35,7 @@ COPY --from=openapi-builder /build/openapi.yaml ./static/openapi.yaml
 RUN chown -R app:app .
 USER app
 
-EXPOSE 8080
+EXPOSE 3000
 
-ENTRYPOINT [ "/sbin/tini","--"]
+ENTRYPOINT [ "/tini","--"]
 CMD ["./app"]
