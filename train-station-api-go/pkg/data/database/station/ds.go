@@ -2,19 +2,19 @@ package station
 
 import (
 	"github.com/Darkness4/train-station-api/internal"
-	"github.com/Darkness4/train-station-api/pkg/data/models"
+	"github.com/Darkness4/train-station-api/pkg/data/database/isfavorite"
 	"gorm.io/gorm"
 )
 
 type DataSource interface {
-	CreateStation(m *models.StationModel) (*models.StationModel, error)
-	CreateManyStation(m []*models.StationModel) ([]*models.StationModel, error)
-	UpdateStation(id string, station *models.StationModel) (*models.StationModel, error)
-	FindOneStation(id string) (*models.StationModel, error)
-	FindManyAndCountStation(s string, limit int, page int) ([]*models.StationModel, int64, error)
+	CreateStation(m *Model) (*Model, error)
+	CreateManyStation(m []*Model) ([]*Model, error)
+	UpdateStation(id string, station *Model) (*Model, error)
+	FindOneStation(id string) (*Model, error)
+	FindManyAndCountStation(s string, limit int, page int) ([]*Model, int64, error)
 	CountStation(s string) (int64, error)
-	CreateIsFavorite(m *models.IsFavoriteModel) (*models.IsFavoriteModel, error)
-	RemoveIsFavorite(m *models.IsFavoriteModel) error
+	CreateIsFavorite(m *isfavorite.Model) (*isfavorite.Model, error)
+	RemoveIsFavorite(m *isfavorite.Model) error
 }
 
 type DataSourceImpl struct {
@@ -31,7 +31,7 @@ func NewDataSource(db *gorm.DB) *DataSourceImpl {
 	}
 }
 
-func (ds *DataSourceImpl) CreateStation(m *models.StationModel) (*models.StationModel, error) {
+func (ds *DataSourceImpl) CreateStation(m *Model) (*Model, error) {
 	result := ds.db.Create(m)
 
 	if result.Error != nil {
@@ -40,7 +40,7 @@ func (ds *DataSourceImpl) CreateStation(m *models.StationModel) (*models.Station
 	return m, nil
 }
 
-func (ds *DataSourceImpl) CreateManyStation(m []*models.StationModel) ([]*models.StationModel, error) {
+func (ds *DataSourceImpl) CreateManyStation(m []*Model) ([]*Model, error) {
 	result := ds.db.CreateInBatches(&m, 100)
 
 	if result.Error != nil {
@@ -49,8 +49,8 @@ func (ds *DataSourceImpl) CreateManyStation(m []*models.StationModel) ([]*models
 	return m, nil
 }
 
-func (ds *DataSourceImpl) UpdateStation(id string, m *models.StationModel) (*models.StationModel, error) {
-	new := models.StationModel{
+func (ds *DataSourceImpl) UpdateStation(id string, m *Model) (*Model, error) {
+	new := Model{
 		RecordID: id,
 	}
 	result := ds.db.First(&new)
@@ -66,8 +66,8 @@ func (ds *DataSourceImpl) UpdateStation(id string, m *models.StationModel) (*mod
 	return &new, nil
 }
 
-func (ds *DataSourceImpl) FindOneStation(id string) (*models.StationModel, error) {
-	m := &models.StationModel{
+func (ds *DataSourceImpl) FindOneStation(id string) (*Model, error) {
+	m := &Model{
 		RecordID: id,
 	}
 	result := ds.db.Preload("IsFavorites").First(m)
@@ -78,10 +78,10 @@ func (ds *DataSourceImpl) FindOneStation(id string) (*models.StationModel, error
 	return m, nil
 }
 
-func (ds *DataSourceImpl) FindManyAndCountStation(s string, limit int, page int) ([]*models.StationModel, int64, error) {
+func (ds *DataSourceImpl) FindManyAndCountStation(s string, limit int, page int) ([]*Model, int64, error) {
 	offset := (page - 1) * limit
 
-	var m []*models.StationModel
+	var m []*Model
 
 	result := ds.db.Preload("IsFavorites").Select(
 		"record_id",
@@ -99,7 +99,7 @@ func (ds *DataSourceImpl) FindManyAndCountStation(s string, limit int, page int)
 func (ds *DataSourceImpl) CountStation(s string) (int64, error) {
 	var count int64
 
-	result := ds.db.Model(&models.StationModel{}).Where("libelle LIKE '%'||?||'%'", s).Count(&count)
+	result := ds.db.Model(&Model{}).Where("libelle LIKE '%'||?||'%'", s).Count(&count)
 	if result.Error != nil {
 		return 0, result.Error
 	}
@@ -107,7 +107,7 @@ func (ds *DataSourceImpl) CountStation(s string) (int64, error) {
 	return count, nil
 }
 
-func (ds *DataSourceImpl) CreateIsFavorite(m *models.IsFavoriteModel) (*models.IsFavoriteModel, error) {
+func (ds *DataSourceImpl) CreateIsFavorite(m *isfavorite.Model) (*isfavorite.Model, error) {
 	result := ds.db.Create(m)
 
 	if result.Error != nil {
@@ -116,8 +116,8 @@ func (ds *DataSourceImpl) CreateIsFavorite(m *models.IsFavoriteModel) (*models.I
 	return m, nil
 }
 
-func (ds *DataSourceImpl) RemoveIsFavorite(m *models.IsFavoriteModel) error {
-	result := ds.db.Where("user_id = ? AND station_id = ?", m.UserID, m.StationID).Delete(&models.IsFavoriteModel{})
+func (ds *DataSourceImpl) RemoveIsFavorite(m *isfavorite.Model) error {
+	result := ds.db.Where("user_id = ? AND station_id = ?", m.UserID, m.StationID).Delete(&isfavorite.Model{})
 
 	if result.Error != nil {
 		return result.Error

@@ -10,7 +10,8 @@ import (
 	"firebase.google.com/go/v4/auth"
 	"github.com/Darkness4/train-station-api/internal"
 	"github.com/Darkness4/train-station-api/pkg/data/database"
-	"github.com/Darkness4/train-station-api/pkg/data/models"
+	"github.com/Darkness4/train-station-api/pkg/data/database/isfavorite"
+	"github.com/Darkness4/train-station-api/pkg/data/database/station"
 	"github.com/certifi/gocertifi"
 	"github.com/spf13/viper"
 	"github.com/valyala/fasthttp"
@@ -54,8 +55,8 @@ func DB() *gorm.DB {
 		internal.Logger.Panic(err)
 	}
 	if err := db.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	); err != nil {
 		internal.Logger.Panic(err)
 	}

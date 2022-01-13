@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/Darkness4/train-station-api/pkg/data/database/fields"
+	"github.com/Darkness4/train-station-api/pkg/data/database/geometry"
+	"github.com/Darkness4/train-station-api/pkg/data/database/isfavorite"
 	"github.com/Darkness4/train-station-api/pkg/data/database/station"
-	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -43,8 +45,8 @@ func TestCreateStation(t *testing.T) {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
 	err = database.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
@@ -55,25 +57,25 @@ func TestCreateStation(t *testing.T) {
 	}
 	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
-		database.Where("1 = 1").Delete(&models.StationModel{})
+		database.Where("1 = 1").Delete(&station.Model{})
 	})
 
 	// Tests
 	t.Run("Create should work", func(t *testing.T) {
-		in := models.StationModel{
+		in := station.Model{
 			RecordID:        "recordid",
 			DatasetID:       "datasetid",
 			Libelle:         "libelle",
-			IsFavorites:     make([]*models.IsFavoriteModel, 0),
+			IsFavorites:     make([]*isfavorite.Model, 0),
 			RecordTimestamp: "record_timestamp",
-			Fields: &models.FieldsModel{
+			Fields: &fields.Model{
 				GeoPoint2D: "[]",
 				CGeo:       "[]",
-				GeoShape: &models.GeometryModel{
+				GeoShape: &geometry.Model{
 					Coordinates: "[]",
 				},
 			},
-			Geometry: &models.GeometryModel{
+			Geometry: &geometry.Model{
 				Coordinates: "[]",
 			},
 		}
@@ -84,7 +86,7 @@ func TestCreateStation(t *testing.T) {
 		}
 
 		var count int64
-		database.Model(&models.StationModel{}).Count(&count)
+		database.Model(&station.Model{}).Count(&count)
 		if count != 1 {
 			t.Errorf("Data wasn't stored: count %d\n", count)
 		}
@@ -92,16 +94,16 @@ func TestCreateStation(t *testing.T) {
 
 	var nonWorkingTable = []struct {
 		name string
-		in   *models.StationModel
+		in   *station.Model
 	}{
-		{"Empty Object", &models.StationModel{}},
-		{"First layer filled", &models.StationModel{
+		{"Empty Object", &station.Model{}},
+		{"First layer filled", &station.Model{
 			RecordID:        "recordid",
 			DatasetID:       "datasetid",
 			Libelle:         "libelle",
 			RecordTimestamp: "record_timestamp",
-			Fields:          &models.FieldsModel{},
-			Geometry:        &models.GeometryModel{},
+			Fields:          &fields.Model{},
+			Geometry:        &geometry.Model{},
 		}},
 	}
 
@@ -124,8 +126,8 @@ func TestCreateManyStation(t *testing.T) {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
 	err = database.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
@@ -136,25 +138,25 @@ func TestCreateManyStation(t *testing.T) {
 	}
 	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
-		database.Where("1 = 1").Delete(&models.StationModel{})
+		database.Where("1 = 1").Delete(&station.Model{})
 	})
 
 	// Tests
 	t.Run("CreateMany should work", func(t *testing.T) {
-		in := []*models.StationModel{
+		in := []*station.Model{
 			{
 				RecordID:        "recordid",
 				DatasetID:       "datasetid",
 				Libelle:         "libelle",
 				RecordTimestamp: "record_timestamp",
-				Fields: &models.FieldsModel{
+				Fields: &fields.Model{
 					GeoPoint2D: "[]",
 					CGeo:       "[]",
-					GeoShape: &models.GeometryModel{
+					GeoShape: &geometry.Model{
 						Coordinates: "[]",
 					},
 				},
-				Geometry: &models.GeometryModel{
+				Geometry: &geometry.Model{
 					Coordinates: "[]",
 				},
 			},
@@ -166,7 +168,7 @@ func TestCreateManyStation(t *testing.T) {
 		}
 
 		var count int64
-		database.Model(&models.StationModel{}).Count(&count)
+		database.Model(&station.Model{}).Count(&count)
 		if count != 1 {
 			t.Errorf("Data wasn't stored: count %d\n", count)
 		}
@@ -180,8 +182,8 @@ func TestUpdateStation(t *testing.T) {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
 	err = database.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
@@ -190,19 +192,19 @@ func TestUpdateStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
-	mock := models.StationModel{
+	mock := station.Model{
 		RecordID:        "recordid",
 		DatasetID:       "datasetid",
 		Libelle:         "libelle",
 		RecordTimestamp: "record_timestamp",
-		Fields: &models.FieldsModel{
+		Fields: &fields.Model{
 			GeoPoint2D: "[]",
 			CGeo:       "[]",
-			GeoShape: &models.GeometryModel{
+			GeoShape: &geometry.Model{
 				Coordinates: "[]",
 			},
 		},
-		Geometry: &models.GeometryModel{
+		Geometry: &geometry.Model{
 			Coordinates: "[]",
 		},
 	}
@@ -212,7 +214,7 @@ func TestUpdateStation(t *testing.T) {
 	}
 	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
-		database.Where("1 = 1").Delete(&models.StationModel{})
+		database.Where("1 = 1").Delete(&station.Model{})
 		result := database.Create(&mock)
 		if result.Error != nil {
 			t.Errorf("Received error when resetting the database: %v\n", err)
@@ -221,7 +223,7 @@ func TestUpdateStation(t *testing.T) {
 
 	// Tests
 	t.Run("Update should work", func(t *testing.T) {
-		in := &models.StationModel{
+		in := &station.Model{
 			Libelle: "updated",
 		}
 
@@ -230,7 +232,7 @@ func TestUpdateStation(t *testing.T) {
 			t.Errorf("Got err on Update: %v\n", err)
 		}
 
-		m := &models.StationModel{
+		m := &station.Model{
 			RecordID: "recordid",
 		}
 		result := database.First(m)
@@ -251,8 +253,8 @@ func TestFindOneStation(t *testing.T) {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
 	err = database.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
@@ -261,20 +263,20 @@ func TestFindOneStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
-	mock := models.StationModel{
+	mock := station.Model{
 		RecordID:        "recordid",
 		DatasetID:       "datasetid",
-		IsFavorites:     make([]*models.IsFavoriteModel, 0),
+		IsFavorites:     make([]*isfavorite.Model, 0),
 		Libelle:         "libelle",
 		RecordTimestamp: "record_timestamp",
-		Fields: &models.FieldsModel{
+		Fields: &fields.Model{
 			GeoPoint2D: "[]",
 			CGeo:       "[]",
-			GeoShape: &models.GeometryModel{
+			GeoShape: &geometry.Model{
 				Coordinates: "[]",
 			},
 		},
-		Geometry: &models.GeometryModel{
+		Geometry: &geometry.Model{
 			Coordinates: "[]",
 		},
 	}
@@ -284,7 +286,7 @@ func TestFindOneStation(t *testing.T) {
 	}
 	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
-		database.Where("1 = 1").Delete(&models.StationModel{})
+		database.Where("1 = 1").Delete(&station.Model{})
 		result := database.Create(&mock)
 		if result.Error != nil {
 			t.Errorf("Received error when resetting the database: %v\n", err)
@@ -311,8 +313,8 @@ func TestFindManyAndCountStation(t *testing.T) {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
 	err = database.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
@@ -321,20 +323,20 @@ func TestFindManyAndCountStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
-	mock := models.StationModel{
+	mock := station.Model{
 		RecordID:        "recordid",
 		DatasetID:       "datasetid",
-		IsFavorites:     make([]*models.IsFavoriteModel, 0),
+		IsFavorites:     make([]*isfavorite.Model, 0),
 		Libelle:         "libelle",
 		RecordTimestamp: "record_timestamp",
-		Fields: &models.FieldsModel{
+		Fields: &fields.Model{
 			GeoPoint2D: "[]",
 			CGeo:       "[]",
-			GeoShape: &models.GeometryModel{
+			GeoShape: &geometry.Model{
 				Coordinates: "[]",
 			},
 		},
-		Geometry: &models.GeometryModel{
+		Geometry: &geometry.Model{
 			Coordinates: "[]",
 		},
 	}
@@ -342,7 +344,7 @@ func TestFindManyAndCountStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
-	mockIsFavorite := models.IsFavoriteModel{
+	mockIsFavorite := isfavorite.Model{
 		UserID:    "userId",
 		StationID: mock.RecordID,
 	}
@@ -352,7 +354,7 @@ func TestFindManyAndCountStation(t *testing.T) {
 	}
 	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
-		database.Where("1 = 1").Delete(&models.StationModel{})
+		database.Where("1 = 1").Delete(&station.Model{})
 		result := database.Create(&mock)
 		if result.Error != nil {
 			t.Errorf("Received error when resetting the database: %v\n", err)
@@ -391,8 +393,8 @@ func TestCountStation(t *testing.T) {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
 	err = database.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
@@ -401,19 +403,19 @@ func TestCountStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
-	mock := models.StationModel{
+	mock := station.Model{
 		RecordID:        "recordid",
 		DatasetID:       "datasetid",
 		Libelle:         "libelle",
 		RecordTimestamp: "record_timestamp",
-		Fields: &models.FieldsModel{
+		Fields: &fields.Model{
 			GeoPoint2D: "[]",
 			CGeo:       "[]",
-			GeoShape: &models.GeometryModel{
+			GeoShape: &geometry.Model{
 				Coordinates: "[]",
 			},
 		},
-		Geometry: &models.GeometryModel{
+		Geometry: &geometry.Model{
 			Coordinates: "[]",
 		},
 	}
@@ -423,7 +425,7 @@ func TestCountStation(t *testing.T) {
 	}
 	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
-		database.Where("1 = 1").Delete(&models.StationModel{})
+		database.Where("1 = 1").Delete(&station.Model{})
 		result := database.Create(&mock)
 		if result.Error != nil {
 			t.Errorf("Received error when resetting the database: %v\n", err)
@@ -472,8 +474,8 @@ func TestCreateIsFavorite(t *testing.T) {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
 	err = database.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
@@ -484,33 +486,33 @@ func TestCreateIsFavorite(t *testing.T) {
 	}
 	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
-		database.Where("1 = 1").Delete(&models.StationModel{})
-		database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
+		database.Where("1 = 1").Delete(&station.Model{})
+		database.Where("1 = 1").Delete(&isfavorite.Model{})
 	})
 
 	var workingTable = []struct {
 		name string
-		mock *models.StationModel
-		in   *models.IsFavoriteModel
+		mock *station.Model
+		in   *isfavorite.Model
 	}{
 		{"CreateIsFavorite with StationID only",
-			&models.StationModel{
+			&station.Model{
 				RecordID:        "recordid",
 				DatasetID:       "datasetid",
 				Libelle:         "libelle",
 				RecordTimestamp: "record_timestamp",
-				Fields: &models.FieldsModel{
+				Fields: &fields.Model{
 					GeoPoint2D: "[]",
 					CGeo:       "[]",
-					GeoShape: &models.GeometryModel{
+					GeoShape: &geometry.Model{
 						Coordinates: "[]",
 					},
 				},
-				Geometry: &models.GeometryModel{
+				Geometry: &geometry.Model{
 					Coordinates: "[]",
 				},
 			},
-			&models.IsFavoriteModel{
+			&isfavorite.Model{
 				UserID:    "userId",
 				StationID: "recordid",
 			},
@@ -521,8 +523,8 @@ func TestCreateIsFavorite(t *testing.T) {
 	for _, tt := range workingTable {
 		t.Run(fmt.Sprintf("%s should work", tt.name), func(t *testing.T) {
 			t.Cleanup(func() {
-				database.Where("1 = 1").Delete(&models.StationModel{})
-				database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
+				database.Where("1 = 1").Delete(&station.Model{})
+				database.Where("1 = 1").Delete(&isfavorite.Model{})
 			})
 
 			_, err := ds.CreateStation(tt.mock)
@@ -543,13 +545,13 @@ func TestCreateIsFavorite(t *testing.T) {
 			}
 
 			var count int64
-			database.Model(&models.IsFavoriteModel{}).Count(&count)
+			database.Model(&isfavorite.Model{}).Count(&count)
 			if count != 1 {
 				t.Errorf("Data wasn't stored: count %d\n", count)
 				t.FailNow()
 			}
 
-			testModel := models.StationModel{
+			testModel := station.Model{
 				RecordID: "recordid",
 			}
 			database.Preload("IsFavorites").First(&testModel)
@@ -567,10 +569,10 @@ func TestCreateIsFavorite(t *testing.T) {
 
 	var nonWorkingTable = []struct {
 		name string
-		in   *models.IsFavoriteModel
+		in   *isfavorite.Model
 	}{
-		{"Empty Object", &models.IsFavoriteModel{}},
-		{"Non existing relation", &models.IsFavoriteModel{
+		{"Empty Object", &isfavorite.Model{}},
+		{"Non existing relation", &isfavorite.Model{
 			UserID:    "fakeid",
 			StationID: "fakerelation",
 		}},
@@ -595,8 +597,8 @@ func TestRemoveIsFavorite(t *testing.T) {
 		t.Errorf("Received error when opening database: %v\n", err)
 	}
 	err = database.AutoMigrate(
-		&models.StationModel{},
-		&models.IsFavoriteModel{},
+		&station.Model{},
+		&isfavorite.Model{},
 	)
 	if err != nil {
 		t.Errorf("Received error when migrating database: %v\n", err)
@@ -607,33 +609,33 @@ func TestRemoveIsFavorite(t *testing.T) {
 	}
 	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
-		database.Where("1 = 1").Delete(&models.StationModel{})
-		database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
+		database.Where("1 = 1").Delete(&station.Model{})
+		database.Where("1 = 1").Delete(&isfavorite.Model{})
 	})
 
 	var workingTable = []struct {
 		name string
-		mock *models.StationModel
-		in   *models.IsFavoriteModel
+		mock *station.Model
+		in   *isfavorite.Model
 	}{
 		{"RemoveIsFavorite with StationID only",
-			&models.StationModel{
+			&station.Model{
 				RecordID:        "recordid",
 				DatasetID:       "datasetid",
 				Libelle:         "libelle",
 				RecordTimestamp: "record_timestamp",
-				Fields: &models.FieldsModel{
+				Fields: &fields.Model{
 					GeoPoint2D: "[]",
 					CGeo:       "[]",
-					GeoShape: &models.GeometryModel{
+					GeoShape: &geometry.Model{
 						Coordinates: "[]",
 					},
 				},
-				Geometry: &models.GeometryModel{
+				Geometry: &geometry.Model{
 					Coordinates: "[]",
 				},
 			},
-			&models.IsFavoriteModel{
+			&isfavorite.Model{
 				UserID:    "userId",
 				StationID: "recordid",
 			},
@@ -644,8 +646,8 @@ func TestRemoveIsFavorite(t *testing.T) {
 	for _, tt := range workingTable {
 		t.Run(fmt.Sprintf("%s should work", tt.name), func(t *testing.T) {
 			t.Cleanup(func() {
-				database.Where("1 = 1").Delete(&models.StationModel{})
-				database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
+				database.Where("1 = 1").Delete(&station.Model{})
+				database.Where("1 = 1").Delete(&isfavorite.Model{})
 			})
 
 			_, err := ds.CreateStation(tt.mock)
@@ -667,7 +669,7 @@ func TestRemoveIsFavorite(t *testing.T) {
 			}
 
 			var count int64
-			if database.Model(&models.IsFavoriteModel{}).Count(&count); count != 0 {
+			if database.Model(&isfavorite.Model{}).Count(&count); count != 0 {
 				t.Error("Entity not deleted")
 				return
 			}

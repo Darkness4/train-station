@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/Darkness4/train-station-api/internal"
-	"github.com/Darkness4/train-station-api/pkg/data/models"
+	"github.com/Darkness4/train-station-api/pkg/data/database/isfavorite"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 	"github.com/valyala/fasthttp"
 )
@@ -87,7 +87,7 @@ func (repo *StationRepositoryImpl) GetOne(id string, userId string) (*entities.S
 }
 
 func (repo *StationRepositoryImpl) CreateOne(station *entities.Station, userId string) (*entities.Station, error) {
-	model, err := models.NewStationModelFromEntity(station)
+	model, err := NewModelFromEntity(station)
 	if err != nil {
 		return nil, err
 	}
@@ -96,14 +96,14 @@ func (repo *StationRepositoryImpl) CreateOne(station *entities.Station, userId s
 		return nil, err
 	}
 	if station.IsFavorite != nil && *station.IsFavorite {
-		if _, err := repo.ds.CreateIsFavorite(&models.IsFavoriteModel{
+		if _, err := repo.ds.CreateIsFavorite(&isfavorite.Model{
 			UserID:    userId,
 			StationID: station.RecordID,
 		}); err != nil {
 			return nil, err
 		}
 	} else if station.IsFavorite != nil && !*station.IsFavorite {
-		if err := repo.ds.RemoveIsFavorite(&models.IsFavoriteModel{
+		if err := repo.ds.RemoveIsFavorite(&isfavorite.Model{
 			UserID:    userId,
 			StationID: station.RecordID,
 		}); err != nil {
@@ -120,9 +120,9 @@ func (repo *StationRepositoryImpl) CreateOne(station *entities.Station, userId s
 
 func (repo *StationRepositoryImpl) CreateMany(stations []*entities.Station, userId string) ([]*entities.Station, error) {
 	// Map
-	values := make([]*models.StationModel, 0, len(stations))
+	values := make([]*Model, 0, len(stations))
 	for _, val := range stations {
-		model, err := models.NewStationModelFromEntity(val)
+		model, err := NewModelFromEntity(val)
 		if err != nil {
 			return nil, err
 		}
@@ -137,14 +137,14 @@ func (repo *StationRepositoryImpl) CreateMany(stations []*entities.Station, user
 
 	for _, val := range stations {
 		if val.IsFavorite != nil && *val.IsFavorite {
-			if _, err := repo.ds.CreateIsFavorite(&models.IsFavoriteModel{
+			if _, err := repo.ds.CreateIsFavorite(&isfavorite.Model{
 				UserID:    userId,
 				StationID: val.RecordID,
 			}); err != nil {
 				return nil, err
 			}
 		} else if val.IsFavorite != nil && !*val.IsFavorite {
-			if err := repo.ds.RemoveIsFavorite(&models.IsFavoriteModel{
+			if err := repo.ds.RemoveIsFavorite(&isfavorite.Model{
 				UserID:    userId,
 				StationID: val.RecordID,
 			}); err != nil {
@@ -168,14 +168,14 @@ func (repo *StationRepositoryImpl) CreateMany(stations []*entities.Station, user
 
 func (repo *StationRepositoryImpl) MakeFavoriteOne(id string, isFavorite bool, userId string) (*entities.Station, error) {
 	if isFavorite {
-		if _, err := repo.ds.CreateIsFavorite(&models.IsFavoriteModel{
+		if _, err := repo.ds.CreateIsFavorite(&isfavorite.Model{
 			UserID:    userId,
 			StationID: id,
 		}); err != nil {
 			return nil, err
 		}
 	} else {
-		if err := repo.ds.RemoveIsFavorite(&models.IsFavoriteModel{
+		if err := repo.ds.RemoveIsFavorite(&isfavorite.Model{
 			UserID:    userId,
 			StationID: id,
 		}); err != nil {

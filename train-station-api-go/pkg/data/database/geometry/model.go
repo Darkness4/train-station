@@ -1,28 +1,32 @@
-package models
+package geometry
 
 import (
 	"github.com/Darkness4/train-station-api/pkg/data/converters"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 )
 
-type GeometryModel struct {
+type Model struct {
 	Type        string
 	Coordinates string `gorm:"check:geo_shape_coordinates <> ''"`
 }
 
-func NewGeometryModelFromEntity(e *entities.Geometry) (*GeometryModel, error) {
+func (Model) TableName() string {
+	return "geometries"
+}
+
+func NewModelFromEntity(e *entities.Geometry) (*Model, error) {
 	coordinates, err := converters.CoordinatesToString(e.Coordinates)
 	if err != nil {
 		return nil, err
 	}
-	m := GeometryModel{
+	m := Model{
 		Type:        e.Type,
 		Coordinates: coordinates,
 	}
 	return &m, nil
 }
 
-func (m GeometryModel) Entity() (*entities.Geometry, error) {
+func (m Model) Entity() (*entities.Geometry, error) {
 	coordinates, err := converters.StringToCoordinates(m.Coordinates)
 	if err != nil {
 		return nil, err

@@ -1,11 +1,12 @@
-package models
+package fields
 
 import (
 	"github.com/Darkness4/train-station-api/pkg/data/converters"
+	"github.com/Darkness4/train-station-api/pkg/data/database/geometry"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
 )
 
-type FieldsModel struct {
+type Model struct {
 	Commune    *string
 	YWgs84     float64
 	XWgs84     float64
@@ -17,7 +18,7 @@ type FieldsModel struct {
 	XL93       float64
 	CGeo       string `gorm:"check:geo_shape_c_geo <> ''"`
 	RgTroncon  int64
-	GeoShape   *GeometryModel `gorm:"embedded;embeddedPrefix:geo_shape_"`
+	GeoShape   *geometry.Model `gorm:"embedded;embeddedPrefix:geo_shape_"`
 	PK         string
 	IDreseau   uint64
 	Departemen string
@@ -25,8 +26,12 @@ type FieldsModel struct {
 	Fret       string
 }
 
-func NewFieldsModelFromEntity(e *entities.Fields) (*FieldsModel, error) {
-	m := &FieldsModel{
+func (Model) TableName() string {
+	return "fields"
+}
+
+func NewModelFromEntity(e *entities.Fields) (*Model, error) {
+	m := &Model{
 		Commune:    e.Commune,
 		YWgs84:     e.YWgs84,
 		XWgs84:     e.XWgs84,
@@ -43,7 +48,7 @@ func NewFieldsModelFromEntity(e *entities.Fields) (*FieldsModel, error) {
 		Fret:       e.Fret,
 	}
 	if e.GeoShape != nil {
-		if geoShape, err := NewGeometryModelFromEntity(e.GeoShape); err == nil {
+		if geoShape, err := geometry.NewModelFromEntity(e.GeoShape); err == nil {
 			m.GeoShape = geoShape
 		} else {
 			return nil, err
@@ -63,7 +68,7 @@ func NewFieldsModelFromEntity(e *entities.Fields) (*FieldsModel, error) {
 	return m, nil
 }
 
-func (m FieldsModel) Entity() (*entities.Fields, error) {
+func (m Model) Entity() (*entities.Fields, error) {
 	e := &entities.Fields{
 		Commune:    m.Commune,
 		YWgs84:     m.YWgs84,
