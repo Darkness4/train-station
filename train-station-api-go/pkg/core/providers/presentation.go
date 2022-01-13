@@ -3,32 +3,45 @@ package providers
 import (
 	"fmt"
 
+	"github.com/Darkness4/train-station-api/internal"
 	"github.com/Darkness4/train-station-api/pkg/domain/auth"
 	"github.com/Darkness4/train-station-api/pkg/domain/station"
 	"github.com/Darkness4/train-station-api/pkg/presentation/root"
 	"github.com/Darkness4/train-station-api/pkg/presentation/root/trainstation"
-	"github.com/atreugo/cors"
-	"github.com/savsgio/atreugo/v11"
-	"github.com/spf13/viper"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/sirupsen/logrus"
 )
 
-func HTTPServer(stations station.Repository, auth auth.Service) *atreugo.Atreugo {
-	addr := fmt.Sprintf("%s:%d", viper.GetString("HOST"), viper.GetInt("PORT"))
-	config := atreugo.Config{
-		Addr:  addr,
-		Debug: viper.GetBool("debug"),
-	}
+func HTTPServer(stations station.Repository, auth auth.Service) *fiber.App {
+	internal.Logger.Debug("Provide HTTPServer")
+	server := fiber.New(fiber.Config{
+		Prefork:           true,
+		CaseSensitive:     false,
+		StrictRouting:     false,
+		AppName:           "A SNCF API",
+		EnablePrintRoutes: true,
+	})
 
-	// Spawn the server
-	server := atreugo.New(config)
-	corsConfig := cors.Config{
-		AllowedOrigins: []string{"*"},
-		AllowedMethods: []string{"GET", "PATCH", "OPTIONS", "POST"},
-		AllowedHeaders: []string{"Access-Control-Allow-Origin", "Content-Type", "Accept", "Accept-Language", "Origin", "User-Agent", "Authorization"},
-		AllowMaxAge:    3600,
-	}
-	server.UseAfter(cors.New(corsConfig))
-	api := server.NewGroupPath("/api")
+	server.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowMethods: "GET, PATCH, OPTIONS, POST",
+		AllowHeaders: "Access-Control-Allow-Origin, Content-Type, Accept, Accept-Language, Origin, User-Agent, Authorization",
+		MaxAge:       3600,
+	}))
+	server.Use(func(c *fiber.Ctx) error {
+		// Log each request
+		internal.Logger.WithFields(logrus.Fields{
+			"context": "HTTPServer",
+			"addr":    fmt.Sprintf("%p", server),
+			"method":  c.Method(),
+			"path":    c.Path(),
+		})
+
+		// Go to next middleware
+		return c.Next()
+	})
+	api := server.Group("/api")
 	root.NewController(server)
 	trainstation.NewController(api, stations, auth)
 

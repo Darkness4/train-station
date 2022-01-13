@@ -12,18 +12,18 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/presentation/filters"
 	"github.com/Darkness4/train-station-api/pkg/presentation/queryargs"
 	"github.com/go-playground/validator/v10"
-	"github.com/savsgio/atreugo/v11"
+	"github.com/gofiber/fiber/v2"
 )
 
 type Controller struct {
-	api        *atreugo.Router
+	api        fiber.Router
 	repo       station.Repository
 	authFilter filters.AuthenticationFilter
 	validate   *validator.Validate
 }
 
 func NewController(
-	api *atreugo.Router,
+	api fiber.Router,
 	repo station.Repository,
 	auth auth.Service,
 ) *Controller {
@@ -47,34 +47,34 @@ func NewController(
 }
 
 func (ctrl *Controller) buildRoutes() {
-	stations := ctrl.api.NewGroupPath("/stations")
-	stations.GET("/", func(ctx *atreugo.RequestCtx) error {
+	stations := ctrl.api.Group("/stations")
+	stations.Get("/", func(ctx *fiber.Ctx) error {
 		return filters.ExceptionFilter(ctx,
 			ctrl.authFilter.Apply(ctx,
 				ctrl.getMany,
 			),
 		)
 	})
-	stations.GET("/{id}", func(ctx *atreugo.RequestCtx) error {
+	stations.Get("/:id", func(ctx *fiber.Ctx) error {
 		return filters.ExceptionFilter(ctx,
 			ctrl.authFilter.Apply(ctx,
 				ctrl.getOne,
 			),
 		)
 	})
-	stations.PATCH("/{id}", func(ctx *atreugo.RequestCtx) error {
+	stations.Patch("/:id", func(ctx *fiber.Ctx) error {
 		return filters.ExceptionFilter(ctx,
 			ctrl.updateOne(ctx),
 		)
 	})
-	stations.POST("/", func(ctx *atreugo.RequestCtx) error {
+	stations.Post("/", func(ctx *fiber.Ctx) error {
 		return filters.ExceptionFilter(ctx,
 			ctrl.authFilter.Apply(ctx,
 				ctrl.createOne,
 			),
 		)
 	})
-	stations.POST("/{id}/makeFavorite", func(ctx *atreugo.RequestCtx) error {
+	stations.Post("/:id/makeFavorite", func(ctx *fiber.Ctx) error {
 		return filters.ExceptionFilter(ctx,
 			ctrl.authFilter.Apply(ctx,
 				ctrl.makeFavoriteOne,
@@ -83,28 +83,28 @@ func (ctrl *Controller) buildRoutes() {
 	})
 }
 
-func (ctrl *Controller) getMany(ctx *atreugo.RequestCtx, uid string) error {
+func (ctrl *Controller) getMany(ctx *fiber.Ctx, uid string) error {
 	// Input
-	args := ctx.QueryArgs()
-	sRaw := args.Peek("s")
+	args := &queryargs.GetMany{}
+	if err := ctx.QueryParser(args); err != nil {
+		return err
+	}
 	s := queryargs.SearchLibelle{
 		Libelle: queryargs.ContainType{
 			Contain: "",
 		},
 	}
-	json.Unmarshal(sRaw, &s) // Ignore error
+	json.Unmarshal([]byte(args.Search), &s) // Ignore error
 
-	limitStr := string(args.Peek("limit"))
 	limit := 10
-	if limitStr != "" && limitStr != "0" {
-		if newLimit, err := strconv.Atoi(limitStr); err == nil && newLimit >= 0 {
+	if args.Limit != "" && args.Limit != "0" {
+		if newLimit, err := strconv.Atoi(args.Limit); err == nil && newLimit >= 0 {
 			limit = newLimit
 		} // Ignore error
 	}
-	pageStr := string(args.Peek("page"))
 	page := 1
-	if pageStr != "" {
-		if newPage, err := strconv.Atoi(pageStr); err == nil && newPage >= 0 {
+	if args.Page != "" {
+		if newPage, err := strconv.Atoi(args.Page); err == nil && newPage >= 0 {
 			page = newPage
 		} // Ignore error
 	}
@@ -128,12 +128,12 @@ func (ctrl *Controller) getMany(ctx *atreugo.RequestCtx, uid string) error {
 		Page:      page,
 		PageCount: pageCount,
 	}
-	return ctx.JSONResponse(response, 200)
+	return ctx.JSON(response)
 }
 
-func (ctrl *Controller) getOne(ctx *atreugo.RequestCtx, uid string) error {
+func (ctrl *Controller) getOne(ctx *fiber.Ctx, uid string) error {
 	// Input
-	id := ctx.UserValue("id").(string)
+	id := ctx.Params("id")
 
 	// Process
 	station, err := ctrl.repo.GetOne(id, uid)
@@ -142,13 +142,15 @@ func (ctrl *Controller) getOne(ctx *atreugo.RequestCtx, uid string) error {
 	}
 
 	// Output
-	return ctx.JSONResponse(station, 200)
+	return ctx.JSON(station)
 }
 
-func (ctrl *Controller) createOne(ctx *atreugo.RequestCtx, uid string) error {
+func (ctrl *Controller) createOne(ctx *fiber.Ctx, uid string) error {
 	// Input
 	dto := entities.Station{}
-	json.Unmarshal(ctx.PostBody(), &dto)
+	if err := ctx.BodyParser(&dto); err != nil {
+		return err
+	}
 
 	// Validate DTO
 	if err := ctrl.validate.Struct(&dto); err != nil {
@@ -162,21 +164,23 @@ func (ctrl *Controller) createOne(ctx *atreugo.RequestCtx, uid string) error {
 	}
 
 	// Output
-	return ctx.JSONResponse(newStation, 201)
+	return ctx.Status(fiber.StatusCreated).JSON(newStation)
 }
 
-func (ctrl *Controller) updateOne(ctx *atreugo.RequestCtx) error {
-	return ctx.JSONResponse(&dtos.Error{
-		StatusCode: 400,
+func (ctrl *Controller) updateOne(ctx *fiber.Ctx) error {
+	return ctx.Status(fiber.StatusBadRequest).JSON(&dtos.Error{
+		StatusCode: fiber.StatusBadRequest,
 		Message:    "The operation PATCH is deprecated.",
-	}, 400)
+	})
 }
 
-func (ctrl *Controller) makeFavoriteOne(ctx *atreugo.RequestCtx, uid string) (err error) {
+func (ctrl *Controller) makeFavoriteOne(ctx *fiber.Ctx, uid string) (err error) {
 	// Input
 	dto := dtos.MakeFavorite{}
-	json.Unmarshal(ctx.PostBody(), &dto)
-	id := ctx.UserValue("id").(string)
+	if err := ctx.BodyParser(&dto); err != nil {
+		return err
+	}
+	id := ctx.Params("id")
 
 	// Validate DTO
 	if err := ctrl.validate.Struct(&dto); err != nil {
@@ -189,5 +193,5 @@ func (ctrl *Controller) makeFavoriteOne(ctx *atreugo.RequestCtx, uid string) (er
 	}
 
 	// Output
-	return ctx.JSONResponse(newStation, 200)
+	return ctx.JSON(newStation)
 }

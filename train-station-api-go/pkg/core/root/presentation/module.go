@@ -5,11 +5,11 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/core/providers"
 	"github.com/Darkness4/train-station-api/pkg/core/root/data"
 	"github.com/Darkness4/train-station-api/pkg/core/root/domain"
-	"github.com/savsgio/atreugo/v11"
+	"github.com/gofiber/fiber/v2"
 )
 
 type Module struct {
-	Server *atreugo.Atreugo
+	Server *fiber.App
 }
 
 func NewModule(data *data.Module, domain *domain.Module) *Module {

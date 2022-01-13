@@ -37,5 +37,5 @@ USER app
 
 EXPOSE 3000
 
-ENTRYPOINT [ "/sbin/tini","--"]
+ENTRYPOINT [ "/tini","--"]
 CMD ["./app"]

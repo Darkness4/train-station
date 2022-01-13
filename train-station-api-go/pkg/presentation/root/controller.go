@@ -2,14 +2,14 @@ package root
 
 import (
 	"github.com/Darkness4/train-station-api/internal"
-	"github.com/savsgio/atreugo/v11"
+	"github.com/gofiber/fiber/v2"
 )
 
 type Controller struct {
-	server *atreugo.Atreugo
+	server *fiber.App
 }
 
-func NewController(server *atreugo.Atreugo) *Controller {
+func NewController(server *fiber.App) *Controller {
 	if server == nil {
 		internal.Logger.Panic("NewController: server is nil")
 	}
@@ -19,20 +19,19 @@ func NewController(server *atreugo.Atreugo) *Controller {
 }
 
 func (ctrl *Controller) buildRoutes() {
-	ctrl.server.GET("/", getRoot)
-	ctrl.server.GET("/healthz", getHealthz)
-	ctrl.server.GET("/openapi", getOpenApi)
+	ctrl.server.Get("/", getRoot)
+	ctrl.server.Get("/healthz", getHealthz)
+	ctrl.server.Get("/openapi", getOpenApi)
 }
 
-func getRoot(ctx *atreugo.RequestCtx) error {
-	return ctx.RedirectResponse("/api", 302)
+func getRoot(ctx *fiber.Ctx) error {
+	return ctx.Redirect("/api", fiber.StatusFound)
 }
 
-func getHealthz(ctx *atreugo.RequestCtx) error {
-	return ctx.JSONResponse(&map[string]string{"status": "OK"}, 200)
+func getHealthz(ctx *fiber.Ctx) error {
+	return ctx.JSON(&map[string]string{"status": "OK"})
 }
 
-func getOpenApi(ctx *atreugo.RequestCtx) error {
-	ctx.SendFile("./static/openapi.yaml")
-	return nil
+func getOpenApi(ctx *fiber.Ctx) error {
+	return ctx.SendFile("./static/openapi.yaml")
 }

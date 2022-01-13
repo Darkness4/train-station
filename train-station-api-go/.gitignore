@@ -28,3 +28,6 @@ vendor/
 
 service-account.json
 static
+
+.env.local
+.env.test

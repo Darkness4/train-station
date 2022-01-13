@@ -1,12 +1,13 @@
 version: '3.9'
 services:
   train-station-api:
-    build: ./
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 38080:8080
+      - '3000:3000'
     volumes:
       - ./service-account.json:/secrets/service-account.json
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /secrets/service-account.json
-      HOST: 0.0.0.0
-      PORT: 8080
+    env_file:
+      - .env
+      - .env.local

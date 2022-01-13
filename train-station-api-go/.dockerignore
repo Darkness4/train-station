@@ -5,3 +5,6 @@ README.md
 
 docker-compose.yml
 Dockerfile
+
+.env
+.env.local

@@ -4,13 +4,14 @@ go 1.17
 
 require (
 	firebase.google.com/go/v4 v4.7.0
-	github.com/atreugo/cors v1.0.5
 	github.com/certifi/gocertifi v0.0.0-20210507211836-431795d63e8d
 	github.com/go-playground/validator/v10 v10.10.0
-	github.com/savsgio/atreugo/v11 v11.9.0
+	github.com/gofiber/fiber/v2 v2.24.0
+	github.com/gofrs/uuid v4.2.0+incompatible
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.1
+	github.com/stretchr/testify v1.7.0
 	github.com/valyala/fasthttp v1.32.0
 	google.golang.org/api v0.65.0
 	gorm.io/driver/sqlite v1.2.6
@@ -24,7 +25,7 @@ require (
 	cloud.google.com/go/iam v0.1.0 // indirect
 	cloud.google.com/go/storage v1.18.2 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/fasthttp/router v1.4.5 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
@@ -42,7 +43,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.10 // indirect
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
-	github.com/savsgio/gotils v0.0.0-20211223103454-d0aaa54c5899 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/spf13/afero v1.8.0 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
@@ -63,4 +64,5 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
