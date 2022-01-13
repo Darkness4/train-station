@@ -78,7 +78,9 @@ func HTTP() *fasthttp.Client {
 	}
 	return &fasthttp.Client{
 		TLSConfig: &tls.Config{
-			RootCAs: certPool,
+			RootCAs:            certPool,
+			InsecureSkipVerify: false,
+			MinVersion:         tls.VersionTLS12,
 		},
 	}
 }
