@@ -1,41 +1,42 @@
-package ctrls
+package trainstation
 
 import (
 	"encoding/json"
 	"strconv"
 
+	"github.com/Darkness4/train-station-api/internal"
+	"github.com/Darkness4/train-station-api/pkg/domain/auth"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
-	"github.com/Darkness4/train-station-api/pkg/domain/repos"
-	"github.com/Darkness4/train-station-api/pkg/domain/services"
-	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
-	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/queryargs"
+	"github.com/Darkness4/train-station-api/pkg/domain/station"
+	"github.com/Darkness4/train-station-api/pkg/presentation/dtos"
 	"github.com/Darkness4/train-station-api/pkg/presentation/filters"
+	"github.com/Darkness4/train-station-api/pkg/presentation/queryargs"
 	"github.com/go-playground/validator/v10"
 	"github.com/savsgio/atreugo/v11"
 )
 
-type TrainStationController struct {
+type Controller struct {
 	api        *atreugo.Router
-	repo       repos.StationRepository
+	repo       station.Repository
 	authFilter filters.AuthenticationFilter
 	validate   *validator.Validate
 }
 
-func NewTrainStationController(
+func NewController(
 	api *atreugo.Router,
-	repo repos.StationRepository,
-	auth services.AuthService,
-) *TrainStationController {
+	repo station.Repository,
+	auth auth.Service,
+) *Controller {
 	if api == nil {
-		panic("NewTrainStationController: api is nil")
+		internal.Logger.Panic("NewController: api is nil")
 	}
 	if repo == nil {
-		panic("NewTrainStationController: repo is nil")
+		internal.Logger.Panic("NewController: repo is nil")
 	}
 	if auth == nil {
-		panic("NewTrainStationController: auth is nil")
+		internal.Logger.Panic("NewController: auth is nil")
 	}
-	ctrl := TrainStationController{
+	ctrl := Controller{
 		api,
 		repo,
 		*filters.NewAuthenticationFilter(auth),
@@ -45,7 +46,7 @@ func NewTrainStationController(
 	return &ctrl
 }
 
-func (ctrl *TrainStationController) buildRoutes() {
+func (ctrl *Controller) buildRoutes() {
 	stations := ctrl.api.NewGroupPath("/stations")
 	stations.GET("/", func(ctx *atreugo.RequestCtx) error {
 		return filters.ExceptionFilter(ctx,
@@ -82,7 +83,7 @@ func (ctrl *TrainStationController) buildRoutes() {
 	})
 }
 
-func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx, uid string) error {
+func (ctrl *Controller) getMany(ctx *atreugo.RequestCtx, uid string) error {
 	// Input
 	args := ctx.QueryArgs()
 	sRaw := args.Peek("s")
@@ -130,7 +131,7 @@ func (ctrl *TrainStationController) getMany(ctx *atreugo.RequestCtx, uid string)
 	return ctx.JSONResponse(response, 200)
 }
 
-func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx, uid string) error {
+func (ctrl *Controller) getOne(ctx *atreugo.RequestCtx, uid string) error {
 	// Input
 	id := ctx.UserValue("id").(string)
 
@@ -144,7 +145,7 @@ func (ctrl *TrainStationController) getOne(ctx *atreugo.RequestCtx, uid string) 
 	return ctx.JSONResponse(station, 200)
 }
 
-func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx, uid string) error {
+func (ctrl *Controller) createOne(ctx *atreugo.RequestCtx, uid string) error {
 	// Input
 	dto := entities.Station{}
 	json.Unmarshal(ctx.PostBody(), &dto)
@@ -164,14 +165,14 @@ func (ctrl *TrainStationController) createOne(ctx *atreugo.RequestCtx, uid strin
 	return ctx.JSONResponse(newStation, 201)
 }
 
-func (ctrl *TrainStationController) updateOne(ctx *atreugo.RequestCtx) error {
+func (ctrl *Controller) updateOne(ctx *atreugo.RequestCtx) error {
 	return ctx.JSONResponse(&dtos.Error{
 		StatusCode: 400,
 		Message:    "The operation PATCH is deprecated.",
 	}, 400)
 }
 
-func (ctrl *TrainStationController) makeFavoriteOne(ctx *atreugo.RequestCtx, uid string) (err error) {
+func (ctrl *Controller) makeFavoriteOne(ctx *atreugo.RequestCtx, uid string) (err error) {
 	// Input
 	dto := dtos.MakeFavorite{}
 	json.Unmarshal(ctx.PostBody(), &dto)

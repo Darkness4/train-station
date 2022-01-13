@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"firebase.google.com/go/v4/auth"
-	"github.com/Darkness4/train-station-api/pkg/presentation/ctrls/dtos"
+	"github.com/Darkness4/train-station-api/pkg/presentation/dtos"
 	"github.com/go-playground/validator/v10"
 	"github.com/savsgio/atreugo/v11"
 	"github.com/spf13/viper"

@@ -1,21 +1,24 @@
-package ctrls
+package root
 
-import "github.com/savsgio/atreugo/v11"
+import (
+	"github.com/Darkness4/train-station-api/internal"
+	"github.com/savsgio/atreugo/v11"
+)
 
-type RootController struct {
+type Controller struct {
 	server *atreugo.Atreugo
 }
 
-func NewRootController(server *atreugo.Atreugo) *RootController {
+func NewController(server *atreugo.Atreugo) *Controller {
 	if server == nil {
-		panic("NewRootController: server is nil")
+		internal.Logger.Panic("NewController: server is nil")
 	}
-	ctrl := RootController{server}
+	ctrl := Controller{server}
 	ctrl.buildRoutes()
 	return &ctrl
 }
 
-func (ctrl *RootController) buildRoutes() {
+func (ctrl *Controller) buildRoutes() {
 	ctrl.server.GET("/", getRoot)
 	ctrl.server.GET("/healthz", getHealthz)
 	ctrl.server.GET("/openapi", getOpenApi)

@@ -1,11 +1,12 @@
-package ds
+package station
 
 import (
+	"github.com/Darkness4/train-station-api/internal"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"gorm.io/gorm"
 )
 
-type StationDataSource interface {
+type DataSource interface {
 	CreateStation(m *models.StationModel) (*models.StationModel, error)
 	CreateManyStation(m []*models.StationModel) ([]*models.StationModel, error)
 	UpdateStation(id string, station *models.StationModel) (*models.StationModel, error)
@@ -16,21 +17,21 @@ type StationDataSource interface {
 	RemoveIsFavorite(m *models.IsFavoriteModel) error
 }
 
-type StationDataSourceImpl struct {
-	StationDataSource
+type DataSourceImpl struct {
+	DataSource
 	db *gorm.DB
 }
 
-func NewStationDataSource(db *gorm.DB) *StationDataSourceImpl {
+func NewDataSource(db *gorm.DB) *DataSourceImpl {
 	if db == nil {
-		panic("StationRepository: db is nil")
+		internal.Logger.Panic("NewDataSource: db is nil")
 	}
-	return &StationDataSourceImpl{
+	return &DataSourceImpl{
 		db: db,
 	}
 }
 
-func (ds *StationDataSourceImpl) CreateStation(m *models.StationModel) (*models.StationModel, error) {
+func (ds *DataSourceImpl) CreateStation(m *models.StationModel) (*models.StationModel, error) {
 	result := ds.db.Create(m)
 
 	if result.Error != nil {
@@ -39,7 +40,7 @@ func (ds *StationDataSourceImpl) CreateStation(m *models.StationModel) (*models.
 	return m, nil
 }
 
-func (ds *StationDataSourceImpl) CreateManyStation(m []*models.StationModel) ([]*models.StationModel, error) {
+func (ds *DataSourceImpl) CreateManyStation(m []*models.StationModel) ([]*models.StationModel, error) {
 	result := ds.db.CreateInBatches(&m, 100)
 
 	if result.Error != nil {
@@ -48,7 +49,7 @@ func (ds *StationDataSourceImpl) CreateManyStation(m []*models.StationModel) ([]
 	return m, nil
 }
 
-func (ds *StationDataSourceImpl) UpdateStation(id string, m *models.StationModel) (*models.StationModel, error) {
+func (ds *DataSourceImpl) UpdateStation(id string, m *models.StationModel) (*models.StationModel, error) {
 	new := models.StationModel{
 		RecordID: id,
 	}
@@ -65,7 +66,7 @@ func (ds *StationDataSourceImpl) UpdateStation(id string, m *models.StationModel
 	return &new, nil
 }
 
-func (ds *StationDataSourceImpl) FindOneStation(id string) (*models.StationModel, error) {
+func (ds *DataSourceImpl) FindOneStation(id string) (*models.StationModel, error) {
 	m := &models.StationModel{
 		RecordID: id,
 	}
@@ -77,7 +78,7 @@ func (ds *StationDataSourceImpl) FindOneStation(id string) (*models.StationModel
 	return m, nil
 }
 
-func (ds *StationDataSourceImpl) FindManyAndCountStation(s string, limit int, page int) ([]*models.StationModel, int64, error) {
+func (ds *DataSourceImpl) FindManyAndCountStation(s string, limit int, page int) ([]*models.StationModel, int64, error) {
 	offset := (page - 1) * limit
 
 	var m []*models.StationModel
@@ -95,7 +96,7 @@ func (ds *StationDataSourceImpl) FindManyAndCountStation(s string, limit int, pa
 	return m, result.RowsAffected, nil
 }
 
-func (ds *StationDataSourceImpl) CountStation(s string) (int64, error) {
+func (ds *DataSourceImpl) CountStation(s string) (int64, error) {
 	var count int64
 
 	result := ds.db.Model(&models.StationModel{}).Where("libelle LIKE '%'||?||'%'", s).Count(&count)
@@ -106,7 +107,7 @@ func (ds *StationDataSourceImpl) CountStation(s string) (int64, error) {
 	return count, nil
 }
 
-func (ds *StationDataSourceImpl) CreateIsFavorite(m *models.IsFavoriteModel) (*models.IsFavoriteModel, error) {
+func (ds *DataSourceImpl) CreateIsFavorite(m *models.IsFavoriteModel) (*models.IsFavoriteModel, error) {
 	result := ds.db.Create(m)
 
 	if result.Error != nil {
@@ -115,7 +116,7 @@ func (ds *StationDataSourceImpl) CreateIsFavorite(m *models.IsFavoriteModel) (*m
 	return m, nil
 }
 
-func (ds *StationDataSourceImpl) RemoveIsFavorite(m *models.IsFavoriteModel) error {
+func (ds *DataSourceImpl) RemoveIsFavorite(m *models.IsFavoriteModel) error {
 	result := ds.db.Where("user_id = ? AND station_id = ?", m.UserID, m.StationID).Delete(&models.IsFavoriteModel{})
 
 	if result.Error != nil {

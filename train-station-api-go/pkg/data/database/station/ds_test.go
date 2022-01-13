@@ -1,37 +1,38 @@
-package ds
+package station_test
 
 import (
 	"fmt"
 	"testing"
 
+	"github.com/Darkness4/train-station-api/pkg/data/database/station"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-func TestNewStationDataSource(t *testing.T) {
-	t.Run("NewStationDataSource should work when depencies are injected", func(t *testing.T) {
+func TestNewDataSource(t *testing.T) {
+	t.Run("NewDataSource should work when depencies are injected", func(t *testing.T) {
 		database, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
 		if err != nil {
 			t.Errorf("Received error when opening database: %v\n", err)
 		}
 
-		got := NewStationDataSource(database)
+		got := station.NewDataSource(database)
 		if got == nil {
-			t.Error("Got nil on NewStationDataSource")
+			t.Error("Got nil on NewDataSource")
 		}
 	})
 
-	t.Run("NewStationDataSource shouldn't work when depencies are not injected", func(t *testing.T) {
+	t.Run("NewDataSource shouldn't work when depencies are not injected", func(t *testing.T) {
 		defer func() {
 			if r := recover(); r != nil {
-				t.Logf("Got expected panic: %v", r)
+				t.Logf("Got expected internal.Logger.Panic: %v", r)
 				return
 			}
-			t.Errorf("NewStationDataSource didn't panic")
+			t.Errorf("NewDataSource didn't internal.Logger.Panic")
 		}()
 
-		NewStationDataSource(nil)
+		station.NewDataSource(nil)
 	})
 }
 
@@ -52,7 +53,7 @@ func TestCreateStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
-	ds := NewStationDataSource(database)
+	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 	})
@@ -133,7 +134,7 @@ func TestCreateManyStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
-	ds := NewStationDataSource(database)
+	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 	})
@@ -209,7 +210,7 @@ func TestUpdateStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
-	ds := NewStationDataSource(database)
+	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 		result := database.Create(&mock)
@@ -281,7 +282,7 @@ func TestFindOneStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
-	ds := NewStationDataSource(database)
+	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 		result := database.Create(&mock)
@@ -349,7 +350,7 @@ func TestFindManyAndCountStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
-	ds := NewStationDataSource(database)
+	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 		result := database.Create(&mock)
@@ -420,7 +421,7 @@ func TestCountStation(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when mocking the database: %v\n", err)
 	}
-	ds := NewStationDataSource(database)
+	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 		result := database.Create(&mock)
@@ -481,7 +482,7 @@ func TestCreateIsFavorite(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
-	ds := NewStationDataSource(database)
+	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 		database.Where("1 = 1").Delete(&models.IsFavoriteModel{})
@@ -604,7 +605,7 @@ func TestRemoveIsFavorite(t *testing.T) {
 	if result.Error != nil {
 		t.Errorf("Received error when PRAGMA foreign_keys = ON: %v\n", result.Error)
 	}
-	ds := NewStationDataSource(database)
+	ds := station.NewDataSource(database)
 	t.Cleanup(func() {
 		database.Where("1 = 1").Delete(&models.StationModel{})
 		database.Where("1 = 1").Delete(&models.IsFavoriteModel{})

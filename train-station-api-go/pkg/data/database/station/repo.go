@@ -1,25 +1,51 @@
-package repos
+package station
 
 import (
-	"github.com/Darkness4/train-station-api/pkg/data/ds"
+	"encoding/json"
+	"fmt"
+	"log"
+
+	"github.com/Darkness4/train-station-api/internal"
 	"github.com/Darkness4/train-station-api/pkg/data/models"
 	"github.com/Darkness4/train-station-api/pkg/domain/entities"
-	"github.com/Darkness4/train-station-api/pkg/domain/repos"
+	"github.com/valyala/fasthttp"
 )
 
 type StationRepositoryImpl struct {
-	repos.StationRepository
-	ds ds.StationDataSource
+	ds   DataSource
+	http *fasthttp.Client
 }
 
-func NewStationRepository(ds ds.StationDataSource) *StationRepositoryImpl {
+func NewRepository(ds DataSource, http *fasthttp.Client) *StationRepositoryImpl {
 	if ds == nil {
-		panic("NewStationRepository: ds is nil")
+		internal.Logger.Panic("NewStationRepository: ds is nil")
+	} else if http == nil {
+		internal.Logger.Panic("NewStationRepository: http is nil")
 	}
-	repo := StationRepositoryImpl{
-		ds: ds,
+	return &StationRepositoryImpl{
+		ds:   ds,
+		http: http,
 	}
-	return &repo
+}
+
+func (repo *StationRepositoryImpl) Preload() error {
+	statusCode, body, err := fasthttp.Get(nil, "https://ressources.data.sncf.com/explore/dataset/liste-des-gares/download/?format=json")
+	if statusCode != 200 {
+		return fmt.Errorf("status code wasn't 200 but was %d", statusCode)
+	}
+	if err != nil {
+		return err
+	}
+	var data []*entities.Station
+	json.Unmarshal(body, &data)
+
+	result, err := repo.CreateMany(data, "0")
+	if err != nil {
+		return err
+	}
+
+	log.Printf("InitializeDatabase: Changed lines %d\n", len(result))
+	return nil
 }
 
 func (repo *StationRepositoryImpl) GetManyAndCount(s string, limit int, page int, userId string) ([]*entities.Station, int64, error) {
