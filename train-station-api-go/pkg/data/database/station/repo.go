@@ -37,7 +37,9 @@ func (repo *StationRepositoryImpl) Preload() error {
 		return err
 	}
 	var data []*entities.Station
-	json.Unmarshal(body, &data)
+	if err := json.Unmarshal(body, &data); err != nil {
+		return err
+	}
 
 	result, err := repo.CreateMany(data, "0")
 	if err != nil {

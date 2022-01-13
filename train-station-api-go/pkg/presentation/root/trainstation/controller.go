@@ -94,7 +94,9 @@ func (ctrl *Controller) getMany(ctx *fiber.Ctx, uid string) error {
 			Contain: "",
 		},
 	}
-	json.Unmarshal([]byte(args.Search), &s) // Ignore error
+	if err := json.Unmarshal([]byte(args.Search), &s); err != nil {
+		internal.Logger.Debug("Empty search")
+	}
 
 	limit := 10
 	if args.Limit != "" && args.Limit != "0" {
