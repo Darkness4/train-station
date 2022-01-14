@@ -18,7 +18,6 @@ type DataSource interface {
 }
 
 type DataSourceImpl struct {
-	DataSource
 	db *gorm.DB
 }
 
