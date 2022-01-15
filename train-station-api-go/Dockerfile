@@ -36,4 +36,4 @@ USER app
 
 EXPOSE 3000
 
-ENTRYPOINT [ "/tini","--","/app/app"]
+ENTRYPOINT ["/tini", "--", "/app/app"]
