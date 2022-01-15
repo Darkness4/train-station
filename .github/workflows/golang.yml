@@ -48,14 +48,24 @@ jobs:
           context: train-station-api-go
           file: ./train-station-api-go/Dockerfile
           platforms: linux/amd64
-          outputs: type=docker,dest=/tmp/image-amd64.tar
-          tags: ghcr.io/darkness4/train-station-api:latest
+          tags: darkness4/train-station-api:latest
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Validate
-        run: docker run --pull never --rm ghcr.io/darkness4/train-station-api:latest --help
+        run: docker run --pull never --rm darkness4/train-station-api:latest --help
+
+      - name: Build and export
+        uses: docker/build-push-action@v2
+        with:
+          context: train-station-api-go
+          file: ./train-station-api-go/Dockerfile
+          platforms: linux/amd64
+          outputs: type=docker,dest=/tmp/image-amd64.tar
+          tags: ghcr.io/darkness4/train-station-api:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
@@ -82,16 +92,26 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: train-station-api-go
-          file: ./train-station-api-go/Dockerfile.arm64
-          platforms: linux/arm64
-          outputs: type=docker,dest=/tmp/image-arm64.tar
-          tags: ghcr.io/darkness4/train-station-api:arm64
+          file: ./train-station-api-go/Dockerfile
+          platforms: linux/amd64
+          tags: darkness4/train-station-api:arm64
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Validate
-        run: docker run --pull never --rm ghcr.io/darkness4/train-station-api:arm64 --help
+        run: docker run --pull never --rm darkness4/train-station-api:arm64 --help
+
+      - name: Build and export
+        uses: docker/build-push-action@v2
+        with:
+          context: train-station-api-go
+          file: ./train-station-api-go/Dockerfile.arm64
+          platforms: linux/arm64
+          outputs: type=docker,dest=/tmp/image-arm64.tar
+          tags: ghcr.io/darkness4/train-station-api:arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
