@@ -1,10 +1,10 @@
 package filters
 
 import (
-	"log"
 	"strings"
 
 	"firebase.google.com/go/v4/auth"
+	"github.com/Darkness4/train-station-api/internal"
 	"github.com/Darkness4/train-station-api/pkg/presentation/dtos"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -50,7 +50,7 @@ func ExceptionFilter(ctx *fiber.Ctx, err error) error {
 	}
 
 	// Unhandled errors
-	log.Printf("Internal Server Error: %+v\n", err)
+	internal.Logger.Printf("Internal Server Error: %+v\n", err)
 	if viper.GetString("LOG_LEVEL") == "debug" {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(dtos.Error{
 			StatusCode: fiber.StatusInternalServerError,

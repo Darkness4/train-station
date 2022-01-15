@@ -15,15 +15,15 @@ func InitConfig() {
 	viper.SetConfigType("env")
 	viper.SetConfigName(".env")
 	if err := viper.ReadInConfig(); err != nil {
-		log.Printf(".env couldn't be loaded %+v\n", err)
+		internal.Logger.Printf(".env couldn't be loaded %+v\n", err)
 	}
 	viper.SetConfigName(".env.local")
 	if err := viper.MergeInConfig(); err != nil {
-		log.Printf(".env.local couldn't be loaded %+v\n", err)
+		internal.Logger.Printf(".env.local couldn't be loaded %+v\n", err)
 	}
 
 	viper.AutomaticEnv()
-	log.Printf("Config loaded: %+v\n", viper.AllKeys())
+	internal.Logger.Printf("Config loaded: %+v\n", viper.AllKeys())
 }
 
 func InitTestConfig() {

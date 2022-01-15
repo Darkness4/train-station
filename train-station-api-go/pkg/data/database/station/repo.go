@@ -3,7 +3,7 @@ package station
 import (
 	"encoding/json"
 	"fmt"
-	"log"
+	"time"
 
 	"github.com/Darkness4/train-station-api/internal"
 	"github.com/Darkness4/train-station-api/pkg/data/database/isfavorite"
@@ -29,15 +29,23 @@ func NewRepository(ds DataSource, http *fasthttp.Client) *StationRepositoryImpl 
 }
 
 func (repo *StationRepositoryImpl) Preload() error {
-	statusCode, body, err := fasthttp.Get(nil, "https://ressources.data.sncf.com/explore/dataset/liste-des-gares/download/?format=json")
-	if statusCode != 200 {
-		return fmt.Errorf("status code wasn't 200 but was %d", statusCode)
-	}
-	if err != nil {
+	req := fasthttp.AcquireRequest()
+	resp := fasthttp.AcquireResponse()
+	defer func() {
+		fasthttp.ReleaseResponse(resp)
+		fasthttp.ReleaseRequest(req)
+	}()
+
+	req.SetRequestURI("https://ressources.data.sncf.com/explore/dataset/liste-des-gares/download/?format=json")
+	req.Header.SetMethod("GET")
+	if err := repo.http.DoTimeout(req, resp, 5*time.Second); err != nil {
 		return err
 	}
+	if resp.StatusCode() != fasthttp.StatusOK {
+		return fmt.Errorf("status code wasn't 200 but was %d", resp.StatusCode())
+	}
 	var data []*entities.Station
-	if err := json.Unmarshal(body, &data); err != nil {
+	if err := json.Unmarshal(resp.Body(), &data); err != nil {
 		return err
 	}
 
@@ -46,7 +54,7 @@ func (repo *StationRepositoryImpl) Preload() error {
 		return err
 	}
 
-	log.Printf("InitializeDatabase: Changed lines %d\n", len(result))
+	internal.Logger.Printf("InitializeDatabase: Changed lines %d\n", len(result))
 	return nil
 }
 
