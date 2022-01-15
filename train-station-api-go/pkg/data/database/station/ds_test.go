@@ -9,9 +9,9 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/data/database/geometry"
 	"github.com/Darkness4/train-station-api/pkg/data/database/isfavorite"
 	"github.com/Darkness4/train-station-api/pkg/data/database/station"
-	"github.com/gofrs/uuid"
+	"github.com/glebarez/sqlite"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/suite"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -43,11 +43,7 @@ type DataSourceTestSuite struct {
 }
 
 func (suite *DataSourceTestSuite) BeforeTest(suiteName, testName string) {
-	id, err := uuid.NewV4()
-	if err != nil {
-		internal.Logger.Panic(err.Error())
-	}
-	db, err := gorm.Open(sqlite.Open(fmt.Sprintf("file:%s?mode=memory&cache=shared", id.String())), &gorm.Config{
+	db, err := gorm.Open(sqlite.Open(fmt.Sprintf("file:%s?mode=memory&cache=shared", uuid.NewString())), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
 	})
 	if err != nil {

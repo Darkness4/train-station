@@ -13,10 +13,10 @@ import (
 	"github.com/Darkness4/train-station-api/pkg/data/database/isfavorite"
 	"github.com/Darkness4/train-station-api/pkg/data/database/station"
 	"github.com/certifi/gocertifi"
+	"github.com/glebarez/sqlite"
 	"github.com/spf13/viper"
 	"github.com/valyala/fasthttp"
 	"google.golang.org/api/option"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
