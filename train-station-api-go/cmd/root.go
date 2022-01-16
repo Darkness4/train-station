@@ -10,23 +10,20 @@ import (
 	"github.com/spf13/viper"
 )
 
-var (
-	rootCmd = &cobra.Command{
-		Use:   "train-station-api",
-		Short: "A SNCF API.",
-		Long:  `A SNCF API built made by Darkness4, based on atreugo, gorm and cobra.`,
-		Run: func(cmd *cobra.Command, args []string) {
-			sl := root.ComponentInit()
-			defer sl.Dispose()
+var rootCmd = &cobra.Command{
+	Use:   "train-station-api",
+	Short: "A SNCF API.",
+	Long:  `A SNCF API built made by Darkness4, based on atreugo, gorm and cobra.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		sl := root.ComponentInit()
+		defer sl.Dispose()
 
-			// Run
-			addr := fmt.Sprintf("%s:%d", viper.GetString("HOST"), viper.GetInt("PORT"))
-			if err := sl.Presentation.Server.Listen(addr); err != nil {
-				internal.Logger.Panic(err)
-			}
-		},
-	}
-)
+		// Run
+		if err := sl.Presentation.Server.Listen(fmt.Sprintf("%s:%d", viper.GetString("HOST"), viper.GetInt("PORT"))); err != nil {
+			internal.Logger.Panic(err)
+		}
+	},
+}
 
 func init() {
 	// HTTP Server

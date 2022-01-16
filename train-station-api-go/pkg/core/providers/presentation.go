@@ -16,7 +16,7 @@ import (
 func HTTPServer(stations station.Repository, auth auth.Service) *fiber.App {
 	internal.Logger.Debug("Provide HTTPServer")
 	server := fiber.New(fiber.Config{
-		Prefork:           true,
+		Prefork:           false,
 		CaseSensitive:     false,
 		StrictRouting:     false,
 		AppName:           "A SNCF API",

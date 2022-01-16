@@ -22,9 +22,7 @@ func AuthService(client *firebaseAuth.Client) auth.Service {
 }
 
 func initStationRepository(stationRepo station.Repository) {
-	go func() {
-		if err := stationRepo.Preload(); err != nil {
-			internal.Logger.Panic(err)
-		}
-	}()
+	if err := stationRepo.Preload(); err != nil {
+		internal.Logger.Panic(err)
+	}
 }

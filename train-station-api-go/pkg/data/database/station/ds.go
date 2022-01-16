@@ -40,10 +40,8 @@ func (ds *DataSourceImpl) CreateStation(m *Model) (*Model, error) {
 }
 
 func (ds *DataSourceImpl) CreateManyStation(m []*Model) ([]*Model, error) {
-	result := ds.db.CreateInBatches(&m, 100)
-
-	if result.Error != nil {
-		return nil, result.Error
+	if err := ds.db.CreateInBatches(&m, 100).Error; err != nil {
+		return nil, err
 	}
 	return m, nil
 }
