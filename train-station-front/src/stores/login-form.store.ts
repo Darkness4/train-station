@@ -1,3 +1,4 @@
+import { app } from '$lib/init-firebase';
 import {
 	createUserWithEmailAndPassword,
 	getAuth,
@@ -23,14 +24,14 @@ function createLoginFormStore() {
 	return {
 		subscribe,
 		createAccount: (email: string, password: string) =>
-			createUserWithEmailAndPassword(getAuth(), email, password),
+			createUserWithEmailAndPassword(getAuth(app), email, password),
 		signIn: (email: string, password: string) =>
-			signInWithEmailAndPassword(getAuth(), email, password),
+			signInWithEmailAndPassword(getAuth(app), email, password),
 		signInWithGoogle: () => {
 			const provider = new GoogleAuthProvider();
-			return signInWithPopup(getAuth(), provider);
+			return signInWithPopup(getAuth(app), provider);
 		},
-		forgotPassword: (email: string) => sendPasswordResetEmail(getAuth(), email)
+		forgotPassword: (email: string) => sendPasswordResetEmail(getAuth(app), email)
 	};
 }
 export const loginFormStore = createLoginFormStore();

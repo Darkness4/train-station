@@ -1,12 +1,7 @@
-<script lang="ts" context="module">
-	import { initializeFirebase } from '$lib/init-firebase';
-
-	initializeFirebase();
-</script>
-
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { app } from '$lib/init-firebase';
 	import { authStore } from '$stores/auth.store';
 	import type { Auth, Unsubscribe } from 'firebase/auth';
 	import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
@@ -17,7 +12,7 @@
 	let unsubscribe: Unsubscribe;
 	let auth: Auth;
 	onMount(() => {
-		auth = getAuth();
+		auth = getAuth(app);
 		unsubscribe = onAuthStateChanged(auth, async (user) => {
 			await authStore.set(user);
 			if ($page.url.pathname !== '/' && !auth?.currentUser) {
