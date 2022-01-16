@@ -6,6 +6,10 @@ COPY .openapi .
 RUN swagger-cli bundle ./openapi.yaml --outfile /build/openapi.yaml --type yaml
 
 # ---
+FROM alpine:3.15 as certs
+RUN apk update && apk add --no-cache ca-certificates
+
+# ---
 FROM golang:1.17.6-alpine as builder
 WORKDIR /go/src/github.com/Darkness4/train-station-api/
 COPY go.mod go.sum ./
@@ -30,6 +34,7 @@ WORKDIR /app
 
 COPY --from=builder /go/src/github.com/Darkness4/train-station-api/app .
 COPY --from=openapi-builder /build/openapi.yaml ./static/openapi.yaml
+COPY --from=certs /etc/ssl/certs /etc/ssl/certs
 
 RUN chown -R app:app .
 USER app

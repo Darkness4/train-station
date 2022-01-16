@@ -21,18 +21,17 @@ type Module struct {
 func NewModule() *Module {
 	internal.Logger.Debug("Instanciating DataModule")
 	tls := providers.TLSConfig()
-	http := providers.HTTP(tls)
-	firebaseApp := providers.FirebaseApp(http)
+	firebaseApp := providers.FirebaseApp()
 	authClient := providers.AuthClient(firebaseApp)
 	db := providers.DB()
-	fastHTTP := providers.FastHTTP(tls)
+	http := providers.HTTP(tls)
 	stationDS := providers.StationDataSource(db)
 
 	return &Module{
 		AuthClient:        authClient,
 		db:                db,
 		firebaseApp:       firebaseApp,
-		HTTPClient:        fastHTTP,
+		HTTPClient:        http,
 		StationDataSource: stationDS,
 	}
 }

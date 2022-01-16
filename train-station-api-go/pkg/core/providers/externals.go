@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"encoding/base64"
-	"net/http"
 
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
@@ -20,12 +19,11 @@ import (
 	"gorm.io/gorm"
 )
 
-func FirebaseApp(http *http.Client) *firebase.App {
+func FirebaseApp() *firebase.App {
 	internal.Logger.Debug("Provide FirebaseApp")
 	creds := viper.GetString("GOOGLE_APPLICATION_CREDENTIALS")
 	credsOpt := option.WithCredentialsFile(creds)
-	httpOpt := option.WithHTTPClient(http)
-	app, err := firebase.NewApp(context.Background(), nil, credsOpt, httpOpt)
+	app, err := firebase.NewApp(context.Background(), nil, credsOpt)
 	if err != nil {
 		internal.Logger.Panic(err)
 	}
@@ -60,15 +58,6 @@ func DB() *gorm.DB {
 	return db
 }
 
-func HTTP(tls *tls.Config) *http.Client {
-	internal.Logger.Debug("Provide HTTP")
-	return &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: tls,
-		},
-	}
-}
-
 func TLSConfig() *tls.Config {
 	internal.Logger.Debug("Provide TLSConfig")
 	certPool, err := gocertifi.CACerts()
@@ -89,7 +78,7 @@ func TLSConfig() *tls.Config {
 	}
 }
 
-func FastHTTP(tls *tls.Config) *fasthttp.Client {
+func HTTP(tls *tls.Config) *fasthttp.Client {
 	internal.Logger.Debug("Provide FastHTTP")
 
 	return &fasthttp.Client{
