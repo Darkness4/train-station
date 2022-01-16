@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"encoding/base64"
+	"net/http"
 
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
@@ -19,11 +20,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func FirebaseApp() *firebase.App {
+func FirebaseApp(http *http.Client) *firebase.App {
 	internal.Logger.Debug("Provide FirebaseApp")
 	creds := viper.GetString("GOOGLE_APPLICATION_CREDENTIALS")
-	opt := option.WithCredentialsFile(creds)
-	app, err := firebase.NewApp(context.Background(), nil, opt)
+	credsOpt := option.WithCredentialsFile(creds)
+	httpOpt := option.WithHTTPClient(http)
+	app, err := firebase.NewApp(context.Background(), nil, credsOpt, httpOpt)
 	if err != nil {
 		internal.Logger.Panic(err)
 	}
@@ -58,8 +60,17 @@ func DB() *gorm.DB {
 	return db
 }
 
-func HTTP() *fasthttp.Client {
+func HTTP(tls *tls.Config) *http.Client {
 	internal.Logger.Debug("Provide HTTP")
+	return &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: tls,
+		},
+	}
+}
+
+func TLSConfig() *tls.Config {
+	internal.Logger.Debug("Provide TLSConfig")
 	certPool, err := gocertifi.CACerts()
 	if err != nil {
 		internal.Logger.Panic(err.Error())
@@ -71,11 +82,17 @@ func HTTP() *fasthttp.Client {
 			internal.Logger.Warn("the certificate couldn't be decoded")
 		}
 	}
+	return &tls.Config{
+		RootCAs:            certPool,
+		InsecureSkipVerify: false,
+		MinVersion:         tls.VersionTLS12,
+	}
+}
+
+func FastHTTP(tls *tls.Config) *fasthttp.Client {
+	internal.Logger.Debug("Provide FastHTTP")
+
 	return &fasthttp.Client{
-		TLSConfig: &tls.Config{
-			RootCAs:            certPool,
-			InsecureSkipVerify: false,
-			MinVersion:         tls.VersionTLS12,
-		},
+		TLSConfig: tls,
 	}
 }
