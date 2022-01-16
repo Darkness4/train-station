@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"encoding/base64"
-	"os"
 
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
@@ -42,10 +41,6 @@ func AuthClient(firebaseApp *firebase.App) *auth.Client {
 
 func DB() *gorm.DB {
 	internal.Logger.Debug("Provide DB")
-	err := os.Remove("cache.sqlite3")
-	if err != nil && !os.IsNotExist(err) {
-		internal.Logger.Panic(err)
-	}
 	db, err := gorm.Open(sqlite.Open("cache.sqlite3"), &gorm.Config{
 		Logger: &database.GormLogger{
 			SkipErrRecordNotFound: true,

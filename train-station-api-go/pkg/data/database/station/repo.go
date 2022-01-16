@@ -37,7 +37,7 @@ func (repo *StationRepositoryImpl) Preload() error {
 	}()
 
 	req.SetRequestURI("https://ressources.data.sncf.com/explore/dataset/liste-des-gares/download/?format=json")
-	req.Header.SetMethod("GET")
+	req.Header.SetMethod(fasthttp.MethodGet)
 	if err := repo.http.DoTimeout(req, resp, 2*time.Minute); err != nil {
 		return err
 	}
