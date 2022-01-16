@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
+
 	export let signUp: boolean;
 	export let email: string;
 	export let password: string;

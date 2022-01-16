@@ -10,25 +10,24 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended-requiring-type-checking'
 	],
 	plugins: ['svelte3', '@typescript-eslint', 'import'],
-	ignorePatterns: ['*.cjs'],
+	ignorePatterns: ['*.cjs', '*.config.js'],
 	overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
 	settings: {
-		'svelte3/typescript': () => require('typescript'),
+		'svelte3/typescript': require('typescript'),
 		'import/resolver': {
 			typescript: {}
 		}
 	},
 	parserOptions: {
 		sourceType: 'module',
-		ecmaVersion: 2019,
+		ecmaVersion: 2020,
 		tsconfigRootDir: __dirname,
 		project: ['./tsconfig.json'],
 		extraFileExtensions: ['.svelte']
 	},
 	env: {
 		browser: true,
-		es2017: true,
-		node: true
+		es6: true
 	},
 	rules: {
 		'import/no-unresolved': 'error',

@@ -1,14 +1,15 @@
 <script lang="ts" context="module">
 	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
+
 	let initialSearchQuery: string;
 	let initialPageNumber: number;
-	export function load({ page }: LoadInput): Promise<LoadOutput> {
+	export function load({ url }: LoadInput): Promise<LoadOutput> {
 		initialPageNumber = 1;
-		const queryPage = page.query.get('page');
+		const queryPage = url.searchParams.get('page');
 		if (queryPage !== null) {
 			initialPageNumber = parseInt(queryPage);
 		}
-		initialSearchQuery = page.query.get('s') ?? '';
+		initialSearchQuery = url.searchParams.get('s') ?? '';
 		return Promise.resolve({});
 	}
 </script>
@@ -22,6 +23,7 @@
 	import type { Station } from '$lib/entities/station';
 	import { authStore } from '$stores/auth.store';
 	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
+
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;
 	$: loadData(searchQuery, pageNumber);
@@ -36,7 +38,7 @@
 		}
 	}
 	function search(newPage: number) {
-		return goto(`${$page.path}?s=${searchQuery}&page=${newPage}`);
+		return goto(`${$page.url.pathname}?s=${searchQuery}&page=${newPage}`);
 	}
 	function onClick(station: Station) {
 		return goto(`/stations/${station.recordid}`);

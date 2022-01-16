@@ -3,8 +3,14 @@
 	import AuthCard from '$components/auth/auth-card.component.svelte';
 	import { authStore } from '$stores/auth.store';
 	import { loginFormStore } from '$stores/login-form.store';
-	$: if ($authStore.user) {
-		goto('/stations');
+	import type { User } from 'firebase/auth';
+
+	$: onLogged($authStore.user);
+
+	async function onLogged(user?: User | null) {
+		if (user) {
+			await goto('/stations');
+		}
 	}
 </script>
 

@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
 	import { initializeFirebase } from '$lib/init-firebase';
+
 	initializeFirebase();
 </script>
 
@@ -12,14 +13,15 @@
 	import 'material-design-icons/iconfont/material-icons.css';
 	import { onDestroy, onMount } from 'svelte';
 	import '../app.scss';
+
 	let unsubscribe: Unsubscribe;
 	let auth: Auth;
 	onMount(() => {
 		auth = getAuth();
-		unsubscribe = onAuthStateChanged(auth, (user) => {
-			authStore.set(user);
-			if ($page.path !== '/' && !auth?.currentUser) {
-				goto('/');
+		unsubscribe = onAuthStateChanged(auth, async (user) => {
+			await authStore.set(user);
+			if ($page.url.pathname !== '/' && !auth?.currentUser) {
+				await goto('/');
 			}
 		});
 	});

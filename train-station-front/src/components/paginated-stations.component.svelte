@@ -2,6 +2,7 @@
 	import ShortStation from '$components/short-station.component.svelte';
 	import type { Paginated } from '$lib/entities/paginated';
 	import type { Station } from '$lib/entities/station';
+
 	export let stations: Paginated<Station>;
 	export let onClick: (station: Station) => unknown;
 	export let onFavorite: (station: Station) => unknown;

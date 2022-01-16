@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Station } from '$lib/entities/station';
+
 	export let station: Station;
 	export let onClick: () => unknown;
 	export let onFavorite: () => unknown;

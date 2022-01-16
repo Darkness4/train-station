@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ForgotPassword from '$components/auth/forgot-password.component.svelte';
 	import SignIn from '$components/auth/sign-in.component.svelte';
+
 	export let email: string;
 	export let password: string;
 	export let onForgotPassword: (email: string) => Promise<unknown>;
