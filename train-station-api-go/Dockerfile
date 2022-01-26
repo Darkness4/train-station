@@ -19,7 +19,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o app .
 
 # ---
-FROM busybox:1.34.1-musl
+FROM busybox:1.35.0-musl
 
 ENV HOST=0.0.0.0
 ENV PORT=3000
