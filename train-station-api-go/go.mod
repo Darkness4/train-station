@@ -3,7 +3,7 @@ module github.com/Darkness4/train-station-api
 go 1.17
 
 require (
-	firebase.google.com/go/v4 v4.7.0
+	firebase.google.com/go/v4 v4.7.1
 	github.com/certifi/gocertifi v0.0.0-20210507211836-431795d63e8d
 	github.com/glebarez/sqlite v1.3.5
 	github.com/go-playground/validator/v10 v10.10.0
