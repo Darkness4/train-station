@@ -169,7 +169,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:2.3.0'
 
     // Fragment
-    implementation "androidx.fragment:fragment-ktx:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
 
     // ViewPager 2
     implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
