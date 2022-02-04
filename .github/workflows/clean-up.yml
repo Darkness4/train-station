@@ -3,12 +3,46 @@ name: Delete packages
 on: push
 
 jobs:
-  clean-up:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: smartsquaregmbh/delete-old-packages@v0.3.3
+      - name: Delete untagged images
+        uses: actions/github-script@v3
         with:
-          keep: 5
-          names: |
-            train-station-api
-            train-station-front
+          github-token: ${{ secrets.DELETE_PACKAGES_TOKEN }}
+          script: |
+            const response = await github.request("GET /${{ env.OWNER }}/packages/container/${{ env.PACKAGE_NAME }}/versions",
+              { per_page: ${{ env.PER_PAGE }}
+            });
+            for(version of response.data) {
+                if (version.metadata.container.tags.length == 0) {
+                    console.log("delete " + version.id)
+                    const deleteResponse = await github.request("DELETE /${{ env.OWNER }}/packages/container/${{ env.PACKAGE_NAME }}/versions/" + version.id, { });
+                    console.log("status " + deleteResponse.status)
+                }
+            }
+        env:
+          OWNER: Darkness4/train-station
+          PACKAGE_NAME: train-station-api
+          PER_PAGE: 2
+
+      - name: Delete untagged images
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.DELETE_PACKAGES_TOKEN }}
+          script: |
+            const response = await github.request("GET /${{ env.OWNER }}/packages/container/${{ env.PACKAGE_NAME }}/versions",
+              { per_page: ${{ env.PER_PAGE }}
+            });
+            for(version of response.data) {
+                if (version.metadata.container.tags.length == 0) {
+                    console.log("delete " + version.id)
+                    const deleteResponse = await github.request("DELETE /${{ env.OWNER }}/packages/container/${{ env.PACKAGE_NAME }}/versions/" + version.id, { });
+                    console.log("status " + deleteResponse.status)
+                }
+            }
+        env:
+          OWNER: Darkness4/train-station
+          PACKAGE_NAME: train-station-front
+          PER_PAGE: 2
