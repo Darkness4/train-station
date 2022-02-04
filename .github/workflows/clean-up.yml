@@ -23,9 +23,9 @@ jobs:
                 }
             }
         env:
-          OWNER: Darkness4/train-station
+          OWNER: Darkness4
           PACKAGE_NAME: train-station-api
-          PER_PAGE: 2
+          PER_PAGE: 1000
 
       - name: Delete untagged images
         uses: actions/github-script@v3
@@ -38,11 +38,11 @@ jobs:
             for(version of response.data) {
                 if (version.metadata.container.tags.length == 0) {
                     console.log("delete " + version.id)
-                    const deleteResponse = await github.request("DELETE /${{ env.OWNER }}/packages/container/${{ env.PACKAGE_NAME }}/versions/" + version.id, { });
+                    const deleteResponse = await github.request("DELETE /${{ env.OWNER }}/pkgs/container/${{ env.PACKAGE_NAME }}/versions/" + version.id, { });
                     console.log("status " + deleteResponse.status)
                 }
             }
         env:
-          OWNER: Darkness4/train-station
+          OWNER: Darkness4
           PACKAGE_NAME: train-station-front
-          PER_PAGE: 2
+          PER_PAGE: 1000
