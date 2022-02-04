@@ -1,0 +1,14 @@
+name: Delete packages
+
+on: push
+
+jobs:
+  clean-up:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: smartsquaregmbh/delete-old-packages@v0.3.3
+        with:
+          keep: 5
+          names: |
+            train-station-api
+            train-station-front
