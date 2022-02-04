@@ -13,7 +13,7 @@ jobs:
           github-token: ${{ secrets.DELETE_PACKAGES_TOKEN }}
           script: |
             const response = await github.request("GET /users/${{ env.OWNER }}/packages/container/${{ env.PACKAGE_NAME }}/versions",
-              { per_page: ${{ env.PER_PAGE }}
+              { per_page: ${{ env.PER_PAGE }}, page: ${{ env.PAGE }}
             });
             for(version of response.data) {
                 if (version.metadata.container.tags.length == 0) {
@@ -26,6 +26,7 @@ jobs:
           OWNER: Darkness4
           PACKAGE_NAME: train-station-api
           PER_PAGE: 1000
+          PAGE: 2
 
       - name: Delete untagged images
         uses: actions/github-script@v3
@@ -33,7 +34,7 @@ jobs:
           github-token: ${{ secrets.DELETE_PACKAGES_TOKEN }}
           script: |
             const response = await github.request("GET /users/${{ env.OWNER }}/packages/container/${{ env.PACKAGE_NAME }}/versions",
-              { per_page: ${{ env.PER_PAGE }}
+              { per_page: ${{ env.PER_PAGE }}, page: ${{ env.PAGE }}
             });
             for(version of response.data) {
                 if (version.metadata.container.tags.length == 0) {
@@ -46,3 +47,4 @@ jobs:
           OWNER: Darkness4
           PACKAGE_NAME: train-station-front
           PER_PAGE: 1000
+          PAGE: 2
