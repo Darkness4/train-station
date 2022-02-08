@@ -13,7 +13,7 @@ require (
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.1
 	github.com/stretchr/testify v1.7.0
-	github.com/valyala/fasthttp v1.32.0
+	github.com/valyala/fasthttp v1.33.0
 	google.golang.org/api v0.65.0
 	gorm.io/gorm v1.22.5
 )
