@@ -18,7 +18,7 @@
 		"material-design-icons": "3.0.1"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-node": "1.0.0-next.68",
+		"@sveltejs/adapter-node": "1.0.0-next.69",
 		"@sveltejs/kit": "1.0.0-next.278",
 		"@trivago/prettier-plugin-sort-imports": "3.2.0",
 		"@typescript-eslint/eslint-plugin": "5.9.1",
