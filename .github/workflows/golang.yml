@@ -71,7 +71,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: image-amd64
           path: /tmp/image-amd64.tar
@@ -117,7 +117,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: image-arm64
           path: /tmp/image-arm64.tar
