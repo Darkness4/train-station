@@ -9,6 +9,12 @@
     {
       "matchDepTypes": ["devDependencies"],
       "automerge": true
+    },
+    {
+      "groupName": "sveltejs packages",
+      "matchPackagePrefixes": [
+        "@sveltejs/"
+      ]
     }
   ],
   "commitMessagePrefix": "[renovate]"
