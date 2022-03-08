@@ -101,7 +101,7 @@ jobs:
           ./gradlew assembleRelease
       - name: Upload Release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: app-apk
           path: train-station-app/app/build/outputs/apk/release/app-release.apk
@@ -114,7 +114,7 @@ jobs:
           ./gradlew assembleStaging
       - name: Upload Staging
         if: "!startsWith(github.ref, 'refs/tags/')"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: app-apk
           path: train-station-app/app/build/outputs/apk/staging/app-staging-unsigned.apk
@@ -148,7 +148,7 @@ jobs:
           ./gradlew app:bundleRelease
       - name: Upload Release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: app-aab
           path: train-station-app/app/build/outputs/bundle/release/app-release.aab
@@ -161,7 +161,7 @@ jobs:
           ./gradlew app:bundleStaging
       - name: Upload Staging
         if: "!startsWith(github.ref, 'refs/tags/')"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: app-aab
           path: train-station-app/app/build/outputs/bundle/staging/app-staging.aab
