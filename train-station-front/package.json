@@ -30,7 +30,7 @@
 		"eslint-plugin-import": "2.25.4",
 		"eslint-plugin-prettier": "4.0.0",
 		"eslint-plugin-svelte3": "3.4.1",
-		"prettier": "2.5.1",
+		"prettier": "2.6.0",
 		"prettier-plugin-svelte": "2.6.0",
 		"sass": "1.49.9",
 		"svelte": "3.46.4",
