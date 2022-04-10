@@ -126,7 +126,7 @@ android {
 
 dependencies {
     // Coroutines
-    def coroutines = '1.6.0'
+    def coroutines = '1.6.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
