@@ -1,4 +1,4 @@
-FROM node:17-alpine as builder
+FROM node:18-alpine as builder
 
 RUN wget -qO- https://get.pnpm.io/v6.16.js | node - add --global pnpm && \
   rm -rf /usr/local/lib/node_modules/npm/ /usr/local/bin/npm && \
@@ -10,7 +10,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm run build
 
-FROM node:17-alpine
+FROM node:18-alpine
 
 RUN wget -qO- https://get.pnpm.io/v6.16.js | node - add --global pnpm && \
   rm -rf /usr/local/lib/node_modules/npm/ /usr/local/bin/npm && \
