@@ -56,25 +56,48 @@ jobs:
       - name: Validate
         run: docker run --pull never --rm darkness4/train-station-api:latest --help
 
-      - name: Build and export
+      - name: Build
+        if: "!startsWith(github.ref, 'refs/tags/')"
         uses: docker/build-push-action@v2
         with:
           context: train-station-api-go
           file: ./train-station-api-go/Dockerfile
           platforms: linux/amd64
-          outputs: type=docker,dest=/tmp/image-amd64.tar
+          push: false
           tags: ghcr.io/darkness4/train-station-api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+      - name: Login to GHCR
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: docker/login-action@v1
         with:
-          name: image-amd64
-          path: /tmp/image-amd64.tar
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get the oci compatible version
+        if: startsWith(github.ref, 'refs/tags/')
+        id: get_version
+        run: |
+          OCI_VERSION=$(echo ${GITHUB_REF#refs/*/} | sed 's/+/-/g')
+          echo ::set-output name=VERSION::${OCI_VERSION}
+
+      - name: Build and export
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: docker/build-push-action@v2
+        with:
+          context: train-station-api-go
+          file: ./train-station-api-go/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ghcr.io/darkness4/train-station-api:latest
+            ghcr.io/darkness4/train-station-api:${{ steps.get_version.outputs.VERSION }}
+            ghcr.io/darkness4/train-station-api:amd64
+            ghcr.io/darkness4/train-station-api:${{ steps.get_version.outputs.VERSION }}-amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-arm64-go:
     runs-on: ubuntu-latest
@@ -102,64 +125,43 @@ jobs:
       - name: Validate
         run: docker run --pull never --rm darkness4/train-station-api:arm64 --help
 
-      - name: Build and export
+      - name: Build
+        if: "!startsWith(github.ref, 'refs/tags/')"
         uses: docker/build-push-action@v2
         with:
           context: train-station-api-go
           file: ./train-station-api-go/Dockerfile.arm64
           platforms: linux/arm64
-          outputs: type=docker,dest=/tmp/image-arm64.tar
+          push: false
           tags: ghcr.io/darkness4/train-station-api:arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+      - name: Login to GHCR
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: docker/login-action@v1
         with:
-          name: image-arm64
-          path: /tmp/image-arm64.tar
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy-go:
-    needs:
-      - test-amd64-go
-      - build-arm64-go
-      - build-amd64-go
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Get the oci compatible version
+        if: startsWith(github.ref, 'refs/tags/')
+        id: get_version
+        run: |
+          OCI_VERSION=$(echo ${GITHUB_REF#refs/*/} | sed 's/+/-/g')
+          echo ::set-output name=VERSION::${OCI_VERSION}
 
-      - name: Download artifact
-        uses: actions/download-artifact@v3
+      - name: Build and export
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: docker/build-push-action@v2
         with:
-          name: image-amd64
-
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: image-arm64
-
-      - name: Load image
-        run: |
-          docker load --input image-arm64.tar
-          docker load --input image-amd64.tar
-          docker image ls -a
-
-      - name: Login to GitHub Packages Docker Registry
-        run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username $GITHUB_ACTOR --password-stdin
-
-      - name: Deploy
-        run: |
-          if echo "$GITHUB_REF" | grep -q 'refs/tags/'; then
-            docker tag ghcr.io/darkness4/train-station-api:latest "ghcr.io/darkness4/train-station-api:${GITHUB_REF#refs/*/}"
-            docker tag ghcr.io/darkness4/train-station-api:latest "ghcr.io/darkness4/train-station-api:${GITHUB_REF#refs/*/}-amd64"
-            docker tag ghcr.io/darkness4/train-station-api:arm64 "ghcr.io/darkness4/train-station-api:${GITHUB_REF#refs/*/}-arm64"
-          fi
-          docker tag ghcr.io/darkness4/train-station-api:latest "ghcr.io/darkness4/train-station-api:amd64"
-          docker push ghcr.io/darkness4/train-station-api --all-tags
+          context: train-station-api-go
+          file: ./train-station-api-go/Dockerfile.arm64
+          platforms: linux/arm64
+          push: true
+          tags: |
+            ghcr.io/darkness4/train-station-api:arm64
+            ghcr.io/darkness4/train-station-api:${{ steps.get_version.outputs.VERSION }}-arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
