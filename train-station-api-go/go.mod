@@ -5,7 +5,7 @@ go 1.17
 require (
 	firebase.google.com/go/v4 v4.8.0
 	github.com/certifi/gocertifi v0.0.0-20210507211836-431795d63e8d
-	github.com/glebarez/sqlite v1.4.1
+	github.com/glebarez/sqlite v1.4.3
 	github.com/go-playground/validator/v10 v10.10.1
 	github.com/gofiber/fiber/v2 v2.30.0
 	github.com/google/uuid v1.3.0
@@ -27,7 +27,7 @@ require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
-	github.com/glebarez/go-sqlite v1.15.1 // indirect
+	github.com/glebarez/go-sqlite v1.16.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -57,7 +57,7 @@ require (
 	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
 	golang.org/x/oauth2 v0.0.0-20220309155454-6242fa91716a // indirect
-	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect
+	golang.org/x/sys v0.0.0-20220405052023-b1e9470b6e64 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
@@ -71,5 +71,5 @@ require (
 	modernc.org/libc v1.14.12 // indirect
 	modernc.org/mathutil v1.4.1 // indirect
 	modernc.org/memory v1.0.7 // indirect
-	modernc.org/sqlite v1.15.2 // indirect
+	modernc.org/sqlite v1.16.0 // indirect
 )
