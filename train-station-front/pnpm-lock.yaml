@@ -20,7 +20,7 @@ specifiers:
   prettier-plugin-svelte: 2.7.0
   sass: 1.51.0
   svelte: 3.47.0
-  svelte-check: 2.6.0
+  svelte-check: 2.7.0
   svelte-preprocess: 4.10.6
   tslib: 2.4.0
   typescript: 4.6.3
@@ -47,7 +47,7 @@ devDependencies:
   prettier-plugin-svelte: 2.7.0_prettier@2.6.2+svelte@3.47.0
   sass: 1.51.0
   svelte: 3.47.0
-  svelte-check: 2.6.0_sass@1.51.0+svelte@3.47.0
+  svelte-check: 2.7.0_sass@1.51.0+svelte@3.47.0
   svelte-preprocess: 4.10.6_4d9381695a7edfbb1fb6bc002cd71e0a
   tslib: 2.4.0
   typescript: 4.6.3
@@ -1246,21 +1246,6 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-    dev: true
-
-  /chokidar/3.5.2:
-    resolution: {integrity: sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ==}
-    engines: {node: '>= 8.10.0'}
-    dependencies:
-      anymatch: 3.1.2
-      braces: 3.0.2
-      glob-parent: 5.1.2
-      is-binary-path: 2.1.0
-      is-glob: 4.0.3
-      normalize-path: 3.0.0
-      readdirp: 3.6.0
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: true
 
   /chokidar/3.5.3:
@@ -2952,13 +2937,13 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-check/2.6.0_sass@1.51.0+svelte@3.47.0:
-    resolution: {integrity: sha512-POL3IqLUuGqb9DdvuXQaSTNXYnw/odK4hqW86+2LwGcZTdbUPKBBln7pq74wXmcnRE+12bXMY1CvbcUNa2d5nw==}
+  /svelte-check/2.7.0_sass@1.51.0+svelte@3.47.0:
+    resolution: {integrity: sha512-GrvG24j0+i8AOm0k0KyJ6Dqc+TAR2yzB7rtS4nljHStunVxCTr/1KYlv4EsOeoqtHLzeWMOd5D2O6nDdP/yw4A==}
     hasBin: true
     peerDependencies:
       svelte: ^3.24.0
     dependencies:
-      chokidar: 3.5.2
+      chokidar: 3.5.3
       fast-glob: 3.2.7
       import-fresh: 3.3.0
       picocolors: 1.0.0
