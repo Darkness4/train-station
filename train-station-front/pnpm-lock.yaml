@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@sveltejs/adapter-node': 1.0.0-next.73
-  '@sveltejs/kit': 1.0.0-next.318
+  '@sveltejs/kit': 1.0.0-next.324
   '@trivago/prettier-plugin-sort-imports': 3.2.0
   '@typescript-eslint/eslint-plugin': 5.16.0
   '@typescript-eslint/parser': 5.16.0
@@ -32,7 +32,7 @@ dependencies:
 
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.73
-  '@sveltejs/kit': 1.0.0-next.318_sass@1.50.1+svelte@3.47.0
+  '@sveltejs/kit': 1.0.0-next.324_sass@1.50.1+svelte@3.47.0
   '@trivago/prettier-plugin-sort-imports': 3.2.0_prettier@2.6.2
   '@typescript-eslint/eslint-plugin': 5.16.0_03de393a8af5f9109a64104132177860
   '@typescript-eslint/parser': 5.16.0_eslint@8.14.0+typescript@4.6.3
@@ -886,14 +886,15 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.318_sass@1.50.1+svelte@3.47.0:
-    resolution: {integrity: sha512-/M/XNvEqK71KCGro1xLuiUuklsMPe+G5DiVMs39tpfFIFhH4oCzAt+YBaIZDKORogGz3QDaYc5BV+eFv9E5cyw==}
+  /@sveltejs/kit/1.0.0-next.324_sass@1.50.1+svelte@3.47.0:
+    resolution: {integrity: sha512-/CGW9rQpHQLBb2EcMw08yelD/C9hTsypymctUWdhryMTI8n1VWb0gkUcSHsz8n8oAAbKLXqwyHqeLATfcIMg2w==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
       svelte: ^3.44.0
     dependencies:
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.32_svelte@3.47.0+vite@2.9.1
+      chokidar: 3.5.3
       sade: 1.7.4
       svelte: 3.47.0
       vite: 2.9.1_sass@1.50.1
@@ -1249,6 +1250,21 @@ packages:
 
   /chokidar/3.5.2:
     resolution: {integrity: sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ==}
+    engines: {node: '>= 8.10.0'}
+    dependencies:
+      anymatch: 3.1.2
+      braces: 3.0.2
+      glob-parent: 5.1.2
+      is-binary-path: 2.1.0
+      is-glob: 4.0.3
+      normalize-path: 3.0.0
+      readdirp: 3.6.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /chokidar/3.5.3:
+    resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
     dependencies:
       anymatch: 3.1.2
