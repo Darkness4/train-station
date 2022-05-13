@@ -5,7 +5,7 @@ go 1.18
 require (
 	firebase.google.com/go/v4 v4.8.0
 	github.com/certifi/gocertifi v0.0.0-20210507211836-431795d63e8d
-	github.com/glebarez/sqlite v1.4.3
+	github.com/glebarez/sqlite v1.4.4
 	github.com/go-playground/validator/v10 v10.11.0
 	github.com/gofiber/fiber/v2 v2.32.0
 	github.com/google/uuid v1.3.0
@@ -27,7 +27,7 @@ require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
-	github.com/glebarez/go-sqlite v1.17.0 // indirect
+	github.com/glebarez/go-sqlite v1.17.1 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -73,5 +73,5 @@ require (
 	modernc.org/libc v1.16.1 // indirect
 	modernc.org/mathutil v1.4.1 // indirect
 	modernc.org/memory v1.1.1 // indirect
-	modernc.org/sqlite v1.17.0 // indirect
+	modernc.org/sqlite v1.17.1 // indirect
 )
