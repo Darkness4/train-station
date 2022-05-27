@@ -18,7 +18,7 @@ specifiers:
   material-design-icons: 3.0.1
   prettier: 2.6.2
   prettier-plugin-svelte: 2.7.0
-  sass: 1.51.0
+  sass: 1.52.1
   svelte: 3.48.0
   svelte-check: 2.7.1
   svelte-preprocess: 4.10.6
@@ -32,7 +32,7 @@ dependencies:
 
 devDependencies:
   '@sveltejs/adapter-node': 1.0.0-next.73
-  '@sveltejs/kit': 1.0.0-next.338_sass@1.51.0+svelte@3.48.0
+  '@sveltejs/kit': 1.0.0-next.338_sass@1.52.1+svelte@3.48.0
   '@trivago/prettier-plugin-sort-imports': 3.2.0_prettier@2.6.2
   '@typescript-eslint/eslint-plugin': 5.16.0_hfarcwrijgcyi7wnnap537tbm4
   '@typescript-eslint/parser': 5.16.0_utdtartgf6fqqgkivzeynh76la
@@ -45,10 +45,10 @@ devDependencies:
   eslint-plugin-svelte3: 3.4.1_vypdqzeyqutkgs6qzc7qod4c64
   prettier: 2.6.2
   prettier-plugin-svelte: 2.7.0_kkjbqzpydplecjtkxrgomroeru
-  sass: 1.51.0
+  sass: 1.52.1
   svelte: 3.48.0
-  svelte-check: 2.7.1_sass@1.51.0+svelte@3.48.0
-  svelte-preprocess: 4.10.6_24ezlekk4ocevlsjgs2qnqmjum
+  svelte-check: 2.7.1_sass@1.52.1+svelte@3.48.0
+  svelte-preprocess: 4.10.6_hfauaxkrfuvb2nolbgz4djzxbq
   tslib: 2.4.0
   typescript: 4.6.4
 
@@ -909,7 +909,7 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.338_sass@1.51.0+svelte@3.48.0:
+  /@sveltejs/kit/1.0.0-next.338_sass@1.52.1+svelte@3.48.0:
     resolution: {integrity: sha512-tqzSHB9ONjmUS8qsYUkypI1eg+FuyKVN5t0wEfIufv7X6ECK1xIRwU1A0igmNLPhqhTqAt3QNmFn2An0/8LbnQ==}
     engines: {node: '>=16'}
     hasBin: true
@@ -920,7 +920,7 @@ packages:
       chokidar: 3.5.3
       sade: 1.7.4
       svelte: 3.48.0
-      vite: 2.9.9_sass@1.51.0
+      vite: 2.9.9_sass@1.52.1
     transitivePeerDependencies:
       - diff-match-patch
       - less
@@ -947,7 +947,7 @@ packages:
       magic-string: 0.26.2
       svelte: 3.48.0
       svelte-hmr: 0.14.11_svelte@3.48.0
-      vite: 2.9.9_sass@1.51.0
+      vite: 2.9.9_sass@1.52.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2846,8 +2846,8 @@ packages:
       rimraf: 2.7.1
     dev: true
 
-  /sass/1.51.0:
-    resolution: {integrity: sha512-haGdpTgywJTvHC2b91GSq+clTKGbtkkZmVAb82jZQN/wTy6qs8DdFm2lhEQbEwrY0QDRgSQ3xDurqM977C3noA==}
+  /sass/1.52.1:
+    resolution: {integrity: sha512-fSzYTbr7z8oQnVJ3Acp9hV80dM1fkMN7mSD/25mpcct9F7FPBMOI8krEYALgU1aZoqGhQNhTPsuSmxjnIvAm4Q==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -3006,7 +3006,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-check/2.7.1_sass@1.51.0+svelte@3.48.0:
+  /svelte-check/2.7.1_sass@1.52.1+svelte@3.48.0:
     resolution: {integrity: sha512-vHVu2+SQ6ibt77iTQaq2oiOjBgGL48qqcg0ZdEOsP5pPOjgeyR9QbnaEdzdBs9nsVYBc/42haKtzb2uFqS8GVw==}
     hasBin: true
     peerDependencies:
@@ -3019,7 +3019,7 @@ packages:
       picocolors: 1.0.0
       sade: 1.7.4
       svelte: 3.48.0
-      svelte-preprocess: 4.10.6_24ezlekk4ocevlsjgs2qnqmjum
+      svelte-preprocess: 4.10.6_hfauaxkrfuvb2nolbgz4djzxbq
       typescript: 4.6.4
     transitivePeerDependencies:
       - '@babel/core'
@@ -3043,7 +3043,7 @@ packages:
       svelte: 3.48.0
     dev: true
 
-  /svelte-preprocess/4.10.6_24ezlekk4ocevlsjgs2qnqmjum:
+  /svelte-preprocess/4.10.6_hfauaxkrfuvb2nolbgz4djzxbq:
     resolution: {integrity: sha512-I2SV1w/AveMvgIQlUF/ZOO3PYVnhxfcpNyGt8pxpUVhPfyfL/CZBkkw/KPfuFix5FJ9TnnNYMhACK3DtSaYVVQ==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -3088,7 +3088,7 @@ packages:
       '@types/sass': 1.16.1
       detect-indent: 6.1.0
       magic-string: 0.25.7
-      sass: 1.51.0
+      sass: 1.52.1
       sorcery: 0.10.0
       strip-indent: 3.0.0
       svelte: 3.48.0
@@ -3201,7 +3201,7 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /vite/2.9.9_sass@1.51.0:
+  /vite/2.9.9_sass@1.52.1:
     resolution: {integrity: sha512-ffaam+NgHfbEmfw/Vuh6BHKKlI/XIAhxE5QSS7gFLIngxg171mg1P3a4LSRME0z2ZU1ScxoKzphkipcYwSD5Ew==}
     engines: {node: '>=12.2.0'}
     hasBin: true
@@ -3221,7 +3221,7 @@ packages:
       postcss: 8.4.14
       resolve: 1.22.0
       rollup: 2.61.1
-      sass: 1.51.0
+      sass: 1.52.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
