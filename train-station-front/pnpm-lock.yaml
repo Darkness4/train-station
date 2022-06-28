@@ -12,7 +12,7 @@ specifiers:
   eslint-import-resolver-alias: 1.1.2
   eslint-import-resolver-typescript: 2.7.1
   eslint-plugin-import: 2.26.0
-  eslint-plugin-prettier: 4.0.0
+  eslint-plugin-prettier: 4.1.0
   eslint-plugin-svelte3: 4.0.0
   firebase: 9.8.4
   material-design-icons: 3.0.1
@@ -41,7 +41,7 @@ devDependencies:
   eslint-import-resolver-alias: 1.1.2_fkfqfehjtk7sk2efaqbgxsuasa
   eslint-import-resolver-typescript: 2.7.1_srrmf5la5dmnsfe2mpg6sboreu
   eslint-plugin-import: 2.26.0_77rr2szt6gk53k37ycwt6wou7a
-  eslint-plugin-prettier: 4.0.0_xu6ewijrtliw5q5lksq5uixwby
+  eslint-plugin-prettier: 4.1.0_xu6ewijrtliw5q5lksq5uixwby
   eslint-plugin-svelte3: 4.0.0_wy4erphnvhealet26qderqv6bu
   prettier: 2.7.1
   prettier-plugin-svelte: 2.7.0_nakrehnrzdf7fdea5k3a4dfy4m
@@ -1785,9 +1785,9 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-prettier/4.0.0_xu6ewijrtliw5q5lksq5uixwby:
-    resolution: {integrity: sha512-98MqmCJ7vJodoQK359bqQWaxOE0CS8paAz/GgjaZLyex4TTk3g9HugoO89EqWCrFiOqn9EVvcoo7gZzONCWVwQ==}
-    engines: {node: '>=6.0.0'}
+  /eslint-plugin-prettier/4.1.0_xu6ewijrtliw5q5lksq5uixwby:
+    resolution: {integrity: sha512-A3AXIEfTnq3D5qDFjWJdQ9c4BLhw/TqhSR+6+SVaoPJBAWciFEuJiNQh275OnjRrAi7yssZzuWBRw66VG2g6UA==}
+    engines: {node: '>=12.0.0'}
     peerDependencies:
       eslint: '>=7.28.0'
       eslint-config-prettier: '*'
