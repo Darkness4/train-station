@@ -12,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.5'
-        classpath 'com.google.gms:google-services:4.3.12'
+        classpath 'com.google.gms:google-services:4.3.13'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }
