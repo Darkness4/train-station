@@ -15,7 +15,7 @@ require (
 	github.com/stretchr/testify v1.7.5
 	github.com/valyala/fasthttp v1.37.0
 	google.golang.org/api v0.85.0
-	gorm.io/gorm v1.23.6
+	gorm.io/gorm v1.23.7
 )
 
 require (
