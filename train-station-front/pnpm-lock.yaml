@@ -20,7 +20,7 @@ specifiers:
   prettier-plugin-svelte: 2.7.0
   sass: 1.53.0
   svelte: 3.48.0
-  svelte-check: 2.7.2
+  svelte-check: 2.8.0
   svelte-preprocess: 4.10.7
   tslib: 2.4.0
   typescript: 4.7.4
@@ -47,7 +47,7 @@ devDependencies:
   prettier-plugin-svelte: 2.7.0_nakrehnrzdf7fdea5k3a4dfy4m
   sass: 1.53.0
   svelte: 3.48.0
-  svelte-check: 2.7.2_sass@1.53.0+svelte@3.48.0
+  svelte-check: 2.8.0_sass@1.53.0+svelte@3.48.0
   svelte-preprocess: 4.10.7_cskk2ketiwcmbharqp7ehzkhki
   tslib: 2.4.0
   typescript: 4.7.4
@@ -1953,17 +1953,6 @@ packages:
       micromatch: 4.0.4
     dev: true
 
-  /fast-glob/3.2.7:
-    resolution: {integrity: sha512-rYGMRwip6lUMvYD3BTScMwT1HtAs2d71SMv66Vrxs0IekGZEjhM0pcMfjQPnknBt2zeCwQMEupiN02ZP4DiT1Q==}
-    engines: {node: '>=8'}
-    dependencies:
-      '@nodelib/fs.stat': 2.0.5
-      '@nodelib/fs.walk': 1.2.8
-      glob-parent: 5.1.2
-      merge2: 1.4.1
-      micromatch: 4.0.4
-    dev: true
-
   /fast-json-stable-stringify/2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
     dev: true
@@ -3001,15 +2990,15 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-check/2.7.2_sass@1.53.0+svelte@3.48.0:
-    resolution: {integrity: sha512-TuVX4YtXHbRM8sVuK5Jk+mKWdm3f0d6hvAC6qCTp8yUszGZewpEBCo2V5fRWZCiz+0J4OCiDHOS+DFMxv39rJA==}
+  /svelte-check/2.8.0_sass@1.53.0+svelte@3.48.0:
+    resolution: {integrity: sha512-HRL66BxffMAZusqe5I5k26mRWQ+BobGd9Rxm3onh7ZVu0nTk8YTKJ9vu3LVPjUGLU9IX7zS+jmwPVhJYdXJ8vg==}
     hasBin: true
     peerDependencies:
       svelte: ^3.24.0
     dependencies:
       '@jridgewell/trace-mapping': 0.3.13
       chokidar: 3.5.3
-      fast-glob: 3.2.7
+      fast-glob: 3.2.11
       import-fresh: 3.3.0
       picocolors: 1.0.0
       sade: 1.7.4
