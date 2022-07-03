@@ -149,7 +149,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
 
     // Lifecycle
-    def lifecycle_version = '2.4.1'
+    def lifecycle_version = '2.5.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
