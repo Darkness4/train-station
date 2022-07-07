@@ -7,7 +7,7 @@ require (
 	github.com/certifi/gocertifi v0.0.0-20210507211836-431795d63e8d
 	github.com/glebarez/sqlite v1.4.5
 	github.com/go-playground/validator/v10 v10.11.0
-	github.com/gofiber/fiber/v2 v2.34.1
+	github.com/gofiber/fiber/v2 v2.35.0
 	github.com/google/uuid v1.3.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.5.0
