@@ -20,7 +20,7 @@ import javax.inject.Inject
 class MainViewModel
 @Inject
 constructor(
-    private val repository: StationRepository,
+    private val repository: StationRepository
 ) : ViewModel() {
     enum class RefreshMode {
         Normal,

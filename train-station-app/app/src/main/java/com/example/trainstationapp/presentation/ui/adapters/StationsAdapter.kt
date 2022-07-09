@@ -17,7 +17,7 @@ import com.example.trainstationapp.domain.entities.Station
  */
 class StationsAdapter(
     private val onFavorite: (Station) -> Unit,
-    private val onClick: (Station) -> Unit,
+    private val onClick: (Station) -> Unit
 ) : PagingDataAdapter<Station, StationsAdapter.ViewHolder>(Comparator) {
     object Comparator : DiffUtil.ItemCallback<Station>() {
         override fun areItemsTheSame(oldItem: Station, newItem: Station) =
@@ -35,7 +35,7 @@ class StationsAdapter(
         ViewHolder.create(
             parent,
             onFavorite,
-            onClick,
+            onClick
         )
 
     class ViewHolder(
@@ -58,10 +58,12 @@ class StationsAdapter(
             ) =
                 ViewHolder(
                     StationItemBinding.inflate( // station_item.xml
-                        LayoutInflater.from(parent.context), parent, false
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
                     ),
                     onFavorite,
-                    onClick,
+                    onClick
                 )
         }
     }

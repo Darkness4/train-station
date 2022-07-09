@@ -25,19 +25,19 @@ object AndroidTestUtils {
                 geoShape =
                 StationModel.GeometryModel(
                     type = "type",
-                    coordinates = listOf(1.0),
+                    coordinates = listOf(1.0)
                 ),
                 pk = "pk",
                 idreseau = 1,
                 departemen = "departemen",
                 yL93 = 1.0,
-                fret = "fret",
+                fret = "fret"
             ),
             geometry =
             StationModel.GeometryModel(
                 type = "type",
-                coordinates = listOf(1.0),
+                coordinates = listOf(1.0)
             ),
-            recordTimestamp = "10",
+            recordTimestamp = "10"
         )
 }

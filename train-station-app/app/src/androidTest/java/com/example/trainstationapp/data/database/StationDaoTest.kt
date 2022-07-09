@@ -34,7 +34,7 @@ internal class StationDaoTest {
         val items =
             listOf(
                 AndroidTestUtils.createStationModel("0"),
-                AndroidTestUtils.createStationModel("1"),
+                AndroidTestUtils.createStationModel("1")
             )
 
         // Act

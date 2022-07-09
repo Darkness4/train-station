@@ -21,7 +21,6 @@ import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAda
 import com.example.trainstationapp.presentation.viewmodels.AuthViewModel
 import com.example.trainstationapp.presentation.viewmodels.MainViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
@@ -47,7 +46,7 @@ class StationListFragment : Fragment() {
                     )
                 }
             },
-            onClick = { activityViewModel.showDetails(it) },
+            onClick = { activityViewModel.showDetails(it) }
         )
 
     private var fetchJob: Job? = null
@@ -190,7 +189,8 @@ class StationListFragment : Fragment() {
                             findNavController()
                                 .navigate(
                                     StationListFragmentDirections.actionStationListFragmentToDetailsActivity(
-                                        it, token
+                                        it,
+                                        token
                                     )
                                 )
                             activityViewModel.showDetailsDone()

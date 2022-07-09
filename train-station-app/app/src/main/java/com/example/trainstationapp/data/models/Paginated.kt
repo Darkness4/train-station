@@ -9,5 +9,5 @@ data class Paginated<out T>(
     val count: Int,
     val total: Int,
     val page: Int,
-    val pageCount: Int,
+    val pageCount: Int
 )

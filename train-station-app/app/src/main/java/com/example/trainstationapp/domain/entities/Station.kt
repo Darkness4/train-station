@@ -5,7 +5,8 @@ import android.os.Parcelable
 import com.example.trainstationapp.data.models.StationModel
 import kotlinx.parcelize.Parcelize
 
-@SuppressLint("ParcelCreator") // Parcelize Issue https://youtrack.jetbrains.com/issue/KT-19300
+@SuppressLint("ParcelCreator")
+// Parcelize Issue https://youtrack.jetbrains.com/issue/KT-19300
 @Parcelize
 data class Station(
     val recordid: String,
@@ -14,7 +15,7 @@ data class Station(
     val libelle: String,
     val fields: Fields?,
     val geometry: Geometry?,
-    val recordTimestamp: String,
+    val recordTimestamp: String
 ) : Parcelable {
 
     fun toggleFavorite() = apply { isFavorite = !isFavorite }
@@ -38,7 +39,7 @@ data class Station(
         val idreseau: Int,
         val departemen: String,
         val yL93: Double,
-        val fret: String,
+        val fret: String
     ) : Parcelable {
         fun asModel() =
             StationModel.FieldsModel(
@@ -58,7 +59,7 @@ data class Station(
                 idreseau,
                 departemen,
                 yL93,
-                fret,
+                fret
             )
     }
 
@@ -66,12 +67,12 @@ data class Station(
     @Parcelize
     data class Geometry(
         val type: String,
-        val coordinates: List<Double>,
+        val coordinates: List<Double>
     ) : Parcelable {
         fun asModel() =
             StationModel.GeometryModel(
                 type,
-                coordinates,
+                coordinates
             )
     }
 

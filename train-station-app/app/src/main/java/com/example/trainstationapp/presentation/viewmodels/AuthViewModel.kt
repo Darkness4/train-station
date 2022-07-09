@@ -24,7 +24,7 @@ class AuthViewModel(private val firebaseAuth: FirebaseAuth) : ViewModel() {
 
     companion object {
         fun provideFactory(
-            firebaseAuth: FirebaseAuth,
+            firebaseAuth: FirebaseAuth
         ): ViewModelProvider.Factory =
             object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")

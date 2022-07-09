@@ -25,19 +25,19 @@ object TestUtils {
                 geoShape =
                 Station.Geometry(
                     type = "type",
-                    coordinates = listOf(1.0),
+                    coordinates = listOf(1.0)
                 ),
                 pk = "pk",
                 idreseau = 1,
                 departemen = "departemen",
                 yL93 = 1.0,
-                fret = "fret",
+                fret = "fret"
             ),
             geometry =
             Station.Geometry(
                 type = "type",
-                coordinates = listOf(1.0),
+                coordinates = listOf(1.0)
             ),
-            recordTimestamp = "10",
+            recordTimestamp = "10"
         )
 }

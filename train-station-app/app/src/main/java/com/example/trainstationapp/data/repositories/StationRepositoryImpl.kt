@@ -22,7 +22,7 @@ class StationRepositoryImpl
 @Inject
 constructor(
     private val trainStationDataSource: TrainStationDataSource,
-    private val database: Database,
+    private val database: Database
 ) : StationRepository {
     companion object {
         private const val NETWORK_PAGE_SIZE = 20
@@ -51,7 +51,7 @@ constructor(
                 search = search,
                 service = trainStationDataSource,
                 database = database,
-                token = bearer,
+                token = bearer
             ),
             pagingSourceFactory = pagingSourceFactory
         )

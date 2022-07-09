@@ -44,7 +44,9 @@ class StationsLoadStateAdapter(private val onRetry: () -> Unit) :
             fun create(parent: ViewGroup, onRetry: () -> Unit) =
                 ViewHolder(
                     StationsLoadStateFooterViewItemBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
                     ),
                     onRetry
                 )

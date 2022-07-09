@@ -13,7 +13,7 @@ import com.google.android.material.button.MaterialButton
 @BindingAdapter("showOnLoadStateLoading")
 fun showOnLoadStateLoading(
     view: View,
-    loadState: LoadState?,
+    loadState: LoadState?
 ) {
     view.isVisible = loadState is LoadState.Loading
 }
@@ -21,7 +21,7 @@ fun showOnLoadStateLoading(
 @BindingAdapter("hideOnLoadStateLoading")
 fun hideOnLoadStateLoading(
     view: View,
-    loadState: LoadState?,
+    loadState: LoadState?
 ) {
     view.isVisible = loadState !is LoadState.Loading
 }
@@ -29,7 +29,7 @@ fun hideOnLoadStateLoading(
 @BindingAdapter("showOnLoadStateNotLoading")
 fun showOnLoadStateNotLoading(
     view: View,
-    loadState: LoadState?,
+    loadState: LoadState?
 ) {
     view.isVisible = loadState is LoadState.NotLoading
 }
@@ -37,7 +37,7 @@ fun showOnLoadStateNotLoading(
 @BindingAdapter("showOnLoadStateError")
 fun showOnLoadStateNotError(
     view: View,
-    loadState: LoadState?,
+    loadState: LoadState?
 ) {
     view.isVisible = loadState is LoadState.Error
 }
@@ -45,7 +45,7 @@ fun showOnLoadStateNotError(
 @BindingAdapter("showTextOnLoadStateError")
 fun showTextOnLoadStateError(
     textView: TextView,
-    loadState: LoadState?,
+    loadState: LoadState?
 ) {
     if (loadState is LoadState.Error) {
         textView.text = loadState.error.localizedMessage
@@ -55,7 +55,7 @@ fun showTextOnLoadStateError(
 @BindingAdapter("favorite")
 fun boolToImageView(
     imageView: ImageView,
-    boolean: Boolean?,
+    boolean: Boolean?
 ) {
     boolean?.let {
         imageView.setImageResource(
@@ -67,7 +67,7 @@ fun boolToImageView(
 @BindingAdapter("favorite")
 fun boolToMaterialButton(
     button: MaterialButton,
-    boolean: Boolean?,
+    boolean: Boolean?
 ) {
     boolean?.let {
         button.icon =

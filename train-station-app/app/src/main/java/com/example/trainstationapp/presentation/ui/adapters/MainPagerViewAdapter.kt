@@ -11,7 +11,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  */
 class MainPagerViewAdapter(
     fragmentActivity: FragmentActivity,
-    private val fragments: List<Fragment>,
+    private val fragments: List<Fragment>
 ) : FragmentStateAdapter(fragmentActivity) {
 
     override fun createFragment(position: Int): Fragment {
