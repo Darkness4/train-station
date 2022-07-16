@@ -133,6 +133,8 @@ github.com/glebarez/sqlite v1.4.4 h1:P8kqohkbFikGuJL5oWcr1DQcwKJkBO14q/EhRCIHeQ4
 github.com/glebarez/sqlite v1.4.4/go.mod h1:8vGZHMVT28zm5JpNEw9SXOkYxmN7mF4866Qu/Chv7as=
 github.com/glebarez/sqlite v1.4.5 h1:oaJupO4X9iTn4sXRvP5Vs15BNvKh9dx5AQfciKlDvV4=
 github.com/glebarez/sqlite v1.4.5/go.mod h1:6D+bB+DdXlEC4mO+pUFJWixVcnrHTIAJ9U6Ynnn4Lxk=
+github.com/glebarez/sqlite v1.4.6 h1:D5uxD2f6UJ82cHnVtO2TZ9pqsLyto3fpDKHIk2OsR8A=
+github.com/glebarez/sqlite v1.4.6/go.mod h1:WYEtEFjhADPaPJqL/PGlbQQGINBA3eUAfDNbKFJf/zA=
 github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1/go.mod h1:vR7hzQXu2zJy9AVAgeJqvqgH9Q5CA+iKCZ2gyEVpxRU=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20191125211704-12ad95a8df72/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
