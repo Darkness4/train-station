@@ -6,7 +6,7 @@ COPY .openapi .
 RUN swagger-cli bundle ./openapi.yaml --outfile /build/openapi.yaml --type yaml
 
 # ---
-FROM arm64v8/alpine:3.16.0 as certs
+FROM arm64v8/alpine:3.16.1 as certs
 RUN apk update && apk add --no-cache ca-certificates
 
 # ---
