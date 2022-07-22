@@ -29,7 +29,7 @@
 				required
 			/>
 			<span class="icon is-small is-left">
-				<i class="fa fa-envelope" />
+				<i class="material-icons">email</i>
 			</span>
 		</div>
 	</div>

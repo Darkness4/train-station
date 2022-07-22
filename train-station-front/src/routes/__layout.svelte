@@ -5,9 +5,7 @@
 	import { authStore } from '$stores/auth.store';
 	import type { Auth, Unsubscribe } from 'firebase/auth';
 	import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-	import 'material-design-icons/iconfont/material-icons.css';
 	import { onDestroy, onMount } from 'svelte';
-	import '../app.scss';
 
 	let unsubscribe: Unsubscribe;
 	let auth: Auth;
@@ -61,3 +59,7 @@
 {:else}
 	<slot />
 {/if}
+
+<style lang="scss" global>
+	@import '../app';
+</style>
