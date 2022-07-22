@@ -2,27 +2,29 @@
 	"name": "train-station-front",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "svelte-kit dev",
-		"build": "svelte-kit build",
-		"preview": "svelte-kit preview",
-		"start:prod": "node build",
+		"dev": "vite dev",
+		"build": "vite build",
+		"package": "svelte-kit package",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync",
+		"test": "playwright test",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-		"lint:fix": "prettier --write --plugin-search-dir=. . && eslint --ignore-path .gitignore . --fix",
+		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
+		"lint:fix": "prettier --write --plugin-search-dir=. . && eslint . --fix",
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"dependencies": {
-		"bulma": "0.9.4",
-		"firebase": "9.9.0",
-		"material-design-icons": "3.0.1"
+		"firebase": "9.9.0"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-node": "1.0.0-next.73",
-		"@sveltejs/kit": "1.0.0-next.338",
+		"@playwright/test": "^1.22.2",
+		"@sveltejs/adapter-node": "1.0.0-next.83",
+		"@sveltejs/kit": "1.0.0-next.388",
 		"@trivago/prettier-plugin-sort-imports": "3.2.0",
 		"@typescript-eslint/eslint-plugin": "5.30.6",
 		"@typescript-eslint/parser": "5.30.6",
+		"bulma": "0.9.4",
 		"eslint": "8.20.0",
 		"eslint-config-prettier": "8.5.0",
 		"eslint-import-resolver-alias": "1.1.2",
@@ -30,6 +32,7 @@
 		"eslint-plugin-import": "2.26.0",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-svelte3": "4.0.0",
+		"material-design-icons": "3.0.1",
 		"prettier": "2.7.1",
 		"prettier-plugin-svelte": "2.7.0",
 		"sass": "1.53.0",
@@ -37,7 +40,8 @@
 		"svelte-check": "2.8.0",
 		"svelte-preprocess": "4.10.7",
 		"tslib": "2.4.0",
-		"typescript": "4.7.4"
+		"typescript": "4.7.4",
+		"vite": "3.0.2"
 	},
 	"type": "module"
 }

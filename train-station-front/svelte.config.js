@@ -1,4 +1,3 @@
-import path from 'path';
 import preprocess from 'svelte-preprocess';
 import adapter from '@sveltejs/adapter-node';
 
@@ -6,22 +5,13 @@ import adapter from '@sveltejs/adapter-node';
 const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
-	preprocess: [
-		preprocess({
-			scss: true
-		})
-	],
+	preprocess: preprocess({
+		scss: true,
+		sass: true
+	}),
 
 	kit: {
-		adapter: adapter(),
-		vite: {
-			resolve: {
-				alias: {
-					$components: path.resolve('./src/components'),
-					$stores: path.resolve('./src/stores')
-				}
-			}
-		}
+		adapter: adapter()
 	}
 };
 
