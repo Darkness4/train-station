@@ -21,7 +21,7 @@
 		"@playwright/test": "^1.22.2",
 		"@sveltejs/adapter-node": "1.0.0-next.83",
 		"@sveltejs/kit": "1.0.0-next.390",
-		"@trivago/prettier-plugin-sort-imports": "3.2.0",
+		"@trivago/prettier-plugin-sort-imports": "3.3.0",
 		"@typescript-eslint/eslint-plugin": "5.30.7",
 		"@typescript-eslint/parser": "5.30.7",
 		"bulma": "0.9.4",
