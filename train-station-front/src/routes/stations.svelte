@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-	import type { LoadInput, LoadOutput } from '@sveltejs/kit';
+	import type { LoadEvent, LoadOutput } from '@sveltejs/kit';
 
 	let initialSearchQuery: string;
 	let initialPageNumber: number;
-	export function load({ url }: LoadInput): Promise<LoadOutput> {
+	export function load({ url }: LoadEvent): Promise<LoadOutput> {
 		initialPageNumber = 1;
 		const queryPage = url.searchParams.get('page');
 		if (queryPage !== null) {
@@ -26,12 +26,15 @@
 
 	let searchQuery: string = initialSearchQuery;
 	let pageNumber: number = initialPageNumber;
+	let isLoading: boolean = false;
 	$: loadData(searchQuery, pageNumber);
 	async function loadData(s: string, page: number) {
 		try {
 			const token = $authStore.token;
 			if (token) {
+				isLoading = true;
 				await paginatedStationsStore.load(token, { s: s, page: page });
+				isLoading = false;
 			}
 		} catch (e) {
 			console.error(e);
@@ -69,7 +72,7 @@
 		goto={search}
 	/>
 
-	<PaginatedStations stations={$paginatedStationsStore} {onClick} {onFavorite} />
+	<PaginatedStations {isLoading} stations={$paginatedStationsStore} {onClick} {onFavorite} />
 
 	<Pager
 		bind:page={pageNumber}
