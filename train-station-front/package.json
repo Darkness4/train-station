@@ -15,7 +15,7 @@
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"dependencies": {
-		"firebase": "9.9.0"
+		"firebase": "9.9.1"
 	},
 	"devDependencies": {
 		"@playwright/test": "1.24.0",
