@@ -1,19 +1,3 @@
-<script lang="ts" context="module">
-	import type { LoadEvent, LoadOutput } from '@sveltejs/kit';
-
-	let initialSearchQuery: string;
-	let initialPageNumber: number;
-	export function load({ url }: LoadEvent): Promise<LoadOutput> {
-		initialPageNumber = 1;
-		const queryPage = url.searchParams.get('page');
-		if (queryPage !== null) {
-			initialPageNumber = parseInt(queryPage);
-		}
-		initialSearchQuery = url.searchParams.get('s') ?? '';
-		return Promise.resolve({});
-	}
-</script>
-
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -23,9 +7,12 @@
 	import type { Station } from '$lib/entities/station';
 	import { authStore } from '$stores/auth.store';
 	import { initialState, paginatedStationsStore } from '$stores/paginated-stations.store';
+	import type { PageData } from './$types';
 
-	let searchQuery: string = initialSearchQuery;
-	let pageNumber: number = initialPageNumber;
+	export let data: PageData;
+
+	let searchQuery: string = data.initialSearchQuery;
+	let pageNumber: number = data.initialPageNumber;
 	let isLoading: boolean = false;
 	$: loadData(searchQuery, pageNumber);
 	async function loadData(s: string, page: number) {

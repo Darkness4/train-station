@@ -25,7 +25,7 @@ specifiers:
   svelte-preprocess: 4.10.7
   tslib: 2.4.0
   typescript: 4.8.3
-  vite: 3.1.0
+  vite: 3.1.3
 
 dependencies:
   firebase: 9.9.4
@@ -33,7 +33,7 @@ dependencies:
 devDependencies:
   '@playwright/test': 1.25.2
   '@sveltejs/adapter-node': 1.0.0-next.92
-  '@sveltejs/kit': 1.0.0-next.489_svelte@3.50.1+vite@3.1.0
+  '@sveltejs/kit': 1.0.0-next.489_svelte@3.50.1+vite@3.1.3
   '@trivago/prettier-plugin-sort-imports': 3.3.0_prettier@2.7.1
   '@typescript-eslint/eslint-plugin': 5.30.7_sxbgmeczvauna26e4o65cugiyi
   '@typescript-eslint/parser': 5.30.7_irgkl5vooow2ydyo6aokmferha
@@ -54,7 +54,7 @@ devDependencies:
   svelte-preprocess: 4.10.7_dmgt4vqjdljwxc7vlji2ruxhdy
   tslib: 2.4.0
   typescript: 4.8.3
-  vite: 3.1.0_sass@1.54.9
+  vite: 3.1.3_sass@1.54.9
 
 packages:
 
@@ -984,7 +984,7 @@ packages:
       esbuild: 0.15.8
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.489_svelte@3.50.1+vite@3.1.0:
+  /@sveltejs/kit/1.0.0-next.489_svelte@3.50.1+vite@3.1.3:
     resolution: {integrity: sha512-7oag1fimI9f8e8mNy2wQRgMCXSov5dASqeTdXffgnptWBpuEjr8myffJ9djoRVQXoFjCja39lCHBo239iY8+KA==}
     engines: {node: '>=16.14'}
     hasBin: true
@@ -993,7 +993,7 @@ packages:
       svelte: ^3.44.0
       vite: ^3.1.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.7_svelte@3.50.1+vite@3.1.0
+      '@sveltejs/vite-plugin-svelte': 1.0.7_svelte@3.50.1+vite@3.1.3
       '@types/cookie': 0.5.1
       cookie: 0.5.0
       devalue: 3.1.3
@@ -1007,13 +1007,13 @@ packages:
       svelte: 3.50.1
       tiny-glob: 0.2.9
       undici: 5.10.0
-      vite: 3.1.0_sass@1.54.9
+      vite: 3.1.3_sass@1.54.9
     transitivePeerDependencies:
       - diff-match-patch
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.7_svelte@3.50.1+vite@3.1.0:
+  /@sveltejs/vite-plugin-svelte/1.0.7_svelte@3.50.1+vite@3.1.3:
     resolution: {integrity: sha512-bf3/xrpKP5Sj9I6hT0slYwY4rVElocWZ79zLPc/bPFCOjjuty0jW4hmC4Uehb7yifjf3I6QnT3eIs2EKqw+Kig==}
     engines: {node: ^14.18.0 || >= 16}
     peerDependencies:
@@ -1031,7 +1031,7 @@ packages:
       magic-string: 0.26.3
       svelte: 3.50.1
       svelte-hmr: 0.15.0_svelte@3.50.1
-      vite: 3.1.0_sass@1.54.9
+      vite: 3.1.3_sass@1.54.9
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3502,8 +3502,8 @@ packages:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: false
 
-  /vite/3.1.0_sass@1.54.9:
-    resolution: {integrity: sha512-YBg3dUicDpDWFCGttmvMbVyS9ydjntwEjwXRj2KBFwSB8SxmGcudo1yb8FW5+M/G86aS8x828ujnzUVdsLjs9g==}
+  /vite/3.1.3_sass@1.54.9:
+    resolution: {integrity: sha512-/3XWiktaopByM5bd8dqvHxRt5EEgRikevnnrpND0gRfNkrMrPaGGexhtLCzv15RcCMtV2CLw+BPas8YFeSG0KA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
