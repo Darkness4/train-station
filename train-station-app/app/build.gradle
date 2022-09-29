@@ -146,7 +146,7 @@ dependencies {
     // Firebase Auth
     implementation platform('com.google.firebase:firebase-bom:30.5.0')
     implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
 
     // Lifecycle
     def lifecycle_version = '2.5.1'
