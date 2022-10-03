@@ -2,8 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@playwright/test': 1.26.1
-  '@sveltejs/adapter-node': 1.0.0-next.95
-  '@sveltejs/kit': 1.0.0-next.503
+  '@sveltejs/adapter-node': 1.0.0-next.96
+  '@sveltejs/kit': 1.0.0-next.507
   '@trivago/prettier-plugin-sort-imports': 3.3.0
   '@typescript-eslint/eslint-plugin': 5.30.7
   '@typescript-eslint/parser': 5.30.7
@@ -32,8 +32,8 @@ dependencies:
 
 devDependencies:
   '@playwright/test': 1.26.1
-  '@sveltejs/adapter-node': 1.0.0-next.95
-  '@sveltejs/kit': 1.0.0-next.503_svelte@3.50.1+vite@3.1.4
+  '@sveltejs/adapter-node': 1.0.0-next.96
+  '@sveltejs/kit': 1.0.0-next.507_svelte@3.50.1+vite@3.1.4
   '@trivago/prettier-plugin-sort-imports': 3.3.0_prettier@2.7.1
   '@typescript-eslint/eslint-plugin': 5.30.7_26ttp2kc5uuexr2dyx3i3c3d7y
   '@typescript-eslint/parser': 5.30.7_ypn2ylkkyfa5i233caldtndbqa
@@ -1030,8 +1030,8 @@ packages:
       picomatch: 2.3.0
     dev: true
 
-  /@sveltejs/adapter-node/1.0.0-next.95:
-    resolution: {integrity: sha512-RrAsFjb8qG9Q0yWusGLBB5OhejR6RfRG3X7b/V65fcIB4t3IP7hkwgNOyuXQd5jQ24lbt+Tyx3fguEfQvhMrhw==}
+  /@sveltejs/adapter-node/1.0.0-next.96:
+    resolution: {integrity: sha512-tIHaRolUYy2PiHl4RUWaOsYxEjK5lN9501qzCzFbYr/uoLnZcnPGSXNJICwX0AX9AUkV6cvkZey6bLbUQcwH0Q==}
     dependencies:
       '@rollup/plugin-commonjs': 22.0.2_rollup@2.78.1
       '@rollup/plugin-json': 4.1.0_rollup@2.78.1
@@ -1039,8 +1039,8 @@ packages:
       rollup: 2.78.1
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.503_svelte@3.50.1+vite@3.1.4:
-    resolution: {integrity: sha512-QSEHe40qMOYjXirxS57dIa9NU4FntlYh+KYslBzasjMCfSiUkHGaWMJRz8uU+R4BWnThD9SdCo7F/NwDxu5LRQ==}
+  /@sveltejs/kit/1.0.0-next.507_svelte@3.50.1+vite@3.1.4:
+    resolution: {integrity: sha512-GAgFb1yLUVOYPWXIPxh8j0iEjUOVvN42Xgsqf6j6j1Sb2/f0m0bC1O7eVbc8NQjNZIvgGuN8yxai188iIYQt7w==}
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true
