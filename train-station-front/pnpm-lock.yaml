@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@playwright/test': 1.26.1
   '@sveltejs/adapter-node': 1.0.0-next.96
-  '@sveltejs/kit': 1.0.0-next.508
+  '@sveltejs/kit': 1.0.0-next.511
   '@trivago/prettier-plugin-sort-imports': 3.3.0
   '@typescript-eslint/eslint-plugin': 5.30.7
   '@typescript-eslint/parser': 5.30.7
@@ -33,7 +33,7 @@ dependencies:
 devDependencies:
   '@playwright/test': 1.26.1
   '@sveltejs/adapter-node': 1.0.0-next.96
-  '@sveltejs/kit': 1.0.0-next.508_svelte@3.50.1+vite@3.1.4
+  '@sveltejs/kit': 1.0.0-next.511_svelte@3.50.1+vite@3.1.4
   '@trivago/prettier-plugin-sort-imports': 3.3.0_prettier@2.7.1
   '@typescript-eslint/eslint-plugin': 5.30.7_26ttp2kc5uuexr2dyx3i3c3d7y
   '@typescript-eslint/parser': 5.30.7_ypn2ylkkyfa5i233caldtndbqa
@@ -1039,8 +1039,8 @@ packages:
       rollup: 2.78.1
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.508_svelte@3.50.1+vite@3.1.4:
-    resolution: {integrity: sha512-qUnuhuL82meE0lSwrsS/FIvtDoE83Au4SxVLCim3FzoCnJc7bFZ9vYRbRUYxAjfYKRMjKVUrp9iHFObn9LmnUg==}
+  /@sveltejs/kit/1.0.0-next.511_svelte@3.50.1+vite@3.1.4:
+    resolution: {integrity: sha512-A/fxd4qHWDD07Mjo6qEEEfsBEkoj5C4/dPSzx6xPUoWmPvRPhU8t+P0oMc8BOn5YHOhPDq3coH8bmafbh73zKg==}
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true
@@ -1051,7 +1051,7 @@ packages:
       '@sveltejs/vite-plugin-svelte': 1.0.7_svelte@3.50.1+vite@3.1.4
       '@types/cookie': 0.5.1
       cookie: 0.5.0
-      devalue: 3.1.3
+      devalue: 4.0.0
       kleur: 4.1.5
       magic-string: 0.26.3
       mime: 3.0.0
@@ -1571,8 +1571,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /devalue/3.1.3:
-    resolution: {integrity: sha512-9KO89Cb+qjzf2CqdrH+NuLaqdk9GhDP5EhR4zlkR51dvuIaiqtlkDkGzLMShDemwUy21raSMdu+kpX8Enw3yGQ==}
+  /devalue/4.0.0:
+    resolution: {integrity: sha512-w25siwXyuMUqMr7jPlEjyNCp1vn0Jzj/fNg3qVt/r/Dpe8HjESh2V92L0jmh3uq4iJt0BvjH+Azk1pQzkcnDWA==}
     dev: true
 
   /dir-glob/3.0.1:
