@@ -2,8 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@playwright/test': 1.27.1
-  '@sveltejs/adapter-node': 1.0.0-next.97
-  '@sveltejs/kit': 1.0.0-next.514
+  '@sveltejs/adapter-node': 1.0.0-next.98
+  '@sveltejs/kit': 1.0.0-next.515
   '@trivago/prettier-plugin-sort-imports': 3.3.0
   '@typescript-eslint/eslint-plugin': 5.30.7
   '@typescript-eslint/parser': 5.30.7
@@ -32,8 +32,8 @@ dependencies:
 
 devDependencies:
   '@playwright/test': 1.27.1
-  '@sveltejs/adapter-node': 1.0.0-next.97
-  '@sveltejs/kit': 1.0.0-next.514_svelte@3.50.1+vite@3.1.7
+  '@sveltejs/adapter-node': 1.0.0-next.98
+  '@sveltejs/kit': 1.0.0-next.515_svelte@3.50.1+vite@3.1.7
   '@trivago/prettier-plugin-sort-imports': 3.3.0_prettier@2.7.1
   '@typescript-eslint/eslint-plugin': 5.30.7_7ant6q35trim3hnb46r6ay3pqm
   '@typescript-eslint/parser': 5.30.7_z4bbprzjrhnsfa24uvmcbu7f5q
@@ -1021,8 +1021,8 @@ packages:
       picomatch: 2.3.0
     dev: true
 
-  /@sveltejs/adapter-node/1.0.0-next.97:
-    resolution: {integrity: sha512-VrecMtq45rFfU8DbpAY+atpWg9LLpb87eb2LiT26eq+/sJNGsLTHGRcKjx4zNuoRhLwRtDs4f7cClsHbJHBH2w==}
+  /@sveltejs/adapter-node/1.0.0-next.98:
+    resolution: {integrity: sha512-eo89sswzm3ntZJgaQzz2MneqMqBfQWQj6b8VtImlHeq2AB+RSodippmKY0RyPcIJ0hJqdDc4DubU7XMDKkoTew==}
     dependencies:
       '@rollup/plugin-commonjs': 23.0.0_rollup@2.78.1
       '@rollup/plugin-json': 5.0.0_rollup@2.78.1
@@ -1030,8 +1030,8 @@ packages:
       rollup: 2.78.1
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.514_svelte@3.50.1+vite@3.1.7:
-    resolution: {integrity: sha512-1vBKNeLkaQGz/QEQ9bxWwqHwJbBQJTVKReFoFQugGBhiT/Q39Uv+FpXWh+XND9OxMJ947ndqp/EiQj0IAmPwhg==}
+  /@sveltejs/kit/1.0.0-next.515_svelte@3.50.1+vite@3.1.7:
+    resolution: {integrity: sha512-Ck+T16bci7VWc4CNP61xvfMrbDHX1Q8aPZWgthnrSH8hsdx9w1MP80D9V4A98WX0cyhCQ02JzlTmxgf2UpYRbQ==}
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true
@@ -1044,7 +1044,7 @@ packages:
       cookie: 0.5.0
       devalue: 4.0.0
       kleur: 4.1.5
-      magic-string: 0.26.3
+      magic-string: 0.26.7
       mime: 3.0.0
       sade: 1.8.1
       set-cookie-parser: 2.5.1
@@ -2724,13 +2724,6 @@ packages:
 
   /magic-string/0.25.7:
     resolution: {integrity: sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==}
-    dependencies:
-      sourcemap-codec: 1.4.8
-    dev: true
-
-  /magic-string/0.26.3:
-    resolution: {integrity: sha512-u1Po0NDyFcwdg2nzHT88wSK0+Rih0N1M+Ph1Sp08k8yvFFU3KR72wryS7e1qMPJypt99WB7fIFVCA92mQrMjrg==}
-    engines: {node: '>=12'}
     dependencies:
       sourcemap-codec: 1.4.8
     dev: true
