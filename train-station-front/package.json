@@ -32,7 +32,7 @@
 		"eslint-plugin-svelte3": "4.0.0",
 		"material-design-icons": "3.0.1",
 		"prettier": "2.7.1",
-		"prettier-plugin-svelte": "2.7.1",
+		"prettier-plugin-svelte": "2.8.0",
 		"sass": "1.55.0",
 		"svelte": "3.50.1",
 		"svelte-check": "2.9.2",
