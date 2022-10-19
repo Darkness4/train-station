@@ -18,7 +18,7 @@
 	"devDependencies": {
 		"@playwright/test": "1.27.1",
 		"@sveltejs/adapter-node": "1.0.0-next.98",
-		"@sveltejs/kit": "1.0.0-next.516",
+		"@sveltejs/kit": "1.0.0-next.517",
 		"@trivago/prettier-plugin-sort-imports": "3.3.1",
 		"@typescript-eslint/eslint-plugin": "5.30.7",
 		"@typescript-eslint/parser": "5.30.7",
