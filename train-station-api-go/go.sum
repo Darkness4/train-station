@@ -149,6 +149,8 @@ github.com/glebarez/sqlite v1.4.7 h1:tIBxEWLJOPkekuQcwfenNfh13itj9GoVJYxp7GidJAo
 github.com/glebarez/sqlite v1.4.7/go.mod h1:UY1smw9rBTSGnJE0He8pVRPvlxCP1C8hlB8Z24K8fG4=
 github.com/glebarez/sqlite v1.4.8 h1:RExUFrctwroRVJkexNvMlbAUlWvVPONXABX+wAzBE5E=
 github.com/glebarez/sqlite v1.4.8/go.mod h1:pHATLp1l0Be6bvCxMCVG/yKxaUZ7BbyVi3ewtZYOVho=
+github.com/glebarez/sqlite v1.5.0 h1:+8LAEpmywqresSoGlqjjT+I9m4PseIM3NcerIJ/V7mk=
+github.com/glebarez/sqlite v1.5.0/go.mod h1:0wzXzTvfVJIN2GqRhCdMbnYd+m+aH5/QV7B30rM6NgY=
 github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1/go.mod h1:vR7hzQXu2zJy9AVAgeJqvqgH9Q5CA+iKCZ2gyEVpxRU=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20191125211704-12ad95a8df72/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
@@ -957,6 +959,8 @@ gorm.io/gorm v1.23.9 h1:NSHG021i+MCznokeXR3udGaNyFyBQJW8MbjrJMVCfGw=
 gorm.io/gorm v1.23.9/go.mod h1:DVrVomtaYTbqs7gB/x2uVvqnXzv0nqjB396B8cG4dBA=
 gorm.io/gorm v1.23.10 h1:4Ne9ZbzID9GUxRkllxN4WjJKpsHx8YbKvekVdgyWh24=
 gorm.io/gorm v1.23.10/go.mod h1:DVrVomtaYTbqs7gB/x2uVvqnXzv0nqjB396B8cG4dBA=
+gorm.io/gorm v1.24.0 h1:j/CoiSm6xpRpmzbFJsQHYj+I8bGYWLXVHeYEyyKlF74=
+gorm.io/gorm v1.24.0/go.mod h1:DVrVomtaYTbqs7gB/x2uVvqnXzv0nqjB396B8cG4dBA=
 honnef.co/go/tools v0.0.0-20190102054323-c2f93a96b099/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
 honnef.co/go/tools v0.0.0-20190106161140-3f1c8253044a/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
 honnef.co/go/tools v0.0.0-20190418001031-e561f6794a2a/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
