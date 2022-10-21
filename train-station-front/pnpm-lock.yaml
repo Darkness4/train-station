@@ -11,7 +11,7 @@ specifiers:
   eslint: 8.25.0
   eslint-config-prettier: 8.5.0
   eslint-import-resolver-alias: 1.1.2
-  eslint-import-resolver-typescript: 3.5.1
+  eslint-import-resolver-typescript: 3.5.2
   eslint-plugin-import: 2.26.0
   eslint-plugin-prettier: 4.2.1
   eslint-plugin-svelte3: 4.0.0
@@ -41,8 +41,8 @@ devDependencies:
   eslint: 8.25.0
   eslint-config-prettier: 8.5.0_eslint@8.25.0
   eslint-import-resolver-alias: 1.1.2_fkfqfehjtk7sk2efaqbgxsuasa
-  eslint-import-resolver-typescript: 3.5.1_fyln4uq2tv75svthy6prqvt6lm
-  eslint-plugin-import: 2.26.0_64fxytdf4bbkvwd45flzwdyzty
+  eslint-import-resolver-typescript: 3.5.2_fyln4uq2tv75svthy6prqvt6lm
+  eslint-plugin-import: 2.26.0_kgyf75kszksdwtiwivzdpbc2em
   eslint-plugin-prettier: 4.2.1_hvbqyfstm4urdpm6ffpwfka4e4
   eslint-plugin-svelte3: 4.0.0_2h6d4ngklmojchucosx7yvuw7m
   material-design-icons: 3.0.1
@@ -888,8 +888,8 @@ packages:
       fastq: 1.12.0
     dev: true
 
-  /@pkgr/utils/2.3.0:
-    resolution: {integrity: sha512-7dIJ9CRVzBnqyEl7diUHPUFJf/oty2SeoVzcMocc5PeOUDK9KGzvgIBjGRRzzlRDaOjh3ADwH0WeibQvi3ls2Q==}
+  /@pkgr/utils/2.3.1:
+    resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dependencies:
       cross-spawn: 7.0.3
@@ -1873,7 +1873,7 @@ packages:
     peerDependencies:
       eslint-plugin-import: '>=1.4.0'
     dependencies:
-      eslint-plugin-import: 2.26.0_64fxytdf4bbkvwd45flzwdyzty
+      eslint-plugin-import: 2.26.0_kgyf75kszksdwtiwivzdpbc2em
     dev: true
 
   /eslint-import-resolver-node/0.3.6:
@@ -1885,9 +1885,9 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-import-resolver-typescript/3.5.1_fyln4uq2tv75svthy6prqvt6lm:
-    resolution: {integrity: sha512-U7LUjNJPYjNsHvAUAkt/RU3fcTSpbllA0//35B4eLYTX74frmOepbt7F7J3D1IGtj9k21buOpaqtDd4ZlS/BYQ==}
-    engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+  /eslint-import-resolver-typescript/3.5.2_fyln4uq2tv75svthy6prqvt6lm:
+    resolution: {integrity: sha512-zX4ebnnyXiykjhcBvKIf5TNvt8K7yX6bllTRZ14MiurKPjDpCAZujlszTdB8pcNXhZcOf+god4s9SjQa5GnytQ==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '*'
       eslint-plugin-import: '*'
@@ -1895,17 +1895,17 @@ packages:
       debug: 4.3.4
       enhanced-resolve: 5.10.0
       eslint: 8.25.0
-      eslint-plugin-import: 2.26.0_64fxytdf4bbkvwd45flzwdyzty
+      eslint-plugin-import: 2.26.0_kgyf75kszksdwtiwivzdpbc2em
       get-tsconfig: 4.2.0
       globby: 13.1.2
       is-core-module: 2.10.0
       is-glob: 4.0.3
-      synckit: 0.8.3
+      synckit: 0.8.4
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /eslint-module-utils/2.7.3_qbvwqywmlwmlxrsnurjva3muee:
+  /eslint-module-utils/2.7.3_diajqeru5bgikxpdqmdx3sr4a4:
     resolution: {integrity: sha512-088JEC7O3lDZM9xGe0RerkOMd0EjFl+Yvd1jPWIkMT5u3H9+HC34mWWPnqPrN13gieT9pBOO+Qt07Nb/6TresQ==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -1926,13 +1926,13 @@ packages:
       '@typescript-eslint/parser': 5.30.7_z4bbprzjrhnsfa24uvmcbu7f5q
       debug: 3.2.7
       eslint-import-resolver-node: 0.3.6
-      eslint-import-resolver-typescript: 3.5.1_fyln4uq2tv75svthy6prqvt6lm
+      eslint-import-resolver-typescript: 3.5.2_fyln4uq2tv75svthy6prqvt6lm
       find-up: 2.1.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /eslint-plugin-import/2.26.0_64fxytdf4bbkvwd45flzwdyzty:
+  /eslint-plugin-import/2.26.0_kgyf75kszksdwtiwivzdpbc2em:
     resolution: {integrity: sha512-hYfi3FXaM8WPLf4S1cikh/r4IxnO6zrhZbEGz2b660EJRbuxgpDS5gkCuYgGWg2xxh2rBuIr4Pvhve/7c31koA==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -1949,7 +1949,7 @@ packages:
       doctrine: 2.1.0
       eslint: 8.25.0
       eslint-import-resolver-node: 0.3.6
-      eslint-module-utils: 2.7.3_qbvwqywmlwmlxrsnurjva3muee
+      eslint-module-utils: 2.7.3_diajqeru5bgikxpdqmdx3sr4a4
       has: 1.0.3
       is-core-module: 2.8.1
       is-glob: 4.0.3
@@ -3426,11 +3426,11 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /synckit/0.8.3:
-    resolution: {integrity: sha512-1goXnDYNJlKwCM37f5MTzRwo+8SqutgVtg2d37D6YnHHT4E3IhQMRfKiGdfTZU7LBlI6T8inCQUxnMBFHrbqWw==}
+  /synckit/0.8.4:
+    resolution: {integrity: sha512-Dn2ZkzMdSX827QbowGbU/4yjWuvNaCoScLLoMo/yKbu+P4GBR6cRGKZH27k6a9bRzdqcyd1DE96pQtQ6uNkmyw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     dependencies:
-      '@pkgr/utils': 2.3.0
+      '@pkgr/utils': 2.3.1
       tslib: 2.4.0
     dev: true
 
