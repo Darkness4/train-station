@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@playwright/test': 1.27.1
+  '@playwright/test': 1.28.0
   '@sveltejs/adapter-node': 1.0.0-next.100
   '@sveltejs/kit': 1.0.0-next.553
   '@trivago/prettier-plugin-sort-imports': 3.4.0
@@ -31,7 +31,7 @@ dependencies:
   firebase: 9.13.0
 
 devDependencies:
-  '@playwright/test': 1.27.1
+  '@playwright/test': 1.28.0
   '@sveltejs/adapter-node': 1.0.0-next.100
   '@sveltejs/kit': 1.0.0-next.553_svelte@3.52.0+vite@3.2.4
   '@trivago/prettier-plugin-sort-imports': 3.4.0_prettier@2.7.1
@@ -900,13 +900,13 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /@playwright/test/1.27.1:
-    resolution: {integrity: sha512-mrL2q0an/7tVqniQQF6RBL2saskjljXzqNcCOVMUjRIgE6Y38nCNaP+Dc2FBW06bcpD3tqIws/HT9qiMHbNU0A==}
+  /@playwright/test/1.28.0:
+    resolution: {integrity: sha512-vrHs5DFTPwYox5SGKq/7TDn/S4q6RA1zArd7uhO6EyP9hj3XgZBBM12ktMbnDQNxh/fL1IUKsTNLxihmsU38lQ==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 16.7.10
-      playwright-core: 1.27.1
+      playwright-core: 1.28.0
     dev: true
 
   /@polka/url/1.0.0-next.21:
@@ -3036,8 +3036,8 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /playwright-core/1.27.1:
-    resolution: {integrity: sha512-9EmeXDncC2Pmp/z+teoVYlvmPWUC6ejSSYZUln7YaP89Z6lpAaiaAnqroUt/BoLo8tn7WYShcfaCh+xofZa44Q==}
+  /playwright-core/1.28.0:
+    resolution: {integrity: sha512-nJLknd28kPBiCNTbqpu6Wmkrh63OEqJSFw9xOfL9qxfNwody7h6/L3O2dZoWQ6Oxcm0VOHjWmGiCUGkc0X3VZA==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
