@@ -33,7 +33,7 @@
 		"material-design-icons": "3.0.1",
 		"prettier": "2.7.1",
 		"prettier-plugin-svelte": "2.8.1",
-		"sass": "1.56.1",
+		"sass": "1.56.2",
 		"svelte": "3.52.0",
 		"svelte-check": "2.9.2",
 		"svelte-preprocess": "4.10.7",
