@@ -10,7 +10,7 @@ FROM alpine:3.17.0 as certs
 RUN apk update && apk add --no-cache ca-certificates
 
 # ---
-FROM golang:1.19.3-alpine as builder
+FROM golang:1.19.4-alpine as builder
 WORKDIR /go/src/github.com/Darkness4/train-station-api/
 COPY go.mod go.sum ./
 RUN go mod download
