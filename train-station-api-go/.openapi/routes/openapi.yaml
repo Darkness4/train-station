@@ -1,8 +1,0 @@
-get:
-  tags:
-    - other
-  summary: Get Open API specification
-  operationId: getOpenApi
-  responses:
-    200:
-      description: Successful operation

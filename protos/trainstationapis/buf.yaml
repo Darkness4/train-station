@@ -1,0 +1,21 @@
+version: v1
+lint:
+  use:
+    - DEFAULT
+  service_suffix: API
+  ignore_only:
+    ENUM_ZERO_VALUE_SUFFIX:
+      - grpc/health/v1/health.proto
+    ENUM_VALUE_PREFIX:
+      - grpc/health/v1/health.proto
+    SERVICE_SUFFIX:
+      - grpc/health/v1/health.proto
+    RPC_REQUEST_RESPONSE_UNIQUE:
+      - grpc/health/v1/health.proto
+    RPC_REQUEST_STANDARD_NAME:
+      - grpc/health/v1/health.proto
+    RPC_RESPONSE_STANDARD_NAME:
+      - grpc/health/v1/health.proto
+breaking:
+  use:
+    - FILE

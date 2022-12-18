@@ -31,3 +31,4 @@ static
 
 .env.local
 .env.test
+bin/

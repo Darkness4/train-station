@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS favorites;
+DROP INDEX IF EXISTS idx_libelle;
+DROP TABLE IF EXISTS stations;

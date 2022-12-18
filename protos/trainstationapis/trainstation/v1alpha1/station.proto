@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package trainstation.v1alpha1;
+
+service StationAPI {
+  rpc GetManyStations(GetManyStationsRequest) returns (GetManyStationsResponse) {}
+  rpc GetOneStation(GetOneStationRequest) returns (GetOneStationResponse) {}
+  rpc SetFavoriteOneStation(SetFavoriteOneStationRequest) returns (SetFavoriteOneStationResponse) {}
+}
+
+message GetManyStationsRequest {
+  string query = 1;
+  int64 limit = 2;
+  int64 page = 3;
+  string token = 4;
+}
+
+message GetManyStationsResponse {
+  PaginatedStation stations = 1;
+}
+
+message GetOneStationRequest {
+  string id = 1;
+  string token = 2;
+}
+
+message GetOneStationResponse {
+  Station station = 1;
+}
+
+message SetFavoriteOneStationRequest {
+  string id = 1;
+  string token = 2;
+  bool value = 3;
+}
+
+message SetFavoriteOneStationResponse {}
+
+message PaginatedStation {
+  repeated Station data = 1;
+  int64 count = 2;
+  int64 total = 3;
+  int64 page = 4;
+  int64 page_count = 5;
+}
+
+message Station {
+  string id = 1;
+  string commune = 2;
+  double y_wgs84 = 3;
+  double x_wgs84 = 4;
+  string libelle = 5;
+  string idgaia = 6;
+  string voyageurs = 7;
+  repeated double geo_point_2d  = 8;
+  string code_ligne  = 9;
+  double x_l93  = 10;
+  repeated double c_geo  = 11;
+  int64 rg_troncon  = 12;
+  Geometry geo_shape  = 13;
+  string pk = 14;
+  int64 idreseau = 15;
+  string departemen = 16;
+  double y_l93 = 17;
+  string fret = 18;
+  bool is_favorite = 19;
+}
+
+message Geometry {
+  string type = 1;
+  repeated double coordinates = 2;
+}

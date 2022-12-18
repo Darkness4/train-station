@@ -1,0 +1,15 @@
+version: v1
+managed:
+  enabled: true
+  cc_enable_arenas: false
+  go_package_prefix:
+    default: github.com/Darkness4/train-station/trainstation/v1alpha1/gen/go
+plugins:
+  - name: go
+    out: ./train-station-api-go/gen/go
+    opt:
+      - paths=source_relative
+  - name: go-grpc
+    out: ./train-station-api-go/gen/go
+    opt:
+      - paths=source_relative
