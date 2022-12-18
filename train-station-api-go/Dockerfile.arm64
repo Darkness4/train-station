@@ -1,4 +1,4 @@
-FROM arm64v8/node:18-alpine as openapi-builder
+FROM arm64v8/node:19-alpine as openapi-builder
 RUN npm install -g swagger-cli
 
 WORKDIR /openapi
