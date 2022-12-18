@@ -12,7 +12,7 @@ type Validator struct {
 	secret string
 }
 
-func New(secret string) *Validator {
+func NewValidator(secret string) *Validator {
 	return &Validator{
 		secret: secret,
 	}

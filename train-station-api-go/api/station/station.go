@@ -1,4 +1,4 @@
-package stations
+package station
 
 import (
 	"context"

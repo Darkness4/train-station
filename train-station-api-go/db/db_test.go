@@ -67,7 +67,8 @@ func (suite *DBTestSuite) BeforeTest(suiteName, testName string) {
 	if err != nil {
 		logger.I.Panic("failed to migrate db", zap.Error(err))
 	}
-	m.Up()
+	err = m.Up()
+	suite.Require().NoError(err)
 	suite.db = db
 }
 
@@ -128,13 +129,13 @@ func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 		StationID: "id2",
 		UserID:    "userid",
 	}
-	m.Insert(context.Background(), suite.db, boil.Infer())
+	err = m.Insert(context.Background(), suite.db, boil.Infer())
 	suite.Require().NoError(err)
 	m = models.Favorite{
 		StationID: "id3",
 		UserID:    "otheruser",
 	}
-	m.Insert(context.Background(), suite.db, boil.Infer())
+	err = m.Insert(context.Background(), suite.db, boil.Infer())
 	suite.Require().NoError(err)
 
 	tests := []struct {
@@ -233,13 +234,13 @@ func (suite *DBTestSuite) TestFindManyFindManyStationAndFavorite() {
 		StationID: "id2",
 		UserID:    "userid",
 	}
-	m.Insert(context.Background(), suite.db, boil.Infer())
+	err = m.Insert(context.Background(), suite.db, boil.Infer())
 	suite.Require().NoError(err)
 	m = models.Favorite{
 		StationID: "id3",
 		UserID:    "otheruser",
 	}
-	m.Insert(context.Background(), suite.db, boil.Infer())
+	err = m.Insert(context.Background(), suite.db, boil.Infer())
 	suite.Require().NoError(err)
 
 	tests := []struct {
@@ -380,13 +381,13 @@ func (suite *DBTestSuite) TestDeleteFavorite() {
 		StationID: "id2",
 		UserID:    "userid",
 	}
-	m.Insert(context.Background(), suite.db, boil.Infer())
+	err = m.Insert(context.Background(), suite.db, boil.Infer())
 	suite.Require().NoError(err)
 	m = models.Favorite{
 		StationID: "id3",
 		UserID:    "otheruser",
 	}
-	m.Insert(context.Background(), suite.db, boil.Infer())
+	err = m.Insert(context.Background(), suite.db, boil.Infer())
 	suite.Require().NoError(err)
 
 	tests := []struct {

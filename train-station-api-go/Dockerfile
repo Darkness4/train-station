@@ -1,5 +1,5 @@
 # ---
-FROM alpine:3.17.0 as certs
+FROM --platform=$BUILDPLATFORM alpine:3.17.0 as certs
 RUN apk update && apk add --no-cache ca-certificates
 
 # ---
@@ -15,7 +15,7 @@ RUN --mount=target=/build/ \
   CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -o /out/app .
 
 # ---
-FROM busybox:1.35.0-musl
+FROM --platform=$BUILDPLATFORM busybox:1.35.0-musl
 
 ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-muslc-amd64 /tini
