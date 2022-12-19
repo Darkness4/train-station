@@ -1,20 +1,14 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import DetailStation from '$components/detail-station.component.svelte';
-	import { authStore } from '$stores/auth.store';
-	import { stationStore } from '$stores/station.store';
+	import type { PageData } from './$types';
 
-	$: id = $page.params.id;
-	$: if ($authStore.token) {
-		stationStore.load(id, $authStore.token).catch((e) => console.error(e));
-	}
-	$: station = $stationStore;
+	export let data: PageData;
 </script>
 
 <svelte:head>
-	<title>Station {id}</title>
+	<title>Station {data.id}</title>
 </svelte:head>
 
-{#if station}
-	<DetailStation {station} />
+{#if data.station}
+	<DetailStation station={data.station} />
 {/if}

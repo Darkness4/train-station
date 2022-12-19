@@ -1,0 +1,9 @@
+ignores:
+  - prettier-plugin-svelte
+  - tslib
+  - typescript
+  - $env
+  - $app
+  - $components
+  - $gen
+  - $lib

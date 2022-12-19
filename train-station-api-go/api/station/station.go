@@ -10,6 +10,7 @@ import (
 	trainstationv1alpha1 "github.com/Darkness4/train-station-api/gen/go/trainstation/v1alpha1"
 	"github.com/Darkness4/train-station-api/jwt"
 	"github.com/Darkness4/train-station-api/logger"
+	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -34,16 +35,18 @@ func New(db *sql.DB, validator *jwt.Validator) *stationAPIServer {
 }
 
 func (s *stationAPIServer) GetManyStations(ctx context.Context, req *trainstationv1alpha1.GetManyStationsRequest) (*trainstationv1alpha1.GetManyStationsResponse, error) {
-	total, err := db.CountStations(ctx, s.db, req.GetQuery())
-	if err != nil {
-		return nil, err
-	}
-	pageCount := total/int64(req.GetLimit()) + 1
-
 	userID, err := s.validator.Validate(req.GetToken())
 	if err != nil {
+		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
+
+	total, err := db.CountStations(ctx, s.db, req.GetQuery())
+	if err != nil {
+		logger.I.Error("count station failed", zap.Error(err), zap.Any("req", req))
+		return nil, err
+	}
+	pageCount := total/req.GetLimit() + 1
 
 	res, err := db.FindManyStationAndFavorite(ctx, s.db, userID, req.GetQuery(), int(req.GetLimit()), int(req.GetPage()))
 	if err == sql.ErrNoRows {
@@ -73,6 +76,7 @@ func (s *stationAPIServer) GetManyStations(ctx context.Context, req *trainstatio
 func (s *stationAPIServer) GetOneStation(ctx context.Context, req *trainstationv1alpha1.GetOneStationRequest) (*trainstationv1alpha1.GetOneStationResponse, error) {
 	userID, err := s.validator.Validate(req.GetToken())
 	if err != nil {
+		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
@@ -87,6 +91,7 @@ func (s *stationAPIServer) GetOneStation(ctx context.Context, req *trainstationv
 func (s *stationAPIServer) SetFavoriteOneStation(ctx context.Context, req *trainstationv1alpha1.SetFavoriteOneStationRequest) (*trainstationv1alpha1.SetFavoriteOneStationResponse, error) {
 	userID, err := s.validator.Validate(req.GetToken())
 	if err != nil {
+		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 

@@ -13,3 +13,5 @@ plugins:
     out: ./train-station-api-go/gen/go
     opt:
       - paths=source_relative
+  - name: ts
+    out: ./train-station-front/gen/ts

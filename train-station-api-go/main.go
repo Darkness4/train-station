@@ -16,7 +16,6 @@ import (
 	"github.com/Darkness4/train-station-api/sncf"
 	"github.com/joho/godotenv"
 	"github.com/urfave/cli/v2"
-	"github.com/volatiletech/sqlboiler/v4/boil"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -77,7 +76,7 @@ var flags = []cli.Flag{
 		Required:    true,
 		Destination: &jwtSecret,
 		Usage:       "JWT secret key.",
-		EnvVars:     []string{"JWT Secret"},
+		EnvVars:     []string{"JWT_SECRET"},
 	},
 	&cli.BoolFlag{
 		Name:    "debug",
@@ -86,7 +85,6 @@ var flags = []cli.Flag{
 		Action: func(ctx *cli.Context, s bool) error {
 			if s {
 				logger.EnableDebug()
-				boil.DebugMode = true
 			}
 			return nil
 		},

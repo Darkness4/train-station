@@ -10,78 +10,62 @@
 
 	function goToStart() {
 		goto(startPage);
-		page = startPage;
 	}
 
 	function goToPrevious() {
 		goto(prevPage);
-		page = prevPage;
 	}
 
 	function goToCurrent() {
 		goto(page);
-		page = page;
 	}
 
 	function goToNext() {
 		goto(nextPage);
-		page = nextPage;
 	}
 
 	function goToLast() {
 		goto(pageCount);
-		page = pageCount;
 	}
 </script>
 
-<nav class="pagination" aria-label="pagination">
-	<button disabled={page <= startPage} on:click={goToPrevious} class="pagination-previous"
-		>Previous</button
-	>
-	<button disabled={page >= pageCount} on:click={goToNext} class="pagination-next">Next page</button
-	>
+<nav aria-label="pagination">
+	<ul>
+		<button disabled={page <= startPage} on:click={goToPrevious}>Previous</button>
+	</ul>
+
 	<ul class="pagination-list">
 		{#if page > startPage}
 			<li>
-				<button on:click={goToStart} class="pagination-link" aria-label="Goto page {startPage}"
-					>{startPage}</button
-				>
+				<button on:click={goToStart} aria-label="Goto page {startPage}">{startPage}</button>
 			</li>
 		{/if}
 		{#if prevPage > startPage}
 			<li>
-				<span class="pagination-ellipsis">&hellip;</span>
+				<span>&hellip;</span>
 			</li>
 			<li>
-				<button on:click={goToPrevious} class="pagination-link" aria-label="Goto page {prevPage}"
-					>{prevPage}</button
-				>
+				<button on:click={goToPrevious} aria-label="Goto page {prevPage}">{prevPage}</button>
 			</li>
 		{/if}
 		<li>
-			<button
-				on:click={goToCurrent}
-				class="pagination-link is-current"
-				aria-label="Page {page}"
-				aria-current="page">{page}</button
-			>
+			<button on:click={goToCurrent} aria-label="Page {page}" aria-current="page">{page}</button>
 		</li>
 		{#if nextPage < pageCount}
 			<li>
-				<button on:click={goToNext} class="pagination-link" aria-label="Goto page {nextPage}"
-					>{nextPage}</button
-				>
+				<button on:click={goToNext} aria-label="Goto page {nextPage}">{nextPage}</button>
 			</li>
 			<li>
-				<span class="pagination-ellipsis">&hellip;</span>
+				<span>&hellip;</span>
 			</li>
 		{/if}
 		{#if page < pageCount}
 			<li>
-				<button on:click={goToLast} class="pagination-link" aria-label="Goto page {pageCount}"
-					>{pageCount}</button
-				>
+				<button on:click={goToLast} aria-label="Goto page {pageCount}">{pageCount}</button>
 			</li>
 		{/if}
+	</ul>
+	<ul>
+		<button disabled={page >= pageCount} on:click={goToNext}>Next page</button>
 	</ul>
 </nav>

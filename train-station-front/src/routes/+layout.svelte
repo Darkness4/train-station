@@ -1,56 +1,39 @@
 <script lang="ts">
+	import '../app.scss';
+
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { app } from '$lib/init-firebase';
-	import { authStore } from '$stores/auth.store';
-	import type { Auth, Unsubscribe } from 'firebase/auth';
-	import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-	import { onDestroy, onMount } from 'svelte';
+	import { signOut } from '@auth/sveltekit/client';
 
-	let unsubscribe: Unsubscribe;
-	let auth: Auth;
-	onMount(() => {
-		auth = getAuth(app);
-		unsubscribe = onAuthStateChanged(auth, async (user) => {
-			await authStore.set(user);
-			if ($page.url.pathname !== '/' && !auth?.currentUser) {
-				await goto('/');
-			}
-		});
-	});
 	async function logOut() {
-		if ($authStore.user) {
-			await signOut(auth);
+		if ($page.data.session) {
+			await signOut();
 			return goto('/');
 		}
 	}
-	onDestroy(() => {
-		if (unsubscribe !== undefined) {
-			unsubscribe();
-		}
-	});
 </script>
 
-{#if $authStore.user}
-	<nav class="navbar">
-		<div class="container">
-			<div id="navMenu" class="navbar-menu">
-				<div class="navbar-start">
-					<div class="navbar-item">
-						<div class="buttons">
-							<button on:click={() => goto('/')} class="button">Home</button>
-						</div>
-					</div>
-				</div>
-				<div class="navbar-end">
-					<div class="navbar-item">
-						<div class="buttons">
-							<button on:click={logOut} class="button is-danger">Log out</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+{#if $page.data.session}
+	<nav class="container-fluid">
+		<ul>
+			<li><a href="/"><strong>Train Stations</strong></a></li>
+		</ul>
+		<ul>
+			<li>
+				<span
+					><small>Signed in as</small>
+					<strong>{$page.data.session.user?.name ?? 'User'}</strong></span
+				>
+			</li>
+			<li>
+				{#if $page.data.session.user?.image}
+					<img src={$page.data.session.user.image} alt="avatar" class="avatar" />
+				{/if}
+			</li>
+			<li><a href="/">Home</a></li>
+			<!-- svelte-ignore a11y-invalid-attribute -->
+			<li><a on:click={logOut} href="#" role="button">Log out</a></li>
+		</ul>
 	</nav>
 
 	<div class="container">
@@ -59,7 +42,3 @@
 {:else}
 	<slot />
 {/if}
-
-<style lang="scss" global>
-	@import '../app';
-</style>
