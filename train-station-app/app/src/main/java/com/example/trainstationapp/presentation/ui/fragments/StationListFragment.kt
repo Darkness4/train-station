@@ -39,11 +39,7 @@ class StationListFragment : Fragment() {
         StationsAdapter(
             onFavorite = {
                 authViewModel.idToken.value?.let { token ->
-                    activityViewModel.makeFavorite(
-                        it.recordid,
-                        !it.isFavorite,
-                        token
-                    )
+                    activityViewModel.makeFavorite(it.id, !it.isFavorite, token)
                 }
             },
             onClick = { activityViewModel.showDetails(it) }
@@ -67,8 +63,9 @@ class StationListFragment : Fragment() {
         authViewModel.idToken.value?.let { token ->
             fetchJob =
                 lifecycleScope.launch {
-                    activityViewModel.watchPages(search, token)
-                        .collectLatest { adapter.submitData(it) }
+                    activityViewModel.watchPages(search, token).collectLatest {
+                        adapter.submitData(it)
+                    }
                 }
         }
     }
@@ -122,7 +119,8 @@ class StationListFragment : Fragment() {
             val errorState =
                 loadState.source.append as? LoadState.Error
                     ?: loadState.source.prepend as? LoadState.Error
-                    ?: loadState.append as? LoadState.Error ?: loadState.prepend as? LoadState.Error
+                        ?: loadState.append as? LoadState.Error
+                        ?: loadState.prepend as? LoadState.Error
             errorState?.let {
                 Toast.makeText(context, "\uD83D\uDE28 Whooops ${it.error}", Toast.LENGTH_LONG)
                     .show()
@@ -188,10 +186,8 @@ class StationListFragment : Fragment() {
                         authViewModel.idToken.value?.let { token ->
                             findNavController()
                                 .navigate(
-                                    StationListFragmentDirections.actionStationListFragmentToDetailsActivity(
-                                        it,
-                                        token
-                                    )
+                                    StationListFragmentDirections
+                                        .actionStationListFragmentToDetailsActivity(it, token)
                                 )
                             activityViewModel.showDetailsDone()
                         }
@@ -202,8 +198,7 @@ class StationListFragment : Fragment() {
         // Scroll to top when the list is refreshed from network.
         scrollToTopJob =
             lifecycleScope.launch {
-                adapter
-                    .loadStateFlow
+                adapter.loadStateFlow
                     // Only emit when REFRESH LoadState for RemoteMediator changes.
                     .distinctUntilChangedBy { it.refresh }
                     // Only react to cases where Remote REFRESH completes i.e., NotLoading.

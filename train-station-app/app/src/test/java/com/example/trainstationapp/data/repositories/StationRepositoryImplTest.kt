@@ -73,24 +73,21 @@ class StationRepositoryImplTest :
                     // Arrange
                     val slot = slot<MakeFavoriteModel>()
                     val mock = TestUtils.createStation("0").asModel()
-                    coEvery {
-                        remote.makeFavoriteById(
-                            any(),
-                            capture(slot),
-                            any()
-                        )
-                    } coAnswers { mock }
+                    coEvery { remote.makeFavoriteById(any(), capture(slot), any()) } coAnswers
+                        {
+                            mock
+                        }
                     coEvery { stationDao.insert(any<StationModel>()) } just Runs
                     val station = TestUtils.createStation("0")
 
                     // Act
                     val result =
-                        repository.makeFavoriteOne(station.recordid, !station.isFavorite, "token")
+                        repository.makeFavoriteOne(station.id, !station.isFavorite, "token")
 
                     // Assert
                     coVerify {
                         remote.makeFavoriteById(
-                            station.recordid,
+                            station.id,
                             MakeFavoriteModel(!station.isFavorite),
                             "Bearer token"
                         )
@@ -105,13 +102,12 @@ class StationRepositoryImplTest :
                     val station = TestUtils.createStation("0")
 
                     // Act
-                    val result =
-                        repository.makeFavoriteOne(station.recordid, station.isFavorite, "token")
+                    val result = repository.makeFavoriteOne(station.id, station.isFavorite, "token")
 
                     // Assert
                     coVerify {
                         remote.makeFavoriteById(
-                            station.recordid,
+                            station.id,
                             MakeFavoriteModel(station.isFavorite),
                             "Bearer token"
                         )
@@ -127,8 +123,7 @@ class StationRepositoryImplTest :
                     val station = TestUtils.createStation("0")
 
                     // Act
-                    val result =
-                        repository.makeFavoriteOne(station.recordid, station.isFavorite, "token")
+                    val result = repository.makeFavoriteOne(station.id, station.isFavorite, "token")
 
                     // Assert
                     verify { stationDao wasNot Called }

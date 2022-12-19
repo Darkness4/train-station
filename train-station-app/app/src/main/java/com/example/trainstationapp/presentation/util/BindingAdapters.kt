@@ -11,52 +11,34 @@ import com.example.trainstationapp.R
 import com.google.android.material.button.MaterialButton
 
 @BindingAdapter("showOnLoadStateLoading")
-fun showOnLoadStateLoading(
-    view: View,
-    loadState: LoadState?
-) {
+fun showOnLoadStateLoading(view: View, loadState: LoadState?) {
     view.isVisible = loadState is LoadState.Loading
 }
 
 @BindingAdapter("hideOnLoadStateLoading")
-fun hideOnLoadStateLoading(
-    view: View,
-    loadState: LoadState?
-) {
+fun hideOnLoadStateLoading(view: View, loadState: LoadState?) {
     view.isVisible = loadState !is LoadState.Loading
 }
 
 @BindingAdapter("showOnLoadStateNotLoading")
-fun showOnLoadStateNotLoading(
-    view: View,
-    loadState: LoadState?
-) {
+fun showOnLoadStateNotLoading(view: View, loadState: LoadState?) {
     view.isVisible = loadState is LoadState.NotLoading
 }
 
 @BindingAdapter("showOnLoadStateError")
-fun showOnLoadStateNotError(
-    view: View,
-    loadState: LoadState?
-) {
+fun showOnLoadStateNotError(view: View, loadState: LoadState?) {
     view.isVisible = loadState is LoadState.Error
 }
 
 @BindingAdapter("showTextOnLoadStateError")
-fun showTextOnLoadStateError(
-    textView: TextView,
-    loadState: LoadState?
-) {
+fun showTextOnLoadStateError(textView: TextView, loadState: LoadState?) {
     if (loadState is LoadState.Error) {
         textView.text = loadState.error.localizedMessage
     }
 }
 
 @BindingAdapter("favorite")
-fun boolToImageView(
-    imageView: ImageView,
-    boolean: Boolean?
-) {
+fun boolToImageView(imageView: ImageView, boolean: Boolean?) {
     boolean?.let {
         imageView.setImageResource(
             if (it) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_border_24
@@ -65,10 +47,7 @@ fun boolToImageView(
 }
 
 @BindingAdapter("favorite")
-fun boolToMaterialButton(
-    button: MaterialButton,
-    boolean: Boolean?
-) {
+fun boolToMaterialButton(button: MaterialButton, boolean: Boolean?) {
     boolean?.let {
         button.icon =
             ContextCompat.getDrawable(

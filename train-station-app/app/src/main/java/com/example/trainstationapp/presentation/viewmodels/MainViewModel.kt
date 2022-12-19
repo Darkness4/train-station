@@ -9,19 +9,15 @@ import com.example.trainstationapp.core.state.map
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel
-@Inject
-constructor(
-    private val repository: StationRepository
-) : ViewModel() {
+class MainViewModel @Inject constructor(private val repository: StationRepository) : ViewModel() {
     enum class RefreshMode {
         Normal,
         WithScrollToTop,
@@ -87,8 +83,7 @@ constructor(
 
     fun makeFavorite(id: String, value: Boolean, token: String) =
         viewModelScope.launch(Dispatchers.Main) {
-            _networkStatus.value =
-                repository.makeFavoriteOne(id, value, token).map {}
+            _networkStatus.value = repository.makeFavoriteOne(id, value, token).map {}
             refreshManually()
         }
 }

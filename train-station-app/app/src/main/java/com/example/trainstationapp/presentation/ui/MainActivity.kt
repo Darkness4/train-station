@@ -52,13 +52,13 @@ class MainActivity : AppCompatActivity() {
 
         // Link the TabLayout and the PagerView
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
-            tab.text =
-                when (position) {
-                    0 -> "Stations"
-                    1 -> "About"
-                    else -> throw RuntimeException("No fragment here.")
-                }
-        }
+                tab.text =
+                    when (position) {
+                        0 -> "Stations"
+                        1 -> "About"
+                        else -> throw RuntimeException("No fragment here.")
+                    }
+            }
             .attach()
 
         if (auth.currentUser == null) {
@@ -90,7 +90,9 @@ class MainActivity : AppCompatActivity() {
 
         // Create and launch sign-in intent
         val signInIntent =
-            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers)
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
                 .build()
         signInLauncher.launch(signInIntent)
     }

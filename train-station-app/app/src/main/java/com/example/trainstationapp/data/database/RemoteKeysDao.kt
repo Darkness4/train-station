@@ -17,12 +17,9 @@ import com.example.trainstationapp.data.models.RemoteKeys
  */
 @Dao
 interface RemoteKeysDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(remoteKey: List<RemoteKeys>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(remoteKey: List<RemoteKeys>)
 
-    @Query("SELECT * FROM remote_keys WHERE id = :id")
-    suspend fun findById(id: String): RemoteKeys?
+    @Query("SELECT * FROM remote_keys WHERE id = :id") suspend fun findById(id: String): RemoteKeys?
 
-    @Query("DELETE FROM remote_keys")
-    suspend fun clear()
+    @Query("DELETE FROM remote_keys") suspend fun clear()
 }

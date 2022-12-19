@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -37,7 +36,6 @@ constructor(
         stationRepository
             .watchOne(initialStation)
             .mapNotNull { it.getOrNull() } // Only take successful values
-            .filter { it.fields != null && it.geometry != null } // Make sure data is complete
             .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     private fun fetch(station: Station, token: String) {

@@ -40,7 +40,6 @@ class AboutFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance() = AboutFragment()
+        @JvmStatic fun newInstance() = AboutFragment()
     }
 }

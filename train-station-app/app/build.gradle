@@ -22,7 +22,7 @@ spotless {
     }
     kotlin {
         target '**/*.kt'
-        ktlint('0.46.1')
+        ktfmt('0.42').kotlinlangStyle()
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()
@@ -49,7 +49,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     buildFeatures {
         dataBinding true
@@ -58,7 +58,7 @@ android {
     defaultConfig {
         applicationId "com.example.trainstationapp"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         def secureProps = new Properties()
@@ -134,7 +134,7 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // Android KTX
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
 
     // Room
     def room_version = '2.4.3'
@@ -201,7 +201,7 @@ dependencies {
     testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
     testImplementation "io.kotest:kotest-property:$kotest_version"
 
-    def test_version = '1.4.0'
+    def test_version = '1.5.0'
     androidTestImplementation "androidx.test:core:$test_version"
     androidTestImplementation "androidx.test:runner:$test_version"
     androidTestImplementation "androidx.test:rules:$test_version"

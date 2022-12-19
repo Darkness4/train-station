@@ -11,12 +11,12 @@ import com.example.trainstationapp.data.datasources.TrainStationDataSource
 import com.example.trainstationapp.data.models.MakeFavoriteModel
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 class StationRepositoryImpl
 @Inject
@@ -45,16 +45,16 @@ constructor(
             }
         }
         return Pager(
-            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            remoteMediator =
-            StationRemoteMediator(
-                search = search,
-                service = trainStationDataSource,
-                database = database,
-                token = bearer
-            ),
-            pagingSourceFactory = pagingSourceFactory
-        )
+                config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+                remoteMediator =
+                    StationRemoteMediator(
+                        search = search,
+                        service = trainStationDataSource,
+                        database = database,
+                        token = bearer
+                    ),
+                pagingSourceFactory = pagingSourceFactory
+            )
             .flow
             .map { it.map { model -> model.asEntity() } }
             .flowOn(Dispatchers.Default)
@@ -64,7 +64,7 @@ constructor(
     override fun watchOne(station: Station): Flow<State<Station>> {
         return database
             .stationDao()
-            .watchById(station.recordid)
+            .watchById(station.id)
             .map { model -> State.Success(model.asEntity()) }
             .catch<State<Station>> { emit(State.Failure(it)) }
     }
@@ -73,7 +73,7 @@ constructor(
     override suspend fun findOne(station: Station, token: String): State<Station> {
         val bearer = "Bearer $token"
         return try {
-            val model = trainStationDataSource.findById(station.recordid, bearer)
+            val model = trainStationDataSource.findById(station.id, bearer)
             model?.let {
                 database.stationDao().insert(model)
                 State.Success(model.asEntity())

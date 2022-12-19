@@ -23,9 +23,7 @@ sealed class State<out T> {
         }
 }
 
-inline fun <R, T> State<T>.doOnSuccess(
-    onSuccess: (value: T) -> R
-): R? =
+inline fun <R, T> State<T>.doOnSuccess(onSuccess: (value: T) -> R): R? =
     when (this) {
         is State.Success -> onSuccess(value)
         else -> null

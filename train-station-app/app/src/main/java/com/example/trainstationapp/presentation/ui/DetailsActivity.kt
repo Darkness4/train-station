@@ -20,10 +20,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -34,15 +34,12 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityDetailsBinding
     private val args: DetailsActivityArgs by navArgs()
 
-    @Inject
-    lateinit var assisted: DetailsViewModel.AssistedFactory
-    private val viewModel by viewModels<DetailsViewModel> {
-        assisted.provideFactory(args.station, args.token)
-    }
+    @Inject lateinit var assisted: DetailsViewModel.AssistedFactory
+    private val viewModel by
+        viewModels<DetailsViewModel> { assisted.provideFactory(args.station, args.token) }
     private lateinit var map: GoogleMap
 
-    @Inject
-    lateinit var stationRepository: StationRepository
+    @Inject lateinit var stationRepository: StationRepository
 
     // Coroutines jobs
     private var networkStatusJob: Job? = null
@@ -83,13 +80,10 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
             lifecycleScope.launch {
                 viewModel.station.collect {
                     it?.let {
-                        val position = LatLng(it.fields!!.yWgs84, it.fields.xWgs84)
+                        val position = LatLng(it.yWgs84, it.xWgs84)
                         map.addMarker(MarkerOptions().position(position).title(it.libelle))
                         map.animateCamera(
-                            CameraUpdateFactory.newLatLngZoom(
-                                position,
-                                DEFAULT_ZOOM_LEVEL
-                            )
+                            CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM_LEVEL)
                         )
                     }
                 }

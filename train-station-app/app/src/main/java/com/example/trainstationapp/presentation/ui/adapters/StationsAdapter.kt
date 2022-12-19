@@ -20,8 +20,7 @@ class StationsAdapter(
     private val onClick: (Station) -> Unit
 ) : PagingDataAdapter<Station, StationsAdapter.ViewHolder>(Comparator) {
     object Comparator : DiffUtil.ItemCallback<Station>() {
-        override fun areItemsTheSame(oldItem: Station, newItem: Station) =
-            oldItem.recordid == newItem.recordid
+        override fun areItemsTheSame(oldItem: Station, newItem: Station) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Station, newItem: Station) = oldItem == newItem
     }
@@ -32,11 +31,7 @@ class StationsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder.create(
-            parent,
-            onFavorite,
-            onClick
-        )
+        ViewHolder.create(parent, onFavorite, onClick)
 
     class ViewHolder(
         private val binding: StationItemBinding, // station_item.xml
