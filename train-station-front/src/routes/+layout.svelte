@@ -3,7 +3,7 @@
 
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { signOut } from '@auth/sveltekit/client';
+	import { signOut } from '$lib/auth/client';
 
 	async function logOut() {
 		if ($page.data.session) {

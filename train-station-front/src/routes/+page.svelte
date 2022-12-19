@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import AuthCard from '$components/auth/auth-card.component.svelte';
-	import { signIn } from '@auth/sveltekit/client';
+	import { signIn } from '$lib/auth/client';
 </script>
 
 <svelte:head>
