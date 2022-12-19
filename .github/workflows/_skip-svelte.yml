@@ -1,0 +1,13 @@
+name: Skip on ignored paths / Svelte CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/svelte.yml
+      - train-station-front/**
+
+jobs:
+  build-deploy-svelte:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "No build required"'

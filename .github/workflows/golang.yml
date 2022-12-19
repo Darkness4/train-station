@@ -19,7 +19,7 @@ defaults:
     working-directory: ./train-station-api-go
 
 jobs:
-  lint:
+  lint-go:
     runs-on: ubuntu-latest
 
     steps:

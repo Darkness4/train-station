@@ -1,0 +1,23 @@
+name: Skip on ignored paths / Go CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/golang.yml
+      - train-station-api-go/**
+
+jobs:
+  lint-go:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "No lint required"'
+
+  test-go:
+    runs-on: self-hosted
+    steps:
+      - run: 'echo "No test required"'
+
+  build-go:
+    runs-on: self-hosted
+    steps:
+      - run: 'echo "No build required"'
