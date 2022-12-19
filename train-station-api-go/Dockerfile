@@ -3,7 +3,7 @@ FROM --platform=$BUILDPLATFORM alpine:3.17.0 as certs
 RUN apk update && apk add --no-cache ca-certificates
 
 # ---
-FROM --platform=$BUILDPLATFORM golang:1.19.4-alpine as builder
+FROM --platform=$BUILDPLATFORM golang:1.19.4 as builder
 WORKDIR /build/
 COPY go.mod go.sum ./
 RUN go mod download
@@ -15,10 +15,12 @@ RUN --mount=target=/build/ \
   CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -o /out/app .
 
 # ---
-FROM --platform=$BUILDPLATFORM busybox:1.35.0-musl
+FROM --platform=$BUILDPLATFORM busybox:1.35.0
+
+ARG TARGETOS TARGETARCH
 
 ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-muslc-amd64 /tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-$TARGETARCH /tini
 RUN chmod +x /tini
 
 RUN mkdir /app
@@ -27,6 +29,10 @@ WORKDIR /app
 
 COPY --from=builder /out/app .
 COPY --from=certs /etc/ssl/certs /etc/ssl/certs
+
+ADD https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.13/grpc_health_probe-$TARGETOS-$TARGETARCH /bin/grpc_health_probe
+
+RUN chmod +x /bin/grpc_health_probe
 
 RUN chown -R app:app .
 USER app
