@@ -9,8 +9,6 @@
 
 	export let data: PageData;
 
-	let stations = data.stations;
-
 	let searchQuery: string = '';
 
 	function search(newPage: number) {
@@ -40,9 +38,19 @@
 <section class="section">
 	<Search bind:value={searchQuery} onConfirm={() => search(data.stations.page)} />
 
-	<Pager page={stations.page} pageCount={stations.pageCount} startPage={1} goto={search} />
+	<Pager
+		page={data.stations.page}
+		pageCount={data.stations.pageCount}
+		startPage={1}
+		goto={search}
+	/>
 
-	<PaginatedStations {stations} {onClick} {onFavorite} />
+	<PaginatedStations stations={data.stations} {onClick} {onFavorite} />
 
-	<Pager page={stations.page} pageCount={stations.pageCount} startPage={1} goto={search} />
+	<Pager
+		page={data.stations.page}
+		pageCount={data.stations.pageCount}
+		startPage={1}
+		goto={search}
+	/>
 </section>
