@@ -20,7 +20,7 @@ specifiers:
   eslint-config-prettier: 8.5.0
   eslint-plugin-svelte3: 4.0.0
   jsonwebtoken: ^8.5.1
-  lodash: ^4.17.21
+  just-clone: ^6.2.0
   material-design-icons: 3.0.1
   prettier: 2.8.1
   prettier-plugin-svelte: 2.9.0
@@ -52,7 +52,7 @@ devDependencies:
   eslint-config-prettier: 8.5.0_eslint@8.30.0
   eslint-plugin-svelte3: 4.0.0_khrjkzzv5v2x7orkj5o7sxbz3a
   jsonwebtoken: 8.5.1
-  lodash: 4.17.21
+  just-clone: 6.2.0
   material-design-icons: 3.0.1
   prettier: 2.8.1
   prettier-plugin-svelte: 2.9.0_ajxj753sv7dbwexjherrch25ta
@@ -1880,6 +1880,10 @@ packages:
       lodash.once: 4.1.1
       ms: 2.1.2
       semver: 5.7.1
+    dev: true
+
+  /just-clone/6.2.0:
+    resolution: {integrity: sha512-1IynUYEc/HAwxhi3WDpIpxJbZpMCvvrrmZVqvj9EhpvbH8lls7HhdhiByjL7DkAaWlLIzpC0Xc/VPvy/UxLNjA==}
     dev: true
 
   /jwa/1.4.1:

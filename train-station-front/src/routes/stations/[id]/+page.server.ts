@@ -1,6 +1,6 @@
 import client from '$lib/server/api';
 import type { PageServerLoad } from './$types';
-import { cloneDeep } from 'lodash';
+import clone from 'just-clone';
 import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ params, locals }) => {
@@ -16,7 +16,7 @@ export const load = (async ({ params, locals }) => {
 	}
 	return {
 		id: params.id,
-		station: cloneDeep(response.station),
+		station: clone(response.station),
 		session: session
 	};
 }) satisfies PageServerLoad;
