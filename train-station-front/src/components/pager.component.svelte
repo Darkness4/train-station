@@ -31,7 +31,9 @@
 
 <nav aria-label="pagination">
 	<ul>
-		<button disabled={page <= startPage} on:click={goToPrevious}>Previous</button>
+		<li>
+			<button disabled={page <= startPage} on:click={goToPrevious}>Previous</button>
+		</li>
 	</ul>
 
 	<ul class="pagination-list">
@@ -66,6 +68,8 @@
 		{/if}
 	</ul>
 	<ul>
-		<button disabled={page >= pageCount} on:click={goToNext}>Next page</button>
+		<li>
+			<button disabled={page >= pageCount} on:click={goToNext}>Next page</button>
+		</li>
 	</ul>
 </nav>
