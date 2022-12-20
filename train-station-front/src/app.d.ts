@@ -8,8 +8,15 @@ declare namespace App {
 	// interface Platform {}
 }
 
+interface Account {
+	provider: string;
+	type: string;
+	providerAccountId: string;
+	access_token: string;
+}
+
 interface Session {
-	encodedToken: string;
+	token?: string;
 	user?: {
 		name?: string | null;
 		email?: string | null;

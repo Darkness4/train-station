@@ -1,10 +1,10 @@
-import client from '$lib/server/api';
+import { stationClient } from '$lib/server/api';
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const POST = (async ({ request, locals }) => {
 	const session = (await locals.getSession()) as Session | null;
-	if (!session) {
+	if (!session || !session.token) {
 		throw redirect(302, '/');
 	}
 
@@ -15,10 +15,10 @@ export const POST = (async ({ request, locals }) => {
 	const value = data.value;
 
 	// TODO: handle error
-	await client.setFavoriteOneStation({
+	await stationClient.setFavoriteOneStation({
 		id: id,
-		token: session.encodedToken,
-		value: value
+		value: value,
+		token: session.token
 	});
 
 	return new Response();

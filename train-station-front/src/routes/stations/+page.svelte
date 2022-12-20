@@ -11,8 +11,11 @@
 
 	let searchQuery: string = '';
 
-	function search(newPage: number) {
-		return goto(`${$page.url.pathname}?s=${searchQuery}&page=${newPage}`);
+	function search(search: string) {
+		return goto(`${$page.url.pathname}?s=${search}`);
+	}
+	function gotoPage(newPage: number) {
+		return goto(`${$page.url.pathname}?s=${$page.url.searchParams.get('s')}&page=${newPage}`);
 	}
 	function onClick(station: Station) {
 		return goto(`/stations/${station.id}`);
@@ -36,13 +39,13 @@
 </svelte:head>
 
 <section class="section">
-	<Search bind:value={searchQuery} onConfirm={() => search(data.stations.page)} />
+	<Search bind:value={searchQuery} onConfirm={() => search(searchQuery)} />
 
 	<Pager
 		page={data.stations.page}
 		pageCount={data.stations.pageCount}
 		startPage={1}
-		goto={search}
+		goto={gotoPage}
 	/>
 
 	<PaginatedStations stations={data.stations} {onClick} {onFavorite} />
@@ -51,6 +54,6 @@
 		page={data.stations.page}
 		pageCount={data.stations.pageCount}
 		startPage={1}
-		goto={search}
+		goto={gotoPage}
 	/>
 </section>

@@ -2,13 +2,16 @@ package main
 
 import (
 	"database/sql"
+	"encoding/base64"
 	"net"
 	"os"
 
+	"github.com/Darkness4/train-station-api/api/auth"
 	"github.com/Darkness4/train-station-api/api/health"
 	"github.com/Darkness4/train-station-api/api/station"
 	"github.com/Darkness4/train-station-api/db"
 	"github.com/Darkness4/train-station-api/db/mappers"
+	authv1alpha1 "github.com/Darkness4/train-station-api/gen/go/auth/v1alpha1"
 	healthv1 "github.com/Darkness4/train-station-api/gen/go/grpc/health/v1"
 	trainstationv1alpha1 "github.com/Darkness4/train-station-api/gen/go/trainstation/v1alpha1"
 	"github.com/Darkness4/train-station-api/jwt"
@@ -32,7 +35,7 @@ var (
 
 	dbFile string
 
-	jwtSecret string
+	jwtSecret []byte
 )
 
 var flags = []cli.Flag{
@@ -72,11 +75,17 @@ var flags = []cli.Flag{
 		EnvVars:     []string{"DB_PATH"},
 	},
 	&cli.StringFlag{
-		Name:        "jwt.secret",
-		Required:    true,
-		Destination: &jwtSecret,
-		Usage:       "JWT secret key.",
-		EnvVars:     []string{"JWT_SECRET"},
+		Name:     "jwt.secret",
+		Required: true,
+		Usage:    "JWT secret key.",
+		EnvVars:  []string{"JWT_SECRET"},
+		Action: func(ctx *cli.Context, s string) (err error) {
+			jwtSecret, err = base64.StdEncoding.DecodeString(s)
+			if err != nil {
+				logger.I.Panic("failed to decode JWT", zap.Error(err))
+			}
+			return nil
+		},
 	},
 	&cli.BoolFlag{
 		Name:    "debug",
@@ -98,7 +107,7 @@ var app = &cli.App{
 	Suggest: true,
 	Action: func(cCtx *cli.Context) error {
 		ctx := cCtx.Context
-		j := jwt.NewValidator(jwtSecret)
+		j := jwt.New(jwtSecret)
 
 		d, err := sql.Open("sqlite", dbFile)
 		if err != nil {
@@ -145,6 +154,10 @@ var app = &cli.App{
 		trainstationv1alpha1.RegisterStationAPIServer(
 			server,
 			station.New(d, j),
+		)
+		authv1alpha1.RegisterAuthAPIServer(
+			server,
+			auth.NewAPI(j),
 		)
 
 		logger.I.Info("serving...")

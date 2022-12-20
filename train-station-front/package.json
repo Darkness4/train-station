@@ -32,7 +32,6 @@
 		"eslint": "8.30.0",
 		"eslint-config-prettier": "8.5.0",
 		"eslint-plugin-svelte3": "4.0.0",
-		"jsonwebtoken": "^8.5.1",
 		"just-clone": "^6.2.0",
 		"material-design-icons": "3.0.1",
 		"next-auth": "^4.18.6",

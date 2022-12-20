@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package auth.v1alpha1;
+
+service AuthAPI {
+  rpc GetJWT(GetJWTRequest) returns (GetJWTResponse) {}
+}
+
+message Account {
+  /** ID of the provider used for this account */
+  string provider = 1;
+  /** Provider's type for this account, oauth or oidc. */
+  string type = 2;
+  /** The OAuth Account ID */
+  string provider_account_id = 3;
+  /** The provider access_token */
+  string access_token = 4;
+}
+
+message GetJWTRequest {
+  Account account = 1;
+}
+
+message GetJWTResponse {
+  string token = 1;
+}

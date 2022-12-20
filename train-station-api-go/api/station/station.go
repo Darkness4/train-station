@@ -17,25 +17,25 @@ import (
 
 type stationAPIServer struct {
 	trainstationv1alpha1.UnimplementedStationAPIServer
-	db        *sql.DB
-	validator *jwt.Validator
+	db  *sql.DB
+	jwt *jwt.Service
 }
 
-func New(db *sql.DB, validator *jwt.Validator) *stationAPIServer {
+func New(db *sql.DB, jwt *jwt.Service) *stationAPIServer {
 	if db == nil {
 		logger.I.Panic("db is nil")
 	}
-	if validator == nil {
-		logger.I.Panic("validator is nil")
+	if jwt == nil {
+		logger.I.Panic("jwt is nil")
 	}
 	return &stationAPIServer{
-		db:        db,
-		validator: validator,
+		db:  db,
+		jwt: jwt,
 	}
 }
 
 func (s *stationAPIServer) GetManyStations(ctx context.Context, req *trainstationv1alpha1.GetManyStationsRequest) (*trainstationv1alpha1.GetManyStationsResponse, error) {
-	userID, err := s.validator.Validate(req.GetToken())
+	userID, err := s.jwt.Validate(req.GetToken())
 	if err != nil {
 		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
@@ -74,7 +74,7 @@ func (s *stationAPIServer) GetManyStations(ctx context.Context, req *trainstatio
 	}, nil
 }
 func (s *stationAPIServer) GetOneStation(ctx context.Context, req *trainstationv1alpha1.GetOneStationRequest) (*trainstationv1alpha1.GetOneStationResponse, error) {
-	userID, err := s.validator.Validate(req.GetToken())
+	userID, err := s.jwt.Validate(req.GetToken())
 	if err != nil {
 		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
@@ -89,7 +89,7 @@ func (s *stationAPIServer) GetOneStation(ctx context.Context, req *trainstationv
 	}, nil
 }
 func (s *stationAPIServer) SetFavoriteOneStation(ctx context.Context, req *trainstationv1alpha1.SetFavoriteOneStationRequest) (*trainstationv1alpha1.SetFavoriteOneStationResponse, error) {
-	userID, err := s.validator.Validate(req.GetToken())
+	userID, err := s.jwt.Validate(req.GetToken())
 	if err != nil {
 		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)

@@ -1,7 +1,7 @@
 import GitHub from '@auth/core/providers/github';
 import { env } from '$env/dynamic/private';
-import jwt from 'jsonwebtoken';
 import SvelteKitAuth from '$lib/auth';
+import { authClient } from '$lib/server/api';
 
 export const handle = SvelteKitAuth({
 	providers: [
@@ -14,12 +14,25 @@ export const handle = SvelteKitAuth({
 		strategy: 'jwt'
 	},
 	callbacks: {
+		jwt: async ({ token, account }) => {
+			if (account && account.access_token) {
+				const { response } = await authClient.getJWT({
+					account: {
+						accessToken: account.access_token,
+						provider: account.provider,
+						providerAccountId: account.providerAccountId,
+						type: account.type
+					}
+				});
+				token.stationToken = response.token;
+			}
+			return token;
+		},
 		session: async ({ session, token }) => {
-			(session as Session).encodedToken = jwt.sign(
-				token,
-				env.AUTH_SECRET ?? '7db5cdd9d2f3ed72662bd8a9ea331844898e9151cee8818ec3cf127d2a08e89d',
-				{ algorithm: 'HS256' }
-			);
+			if (token.stationToken) {
+				(session as Session).token = token.stationToken as string;
+			}
+
 			return session;
 		}
 	}
