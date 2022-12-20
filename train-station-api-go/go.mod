@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/friendsofgo/errors v0.9.2
-	github.com/golang-jwt/jwt/v4 v4.2.0
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.4.0

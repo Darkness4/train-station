@@ -31,7 +31,7 @@ func (s *authAPIServer) GetJWT(ctx context.Context, req *authv1alpha1.GetJWTRequ
 	userID, err := auth.Validate(ctx, req.GetAccount())
 	if err != nil {
 		logger.I.Error("user failed to authenticate", zap.Error(err), zap.Any("req", req))
-		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticated: ", err)
+		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticated: %s", err)
 	}
 	token := s.jwt.CreateToken(userID)
 	logger.I.Debug("GetJWT success", zap.Any("token", token))

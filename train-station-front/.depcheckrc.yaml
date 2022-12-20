@@ -7,3 +7,4 @@ ignores:
   - $components
   - $gen
   - $lib
+  - just-clone
