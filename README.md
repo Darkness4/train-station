@@ -142,6 +142,44 @@ erDiagram
 - JWT for session handling
 - OAuth2 for Authentication
 
+## Web Front-End
+
+### Setup
+
+Install [pnpm](https://pnpm.io) and install the dependencies:
+
+```shell
+pnpm install --frozen-lockfile
+```
+
+Create a [Github OAuth App](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app), generate a secret with `openssl rand -base64 32`, and fill a `.env` file with the following content:
+
+```shell
+GITHUB_ID=<Github OAUTH App ID>
+GITHUB_SECRET=<Github OAUTH App Secret>
+AUTH_SECRET=<Random Secret>
+```
+
+Serve in development mode:
+
+```shell
+pnpm run dev
+```
+
+Or deploy in production:
+
+```shell
+pnpm run build
+# pnpm run preview # for demonstration
+```
+
+### Technologies used
+
+- SvelteKit with SSR as main web framework
+- NextAuth.js as authentication helpers
+- protobuf-ts + gRPC as transport
+- ViteJS for bundling and optimizing
+
 ## Android App
 
 ### Architecture
