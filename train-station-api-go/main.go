@@ -114,6 +114,9 @@ var app = &cli.App{
 			logger.I.Error("db failed", zap.Error(err))
 			return err
 		}
+		db := &db.DB{
+			DB: d,
+		}
 
 		go func() {
 			logger.I.Info("downloading initial data...")
@@ -122,11 +125,11 @@ var app = &cli.App{
 				logger.I.Panic("failed to download initial data", zap.Error(err))
 			}
 			logger.I.Info("clearing database...")
-			if err := db.Clear(ctx, d); err != nil {
+			if err := db.Clear(ctx); err != nil {
 				logger.I.Panic("failed to clear db", zap.Error(err))
 			}
 			logger.I.Info("inserting new data in database...")
-			if err := db.CreateManyStation(ctx, d, mappers.StationsFromSNCF(stations)); err != nil {
+			if err := db.CreateManyStation(ctx, mappers.StationsFromSNCF(stations)); err != nil {
 				logger.I.Panic("failed to insert initial data", zap.Error(err))
 			}
 			logger.I.Info("initialized database successfully")
@@ -153,7 +156,7 @@ var app = &cli.App{
 		)
 		trainstationv1alpha1.RegisterStationAPIServer(
 			server,
-			station.New(d, j),
+			station.New(db, j),
 		)
 		authv1alpha1.RegisterAuthAPIServer(
 			server,

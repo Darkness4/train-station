@@ -22,8 +22,11 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StationAPIClient interface {
+	// GetManyStations fetch a paginated list of station.
 	GetManyStations(ctx context.Context, in *GetManyStationsRequest, opts ...grpc.CallOption) (*GetManyStationsResponse, error)
+	// GetOneStation fetches the details of a station.
 	GetOneStation(ctx context.Context, in *GetOneStationRequest, opts ...grpc.CallOption) (*GetOneStationResponse, error)
+	// SetFavoriteOneStation set a station to favorite for a user.
 	SetFavoriteOneStation(ctx context.Context, in *SetFavoriteOneStationRequest, opts ...grpc.CallOption) (*SetFavoriteOneStationResponse, error)
 }
 
@@ -66,8 +69,11 @@ func (c *stationAPIClient) SetFavoriteOneStation(ctx context.Context, in *SetFav
 // All implementations must embed UnimplementedStationAPIServer
 // for forward compatibility
 type StationAPIServer interface {
+	// GetManyStations fetch a paginated list of station.
 	GetManyStations(context.Context, *GetManyStationsRequest) (*GetManyStationsResponse, error)
+	// GetOneStation fetches the details of a station.
 	GetOneStation(context.Context, *GetOneStationRequest) (*GetOneStationResponse, error)
+	// SetFavoriteOneStation set a station to favorite for a user.
 	SetFavoriteOneStation(context.Context, *SetFavoriteOneStationRequest) (*SetFavoriteOneStationResponse, error)
 	mustEmbedUnimplementedStationAPIServer()
 }

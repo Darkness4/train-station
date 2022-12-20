@@ -15,3 +15,9 @@ plugins:
       - paths=source_relative
   - name: ts
     out: ./train-station-front/gen/ts
+  - name: doc
+    out: ./docs
+    opt:
+      - markdown
+      - index.md
+      - source_relative

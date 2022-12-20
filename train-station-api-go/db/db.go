@@ -12,7 +12,11 @@ import (
 	"go.uber.org/zap"
 )
 
-func CreateManyStation(ctx context.Context, db *sql.DB, models []*models.Station) error {
+type DB struct {
+	*sql.DB
+}
+
+func (db *DB) CreateManyStation(ctx context.Context, models []*models.Station) error {
 	logger.I.Debug("CreateManyStation called")
 	tx, err := db.BeginTx(ctx, nil)
 	if err != nil {
@@ -37,7 +41,7 @@ func CreateManyStation(ctx context.Context, db *sql.DB, models []*models.Station
 	return tx.Commit()
 }
 
-func FindOneStationAndFavorite(ctx context.Context, db *sql.DB, id string, userID string) (*types.StationAndFavorite, error) {
+func (db *DB) FindOneStationAndFavorite(ctx context.Context, id string, userID string) (*types.StationAndFavorite, error) {
 	logger.I.Debug(
 		"FindOneStationAndFavorite called",
 		zap.String("id", id),
@@ -57,9 +61,8 @@ func FindOneStationAndFavorite(ctx context.Context, db *sql.DB, id string, userI
 	return &s, nil
 }
 
-func FindManyStationAndFavorite(
+func (db *DB) FindManyStationAndFavorite(
 	ctx context.Context,
-	db *sql.DB,
 	userID string,
 	search string,
 	limit int,
@@ -89,9 +92,8 @@ func FindManyStationAndFavorite(
 	return s, nil
 }
 
-func CountStations(
+func (db *DB) CountStations(
 	ctx context.Context,
-	db *sql.DB,
 	search string,
 ) (int64, error) {
 	queries := []qm.QueryMod{}
@@ -101,12 +103,12 @@ func CountStations(
 	return models.Stations(queries...).Count(ctx, db)
 }
 
-func CreateFavorite(ctx context.Context, db *sql.DB, m *models.Favorite) error {
+func (db *DB) CreateFavorite(ctx context.Context, m *models.Favorite) error {
 	logger.I.Debug("CreateFavorite called", zap.Any("model", m))
 	return m.Insert(ctx, db, boil.Infer())
 }
 
-func DeleteFavorite(ctx context.Context, db *sql.DB, m *models.Favorite) error {
+func (db *DB) DeleteFavorite(ctx context.Context, m *models.Favorite) error {
 	logger.I.Debug("DeleteFavorite called", zap.Any("model", m))
 	_, err := models.Favorites(
 		qm.Where("station_id = ?", m.StationID),
@@ -115,7 +117,7 @@ func DeleteFavorite(ctx context.Context, db *sql.DB, m *models.Favorite) error {
 	return err
 }
 
-func Clear(ctx context.Context, db *sql.DB) error {
+func (db *DB) Clear(ctx context.Context) error {
 	logger.I.Debug("Clear called")
 	if _, err := models.Favorites().DeleteAll(ctx, db); err != nil {
 		return err

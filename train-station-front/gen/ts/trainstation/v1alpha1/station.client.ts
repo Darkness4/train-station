@@ -14,23 +14,37 @@ import type { GetManyStationsRequest } from "./station";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
+ * StationAPI handles train stations from the SNCF.
+ *
+ * The API needs the user to be authenticated via the AuthAPI.
+ *
  * @generated from protobuf service trainstation.v1alpha1.StationAPI
  */
 export interface IStationAPIClient {
     /**
+     * GetManyStations fetch a paginated list of station.
+     *
      * @generated from protobuf rpc: GetManyStations(trainstation.v1alpha1.GetManyStationsRequest) returns (trainstation.v1alpha1.GetManyStationsResponse);
      */
     getManyStations(input: GetManyStationsRequest, options?: RpcOptions): UnaryCall<GetManyStationsRequest, GetManyStationsResponse>;
     /**
+     * GetOneStation fetches the details of a station.
+     *
      * @generated from protobuf rpc: GetOneStation(trainstation.v1alpha1.GetOneStationRequest) returns (trainstation.v1alpha1.GetOneStationResponse);
      */
     getOneStation(input: GetOneStationRequest, options?: RpcOptions): UnaryCall<GetOneStationRequest, GetOneStationResponse>;
     /**
+     * SetFavoriteOneStation set a station to favorite for a user.
+     *
      * @generated from protobuf rpc: SetFavoriteOneStation(trainstation.v1alpha1.SetFavoriteOneStationRequest) returns (trainstation.v1alpha1.SetFavoriteOneStationResponse);
      */
     setFavoriteOneStation(input: SetFavoriteOneStationRequest, options?: RpcOptions): UnaryCall<SetFavoriteOneStationRequest, SetFavoriteOneStationResponse>;
 }
 /**
+ * StationAPI handles train stations from the SNCF.
+ *
+ * The API needs the user to be authenticated via the AuthAPI.
+ *
  * @generated from protobuf service trainstation.v1alpha1.StationAPI
  */
 export class StationAPIClient implements IStationAPIClient, ServiceInfo {
@@ -40,6 +54,8 @@ export class StationAPIClient implements IStationAPIClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
+     * GetManyStations fetch a paginated list of station.
+     *
      * @generated from protobuf rpc: GetManyStations(trainstation.v1alpha1.GetManyStationsRequest) returns (trainstation.v1alpha1.GetManyStationsResponse);
      */
     getManyStations(input: GetManyStationsRequest, options?: RpcOptions): UnaryCall<GetManyStationsRequest, GetManyStationsResponse> {
@@ -47,6 +63,8 @@ export class StationAPIClient implements IStationAPIClient, ServiceInfo {
         return stackIntercept<GetManyStationsRequest, GetManyStationsResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * GetOneStation fetches the details of a station.
+     *
      * @generated from protobuf rpc: GetOneStation(trainstation.v1alpha1.GetOneStationRequest) returns (trainstation.v1alpha1.GetOneStationResponse);
      */
     getOneStation(input: GetOneStationRequest, options?: RpcOptions): UnaryCall<GetOneStationRequest, GetOneStationResponse> {
@@ -54,6 +72,8 @@ export class StationAPIClient implements IStationAPIClient, ServiceInfo {
         return stackIntercept<GetOneStationRequest, GetOneStationResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * SetFavoriteOneStation set a station to favorite for a user.
+     *
      * @generated from protobuf rpc: SetFavoriteOneStation(trainstation.v1alpha1.SetFavoriteOneStationRequest) returns (trainstation.v1alpha1.SetFavoriteOneStationResponse);
      */
     setFavoriteOneStation(input: SetFavoriteOneStationRequest, options?: RpcOptions): UnaryCall<SetFavoriteOneStationRequest, SetFavoriteOneStationResponse> {

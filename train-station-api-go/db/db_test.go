@@ -45,15 +45,15 @@ func fakeStation(id string) *models.Station {
 
 type DBTestSuite struct {
 	suite.Suite
-	db *sql.DB
+	db *db.DB
 }
 
 func (suite *DBTestSuite) BeforeTest(suiteName, testName string) {
-	db, err := sql.Open("sqlite", fmt.Sprintf("file:%s?mode=memory&cache=shared", uuid.NewString()))
+	d, err := sql.Open("sqlite", fmt.Sprintf("file:%s?mode=memory&cache=shared", uuid.NewString()))
 	if err != nil {
 		logger.I.Panic("failed to open db", zap.Error(err))
 	}
-	driver, err := sqlite.WithInstance(db, &sqlite.Config{
+	driver, err := sqlite.WithInstance(d, &sqlite.Config{
 		NoTxWrap: true,
 	})
 	if err != nil {
@@ -69,7 +69,7 @@ func (suite *DBTestSuite) BeforeTest(suiteName, testName string) {
 	}
 	err = m.Up()
 	suite.Require().NoError(err)
-	suite.db = db
+	suite.db = &db.DB{d}
 }
 
 func (suite *DBTestSuite) AfterTest(suiteName, testName string) {
@@ -99,7 +99,7 @@ func (suite *DBTestSuite) TestCreateManyStation() {
 			ctx := context.Background()
 
 			// Act
-			err := db.CreateManyStation(ctx, suite.db, tt.input)
+			err := suite.db.CreateManyStation(ctx, tt.input)
 
 			// Assert
 			if tt.isError {
@@ -206,7 +206,7 @@ func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 		suite.Run(tt.title, func() {
 			// Act
 			ctx := context.Background()
-			got, err := db.FindOneStationAndFavorite(ctx, suite.db, tt.input.id, tt.input.userID)
+			got, err := suite.db.FindOneStationAndFavorite(ctx, tt.input.id, tt.input.userID)
 
 			// Assert
 			if tt.isError {
@@ -287,7 +287,7 @@ func (suite *DBTestSuite) TestFindManyFindManyStationAndFavorite() {
 		suite.Run(tt.title, func() {
 			// Act
 			ctx := context.Background()
-			got, err := db.FindManyStationAndFavorite(ctx, suite.db, tt.input.userID, tt.input.search, tt.input.limit, tt.input.page)
+			got, err := suite.db.FindManyStationAndFavorite(ctx, tt.input.userID, tt.input.search, tt.input.limit, tt.input.page)
 
 			// Assert
 			if tt.isError {
@@ -351,7 +351,7 @@ func (suite *DBTestSuite) TestCreateFavorite() {
 		suite.Run(tt.title, func() {
 			// Act
 			ctx := context.Background()
-			err := db.CreateFavorite(ctx, suite.db, &tt.input)
+			err := suite.db.CreateFavorite(ctx, &tt.input)
 
 			// Assert
 			if tt.isError {
@@ -419,7 +419,7 @@ func (suite *DBTestSuite) TestDeleteFavorite() {
 		suite.Run(tt.title, func() {
 			// Act
 			ctx := context.Background()
-			err := db.DeleteFavorite(ctx, suite.db, &tt.input)
+			err := suite.db.DeleteFavorite(ctx, &tt.input)
 
 			// Assert
 			if tt.isError {

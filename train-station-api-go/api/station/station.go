@@ -17,11 +17,11 @@ import (
 
 type stationAPIServer struct {
 	trainstationv1alpha1.UnimplementedStationAPIServer
-	db  *sql.DB
+	db  *db.DB
 	jwt *jwt.Service
 }
 
-func New(db *sql.DB, jwt *jwt.Service) *stationAPIServer {
+func New(db *db.DB, jwt *jwt.Service) *stationAPIServer {
 	if db == nil {
 		logger.I.Panic("db is nil")
 	}
@@ -41,14 +41,14 @@ func (s *stationAPIServer) GetManyStations(ctx context.Context, req *trainstatio
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
-	total, err := db.CountStations(ctx, s.db, req.GetQuery())
+	total, err := s.db.CountStations(ctx, req.GetQuery())
 	if err != nil {
 		logger.I.Error("count station failed", zap.Error(err), zap.Any("req", req))
 		return nil, err
 	}
 	pageCount := total/req.GetLimit() + 1
 
-	res, err := db.FindManyStationAndFavorite(ctx, s.db, userID, req.GetQuery(), int(req.GetLimit()), int(req.GetPage()))
+	res, err := s.db.FindManyStationAndFavorite(ctx, userID, req.GetQuery(), int(req.GetLimit()), int(req.GetPage()))
 	if err == sql.ErrNoRows {
 		return &trainstationv1alpha1.GetManyStationsResponse{
 			Stations: &trainstationv1alpha1.PaginatedStation{
@@ -80,7 +80,7 @@ func (s *stationAPIServer) GetOneStation(ctx context.Context, req *trainstationv
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
-	res, err := db.FindOneStationAndFavorite(ctx, s.db, req.GetId(), userID)
+	res, err := s.db.FindOneStationAndFavorite(ctx, req.GetId(), userID)
 	if err == sql.ErrNoRows {
 		return nil, status.Error(codes.NotFound, "station not found")
 	}
@@ -88,6 +88,9 @@ func (s *stationAPIServer) GetOneStation(ctx context.Context, req *trainstationv
 		Station: mappers.StationAndFavoriteFromDB(res),
 	}, nil
 }
+
+type favoriteSetter func(ctx context.Context, m *models.Favorite) error
+
 func (s *stationAPIServer) SetFavoriteOneStation(ctx context.Context, req *trainstationv1alpha1.SetFavoriteOneStationRequest) (*trainstationv1alpha1.SetFavoriteOneStationResponse, error) {
 	userID, err := s.jwt.Validate(req.GetToken())
 	if err != nil {
@@ -95,14 +98,14 @@ func (s *stationAPIServer) SetFavoriteOneStation(ctx context.Context, req *train
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
-	var fn func(ctx context.Context, db *sql.DB, m *models.Favorite) error
+	var fn favoriteSetter
 	if req.GetValue() {
-		fn = db.CreateFavorite
+		fn = s.db.CreateFavorite
 	} else {
-		fn = db.DeleteFavorite
+		fn = s.db.DeleteFavorite
 	}
 
-	if err := fn(ctx, s.db, &models.Favorite{
+	if err := fn(ctx, &models.Favorite{
 		StationID: req.Id,
 		UserID:    userID,
 	}); err != nil {

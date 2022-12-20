@@ -10,6 +10,8 @@ import type { GetJWTRequest } from "./auth";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
+ * AuthAPI is the main authentication API between the backend and the frontends.
+ *
  * @generated from protobuf service auth.v1alpha1.AuthAPI
  */
 export interface IAuthAPIClient {
@@ -19,6 +21,8 @@ export interface IAuthAPIClient {
     getJWT(input: GetJWTRequest, options?: RpcOptions): UnaryCall<GetJWTRequest, GetJWTResponse>;
 }
 /**
+ * AuthAPI is the main authentication API between the backend and the frontends.
+ *
  * @generated from protobuf service auth.v1alpha1.AuthAPI
  */
 export class AuthAPIClient implements IAuthAPIClient, ServiceInfo {

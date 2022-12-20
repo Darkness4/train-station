@@ -2,9 +2,15 @@ syntax = "proto3";
 
 package trainstation.v1alpha1;
 
+// StationAPI handles train stations from the SNCF.
+//
+// The API needs the user to be authenticated via the AuthAPI.
 service StationAPI {
+  // GetManyStations fetch a paginated list of station.
   rpc GetManyStations(GetManyStationsRequest) returns (GetManyStationsResponse) {}
+  // GetOneStation fetches the details of a station.
   rpc GetOneStation(GetOneStationRequest) returns (GetOneStationResponse) {}
+  // SetFavoriteOneStation set a station to favorite for a user.
   rpc SetFavoriteOneStation(SetFavoriteOneStationRequest) returns (SetFavoriteOneStationResponse) {}
 }
 

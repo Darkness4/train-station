@@ -2,18 +2,24 @@ syntax = "proto3";
 
 package auth.v1alpha1;
 
+// AuthAPI is the main authentication API between the backend and the frontends.
 service AuthAPI {
   rpc GetJWT(GetJWTRequest) returns (GetJWTResponse) {}
 }
 
+// Account are the credentials for authentication API.
 message Account {
-  /** ID of the provider used for this account */
+  /**
+   * ID of the provider used for this account.
+   *
+   * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
+   */
   string provider = 1;
   /** Provider's type for this account, oauth or oidc. */
   string type = 2;
-  /** The OAuth Account ID */
+  /** The provider account ID. */
   string provider_account_id = 3;
-  /** The provider access_token */
+  /** The provider access_token. */
   string access_token = 4;
 }
 

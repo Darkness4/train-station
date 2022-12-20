@@ -2,13 +2,11 @@
 
 By Marc Nguyen and Jean-Baptiste Rubio.
 
-[TOC]
-
 ## Specifications
 
 ### API
 
-Specifications are given here: [OpenAPI](https://openapi.the-end-is-never-the-end.pw)
+Specifications are given here: [Protos](./protos) and [`docs`](./docs)
 
 ### Android
 
@@ -16,7 +14,7 @@ Specifications are given here: [OpenAPI](https://openapi.the-end-is-never-the-en
 
 - Possibility to bookmark certain items per user
 
-- Firebase Authentication
+- OAuth Authentication
 
 - Mockup:
 
@@ -49,14 +47,10 @@ Specifications are given here: [OpenAPI](https://openapi.the-end-is-never-the-en
 Use docker/kubernetes/openshift to deploy the container.
 
 ```sh
-docker pull ghcr.io/darkness4/train-station-api:amd64
+docker pull ghcr.io/darkness4/train-station-api:latest
 ```
 
-Tags are formatted like this `latest` or `<arch>` or `<version>-<arch>` or `<version>`. Default version is the `latest`, default arch is `amd64`.
-
 Available arch are: `arm64` and `amd64`.
-
-The container must have a the Google service account JSON file inside and must be located with the environment variable `GOOGLE_APPLICATION_CREDENTIALS`.
 
 An example of docker-compose.yml:
 
@@ -66,65 +60,87 @@ services:
   train-station-api:
     build: ghcr.io/darkness4/train-station-api:amd64
     ports:
-      - 38080:8080
+      - 3000:3000
     volumes:
-      - ./service-account.json:/secrets/service-account.json
+      - ./db:/db
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /secrets/service-account.json
-      HOST: 0.0.0.0
-      PORT: 8080
+      JWT_SECRET: <base64 secret>
+      LISTEN_ADDRESS: 0.0.0.0:3000
+      DB_PATH: /db/db.sqlite3
+      DEBUG: true
+      TLS_ENABLE: false
 ```
-
-**The container cannot be configured for high availability at this time because the API does not use a remote database.**
 
 #### Setup a development environment
 
-1. Install `swagger-cli` to generate the OpenAPI specification.
+1. Install [golang](https://golang.org) et install the dependencies
 
    ```sh
-   npm -g swagger-cli
-   swagger-cli bundle ./.openapi/openapi.yaml --outfile ./static/openapi.yaml --type yaml
+   go mod download
    ```
 
-2. Install [golang](https://golang.org) et install the dependencies
-
-   ```sh
-   go get
-   ```
-
-3. Fetch a valid [Google Service Account JSON files with Firebase SDK for Web and Firebase Auth configured](https://firebase.google.com/docs/admin/setup) and specify the location of the JSON file with the `GOOGLE_APPLICATION_CREDENTIALS` environment variable. The default is:
-
-   ```sh
-   export GOOGLE_APPLICATION_CREDENTIALS=service-account.json
-   ```
-
-4. Optionally, setup the rest of the environment variables:
-
-   ```sh
-   export HOST=0.0.0.0 #listening hosts
-   export POST=8080
-   ```
-
-5. ```sh
-   go run  # Run the app
-   go test ./...  # Run all the tests
+4. ```sh
+   # Inside: ./train-station-api
+   make
+   ./bin/train-station-api
+   make unit # Run unit tests
    ```
 
 ### Architecture
 
-![api-architecture](assets/api-architecture.svg)
+```mermaid
+flowchart TD
+	JWT
+	*sql.SQL
+	DB
+	subgraph server[gRPC server]
+        healthAPI
+        stationAPI
+        authAPI
+    end
+    *sql.SQL --> DB
+    DB --> stationAPI
+    JWT --> authAPI
+    JWT --> stationAPI
+```
+
+If you have seen the old versions before version 2, we were using the SOLID architecture in Go. After years of experience, we realized that the SOLID architecture tells us how to organize our code and how to inject dependencies.
+
+However, the explicit layering adds standard code and incomprehensible "data mappings", which hinders maintainability and understanding of the project. While the SOLID architecture seems ideal for object-oriented languages such as Kotlin, for Go it adds too much boilerplate code with no benefit other than having to "pseudo-satisfy" the SOLID principles.
+
+In reality, the SOLID priciples goes against the [Effective Go](https://go.dev/doc/effective_go) recommendations which is way more important since it is the base for every Go developers, while SOLID are principles for object-oriented programming.
+
+Since SOLID offers no real benefits outside of pain, we decided to remove the explicit layering while still sticking to domain-oriented development.
+
+The contract is as follows:
+
+- Retrieve the data at the start of the program
+- Retrieve stations (several or one)
+- The user can add a station to his favorites
+
+This translates into :
+
+- Download the data in the `main.go` as the `main` function indicates the start. The data is stored in a database or cache.
+- The gRPC models are the domain entities and we serve them. This means that we translate the database models into gRPC models.
+- Define a `favoriteSetter` interface and implement it. And the database can implement the interface perfectly.
 
 ### Entity relationship
 
-![erdiagram](assets/erdiagram.svg)
+```mermaid
+erDiagram
+    Station }|..|{ User : favorite
+```
+
+
 
 ### Technologies used
 
-- GORM + SQLite to manage the database
-- Atreugo + fasthttp for routing and http server
-- Viper + Cobra for the CLI tooling
-- Validator for validation
-- Firebase Admin SDK for authentication
+- SQLBoiler for database-first approach 
+- go-migrate for database migrations
+- gRPC as HTTP server and main entrypoint
+- urfave/cli for the CLI tooling
+- JWT for session handling
+- OAuth2 for Authentication
 
 ## Android App
 

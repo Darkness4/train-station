@@ -20,18 +20,21 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Account are the credentials for authentication API.
 type Account struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the provider used for this account
+	// ID of the provider used for this account.
+	//
+	// Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
 	Provider string `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`
 	// Provider's type for this account, oauth or oidc.
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	// The OAuth Account ID
+	// The provider account ID.
 	ProviderAccountId string `protobuf:"bytes,3,opt,name=provider_account_id,json=providerAccountId,proto3" json:"provider_account_id,omitempty"`
-	// The provider access_token
+	// The provider access_token.
 	AccessToken string `protobuf:"bytes,4,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
 }
 

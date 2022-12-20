@@ -13,11 +13,16 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 /**
+ * Account are the credentials for authentication API.
+ *
  * @generated from protobuf message auth.v1alpha1.Account
  */
 export interface Account {
     /**
-     * ID of the provider used for this account
+     *
+     * ID of the provider used for this account.
+     *
+     * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      *
      * @generated from protobuf field: string provider = 1;
      */
@@ -29,13 +34,13 @@ export interface Account {
      */
     type: string;
     /**
-     * The OAuth Account ID
+     * The provider account ID.
      *
      * @generated from protobuf field: string provider_account_id = 3;
      */
     providerAccountId: string;
     /**
-     * The provider access_token
+     * The provider access_token.
      *
      * @generated from protobuf field: string access_token = 4;
      */
