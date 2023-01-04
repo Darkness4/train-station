@@ -15,7 +15,7 @@ RUN --mount=target=/build/ \
   CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -o /out/app .
 
 # ---
-FROM --platform=$BUILDPLATFORM busybox:1.35.0
+FROM --platform=$BUILDPLATFORM busybox:1.36.0
 
 ARG TARGETOS TARGETARCH
 
