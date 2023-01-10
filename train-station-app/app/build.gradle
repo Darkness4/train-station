@@ -164,7 +164,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.maps.android:maps-ktx:3.4.0'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
-    implementation 'com.google.maps.android:android-maps-utils:2.4.0'
+    implementation 'com.google.maps.android:android-maps-utils:3.0.0'
 
     // Fragment
     implementation "androidx.fragment:fragment-ktx:1.5.5"
