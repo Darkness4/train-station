@@ -1,5 +1,5 @@
 # ---
-FROM --platform=$BUILDPLATFORM alpine:3.17.0 as certs
+FROM --platform=$BUILDPLATFORM alpine:3.17.1 as certs
 RUN apk update && apk add --no-cache ca-certificates
 
 # ---
