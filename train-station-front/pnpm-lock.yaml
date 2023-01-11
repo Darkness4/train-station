@@ -4,7 +4,7 @@ specifiers:
   '@auth/core': 0.1.4
   '@grpc/grpc-js': 1.8.0
   '@picocss/pico': 1.5.6
-  '@playwright/test': 1.29.0
+  '@playwright/test': 1.29.2
   '@protobuf-ts/grpc-transport': 2.8.2
   '@protobuf-ts/runtime': 2.8.2
   '@protobuf-ts/runtime-rpc': 2.8.2
@@ -33,7 +33,7 @@ devDependencies:
   '@auth/core': 0.1.4
   '@grpc/grpc-js': 1.8.0
   '@picocss/pico': 1.5.6
-  '@playwright/test': 1.29.0
+  '@playwright/test': 1.29.2
   '@protobuf-ts/grpc-transport': 2.8.2_@grpc+grpc-js@1.8.0
   '@protobuf-ts/runtime': 2.8.2
   '@protobuf-ts/runtime-rpc': 2.8.2
@@ -511,13 +511,13 @@ packages:
     resolution: {integrity: sha512-9R+OdtMuHijKa7AQKBrng/1Q/Cd3BnEigYJXmOxI10Eka2qGGDa4b0hua8UeYu01BTtAiO70K7CQuHffU4YXGA==}
     dev: true
 
-  /@playwright/test/1.29.0:
-    resolution: {integrity: sha512-gp5PVBenxTJsm2bATWDNc2CCnrL5OaA/MXQdJwwkGQtqTjmY+ZOqAdLqo49O9MLTDh2vYh+tHWDnmFsILnWaeA==}
+  /@playwright/test/1.29.2:
+    resolution: {integrity: sha512-+3/GPwOgcoF0xLz/opTnahel1/y42PdcgZ4hs+BZGIUjtmEFSXGg+nFoaH3NSmuc7a6GSFwXDJ5L7VXpqzigNg==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.11.17
-      playwright-core: 1.29.0
+      playwright-core: 1.29.2
     dev: true
 
   /@polka/url/1.0.0-next.21:
@@ -2185,8 +2185,8 @@ packages:
       pathe: 1.0.0
     dev: true
 
-  /playwright-core/1.29.0:
-    resolution: {integrity: sha512-pboOm1m0RD6z1GtwAbEH60PYRfF87vKdzOSRw2RyO0Y0a7utrMyWN2Au1ojGvQr4umuBMODkKTv607YIRypDSQ==}
+  /playwright-core/1.29.2:
+    resolution: {integrity: sha512-94QXm4PMgFoHAhlCuoWyaBYKb92yOcGVHdQLoxQ7Wjlc7Flg4aC/jbFW7xMR52OfXMVkWicue4WXE7QEegbIRA==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
