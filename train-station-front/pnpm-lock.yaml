@@ -18,7 +18,7 @@ specifiers:
   eslint-plugin-svelte3: 4.0.0
   just-clone: 6.2.0
   material-design-icons: 3.0.1
-  next-auth: 4.18.6
+  next-auth: 4.18.8
   prettier: 2.8.1
   prettier-plugin-svelte: 2.9.0
   sass: 1.57.1
@@ -47,7 +47,7 @@ devDependencies:
   eslint-plugin-svelte3: 4.0.0_khrjkzzv5v2x7orkj5o7sxbz3a
   just-clone: 6.2.0
   material-design-icons: 3.0.1
-  next-auth: 4.18.6
+  next-auth: 4.18.8
   prettier: 2.8.1
   prettier-plugin-svelte: 2.9.0_ajxj753sv7dbwexjherrch25ta
   sass: 1.57.1
@@ -2028,8 +2028,8 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-auth/4.18.6:
-    resolution: {integrity: sha512-0TQwbq5X9Jyd1wUVYUoyvHJh4JWXeW9UOcMEl245Er/Y5vsSbyGJHt8M7xjRMzk9mORVMYehoMdERgyiq/jCgA==}
+  /next-auth/4.18.8:
+    resolution: {integrity: sha512-USP8ihmvB7iCGtkS0+toe2QPrzdbZfkydQZX56JOI9Ft5n/BardOXh3D4wQ2An+vpq/jDKojGlgfv21wVElW7A==}
     engines: {node: ^12.19.0 || ^14.15.0 || ^16.13.0 || ^18.12.0}
     peerDependencies:
       next: ^12.2.5 || ^13
