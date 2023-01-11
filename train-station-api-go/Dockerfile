@@ -3,7 +3,7 @@ FROM --platform=$BUILDPLATFORM alpine:3.17.0 as certs
 RUN apk update && apk add --no-cache ca-certificates
 
 # ---
-FROM --platform=$BUILDPLATFORM golang:1.19.4 as builder
+FROM --platform=$BUILDPLATFORM golang:1.19.5 as builder
 WORKDIR /build/
 COPY go.mod go.sum ./
 RUN go mod download
