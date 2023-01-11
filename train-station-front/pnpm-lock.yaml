@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@auth/core': 0.1.4
+  '@auth/core': 0.2.5
   '@grpc/grpc-js': 1.8.0
   '@picocss/pico': 1.5.6
   '@playwright/test': 1.29.0
@@ -30,7 +30,7 @@ specifiers:
   vitest: 0.26.0
 
 devDependencies:
-  '@auth/core': 0.1.4
+  '@auth/core': 0.2.5
   '@grpc/grpc-js': 1.8.0
   '@picocss/pico': 1.5.6
   '@playwright/test': 1.29.0
@@ -60,8 +60,8 @@ devDependencies:
 
 packages:
 
-  /@auth/core/0.1.4:
-    resolution: {integrity: sha512-RsGtCWzbimuTUfV0ODE8NDxiJ5iDJAR3Wedj5OgdyZxTlCxSirXKf7+6g+krE6gHG3PoOkkd6xN6QENk+D60xw==}
+  /@auth/core/0.2.5:
+    resolution: {integrity: sha512-e9jQOW6kSnxa0gfeR5neqLIDAUvZtyGTh3YpO2eN5F/5gBybE582M5e34rXlJKj+/tAgf+oYBJAY5CUxGTY9tw==}
     peerDependencies:
       nodemailer: 6.8.0
     peerDependenciesMeta:
@@ -71,7 +71,7 @@ packages:
       '@panva/hkdf': 1.0.2
       cookie: 0.5.0
       jose: 4.11.1
-      oauth4webapi: 2.0.5
+      oauth4webapi: 2.0.6
       preact: 10.11.3
       preact-render-to-string: 5.2.3_preact@10.11.3
     dev: true
@@ -2060,8 +2060,8 @@ packages:
     resolution: {integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==}
     dev: true
 
-  /oauth4webapi/2.0.5:
-    resolution: {integrity: sha512-KmoR3KxCwmr9KvL/c/6UVzQnc4CUjo+j8NSgD3bWYlZXpUmyOVw97nDVb0BKZhCcUtGsbll16v8vsnR5JbTZ9A==}
+  /oauth4webapi/2.0.6:
+    resolution: {integrity: sha512-smacvTzkfgWxXTTfjZeKeCwtiZ7/HIgM+PWcgTltAmEbfmJQRfl/nbWktA9tnzSjezvWNg9N96PJomuMi0zkxQ==}
     dev: true
 
   /object-hash/2.2.0:
