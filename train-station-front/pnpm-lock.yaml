@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@auth/core': 0.1.4
-  '@grpc/grpc-js': 1.8.0
+  '@grpc/grpc-js': 1.8.4
   '@picocss/pico': 1.5.6
   '@playwright/test': 1.29.0
   '@protobuf-ts/grpc-transport': 2.8.2
@@ -31,10 +31,10 @@ specifiers:
 
 devDependencies:
   '@auth/core': 0.1.4
-  '@grpc/grpc-js': 1.8.0
+  '@grpc/grpc-js': 1.8.4
   '@picocss/pico': 1.5.6
   '@playwright/test': 1.29.0
-  '@protobuf-ts/grpc-transport': 2.8.2_@grpc+grpc-js@1.8.0
+  '@protobuf-ts/grpc-transport': 2.8.2_@grpc+grpc-js@1.8.4
   '@protobuf-ts/runtime': 2.8.2
   '@protobuf-ts/runtime-rpc': 2.8.2
   '@sveltejs/adapter-node': 1.0.0_@sveltejs+kit@1.0.1
@@ -412,8 +412,8 @@ packages:
       - supports-color
     dev: true
 
-  /@grpc/grpc-js/1.8.0:
-    resolution: {integrity: sha512-ySMTXQuMvvswoobvN+0LsaPf7ITO2JVfJmHxQKI4cGehNrrUms+n81BlHEX7Hl/LExji6XE3fnI9U04GSkRruA==}
+  /@grpc/grpc-js/1.8.4:
+    resolution: {integrity: sha512-oaETBotls7FTBpySg5dhyUCyXSxSeCMmkBBXHXG1iw57MiNoB6D7VRhkrXYbwyHM3Q3Afjp4KlsBX0Zb+ELZXw==}
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.4
@@ -524,12 +524,12 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
-  /@protobuf-ts/grpc-transport/2.8.2_@grpc+grpc-js@1.8.0:
+  /@protobuf-ts/grpc-transport/2.8.2_@grpc+grpc-js@1.8.4:
     resolution: {integrity: sha512-Kudcl2bkYwoACQE7RqOEbRFSqn9U00GK03fb3Eaa0VkwVlh9l8tte4IYUNNC75JSbjlsxblQ/Cs5Bv9OnIgIIg==}
     peerDependencies:
       '@grpc/grpc-js': ^1.6.0
     dependencies:
-      '@grpc/grpc-js': 1.8.0
+      '@grpc/grpc-js': 1.8.4
       '@protobuf-ts/runtime': 2.8.2
       '@protobuf-ts/runtime-rpc': 2.8.2
     dev: true
