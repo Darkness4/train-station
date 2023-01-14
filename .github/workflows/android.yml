@@ -124,6 +124,10 @@ jobs:
           ./gradlew app:check
 
   package-apk-android:
+    needs:
+      - test-android
+      - build-android
+
     runs-on: self-hosted
 
     steps:
@@ -184,6 +188,10 @@ jobs:
           path: train-station-app/app/build/outputs/apk/staging/app-staging-unsigned.apk
 
   package-aab-android:
+    needs:
+      - test-android
+      - build-android
+
     runs-on: self-hosted
 
     steps:
