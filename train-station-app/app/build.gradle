@@ -137,7 +137,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
 
     // Room
-    def room_version = '2.4.3'
+    def room_version = '2.5.0'
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-paging:$room_version"
@@ -158,13 +158,13 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Support Libraries
-    implementation "androidx.appcompat:appcompat:1.5.1"
+    implementation "androidx.appcompat:appcompat:1.6.0"
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.maps.android:maps-ktx:3.4.0'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
-    implementation 'com.google.maps.android:android-maps-utils:2.4.0'
+    implementation 'com.google.maps.android:android-maps-utils:3.1.0'
 
     // Fragment
     implementation "androidx.fragment:fragment-ktx:1.5.5"
@@ -201,10 +201,9 @@ dependencies {
     testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
     testImplementation "io.kotest:kotest-property:$kotest_version"
 
-    def test_version = '1.5.2'
-    androidTestImplementation "androidx.test:core:$test_version"
-    androidTestImplementation "androidx.test:runner:$test_version"
-    androidTestImplementation "androidx.test:rules:$test_version"
+    androidTestImplementation "androidx.test:core:1.5.0"
+    androidTestImplementation "androidx.test:runner:1.5.2"
+    androidTestImplementation "androidx.test:rules:1.5.2"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
-    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.4'
+    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.5'
 }
