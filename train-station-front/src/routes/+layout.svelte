@@ -1,16 +1,8 @@
 <script lang="ts">
 	import '../app.scss';
 
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { signOut } from '$lib/auth/client';
-
-	async function logOut() {
-		if ($page.data.session) {
-			await signOut();
-			return goto('/');
-		}
-	}
+	import { signOut } from '@auth/sveltekit/client';
 </script>
 
 {#if $page.data.session}
@@ -32,7 +24,7 @@
 			</li>
 			<li><a href="/">Home</a></li>
 			<!-- svelte-ignore a11y-invalid-attribute -->
-			<li><a on:click={logOut} href="#" role="button">Log out</a></li>
+			<li><a on:click={() => signOut()} href="#" role="button">Log out</a></li>
 		</ul>
 	</nav>
 

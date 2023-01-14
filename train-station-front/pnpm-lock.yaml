@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@auth/core': 0.2.5
+  '@auth/sveltekit': 0.1.12
   '@grpc/grpc-js': 1.8.4
   '@picocss/pico': 1.5.6
   '@playwright/test': 1.29.2
@@ -31,6 +32,7 @@ specifiers:
 
 devDependencies:
   '@auth/core': 0.2.5
+  '@auth/sveltekit': 0.1.12_ks7k4j4wgtpo2ctqt7ohvqqwde
   '@grpc/grpc-js': 1.8.4
   '@picocss/pico': 1.5.6
   '@playwright/test': 1.29.2
@@ -74,6 +76,19 @@ packages:
       oauth4webapi: 2.0.6
       preact: 10.11.3
       preact-render-to-string: 5.2.3_preact@10.11.3
+    dev: true
+
+  /@auth/sveltekit/0.1.12_ks7k4j4wgtpo2ctqt7ohvqqwde:
+    resolution: {integrity: sha512-nQyOXOaVRl+70XSIsgQCpU0BFkOb52DqsRmfNUOIm4/EtGTERLLsKVCRaPXXCYp6t22I2pu4E2gD79r74gPyZA==}
+    peerDependencies:
+      '@sveltejs/kit': ^1.0.0
+      svelte: ^3.54.0
+    dependencies:
+      '@auth/core': 0.2.5
+      '@sveltejs/kit': 1.0.1_svelte@3.55.1+vite@4.0.4
+      svelte: 3.55.1
+    transitivePeerDependencies:
+      - nodemailer
     dev: true
 
   /@babel/code-frame/7.18.6:

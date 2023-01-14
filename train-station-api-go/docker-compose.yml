@@ -6,8 +6,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
-    volumes:
-      - ./service-account.json:/secrets/service-account.json
     env_file:
       - .env
-      - .env.local

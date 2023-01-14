@@ -15,7 +15,9 @@
 		return goto(`${$page.url.pathname}?s=${search}`);
 	}
 	function gotoPage(newPage: number) {
-		return goto(`${$page.url.pathname}?s=${$page.url.searchParams.get('s')}&page=${newPage}`);
+		const params = new URLSearchParams($page.url.searchParams);
+		params.set('page', newPage.toString());
+		return goto(`${$page.url.pathname}?${params.toString()}`);
 	}
 	function onClick(station: Station) {
 		return goto(`/stations/${station.id}`);

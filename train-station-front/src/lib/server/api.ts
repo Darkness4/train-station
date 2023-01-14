@@ -2,11 +2,10 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { StationAPIClient } from '$gen/ts/trainstation/v1alpha1/station.client';
 import { AuthAPIClient } from '$gen/ts/auth/v1alpha1/auth.client';
-
-const TRAIN_API_BASE_URL = 'localhost:3000';
+import { env } from '$env/dynamic/private';
 
 const transport = new GrpcTransport({
-	host: TRAIN_API_BASE_URL,
+	host: env.TRAIN_API_BASE_URL ?? 'localhost:3000',
 	channelCredentials: ChannelCredentials.createInsecure()
 });
 

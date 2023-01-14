@@ -1,14 +1,16 @@
 import GitHub from '@auth/core/providers/github';
 import { env } from '$env/dynamic/private';
-import SvelteKitAuth from '$lib/auth';
 import { authClient } from '$lib/server/api';
+import { SvelteKitAuth } from '@auth/sveltekit';
+import type { Provider } from '@auth/core/providers';
+import type { Profile } from '@auth/core/types';
 
 export const handle = SvelteKitAuth({
 	providers: [
 		GitHub({
 			clientId: env.GITHUB_ID ?? 'bed15795fa3da2de6e6a',
 			clientSecret: env.GITHUB_SECRET ?? '6d1801da84cf5f3c747f95dcb936f3f8'
-		})
+		}) as Provider<Profile>
 	],
 	session: {
 		strategy: 'jwt'

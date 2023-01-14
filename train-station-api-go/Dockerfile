@@ -1,9 +1,9 @@
 # ---
-FROM --platform=$BUILDPLATFORM alpine:latest as certs
+FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/alpine:latest as certs
 RUN apk update && apk add --no-cache ca-certificates
 
 # ---
-FROM --platform=$BUILDPLATFORM golang:1.19.5 as builder
+FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/golang:1.19.5 as builder
 WORKDIR /build/
 COPY go.mod go.sum ./
 RUN go mod download
@@ -15,7 +15,7 @@ RUN --mount=target=/build/ \
   CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -o /out/app .
 
 # ---
-FROM --platform=$BUILDPLATFORM busybox:1.35.0
+FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/busybox:1.35.0
 
 ARG TARGETOS TARGETARCH
 
