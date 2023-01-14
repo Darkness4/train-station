@@ -20,7 +20,7 @@ defaults:
 
 jobs:
   lint-go:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -48,7 +48,7 @@ jobs:
           args: --timeout 5m
 
   test-go:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -72,7 +72,7 @@ jobs:
         run: go test -race -covermode=atomic -timeout=30s ./...
 
   build-go:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3

@@ -20,7 +20,7 @@ defaults:
 
 jobs:
   build-android:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -55,7 +55,7 @@ jobs:
           ./gradlew buildStaging
 
   test-android:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -70,7 +70,7 @@ jobs:
           ./gradlew test
 
   check-android:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -85,7 +85,7 @@ jobs:
           ./gradlew app:check
 
   package-apk-android:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -132,7 +132,7 @@ jobs:
           path: train-station-app/app/build/outputs/apk/staging/app-staging-unsigned.apk
 
   package-aab-android:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -184,7 +184,7 @@ jobs:
       - build-android
       - package-apk-android
       - package-aab-android
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v3
