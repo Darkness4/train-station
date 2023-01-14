@@ -4,6 +4,9 @@ managed:
   cc_enable_arenas: false
   go_package_prefix:
     default: github.com/Darkness4/train-station/trainstation/v1alpha1/gen/go
+  java_multiple_files: false
+  java_package_prefix: com.example.trainstationapp.data.grpc
+  optimize_for: LITE_RUNTIME
 plugins:
   - name: go
     out: ./train-station-api-go/gen/go
@@ -21,3 +24,11 @@ plugins:
       - markdown
       - index.md
       - source_relative
+  - name: java
+    out: ./train-station-app/app/src/main/java
+    opt:
+      - lite
+  - name: kotlin
+    out: ./train-station-app/app/src/main/java
+    opt:
+      - lite

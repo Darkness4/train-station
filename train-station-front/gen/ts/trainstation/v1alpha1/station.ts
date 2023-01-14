@@ -2,15 +2,6 @@
 // @generated from protobuf file "trainstation/v1alpha1/station.proto" (package "trainstation.v1alpha1", syntax proto3)
 // tslint:disable
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 /**
  * @generated from protobuf message trainstation.v1alpha1.GetManyStationsRequest
@@ -215,59 +206,6 @@ class GetManyStationsRequest$Type extends MessageType<GetManyStationsRequest> {
             { no: 4, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<GetManyStationsRequest>): GetManyStationsRequest {
-        const message = { query: "", limit: 0, page: 0, token: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetManyStationsRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetManyStationsRequest): GetManyStationsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string query */ 1:
-                    message.query = reader.string();
-                    break;
-                case /* int64 limit = 2 [jstype = JS_NUMBER];*/ 2:
-                    message.limit = reader.int64().toNumber();
-                    break;
-                case /* int64 page = 3 [jstype = JS_NUMBER];*/ 3:
-                    message.page = reader.int64().toNumber();
-                    break;
-                case /* string token */ 4:
-                    message.token = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetManyStationsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string query = 1; */
-        if (message.query !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.query);
-        /* int64 limit = 2 [jstype = JS_NUMBER]; */
-        if (message.limit !== 0)
-            writer.tag(2, WireType.Varint).int64(message.limit);
-        /* int64 page = 3 [jstype = JS_NUMBER]; */
-        if (message.page !== 0)
-            writer.tag(3, WireType.Varint).int64(message.page);
-        /* string token = 4; */
-        if (message.token !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.token);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
 }
 /**
  * @generated MessageType for protobuf message trainstation.v1alpha1.GetManyStationsRequest
@@ -279,41 +217,6 @@ class GetManyStationsResponse$Type extends MessageType<GetManyStationsResponse> 
         super("trainstation.v1alpha1.GetManyStationsResponse", [
             { no: 1, name: "stations", kind: "message", T: () => PaginatedStation }
         ]);
-    }
-    create(value?: PartialMessage<GetManyStationsResponse>): GetManyStationsResponse {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetManyStationsResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetManyStationsResponse): GetManyStationsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* trainstation.v1alpha1.PaginatedStation stations */ 1:
-                    message.stations = PaginatedStation.internalBinaryRead(reader, reader.uint32(), options, message.stations);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetManyStationsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* trainstation.v1alpha1.PaginatedStation stations = 1; */
-        if (message.stations)
-            PaginatedStation.internalBinaryWrite(message.stations, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
     }
 }
 /**
@@ -328,47 +231,6 @@ class GetOneStationRequest$Type extends MessageType<GetOneStationRequest> {
             { no: 2, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<GetOneStationRequest>): GetOneStationRequest {
-        const message = { id: "", token: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetOneStationRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetOneStationRequest): GetOneStationRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string id */ 1:
-                    message.id = reader.string();
-                    break;
-                case /* string token */ 2:
-                    message.token = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetOneStationRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string id = 1; */
-        if (message.id !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* string token = 2; */
-        if (message.token !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.token);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
 }
 /**
  * @generated MessageType for protobuf message trainstation.v1alpha1.GetOneStationRequest
@@ -380,41 +242,6 @@ class GetOneStationResponse$Type extends MessageType<GetOneStationResponse> {
         super("trainstation.v1alpha1.GetOneStationResponse", [
             { no: 1, name: "station", kind: "message", T: () => Station }
         ]);
-    }
-    create(value?: PartialMessage<GetOneStationResponse>): GetOneStationResponse {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetOneStationResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetOneStationResponse): GetOneStationResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* trainstation.v1alpha1.Station station */ 1:
-                    message.station = Station.internalBinaryRead(reader, reader.uint32(), options, message.station);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetOneStationResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* trainstation.v1alpha1.Station station = 1; */
-        if (message.station)
-            Station.internalBinaryWrite(message.station, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
     }
 }
 /**
@@ -430,53 +257,6 @@ class SetFavoriteOneStationRequest$Type extends MessageType<SetFavoriteOneStatio
             { no: 3, name: "value", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
-    create(value?: PartialMessage<SetFavoriteOneStationRequest>): SetFavoriteOneStationRequest {
-        const message = { id: "", token: "", value: false };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<SetFavoriteOneStationRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SetFavoriteOneStationRequest): SetFavoriteOneStationRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string id */ 1:
-                    message.id = reader.string();
-                    break;
-                case /* string token */ 2:
-                    message.token = reader.string();
-                    break;
-                case /* bool value */ 3:
-                    message.value = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SetFavoriteOneStationRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string id = 1; */
-        if (message.id !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* string token = 2; */
-        if (message.token !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.token);
-        /* bool value = 3; */
-        if (message.value !== false)
-            writer.tag(3, WireType.Varint).bool(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
 }
 /**
  * @generated MessageType for protobuf message trainstation.v1alpha1.SetFavoriteOneStationRequest
@@ -486,22 +266,6 @@ export const SetFavoriteOneStationRequest = new SetFavoriteOneStationRequest$Typ
 class SetFavoriteOneStationResponse$Type extends MessageType<SetFavoriteOneStationResponse> {
     constructor() {
         super("trainstation.v1alpha1.SetFavoriteOneStationResponse", []);
-    }
-    create(value?: PartialMessage<SetFavoriteOneStationResponse>): SetFavoriteOneStationResponse {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<SetFavoriteOneStationResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SetFavoriteOneStationResponse): SetFavoriteOneStationResponse {
-        return target ?? this.create();
-    }
-    internalBinaryWrite(message: SetFavoriteOneStationResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
     }
 }
 /**
@@ -518,65 +282,6 @@ class PaginatedStation$Type extends MessageType<PaginatedStation> {
             { no: 4, name: "page", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 5, name: "page_count", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
-    }
-    create(value?: PartialMessage<PaginatedStation>): PaginatedStation {
-        const message = { data: [], count: 0, total: 0, page: 0, pageCount: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<PaginatedStation>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PaginatedStation): PaginatedStation {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated trainstation.v1alpha1.Station data */ 1:
-                    message.data.push(Station.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* int64 count = 2 [jstype = JS_NUMBER];*/ 2:
-                    message.count = reader.int64().toNumber();
-                    break;
-                case /* int64 total = 3 [jstype = JS_NUMBER];*/ 3:
-                    message.total = reader.int64().toNumber();
-                    break;
-                case /* int64 page = 4 [jstype = JS_NUMBER];*/ 4:
-                    message.page = reader.int64().toNumber();
-                    break;
-                case /* int64 page_count = 5 [jstype = JS_NUMBER];*/ 5:
-                    message.pageCount = reader.int64().toNumber();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PaginatedStation, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated trainstation.v1alpha1.Station data = 1; */
-        for (let i = 0; i < message.data.length; i++)
-            Station.internalBinaryWrite(message.data[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* int64 count = 2 [jstype = JS_NUMBER]; */
-        if (message.count !== 0)
-            writer.tag(2, WireType.Varint).int64(message.count);
-        /* int64 total = 3 [jstype = JS_NUMBER]; */
-        if (message.total !== 0)
-            writer.tag(3, WireType.Varint).int64(message.total);
-        /* int64 page = 4 [jstype = JS_NUMBER]; */
-        if (message.page !== 0)
-            writer.tag(4, WireType.Varint).int64(message.page);
-        /* int64 page_count = 5 [jstype = JS_NUMBER]; */
-        if (message.pageCount !== 0)
-            writer.tag(5, WireType.Varint).int64(message.pageCount);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
     }
 }
 /**
@@ -608,165 +313,6 @@ class Station$Type extends MessageType<Station> {
             { no: 19, name: "is_favorite", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
-    create(value?: PartialMessage<Station>): Station {
-        const message = { id: "", commune: "", yWgs84: 0, xWgs84: 0, libelle: "", idgaia: "", voyageurs: "", geoPoint2D: [], codeLigne: "", xL93: 0, cGeo: [], rgTroncon: 0, pk: "", idreseau: 0, departemen: "", yL93: 0, fret: "", isFavorite: false };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<Station>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Station): Station {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string id */ 1:
-                    message.id = reader.string();
-                    break;
-                case /* string commune */ 2:
-                    message.commune = reader.string();
-                    break;
-                case /* double y_wgs84 */ 3:
-                    message.yWgs84 = reader.double();
-                    break;
-                case /* double x_wgs84 */ 4:
-                    message.xWgs84 = reader.double();
-                    break;
-                case /* string libelle */ 5:
-                    message.libelle = reader.string();
-                    break;
-                case /* string idgaia */ 6:
-                    message.idgaia = reader.string();
-                    break;
-                case /* string voyageurs */ 7:
-                    message.voyageurs = reader.string();
-                    break;
-                case /* repeated double geo_point_2d = 8 [json_name = "geoPoint2d"];*/ 8:
-                    if (wireType === WireType.LengthDelimited)
-                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
-                            message.geoPoint2D.push(reader.double());
-                    else
-                        message.geoPoint2D.push(reader.double());
-                    break;
-                case /* string code_ligne */ 9:
-                    message.codeLigne = reader.string();
-                    break;
-                case /* double x_l93 */ 10:
-                    message.xL93 = reader.double();
-                    break;
-                case /* repeated double c_geo */ 11:
-                    if (wireType === WireType.LengthDelimited)
-                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
-                            message.cGeo.push(reader.double());
-                    else
-                        message.cGeo.push(reader.double());
-                    break;
-                case /* int64 rg_troncon = 12 [jstype = JS_NUMBER];*/ 12:
-                    message.rgTroncon = reader.int64().toNumber();
-                    break;
-                case /* trainstation.v1alpha1.Geometry geo_shape */ 13:
-                    message.geoShape = Geometry.internalBinaryRead(reader, reader.uint32(), options, message.geoShape);
-                    break;
-                case /* string pk */ 14:
-                    message.pk = reader.string();
-                    break;
-                case /* int64 idreseau = 15 [jstype = JS_NUMBER];*/ 15:
-                    message.idreseau = reader.int64().toNumber();
-                    break;
-                case /* string departemen */ 16:
-                    message.departemen = reader.string();
-                    break;
-                case /* double y_l93 */ 17:
-                    message.yL93 = reader.double();
-                    break;
-                case /* string fret */ 18:
-                    message.fret = reader.string();
-                    break;
-                case /* bool is_favorite */ 19:
-                    message.isFavorite = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Station, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string id = 1; */
-        if (message.id !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* string commune = 2; */
-        if (message.commune !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.commune);
-        /* double y_wgs84 = 3; */
-        if (message.yWgs84 !== 0)
-            writer.tag(3, WireType.Bit64).double(message.yWgs84);
-        /* double x_wgs84 = 4; */
-        if (message.xWgs84 !== 0)
-            writer.tag(4, WireType.Bit64).double(message.xWgs84);
-        /* string libelle = 5; */
-        if (message.libelle !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.libelle);
-        /* string idgaia = 6; */
-        if (message.idgaia !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.idgaia);
-        /* string voyageurs = 7; */
-        if (message.voyageurs !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.voyageurs);
-        /* repeated double geo_point_2d = 8 [json_name = "geoPoint2d"]; */
-        if (message.geoPoint2D.length) {
-            writer.tag(8, WireType.LengthDelimited).fork();
-            for (let i = 0; i < message.geoPoint2D.length; i++)
-                writer.double(message.geoPoint2D[i]);
-            writer.join();
-        }
-        /* string code_ligne = 9; */
-        if (message.codeLigne !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.codeLigne);
-        /* double x_l93 = 10; */
-        if (message.xL93 !== 0)
-            writer.tag(10, WireType.Bit64).double(message.xL93);
-        /* repeated double c_geo = 11; */
-        if (message.cGeo.length) {
-            writer.tag(11, WireType.LengthDelimited).fork();
-            for (let i = 0; i < message.cGeo.length; i++)
-                writer.double(message.cGeo[i]);
-            writer.join();
-        }
-        /* int64 rg_troncon = 12 [jstype = JS_NUMBER]; */
-        if (message.rgTroncon !== 0)
-            writer.tag(12, WireType.Varint).int64(message.rgTroncon);
-        /* trainstation.v1alpha1.Geometry geo_shape = 13; */
-        if (message.geoShape)
-            Geometry.internalBinaryWrite(message.geoShape, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
-        /* string pk = 14; */
-        if (message.pk !== "")
-            writer.tag(14, WireType.LengthDelimited).string(message.pk);
-        /* int64 idreseau = 15 [jstype = JS_NUMBER]; */
-        if (message.idreseau !== 0)
-            writer.tag(15, WireType.Varint).int64(message.idreseau);
-        /* string departemen = 16; */
-        if (message.departemen !== "")
-            writer.tag(16, WireType.LengthDelimited).string(message.departemen);
-        /* double y_l93 = 17; */
-        if (message.yL93 !== 0)
-            writer.tag(17, WireType.Bit64).double(message.yL93);
-        /* string fret = 18; */
-        if (message.fret !== "")
-            writer.tag(18, WireType.LengthDelimited).string(message.fret);
-        /* bool is_favorite = 19; */
-        if (message.isFavorite !== false)
-            writer.tag(19, WireType.Varint).bool(message.isFavorite);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
 }
 /**
  * @generated MessageType for protobuf message trainstation.v1alpha1.Station
@@ -779,55 +325,6 @@ class Geometry$Type extends MessageType<Geometry> {
             { no: 1, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "coordinates", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ }
         ]);
-    }
-    create(value?: PartialMessage<Geometry>): Geometry {
-        const message = { type: "", coordinates: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<Geometry>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Geometry): Geometry {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string type */ 1:
-                    message.type = reader.string();
-                    break;
-                case /* repeated double coordinates */ 2:
-                    if (wireType === WireType.LengthDelimited)
-                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
-                            message.coordinates.push(reader.double());
-                    else
-                        message.coordinates.push(reader.double());
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Geometry, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string type = 1; */
-        if (message.type !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.type);
-        /* repeated double coordinates = 2; */
-        if (message.coordinates.length) {
-            writer.tag(2, WireType.LengthDelimited).fork();
-            for (let i = 0; i < message.coordinates.length; i++)
-                writer.double(message.coordinates[i]);
-            writer.join();
-        }
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
     }
 }
 /**

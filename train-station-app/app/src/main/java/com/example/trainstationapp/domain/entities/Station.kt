@@ -5,8 +5,6 @@ import android.os.Parcelable
 import com.example.trainstationapp.data.models.StationModel
 import kotlinx.parcelize.Parcelize
 
-@SuppressLint("ParcelCreator")
-// Parcelize Issue https://youtrack.jetbrains.com/issue/KT-19300
 @Parcelize
 data class Station(
     val id: String,
