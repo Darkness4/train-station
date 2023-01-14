@@ -29,7 +29,7 @@
 		"@typescript-eslint/parser": "5.48.1",
 		"depcheck": "1.4.3",
 		"eslint": "8.30.0",
-		"eslint-config-prettier": "8.5.0",
+		"eslint-config-prettier": "8.6.0",
 		"eslint-plugin-svelte3": "4.0.0",
 		"just-clone": "6.2.0",
 		"material-design-icons": "3.0.1",
