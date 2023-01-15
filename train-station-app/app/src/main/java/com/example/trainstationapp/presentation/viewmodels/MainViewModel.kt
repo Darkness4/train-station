@@ -1,11 +1,13 @@
 package com.example.trainstationapp.presentation.viewmodels
 
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.trainstationapp.core.state.State
 import com.example.trainstationapp.core.state.map
+import com.example.trainstationapp.data.datastore.JwtOuterClass.Jwt
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,15 +15,21 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: StationRepository) : ViewModel() {
+class MainViewModel
+@Inject
+constructor(jwtDataStore: DataStore<Jwt>, private val repository: StationRepository) : ViewModel() {
     enum class RefreshMode {
         Normal,
         WithScrollToTop,
     }
+
+    val jwt = jwtDataStore.data.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     private val _refreshManually = MutableStateFlow<RefreshMode?>(null)
     val refreshManually: StateFlow<RefreshMode?>

@@ -32,3 +32,11 @@ plugins:
     out: ./train-station-app/app/src/main/java
     opt:
       - lite
+  - name: grpc-java
+    out: ./train-station-app/app/src/main/java
+    opt:
+      - lite
+  - name: grpc-kotlin
+    out: ./train-station-app/app/src/main/java
+    opt:
+      - lite

@@ -18,7 +18,6 @@ import com.example.trainstationapp.core.state.doOnFailure
 import com.example.trainstationapp.databinding.FragmentStationListBinding
 import com.example.trainstationapp.presentation.ui.adapters.StationsAdapter
 import com.example.trainstationapp.presentation.ui.adapters.StationsLoadStateAdapter
-import com.example.trainstationapp.presentation.viewmodels.AuthViewModel
 import com.example.trainstationapp.presentation.viewmodels.MainViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -29,7 +28,6 @@ import timber.log.Timber
 
 class StationListFragment : Fragment() {
     private val activityViewModel by activityViewModels<MainViewModel>()
-    private val authViewModel by activityViewModels<AuthViewModel>()
 
     private var _binding: FragmentStationListBinding? = null
     private val binding: FragmentStationListBinding
@@ -38,8 +36,8 @@ class StationListFragment : Fragment() {
     private val adapter =
         StationsAdapter(
             onFavorite = {
-                authViewModel.idToken.value?.let { token ->
-                    activityViewModel.makeFavorite(it.id, !it.isFavorite, token)
+                activityViewModel.jwt.value?.let { jwt ->
+                    activityViewModel.makeFavorite(it.id, !it.isFavorite, jwt.token)
                 }
             },
             onClick = { activityViewModel.showDetails(it) }
@@ -60,10 +58,10 @@ class StationListFragment : Fragment() {
      */
     private fun fetch(search: String) {
         fetchJob?.cancel()
-        authViewModel.idToken.value?.let { token ->
+        activityViewModel.jwt.value?.let { jwt ->
             fetchJob =
                 lifecycleScope.launch {
-                    activityViewModel.watchPages(search, token).collectLatest {
+                    activityViewModel.watchPages(search, jwt.token).collectLatest {
                         adapter.submitData(it)
                     }
                 }
@@ -173,7 +171,7 @@ class StationListFragment : Fragment() {
         // Watch for login changes
         idTokenJob =
             lifecycleScope.launch {
-                authViewModel.idToken.collect {
+                activityViewModel.jwt.collect {
                     it?.let { fetch(binding.searchBar.text!!.trim().toString()) }
                 }
             }
@@ -183,11 +181,11 @@ class StationListFragment : Fragment() {
             lifecycleScope.launch {
                 activityViewModel.showDetails.collect {
                     it?.let {
-                        authViewModel.idToken.value?.let { token ->
+                        activityViewModel.jwt.value?.let { jwt ->
                             findNavController()
                                 .navigate(
                                     StationListFragmentDirections
-                                        .actionStationListFragmentToDetailsActivity(it, token)
+                                        .actionStationListFragmentToDetailsActivity(it, jwt.token)
                                 )
                             activityViewModel.showDetailsDone()
                         }

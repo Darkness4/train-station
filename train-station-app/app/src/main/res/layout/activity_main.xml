@@ -8,10 +8,6 @@
         <variable
             name="viewModel"
             type="com.example.trainstationapp.presentation.viewmodels.MainViewModel" />
-
-        <variable
-            name="authViewModel"
-            type="com.example.trainstationapp.presentation.viewmodels.AuthViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

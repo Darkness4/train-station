@@ -2,21 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a7aaae195111efc649d24ffb7d482885",
+    "identityHash": "c813601066a6a01e25528960da157666",
     "entities": [
       {
         "tableName": "stations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `datasetid` TEXT NOT NULL, `is_favorite` INTEGER NOT NULL, `commune` TEXT NOT NULL, `y_wgs84` REAL NOT NULL, `x_wgs84` REAL NOT NULL, `libelle` TEXT NOT NULL, `idgaia` TEXT NOT NULL, `voyageurs` TEXT NOT NULL, `geo_point_2d` TEXT NOT NULL, `code_ligne` TEXT NOT NULL, `x_l93` REAL NOT NULL, `c_geo` TEXT NOT NULL, `rg_troncon` INTEGER NOT NULL, `pk` TEXT NOT NULL, `idreseau` INTEGER NOT NULL, `departemen` TEXT NOT NULL, `y_l93` REAL NOT NULL, `fret` TEXT NOT NULL, `geo_shape_type` TEXT NOT NULL, `geo_shape_coordinates` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `is_favorite` INTEGER NOT NULL, `commune` TEXT NOT NULL, `y_wgs84` REAL NOT NULL, `x_wgs84` REAL NOT NULL, `libelle` TEXT NOT NULL, `idgaia` TEXT NOT NULL, `voyageurs` TEXT NOT NULL, `geo_point_2d` TEXT NOT NULL, `code_ligne` TEXT NOT NULL, `x_l93` REAL NOT NULL, `c_geo` TEXT NOT NULL, `rg_troncon` INTEGER NOT NULL, `pk` TEXT NOT NULL, `idreseau` INTEGER NOT NULL, `departemen` TEXT NOT NULL, `y_l93` REAL NOT NULL, `fret` TEXT NOT NULL, `geo_shape_type` TEXT NOT NULL, `geo_shape_coordinates` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "datasetid",
-            "columnName": "datasetid",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -136,10 +130,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "id"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -168,10 +162,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "id"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -180,7 +174,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a7aaae195111efc649d24ffb7d482885')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c813601066a6a01e25528960da157666')"
     ]
   }
 }

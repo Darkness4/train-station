@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.trainstationapp.data.models.RemoteKeys
 
 /**
  * This DAO permits to save the *index* of the page of an object.

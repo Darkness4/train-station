@@ -4,11 +4,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.map
 import com.example.trainstationapp.core.state.State
 import com.example.trainstationapp.data.database.Database
-import com.example.trainstationapp.data.datasources.TrainStationDataSource
-import com.example.trainstationapp.data.models.MakeFavoriteModel
+import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIGrpcKt
+import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getOneStationRequest
+import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.setFavoriteOneStationRequest
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import javax.inject.Inject
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.map
 class StationRepositoryImpl
 @Inject
 constructor(
-    private val trainStationDataSource: TrainStationDataSource,
+    private val stationAPI: StationAPIGrpcKt.StationAPICoroutineStub,
     private val database: Database
 ) : StationRepository {
     companion object {
@@ -49,14 +49,13 @@ constructor(
                 remoteMediator =
                     StationRemoteMediator(
                         search = search,
-                        service = trainStationDataSource,
+                        service = stationAPI,
                         database = database,
                         token = bearer
                     ),
                 pagingSourceFactory = pagingSourceFactory
             )
             .flow
-            .map { it.map { model -> model.asEntity() } }
             .flowOn(Dispatchers.Default)
     }
 
@@ -65,7 +64,7 @@ constructor(
         return database
             .stationDao()
             .watchById(station.id)
-            .map { model -> State.Success(model.asEntity()) }
+            .map { State.Success(it) }
             .catch<State<Station>> { emit(State.Failure(it)) }
     }
 
@@ -73,24 +72,19 @@ constructor(
     override suspend fun findOne(station: Station, token: String): State<Station> {
         val bearer = "Bearer $token"
         return try {
-            val model = trainStationDataSource.findById(station.id, bearer)
-            model?.let {
-                database.stationDao().insert(model)
-                State.Success(model.asEntity())
+            val response =
+                stationAPI.getOneStation(
+                    getOneStationRequest {
+                        id = station.id
+                        this.token = bearer
+                    }
+                )
+            response.station?.let {
+                val entity = Station.fromGrpc(it)
+                database.stationDao().insert(entity)
+                State.Success(entity)
             }
                 ?: State.Failure(Exception("Element not found."))
-        } catch (e: Throwable) {
-            State.Failure(e)
-        }
-    }
-
-    /** Create one station in the API and cache it. */
-    override suspend fun createOne(station: Station, token: String): State<Station> {
-        val bearer = "Bearer $token"
-        return try {
-            val model = trainStationDataSource.create(station.asModel(), bearer)
-            database.stationDao().insert(model)
-            State.Success(model.asEntity())
         } catch (e: Throwable) {
             State.Failure(e)
         }
@@ -104,11 +98,24 @@ constructor(
     ): State<Station> {
         val bearer = "Bearer $token"
         return try {
-            val model =
-                trainStationDataSource.makeFavoriteById(id, MakeFavoriteModel(value), bearer)
-            model?.let {
-                database.stationDao().insert(model)
-                State.Success(model.asEntity())
+            stationAPI.setFavoriteOneStation(
+                setFavoriteOneStationRequest {
+                    this.id = id
+                    this.token = bearer
+                    this.value = value
+                }
+            )
+            val resp =
+                stationAPI.getOneStation(
+                    getOneStationRequest {
+                        this.id = id
+                        this.token = bearer
+                    }
+                )
+            resp.station?.let {
+                val entity = Station.fromGrpc(it)
+                database.stationDao().insert(entity)
+                State.Success(entity)
             }
                 ?: State.Failure(Exception("Element not found."))
         } catch (e: Throwable) {

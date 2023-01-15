@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.trainstationapp">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -32,19 +31,36 @@
             android:value="@string/maps_api_key" />
 
         <activity
+            android:name=".presentation.ui.LoginActivity"
+            android:exported="true"
+            android:label="Sign in"
+            android:theme="@style/Theme.TrainStationApp.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".presentation.ui.DetailsActivity"
             android:label="@string/title_activity_details"
             android:parentActivityName=".presentation.ui.MainActivity"
             android:theme="@style/Theme.TrainStationApp.NoActionBar" />
+
         <activity
             android:name=".presentation.ui.MainActivity"
-            android:label="@string/title_activity_main"
             android:exported="true"
+            android:label="@string/title_activity_main"
             android:theme="@style/Theme.TrainStationApp.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <data
+                    android:host="train.the-end-is-never-the-end.pw"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
     </application>

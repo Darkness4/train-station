@@ -1,7 +1,5 @@
 package com.example.trainstationapp.utils
 
-import com.example.trainstationapp.data.models.StationModel
-
 object AndroidTestUtils {
     fun createStationModel(id: String) =
         StationModel(

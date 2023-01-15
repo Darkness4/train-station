@@ -2,30 +2,34 @@ package com.example.trainstationapp.domain.entities
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
-import com.example.trainstationapp.data.models.StationModel
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+@Entity(tableName = "stations")
 data class Station(
-    val id: String,
-    val datasetid: String,
-    var isFavorite: Boolean,
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = "is_favorite") var isFavorite: Boolean,
     val commune: String,
-    val yWgs84: Double,
-    val xWgs84: Double,
+    @ColumnInfo(name = "y_wgs84") val yWgs84: Double,
+    @ColumnInfo(name = "x_wgs84") val xWgs84: Double,
     val libelle: String,
     val idgaia: String,
     val voyageurs: String,
-    val geoPoint2d: List<Double>,
-    val codeLigne: String,
-    val xL93: Double,
-    val cGeo: List<Double>,
-    val rgTroncon: Int,
-    val geoShape: Geometry,
+    @ColumnInfo(name = "geo_point_2d") val geoPoint2d: List<Double>,
+    @ColumnInfo(name = "code_ligne") val codeLigne: String,
+    @ColumnInfo(name = "x_l93") val xL93: Double,
+    @ColumnInfo(name = "c_geo") val cGeo: List<Double>,
+    @ColumnInfo(name = "rg_troncon") val rgTroncon: Long,
+    @Embedded(prefix = "geo_shape_") val geoShape: Geometry,
     val pk: String,
-    val idreseau: Int,
+    val idreseau: Long,
     val departemen: String,
-    val yL93: Double,
+    @ColumnInfo(name = "y_l93") val yL93: Double,
     val fret: String
 ) : Parcelable {
 
@@ -33,31 +37,66 @@ data class Station(
 
     @SuppressLint("ParcelCreator")
     @Parcelize
-    data class Geometry(val type: String, val coordinates: List<Double>) : Parcelable {
-        fun asModel() = StationModel.GeometryModel(type, coordinates)
+    data class Geometry(
+        val type: String,
+        val coordinates: List<Double>,
+    ) : Parcelable {
+        companion object {
+            fun fromGrpc(model: StationProto.Geometry) =
+                Geometry(
+                    model.type,
+                    model.coordinatesList,
+                )
+        }
+        fun asGrpcModel() =
+            StationProto.Geometry.newBuilder().setType(type).addAllCoordinates(coordinates).build()
     }
 
-    fun asModel() =
-        StationModel(
-            id,
-            datasetid,
-            isFavorite,
-            commune,
-            yWgs84,
-            xWgs84,
-            libelle,
-            idgaia,
-            voyageurs,
-            geoPoint2d,
-            codeLigne,
-            xL93,
-            cGeo,
-            rgTroncon,
-            geoShape.asModel(),
-            pk,
-            idreseau,
-            departemen,
-            yL93,
-            fret
-        )
+    companion object {
+        fun fromGrpc(model: StationProto.Station) =
+            Station(
+                model.id,
+                model.isFavorite,
+                model.commune,
+                model.yWgs84,
+                model.xWgs84,
+                model.libelle,
+                model.idgaia,
+                model.voyageurs,
+                model.geoPoint2DList,
+                model.codeLigne,
+                model.xL93,
+                model.cGeoList,
+                model.rgTroncon,
+                Geometry.fromGrpc(model.geoShape),
+                model.pk,
+                model.idreseau,
+                model.departemen,
+                model.yL93,
+                model.fret,
+            )
+    }
+
+    fun asGrpcModel() =
+        StationProto.Station.newBuilder()
+            .setId(id)
+            .setIsFavorite(isFavorite)
+            .setCommune(commune)
+            .setYWgs84(yWgs84)
+            .setXWgs84(xWgs84)
+            .setLibelle(libelle)
+            .setIdgaia(idgaia)
+            .setVoyageurs(voyageurs)
+            .addAllGeoPoint2D(geoPoint2d)
+            .setCodeLigne(codeLigne)
+            .setXL93(xL93)
+            .addAllCGeo(cGeo)
+            .setRgTroncon(rgTroncon)
+            .setGeoShape(geoShape.asGrpcModel())
+            .setPk(pk)
+            .setIdreseau(idreseau)
+            .setDepartemen(departemen)
+            .setYL93(yL93)
+            .setFret(fret)
+            .build()
 }

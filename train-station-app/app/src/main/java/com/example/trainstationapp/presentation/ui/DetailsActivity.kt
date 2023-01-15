@@ -10,7 +10,6 @@ import androidx.navigation.navArgs
 import com.example.trainstationapp.R
 import com.example.trainstationapp.core.state.doOnFailure
 import com.example.trainstationapp.databinding.ActivityDetailsBinding
-import com.example.trainstationapp.domain.repositories.StationRepository
 import com.example.trainstationapp.presentation.viewmodels.DetailsViewModel
 import com.example.trainstationapp.presentation.viewmodels.DetailsViewModel.Companion.provideFactory
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,7 +21,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -38,8 +36,6 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     private val viewModel by
         viewModels<DetailsViewModel> { assisted.provideFactory(args.station, args.token) }
     private lateinit var map: GoogleMap
-
-    @Inject lateinit var stationRepository: StationRepository
 
     // Coroutines jobs
     private var networkStatusJob: Job? = null
