@@ -142,7 +142,7 @@ dependencies {
     implementation 'io.grpc:grpc-kotlin-stub:1.3.0'
     implementation 'io.grpc:grpc-protobuf-lite:1.52.0'
     implementation 'com.google.protobuf:protobuf-kotlin-lite:3.21.6'
-    runtimeOnly "io.grpc:grpc-okhttp:1.52.0"
+    runtimeOnly "io.grpc:grpc-okhttp:1.52.1"
 
     // Room
     def room_version = '2.5.0'
