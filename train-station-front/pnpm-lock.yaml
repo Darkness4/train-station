@@ -9,8 +9,8 @@ specifiers:
   '@protobuf-ts/grpc-transport': 2.8.2
   '@protobuf-ts/runtime': 2.8.2
   '@protobuf-ts/runtime-rpc': 2.8.2
-  '@sveltejs/adapter-node': 1.1.3
-  '@sveltejs/kit': 1.1.1
+  '@sveltejs/adapter-node': 1.1.4
+  '@sveltejs/kit': 1.1.4
   '@typescript-eslint/eslint-plugin': 5.48.2
   '@typescript-eslint/parser': 5.48.2
   depcheck: 1.4.3
@@ -32,15 +32,15 @@ specifiers:
 
 devDependencies:
   '@auth/core': 0.2.5
-  '@auth/sveltekit': 0.1.12_tnskpgbo5sth7cuiawkoziadye
+  '@auth/sveltekit': 0.1.12_c3jmigb6vlzhi6d7maynwd2vim
   '@grpc/grpc-js': 1.8.4
   '@picocss/pico': 1.5.6
   '@playwright/test': 1.29.2
   '@protobuf-ts/grpc-transport': 2.8.2_@grpc+grpc-js@1.8.4
   '@protobuf-ts/runtime': 2.8.2
   '@protobuf-ts/runtime-rpc': 2.8.2
-  '@sveltejs/adapter-node': 1.1.3_@sveltejs+kit@1.1.1
-  '@sveltejs/kit': 1.1.1_svelte@3.55.1+vite@4.0.4
+  '@sveltejs/adapter-node': 1.1.4_@sveltejs+kit@1.1.4
+  '@sveltejs/kit': 1.1.4_svelte@3.55.1+vite@4.0.4
   '@typescript-eslint/eslint-plugin': 5.48.2_caon6io6stgpr7lz2rtbhekxqy
   '@typescript-eslint/parser': 5.48.2_7uibuqfxkfaozanbtbziikiqje
   depcheck: 1.4.3
@@ -78,14 +78,14 @@ packages:
       preact-render-to-string: 5.2.3_preact@10.11.3
     dev: true
 
-  /@auth/sveltekit/0.1.12_tnskpgbo5sth7cuiawkoziadye:
+  /@auth/sveltekit/0.1.12_c3jmigb6vlzhi6d7maynwd2vim:
     resolution: {integrity: sha512-nQyOXOaVRl+70XSIsgQCpU0BFkOb52DqsRmfNUOIm4/EtGTERLLsKVCRaPXXCYp6t22I2pu4E2gD79r74gPyZA==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
       svelte: ^3.54.0
     dependencies:
       '@auth/core': 0.2.5
-      '@sveltejs/kit': 1.1.1_svelte@3.55.1+vite@4.0.4
+      '@sveltejs/kit': 1.1.4_svelte@3.55.1+vite@4.0.4
       svelte: 3.55.1
     transitivePeerDependencies:
       - nodemailer
@@ -666,20 +666,20 @@ packages:
       rollup: 3.7.5
     dev: true
 
-  /@sveltejs/adapter-node/1.1.3_@sveltejs+kit@1.1.1:
-    resolution: {integrity: sha512-CXNYbYVAO8PlN95toqQRR6+QaFT8bejShDbmMwJfdokNpscjgxYbS8oAcWqrizxfPTBfyHlW+kDbu5KuWhxUNA==}
+  /@sveltejs/adapter-node/1.1.4_@sveltejs+kit@1.1.4:
+    resolution: {integrity: sha512-3iEBqi1fXLXP9YIbVuz2LXajoebRJCmAFEQbN40DlxAnA7G+InxUgnqFun3q9gBMz2Qvd99K51g/HxWetXRe8Q==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
     dependencies:
       '@rollup/plugin-commonjs': 24.0.0_rollup@3.7.5
       '@rollup/plugin-json': 6.0.0_rollup@3.7.5
       '@rollup/plugin-node-resolve': 15.0.1_rollup@3.7.5
-      '@sveltejs/kit': 1.1.1_svelte@3.55.1+vite@4.0.4
+      '@sveltejs/kit': 1.1.4_svelte@3.55.1+vite@4.0.4
       rollup: 3.7.5
     dev: true
 
-  /@sveltejs/kit/1.1.1_svelte@3.55.1+vite@4.0.4:
-    resolution: {integrity: sha512-5hZef6yTqiLm8fLMFD78udJI3pG9ptSndg3NNmDqxv5fS9KFABkASQwnWB25Pf1HkPNqvL+x4Tl8kyW1N8thKQ==}
+  /@sveltejs/kit/1.1.4_svelte@3.55.1+vite@4.0.4:
+    resolution: {integrity: sha512-FHt8j8PgwhgeA41WTJfD8yQdOmzRY1v6ORtyXjzbzIZ+106LTclRpywnFoKxACEilAQHdGLAivVf9bRHkW1LLQ==}
     engines: {node: ^16.14 || >=18}
     hasBin: true
     requiresBuild: true
