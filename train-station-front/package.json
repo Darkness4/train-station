@@ -24,7 +24,7 @@
 		"@protobuf-ts/runtime": "2.8.2",
 		"@protobuf-ts/runtime-rpc": "2.8.2",
 		"@sveltejs/adapter-node": "1.1.4",
-		"@sveltejs/kit": "1.1.4",
+		"@sveltejs/kit": "1.2.0",
 		"@typescript-eslint/eslint-plugin": "5.48.2",
 		"@typescript-eslint/parser": "5.48.2",
 		"depcheck": "1.4.3",
