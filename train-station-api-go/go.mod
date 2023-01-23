@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.4.0
 	github.com/stretchr/testify v1.8.1
-	github.com/urfave/cli/v2 v2.23.7
+	github.com/urfave/cli/v2 v2.24.1
 	github.com/volatiletech/sqlboiler/v4 v4.14.0
 	github.com/volatiletech/strmangle v0.0.4
 	go.uber.org/zap v1.24.0
