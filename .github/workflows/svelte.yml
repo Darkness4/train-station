@@ -32,7 +32,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: train-station-front
           file: ./train-station-front/Dockerfile
@@ -59,7 +59,7 @@ jobs:
 
       - name: Build and export
         if: startsWith(github.ref, 'refs/tags/')
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: train-station-front
           file: ./train-station-front/Dockerfile
