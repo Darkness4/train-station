@@ -9,8 +9,9 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 ARG TARGETOS TARGETARCH
-RUN --mount=target=/build/ \
-  --mount=type=cache,target=/root/.cache/go-build \
+COPY . /build/
+
+RUN --mount=type=cache,target=/root/.cache/go-build \
   --mount=type=cache,target=/go/pkg \
   CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -o /out/app .
 
@@ -29,6 +30,7 @@ WORKDIR /app
 
 COPY --from=builder /out/app .
 COPY --from=certs /etc/ssl/certs /etc/ssl/certs
+COPY ./db/migrations ./migrations
 
 ADD https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.13/grpc_health_probe-$TARGETOS-$TARGETARCH /bin/grpc_health_probe
 

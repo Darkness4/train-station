@@ -114,9 +114,8 @@ var app = &cli.App{
 			logger.I.Error("db failed", zap.Error(err))
 			return err
 		}
-		db := &db.DB{
-			DB: d,
-		}
+		db := &db.DB{DB: d}
+		db.InitialMigration()
 
 		go func() {
 			logger.I.Info("downloading initial data...")

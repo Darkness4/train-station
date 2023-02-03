@@ -10,8 +10,6 @@ import (
 	"github.com/Darkness4/train-station-api/db/models"
 	"github.com/Darkness4/train-station-api/db/types"
 	"github.com/Darkness4/train-station-api/logger"
-	"github.com/golang-migrate/migrate/v4"
-	"github.com/golang-migrate/migrate/v4/database/sqlite"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/suite"
@@ -53,23 +51,8 @@ func (suite *DBTestSuite) BeforeTest(suiteName, testName string) {
 	if err != nil {
 		logger.I.Panic("failed to open db", zap.Error(err))
 	}
-	driver, err := sqlite.WithInstance(d, &sqlite.Config{
-		NoTxWrap: true,
-	})
-	if err != nil {
-		logger.I.Panic("failed to attach db", zap.Error(err))
-	}
-	m, err := migrate.NewWithDatabaseInstance(
-		"file://migrations",
-		"sqlite",
-		driver,
-	)
-	if err != nil {
-		logger.I.Panic("failed to migrate db", zap.Error(err))
-	}
-	err = m.Up()
-	suite.Require().NoError(err)
 	suite.db = &db.DB{d}
+	suite.db.InitialMigration()
 }
 
 func (suite *DBTestSuite) AfterTest(suiteName, testName string) {

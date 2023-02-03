@@ -1,10 +1,34 @@
-README.md
+# Created by https://www.toptal.com/developers/gitignore/api/go
+# Edit at https://www.toptal.com/developers/gitignore?templates=go
 
-.vscode
-**/.gitignore
+### Go ###
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
 
-docker-compose.yml
-Dockerfile
+# Test binary, built with `go test -c`
+*.test
 
-.env
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+*.sqlite3
+
+# Dependency directories (remove the comment below to include it)
+vendor/
+
+### Go Patch ###
+/vendor/
+/Godeps/
+
+# End of https://www.toptal.com/developers/gitignore/api/go
+
+service-account.json
+static
+
 .env.local
+.env.test
+bin/
