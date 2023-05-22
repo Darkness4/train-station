@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
   CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -o /out/app .
 
 # ---
-FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/busybox:1.36.0
+FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/busybox:1.36.1
 
 ARG TARGETOS TARGETARCH
 
