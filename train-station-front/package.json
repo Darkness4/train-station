@@ -33,7 +33,7 @@
 		"eslint-plugin-svelte3": "4.0.0",
 		"just-clone": "6.2.0",
 		"material-design-icons": "3.0.1",
-		"next-auth": "4.18.8",
+		"next-auth": "4.20.1",
 		"prettier": "2.8.8",
 		"prettier-plugin-svelte": "2.9.0",
 		"sass": "1.57.1",
