@@ -20,7 +20,7 @@ defaults:
 
 jobs:
   build-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -68,7 +68,7 @@ jobs:
           ./gradlew buildStaging
 
   test-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -96,7 +96,7 @@ jobs:
           ./gradlew test
 
   check-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -128,7 +128,7 @@ jobs:
       - test-android
       - build-android
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -192,7 +192,7 @@ jobs:
       - test-android
       - build-android
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -257,7 +257,7 @@ jobs:
       - build-android
       - package-apk-android
       - package-aab-android
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v3
