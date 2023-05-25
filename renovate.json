@@ -12,10 +12,9 @@
     },
     {
       "groupName": "sveltejs packages",
-      "matchPackagePrefixes": [
-        "@sveltejs/"
-      ]
+      "matchPackagePrefixes": ["@sveltejs/"]
     }
   ],
-  "commitMessagePrefix": "[renovate]"
+  "rebaseWhen": "conflicted",
+  "commitMessagePrefix": "chore({{parentDir}}):"
 }
