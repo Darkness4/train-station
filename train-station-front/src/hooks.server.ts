@@ -1,9 +1,9 @@
-import GitHub from '@auth/core/providers/github';
 import { env } from '$env/dynamic/private';
 import { authClient } from '$lib/server/api';
-import { SvelteKitAuth } from '@auth/sveltekit';
 import type { Provider } from '@auth/core/providers';
+import GitHub from '@auth/core/providers/github';
 import type { Profile } from '@auth/core/types';
+import { SvelteKitAuth } from '@auth/sveltekit';
 
 export const handle = SvelteKitAuth({
 	providers: [
@@ -29,6 +29,13 @@ export const handle = SvelteKitAuth({
 				token.stationToken = response.token;
 			}
 			return token;
+		},
+		redirect({ url, baseUrl }) {
+			// Allows relative callback URLs
+			if (url.startsWith('/')) return `${baseUrl}${url}`;
+			// Allows callback URLs on the same origin
+			else if (new URL(url).origin === baseUrl) return url;
+			return baseUrl;
 		},
 		session: async ({ session, token }) => {
 			if (token.stationToken) {
