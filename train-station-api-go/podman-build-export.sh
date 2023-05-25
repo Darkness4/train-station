@@ -3,7 +3,7 @@
 # Build your amd64 architecture container
 podman build \
   --tag "ghcr.io/darkness4/train-station-api:dev" \
-  --jobs=2 --platform=linux/amd64,linux/arm64 \
+  --jobs=2 --platform=linux/amd64,linux/arm64/v8 \
   --manifest ghcr.io/darkness4/train-station-api \
   .
 

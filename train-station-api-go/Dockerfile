@@ -8,15 +8,15 @@ WORKDIR /build/
 COPY go.mod go.sum ./
 RUN go mod download
 
-ARG TARGETOS TARGETARCH
+ARG TARGETOS TARGETARCH VERSION
 COPY . /build/
 
 RUN --mount=type=cache,target=/root/.cache/go-build \
   --mount=type=cache,target=/go/pkg \
-  CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -o /out/app .
+  CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCHgo build -a -ldflags "-s -w -X main.version=${VERSION}" -o /out/train-station-api-go ./main.go
 
 # ---
-FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/busybox:1.36.0
+FROM registry-1.docker.io/library/busybox:1.36.0
 
 ARG TARGETOS TARGETARCH
 
@@ -28,7 +28,7 @@ RUN mkdir /app
 RUN addgroup -S app && adduser -S -G app app
 WORKDIR /app
 
-COPY --from=builder /out/app .
+COPY --from=builder /out/train-station-api-go .
 COPY --from=certs /etc/ssl/certs /etc/ssl/certs
 COPY ./db/migrations ./migrations
 
@@ -41,4 +41,4 @@ USER app
 
 EXPOSE 3000
 
-ENTRYPOINT ["/tini", "--", "/app/app"]
+ENTRYPOINT ["/tini", "--", "/app/train-station-api-go"]

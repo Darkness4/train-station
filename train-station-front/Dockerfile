@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM docker.io/library/node:18-alpine as builder
+FROM registry-1.docker.io/library/node:18-alpine as builder
 
 RUN wget -qO- https://get.pnpm.io/v6.16.js | node - add --global pnpm && \
   rm -rf /usr/local/lib/node_modules/npm/ /usr/local/bin/npm && \
@@ -11,7 +11,7 @@ COPY . .
 RUN pnpm run build
 
 # ---
-FROM --platform=$BUILDPLATFORM docker.io/library/node:18-alpine
+FROM registry-1.docker.io/library/node:18-alpine
 
 RUN wget -qO- https://get.pnpm.io/v6.16.js | node - add --global pnpm && \
   rm -rf /usr/local/lib/node_modules/npm/ /usr/local/bin/npm && \

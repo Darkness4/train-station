@@ -36,6 +36,8 @@ var (
 	dbFile string
 
 	jwtSecret []byte
+
+	version string
 )
 
 var flags = []cli.Flag{
@@ -104,6 +106,7 @@ var app = &cli.App{
 	Name:    "train-station-api",
 	Usage:   "The train station API",
 	Flags:   flags,
+	Version: version,
 	Suggest: true,
 	Action: func(cCtx *cli.Context) error {
 		ctx := cCtx.Context

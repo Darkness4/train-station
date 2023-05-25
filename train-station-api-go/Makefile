@@ -1,5 +1,11 @@
-GO_SRCS := $(shell find . -type f -name '*.go' -a ! \( -name 'zz_generated*' -o -name '*_test.go' \))
+GO_SRCS := $(shell find . -type f -name '*.go' -a -name '*.tpl' -a ! \( -name 'zz_generated*' -o -name '*_test.go' \))
 GO_TESTS := $(shell find . -type f -name '*_test.go')
+TAG_NAME = $(shell git describe --tags --abbrev=0 --exact-match 2>/dev/null)
+TAG_NAME_DEV = $(shell git describe --tags --abbrev=0 2>/dev/null)
+VERSION_CORE = $(shell echo $(TAG_NAME) | sed 's/^\(v[0-9]\+\.[0-9]\+\.[0-9]\+\)\(+\([0-9]\+\)\)\?$$/\1/')
+VERSION_CORE_DEV = $(shell echo $(TAG_NAME_DEV) | sed 's/^\(v[0-9]\+\.[0-9]\+\.[0-9]\+\)\(+\([0-9]\+\)\)\?$$/\1/')
+GIT_COMMIT = $(shell git rev-parse --short=7 HEAD)
+VERSION = $(or $(and $(TAG_NAME),$(VERSION_CORE)),$(and $(TAG_NAME_DEV),$(VERSION_CORE_DEV)-dev),$(GIT_COMMIT))
 PROTOS := $(shell find ../protos -type f -name '*.proto')
 MIGRATIONS := $(shell find ./db/migrations -type f -name '*.sql')
 
@@ -7,32 +13,33 @@ MIGRATION_NAME?=migration_name
 
 bins := train-station-api-linux-amd64 train-station-api-linux-arm64 train-station-api-linux-mips64 train-station-api-linux-mips64le train-station-api-linux-ppc64 train-station-api-linux-ppc64le train-station-api-linux-riscv64 train-station-api-linux-s390x
 
+.PHONY: bin/train-station-api
 bin/train-station-api: $(GO_SRCS)
-	CGO_ENABLED=0 go build -o "$@" ./main.go
+	CGO_ENABLED=0 go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 bin/train-station-api-linux-amd64: $(GO_SRCS)
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "$@" ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 bin/train-station-api-linux-arm64: $(GO_SRCS)
-	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o "$@" ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 bin/train-station-api-linux-mips64: $(GO_SRCS)
-	CGO_ENABLED=0 GOOS=linux GOARCH=mips64 go build -o "$@" ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=mips64 go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 bin/train-station-api-linux-mips64le: $(GO_SRCS)
-	CGO_ENABLED=0 GOOS=linux GOARCH=mips64le go build -o "$@" ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=mips64le go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 bin/train-station-api-linux-ppc64: $(GO_SRCS)
-	CGO_ENABLED=0 GOOS=linux GOARCH=ppc64 go build -o "$@" ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=ppc64 go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 bin/train-station-api-linux-ppc64le: $(GO_SRCS)
-	CGO_ENABLED=0 GOOS=linux GOARCH=ppc64le go build -o "$@" ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=ppc64le go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 bin/train-station-api-linux-riscv64: $(GO_SRCS)
-	CGO_ENABLED=0 GOOS=linux GOARCH=riscv64 go build -o "$@" ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=riscv64 go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 bin/train-station-api-linux-s390x: $(GO_SRCS)
-	CGO_ENABLED=0 GOOS=linux GOARCH=s390x go build -o "$@" ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=s390x go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 
 ifeq ($(migrate),)
