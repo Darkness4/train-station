@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.trainstation.v1alpha1;
 
 @kotlin.jvm.JvmName("-initializesetFavoriteOneStationResponse")
-public inline fun setFavoriteOneStationResponse(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.SetFavoriteOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse =
+inline fun setFavoriteOneStationResponse(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.SetFavoriteOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.SetFavoriteOneStationResponseKt.Dsl._create(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse.newBuilder()).apply { block() }._build()
-public object SetFavoriteOneStationResponseKt {
+object SetFavoriteOneStationResponseKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse.Builder): Dsl = Dsl(builder)
@@ -23,6 +23,6 @@ public object SetFavoriteOneStationResponseKt {
     internal fun _build(): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse = _builder.build()
   }
 }
-public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.SetFavoriteOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse =
+inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.SetFavoriteOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.SetFavoriteOneStationResponseKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 

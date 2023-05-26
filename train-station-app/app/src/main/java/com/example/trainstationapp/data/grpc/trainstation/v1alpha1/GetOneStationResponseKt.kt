@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.trainstation.v1alpha1;
 
 @kotlin.jvm.JvmName("-initializegetOneStationResponse")
-public inline fun getOneStationResponse(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GetOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse =
+inline fun getOneStationResponse(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GetOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GetOneStationResponseKt.Dsl._create(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse.newBuilder()).apply { block() }._build()
-public object GetOneStationResponseKt {
+object GetOneStationResponseKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse.Builder): Dsl = Dsl(builder)
@@ -25,7 +25,7 @@ public object GetOneStationResponseKt {
     /**
      * <code>.trainstation.v1alpha1.Station station = 1 [json_name = "station"];</code>
      */
-    public var station: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station
+    var station: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station
       @JvmName("getStation")
       get() = _builder.getStation()
       @JvmName("setStation")
@@ -35,21 +35,21 @@ public object GetOneStationResponseKt {
     /**
      * <code>.trainstation.v1alpha1.Station station = 1 [json_name = "station"];</code>
      */
-    public fun clearStation() {
+    fun clearStation() {
       _builder.clearStation()
     }
     /**
      * <code>.trainstation.v1alpha1.Station station = 1 [json_name = "station"];</code>
      * @return Whether the station field is set.
      */
-    public fun hasStation(): kotlin.Boolean {
+    fun hasStation(): kotlin.Boolean {
       return _builder.hasStation()
     }
   }
 }
-public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GetOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse =
+inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GetOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GetOneStationResponseKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 
-public val com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponseOrBuilder.stationOrNull: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station?
+val com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponseOrBuilder.stationOrNull: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station?
   get() = if (hasStation()) getStation() else null
 

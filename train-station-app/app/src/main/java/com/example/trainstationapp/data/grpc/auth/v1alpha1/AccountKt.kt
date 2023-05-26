@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.auth.v1alpha1;
 
 @kotlin.jvm.JvmName("-initializeaccount")
-public inline fun account(block: com.example.trainstationapp.data.grpc.auth.v1alpha1.AccountKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account =
+inline fun account(block: com.example.trainstationapp.data.grpc.auth.v1alpha1.AccountKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account =
   com.example.trainstationapp.data.grpc.auth.v1alpha1.AccountKt.Dsl._create(com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account.newBuilder()).apply { block() }._build()
-public object AccountKt {
+object AccountKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account.Builder): Dsl = Dsl(builder)
@@ -24,13 +24,14 @@ public object AccountKt {
 
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
      * <code>string provider = 1 [json_name = "provider"];</code>
      */
-    public var provider: kotlin.String
+    var provider: kotlin.String
       @JvmName("getProvider")
       get() = _builder.getProvider()
       @JvmName("setProvider")
@@ -39,24 +40,25 @@ public object AccountKt {
       }
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
      * <code>string provider = 1 [json_name = "provider"];</code>
      */
-    public fun clearProvider() {
+    fun clearProvider() {
       _builder.clearProvider()
     }
 
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
      */
-    public var type: kotlin.String
+    var type: kotlin.String
       @JvmName("getType")
       get() = _builder.getType()
       @JvmName("setType")
@@ -65,23 +67,23 @@ public object AccountKt {
       }
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
      */
-    public fun clearType() {
+    fun clearType() {
       _builder.clearType()
     }
 
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
      */
-    public var providerAccountId: kotlin.String
+    var providerAccountId: kotlin.String
       @JvmName("getProviderAccountId")
       get() = _builder.getProviderAccountId()
       @JvmName("setProviderAccountId")
@@ -90,23 +92,23 @@ public object AccountKt {
       }
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
      */
-    public fun clearProviderAccountId() {
+    fun clearProviderAccountId() {
       _builder.clearProviderAccountId()
     }
 
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
      */
-    public var accessToken: kotlin.String
+    var accessToken: kotlin.String
       @JvmName("getAccessToken")
       get() = _builder.getAccessToken()
       @JvmName("setAccessToken")
@@ -115,16 +117,16 @@ public object AccountKt {
       }
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
      */
-    public fun clearAccessToken() {
+    fun clearAccessToken() {
       _builder.clearAccessToken()
     }
   }
 }
-public inline fun com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account.copy(block: com.example.trainstationapp.data.grpc.auth.v1alpha1.AccountKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account =
+inline fun com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account.copy(block: com.example.trainstationapp.data.grpc.auth.v1alpha1.AccountKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account =
   com.example.trainstationapp.data.grpc.auth.v1alpha1.AccountKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 

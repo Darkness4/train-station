@@ -8,7 +8,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * </pre>
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.52.0)",
+    value = "by gRPC proto compiler (version 1.55.1)",
     comments = "Source: auth/v1alpha1/auth.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class AuthAPIGrpc {
@@ -97,34 +97,38 @@ public final class AuthAPIGrpc {
    * AuthAPI is the main authentication API between the backend and the frontends.
    * </pre>
    */
-  public static abstract class AuthAPIImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void getJWT(com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTRequest request,
+    default void getJWT(com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTRequest request,
         io.grpc.stub.StreamObserver<com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetJWTMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getGetJWTMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTRequest,
-                com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse>(
-                  this, METHODID_GET_JWT)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service AuthAPI.
    * <pre>
    * AuthAPI is the main authentication API between the backend and the frontends.
    * </pre>
    */
-  public static final class AuthAPIStub extends io.grpc.stub.AbstractAsyncStub<AuthAPIStub> {
+  public static abstract class AuthAPIImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return AuthAPIGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service AuthAPI.
+   * <pre>
+   * AuthAPI is the main authentication API between the backend and the frontends.
+   * </pre>
+   */
+  public static final class AuthAPIStub
+      extends io.grpc.stub.AbstractAsyncStub<AuthAPIStub> {
     private AuthAPIStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -146,11 +150,13 @@ public final class AuthAPIGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service AuthAPI.
    * <pre>
    * AuthAPI is the main authentication API between the backend and the frontends.
    * </pre>
    */
-  public static final class AuthAPIBlockingStub extends io.grpc.stub.AbstractBlockingStub<AuthAPIBlockingStub> {
+  public static final class AuthAPIBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<AuthAPIBlockingStub> {
     private AuthAPIBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -171,11 +177,13 @@ public final class AuthAPIGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service AuthAPI.
    * <pre>
    * AuthAPI is the main authentication API between the backend and the frontends.
    * </pre>
    */
-  public static final class AuthAPIFutureStub extends io.grpc.stub.AbstractFutureStub<AuthAPIFutureStub> {
+  public static final class AuthAPIFutureStub
+      extends io.grpc.stub.AbstractFutureStub<AuthAPIFutureStub> {
     private AuthAPIFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -203,10 +211,10 @@ public final class AuthAPIGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final AuthAPIImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(AuthAPIImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -233,6 +241,18 @@ public final class AuthAPIGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getGetJWTMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTRequest,
+              com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse>(
+                service, METHODID_GET_JWT)))
+        .build();
   }
 
   private static volatile io.grpc.ServiceDescriptor serviceDescriptor;

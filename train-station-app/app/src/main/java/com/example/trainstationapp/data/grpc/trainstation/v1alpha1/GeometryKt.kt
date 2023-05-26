@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.trainstation.v1alpha1;
 
 @kotlin.jvm.JvmName("-initializegeometry")
-public inline fun geometry(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GeometryKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry =
+inline fun geometry(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GeometryKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GeometryKt.Dsl._create(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry.newBuilder()).apply { block() }._build()
-public object GeometryKt {
+object GeometryKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry.Builder): Dsl = Dsl(builder)
@@ -25,7 +25,7 @@ public object GeometryKt {
     /**
      * <code>string type = 1 [json_name = "type"];</code>
      */
-    public var type: kotlin.String
+    var type: kotlin.String
       @JvmName("getType")
       get() = _builder.getType()
       @JvmName("setType")
@@ -35,7 +35,7 @@ public object GeometryKt {
     /**
      * <code>string type = 1 [json_name = "type"];</code>
      */
-    public fun clearType() {
+    fun clearType() {
       _builder.clearType()
     }
 
@@ -44,11 +44,11 @@ public object GeometryKt {
      * generics.
      */
     @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
-    public class CoordinatesProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    class CoordinatesProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
     /**
      * <code>repeated double coordinates = 2 [json_name = "coordinates"];</code>
      */
-     public val coordinates: com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>
+     val coordinates: com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>
       @kotlin.jvm.JvmSynthetic
       get() = com.google.protobuf.kotlin.DslList(
         _builder.getCoordinatesList()
@@ -59,7 +59,7 @@ public object GeometryKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("addCoordinates")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.add(value: kotlin.Double) {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.add(value: kotlin.Double) {
       _builder.addCoordinates(value)
     }/**
      * <code>repeated double coordinates = 2 [json_name = "coordinates"];</code>
@@ -68,7 +68,7 @@ public object GeometryKt {
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("plusAssignCoordinates")
     @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.plusAssign(value: kotlin.Double) {
+    inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.plusAssign(value: kotlin.Double) {
       add(value)
     }/**
      * <code>repeated double coordinates = 2 [json_name = "coordinates"];</code>
@@ -76,7 +76,7 @@ public object GeometryKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("addAllCoordinates")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.addAll(values: kotlin.collections.Iterable<kotlin.Double>) {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.addAll(values: kotlin.collections.Iterable<kotlin.Double>) {
       _builder.addAllCoordinates(values)
     }/**
      * <code>repeated double coordinates = 2 [json_name = "coordinates"];</code>
@@ -85,7 +85,7 @@ public object GeometryKt {
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("plusAssignAllCoordinates")
     @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.Double>) {
+    inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.Double>) {
       addAll(values)
     }/**
      * <code>repeated double coordinates = 2 [json_name = "coordinates"];</code>
@@ -94,17 +94,17 @@ public object GeometryKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("setCoordinates")
-    public operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.set(index: kotlin.Int, value: kotlin.Double) {
+    operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.set(index: kotlin.Int, value: kotlin.Double) {
       _builder.setCoordinates(index, value)
     }/**
      * <code>repeated double coordinates = 2 [json_name = "coordinates"];</code>
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("clearCoordinates")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.clear() {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, CoordinatesProxy>.clear() {
       _builder.clearCoordinates()
     }}
 }
-public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GeometryKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry =
+inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GeometryKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.GeometryKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 

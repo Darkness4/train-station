@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.trainstation.v1alpha1;
 
 @kotlin.jvm.JvmName("-initializepaginatedStation")
-public inline fun paginatedStation(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.PaginatedStationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation =
+inline fun paginatedStation(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.PaginatedStationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.PaginatedStationKt.Dsl._create(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation.newBuilder()).apply { block() }._build()
-public object PaginatedStationKt {
+object PaginatedStationKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation.Builder): Dsl = Dsl(builder)
@@ -27,11 +27,11 @@ public object PaginatedStationKt {
      * generics.
      */
     @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
-    public class DataProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    class DataProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
     /**
      * <code>repeated .trainstation.v1alpha1.Station data = 1 [json_name = "data"];</code>
      */
-     public val data: com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>
+     val data: com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>
       @kotlin.jvm.JvmSynthetic
       get() = com.google.protobuf.kotlin.DslList(
         _builder.getDataList()
@@ -42,7 +42,7 @@ public object PaginatedStationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("addData")
-    public fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.add(value: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station) {
+    fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.add(value: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station) {
       _builder.addData(value)
     }
     /**
@@ -52,7 +52,7 @@ public object PaginatedStationKt {
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("plusAssignData")
     @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.plusAssign(value: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station) {
+    inline operator fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.plusAssign(value: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station) {
       add(value)
     }
     /**
@@ -61,7 +61,7 @@ public object PaginatedStationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("addAllData")
-    public fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.addAll(values: kotlin.collections.Iterable<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station>) {
+    fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.addAll(values: kotlin.collections.Iterable<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station>) {
       _builder.addAllData(values)
     }
     /**
@@ -71,7 +71,7 @@ public object PaginatedStationKt {
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("plusAssignAllData")
     @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.plusAssign(values: kotlin.collections.Iterable<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station>) {
+    inline operator fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.plusAssign(values: kotlin.collections.Iterable<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station>) {
       addAll(values)
     }
     /**
@@ -81,7 +81,7 @@ public object PaginatedStationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("setData")
-    public operator fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.set(index: kotlin.Int, value: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station) {
+    operator fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.set(index: kotlin.Int, value: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station) {
       _builder.setData(index, value)
     }
     /**
@@ -89,14 +89,14 @@ public object PaginatedStationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("clearData")
-    public fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.clear() {
+    fun com.google.protobuf.kotlin.DslList<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station, DataProxy>.clear() {
       _builder.clearData()
     }
 
     /**
      * <code>int64 count = 2 [json_name = "count", jstype = JS_NUMBER];</code>
      */
-    public var count: kotlin.Long
+    var count: kotlin.Long
       @JvmName("getCount")
       get() = _builder.getCount()
       @JvmName("setCount")
@@ -106,14 +106,14 @@ public object PaginatedStationKt {
     /**
      * <code>int64 count = 2 [json_name = "count", jstype = JS_NUMBER];</code>
      */
-    public fun clearCount() {
+    fun clearCount() {
       _builder.clearCount()
     }
 
     /**
      * <code>int64 total = 3 [json_name = "total", jstype = JS_NUMBER];</code>
      */
-    public var total: kotlin.Long
+    var total: kotlin.Long
       @JvmName("getTotal")
       get() = _builder.getTotal()
       @JvmName("setTotal")
@@ -123,14 +123,14 @@ public object PaginatedStationKt {
     /**
      * <code>int64 total = 3 [json_name = "total", jstype = JS_NUMBER];</code>
      */
-    public fun clearTotal() {
+    fun clearTotal() {
       _builder.clearTotal()
     }
 
     /**
      * <code>int64 page = 4 [json_name = "page", jstype = JS_NUMBER];</code>
      */
-    public var page: kotlin.Long
+    var page: kotlin.Long
       @JvmName("getPage")
       get() = _builder.getPage()
       @JvmName("setPage")
@@ -140,14 +140,14 @@ public object PaginatedStationKt {
     /**
      * <code>int64 page = 4 [json_name = "page", jstype = JS_NUMBER];</code>
      */
-    public fun clearPage() {
+    fun clearPage() {
       _builder.clearPage()
     }
 
     /**
      * <code>int64 page_count = 5 [json_name = "pageCount", jstype = JS_NUMBER];</code>
      */
-    public var pageCount: kotlin.Long
+    var pageCount: kotlin.Long
       @JvmName("getPageCount")
       get() = _builder.getPageCount()
       @JvmName("setPageCount")
@@ -157,11 +157,11 @@ public object PaginatedStationKt {
     /**
      * <code>int64 page_count = 5 [json_name = "pageCount", jstype = JS_NUMBER];</code>
      */
-    public fun clearPageCount() {
+    fun clearPageCount() {
       _builder.clearPageCount()
     }
   }
 }
-public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.PaginatedStationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation =
+inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.PaginatedStationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.PaginatedStationKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 

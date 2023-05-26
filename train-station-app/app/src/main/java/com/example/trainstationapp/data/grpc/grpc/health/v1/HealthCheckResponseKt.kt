@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.grpc.health.v1;
 
 @kotlin.jvm.JvmName("-initializehealthCheckResponse")
-public inline fun healthCheckResponse(block: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse =
+inline fun healthCheckResponse(block: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse =
   com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckResponseKt.Dsl._create(com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse.newBuilder()).apply { block() }._build()
-public object HealthCheckResponseKt {
+object HealthCheckResponseKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse.Builder): Dsl = Dsl(builder)
@@ -25,7 +25,7 @@ public object HealthCheckResponseKt {
     /**
      * <code>.grpc.health.v1.HealthCheckResponse.ServingStatus status = 1 [json_name = "status"];</code>
      */
-    public var status: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse.ServingStatus
+    var status: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse.ServingStatus
       @JvmName("getStatus")
       get() = _builder.getStatus()
       @JvmName("setStatus")
@@ -35,11 +35,11 @@ public object HealthCheckResponseKt {
     /**
      * <code>.grpc.health.v1.HealthCheckResponse.ServingStatus status = 1 [json_name = "status"];</code>
      */
-    public fun clearStatus() {
+    fun clearStatus() {
       _builder.clearStatus()
     }
   }
 }
-public inline fun com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse.copy(block: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse =
+inline fun com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse.copy(block: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse =
   com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckResponseKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 

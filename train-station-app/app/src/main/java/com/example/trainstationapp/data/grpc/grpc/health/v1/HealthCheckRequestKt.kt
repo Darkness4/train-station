@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.grpc.health.v1;
 
 @kotlin.jvm.JvmName("-initializehealthCheckRequest")
-public inline fun healthCheckRequest(block: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckRequestKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest =
+inline fun healthCheckRequest(block: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckRequestKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest =
   com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckRequestKt.Dsl._create(com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest.newBuilder()).apply { block() }._build()
-public object HealthCheckRequestKt {
+object HealthCheckRequestKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest.Builder): Dsl = Dsl(builder)
@@ -25,7 +25,7 @@ public object HealthCheckRequestKt {
     /**
      * <code>string service = 1 [json_name = "service"];</code>
      */
-    public var service: kotlin.String
+    var service: kotlin.String
       @JvmName("getService")
       get() = _builder.getService()
       @JvmName("setService")
@@ -35,11 +35,11 @@ public object HealthCheckRequestKt {
     /**
      * <code>string service = 1 [json_name = "service"];</code>
      */
-    public fun clearService() {
+    fun clearService() {
       _builder.clearService()
     }
   }
 }
-public inline fun com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest.copy(block: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckRequestKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest =
+inline fun com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest.copy(block: com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckRequestKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest =
   com.example.trainstationapp.data.grpc.grpc.health.v1.HealthCheckRequestKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 

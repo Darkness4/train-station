@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.auth.v1alpha1;
 
 @kotlin.jvm.JvmName("-initializegetJWTResponse")
-public inline fun getJWTResponse(block: com.example.trainstationapp.data.grpc.auth.v1alpha1.GetJWTResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse =
+inline fun getJWTResponse(block: com.example.trainstationapp.data.grpc.auth.v1alpha1.GetJWTResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse =
   com.example.trainstationapp.data.grpc.auth.v1alpha1.GetJWTResponseKt.Dsl._create(com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse.newBuilder()).apply { block() }._build()
-public object GetJWTResponseKt {
+object GetJWTResponseKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse.Builder): Dsl = Dsl(builder)
@@ -25,7 +25,7 @@ public object GetJWTResponseKt {
     /**
      * <code>string token = 1 [json_name = "token"];</code>
      */
-    public var token: kotlin.String
+    var token: kotlin.String
       @JvmName("getToken")
       get() = _builder.getToken()
       @JvmName("setToken")
@@ -35,11 +35,11 @@ public object GetJWTResponseKt {
     /**
      * <code>string token = 1 [json_name = "token"];</code>
      */
-    public fun clearToken() {
+    fun clearToken() {
       _builder.clearToken()
     }
   }
 }
-public inline fun com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse.copy(block: com.example.trainstationapp.data.grpc.auth.v1alpha1.GetJWTResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse =
+inline fun com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse.copy(block: com.example.trainstationapp.data.grpc.auth.v1alpha1.GetJWTResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse =
   com.example.trainstationapp.data.grpc.auth.v1alpha1.GetJWTResponseKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 

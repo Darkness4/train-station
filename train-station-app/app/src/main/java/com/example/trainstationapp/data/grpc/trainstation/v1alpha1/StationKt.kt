@@ -4,15 +4,15 @@
 package com.example.trainstationapp.data.grpc.trainstation.v1alpha1;
 
 @kotlin.jvm.JvmName("-initializestation")
-public inline fun station(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station =
+inline fun station(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationKt.Dsl._create(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station.newBuilder()).apply { block() }._build()
-public object StationKt {
+object StationKt {
   @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
   @com.google.protobuf.kotlin.ProtoDslMarker
-  public class Dsl private constructor(
+  class Dsl private constructor(
     private val _builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station.Builder
   ) {
-    public companion object {
+    companion object {
       @kotlin.jvm.JvmSynthetic
       @kotlin.PublishedApi
       internal fun _create(builder: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station.Builder): Dsl = Dsl(builder)
@@ -25,7 +25,7 @@ public object StationKt {
     /**
      * <code>string id = 1 [json_name = "id"];</code>
      */
-    public var id: kotlin.String
+    var id: kotlin.String
       @JvmName("getId")
       get() = _builder.getId()
       @JvmName("setId")
@@ -35,14 +35,14 @@ public object StationKt {
     /**
      * <code>string id = 1 [json_name = "id"];</code>
      */
-    public fun clearId() {
+    fun clearId() {
       _builder.clearId()
     }
 
     /**
      * <code>string commune = 2 [json_name = "commune"];</code>
      */
-    public var commune: kotlin.String
+    var commune: kotlin.String
       @JvmName("getCommune")
       get() = _builder.getCommune()
       @JvmName("setCommune")
@@ -52,14 +52,14 @@ public object StationKt {
     /**
      * <code>string commune = 2 [json_name = "commune"];</code>
      */
-    public fun clearCommune() {
+    fun clearCommune() {
       _builder.clearCommune()
     }
 
     /**
      * <code>double y_wgs84 = 3 [json_name = "yWgs84"];</code>
      */
-    public var yWgs84: kotlin.Double
+    var yWgs84: kotlin.Double
       @JvmName("getYWgs84")
       get() = _builder.getYWgs84()
       @JvmName("setYWgs84")
@@ -69,14 +69,14 @@ public object StationKt {
     /**
      * <code>double y_wgs84 = 3 [json_name = "yWgs84"];</code>
      */
-    public fun clearYWgs84() {
+    fun clearYWgs84() {
       _builder.clearYWgs84()
     }
 
     /**
      * <code>double x_wgs84 = 4 [json_name = "xWgs84"];</code>
      */
-    public var xWgs84: kotlin.Double
+    var xWgs84: kotlin.Double
       @JvmName("getXWgs84")
       get() = _builder.getXWgs84()
       @JvmName("setXWgs84")
@@ -86,14 +86,14 @@ public object StationKt {
     /**
      * <code>double x_wgs84 = 4 [json_name = "xWgs84"];</code>
      */
-    public fun clearXWgs84() {
+    fun clearXWgs84() {
       _builder.clearXWgs84()
     }
 
     /**
      * <code>string libelle = 5 [json_name = "libelle"];</code>
      */
-    public var libelle: kotlin.String
+    var libelle: kotlin.String
       @JvmName("getLibelle")
       get() = _builder.getLibelle()
       @JvmName("setLibelle")
@@ -103,14 +103,14 @@ public object StationKt {
     /**
      * <code>string libelle = 5 [json_name = "libelle"];</code>
      */
-    public fun clearLibelle() {
+    fun clearLibelle() {
       _builder.clearLibelle()
     }
 
     /**
      * <code>string idgaia = 6 [json_name = "idgaia"];</code>
      */
-    public var idgaia: kotlin.String
+    var idgaia: kotlin.String
       @JvmName("getIdgaia")
       get() = _builder.getIdgaia()
       @JvmName("setIdgaia")
@@ -120,14 +120,14 @@ public object StationKt {
     /**
      * <code>string idgaia = 6 [json_name = "idgaia"];</code>
      */
-    public fun clearIdgaia() {
+    fun clearIdgaia() {
       _builder.clearIdgaia()
     }
 
     /**
      * <code>string voyageurs = 7 [json_name = "voyageurs"];</code>
      */
-    public var voyageurs: kotlin.String
+    var voyageurs: kotlin.String
       @JvmName("getVoyageurs")
       get() = _builder.getVoyageurs()
       @JvmName("setVoyageurs")
@@ -137,7 +137,7 @@ public object StationKt {
     /**
      * <code>string voyageurs = 7 [json_name = "voyageurs"];</code>
      */
-    public fun clearVoyageurs() {
+    fun clearVoyageurs() {
       _builder.clearVoyageurs()
     }
 
@@ -146,11 +146,11 @@ public object StationKt {
      * generics.
      */
     @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
-    public class GeoPoint2DProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    class GeoPoint2DProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
     /**
      * <code>repeated double geo_point_2d = 8 [json_name = "geoPoint2d"];</code>
      */
-     public val geoPoint2D: com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>
+     val geoPoint2D: com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>
       @kotlin.jvm.JvmSynthetic
       get() = com.google.protobuf.kotlin.DslList(
         _builder.getGeoPoint2DList()
@@ -161,7 +161,7 @@ public object StationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("addGeoPoint2D")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.add(value: kotlin.Double) {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.add(value: kotlin.Double) {
       _builder.addGeoPoint2D(value)
     }/**
      * <code>repeated double geo_point_2d = 8 [json_name = "geoPoint2d"];</code>
@@ -170,7 +170,7 @@ public object StationKt {
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("plusAssignGeoPoint2D")
     @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.plusAssign(value: kotlin.Double) {
+    inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.plusAssign(value: kotlin.Double) {
       add(value)
     }/**
      * <code>repeated double geo_point_2d = 8 [json_name = "geoPoint2d"];</code>
@@ -178,7 +178,7 @@ public object StationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("addAllGeoPoint2D")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.addAll(values: kotlin.collections.Iterable<kotlin.Double>) {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.addAll(values: kotlin.collections.Iterable<kotlin.Double>) {
       _builder.addAllGeoPoint2D(values)
     }/**
      * <code>repeated double geo_point_2d = 8 [json_name = "geoPoint2d"];</code>
@@ -187,7 +187,7 @@ public object StationKt {
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("plusAssignAllGeoPoint2D")
     @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.Double>) {
+    inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.Double>) {
       addAll(values)
     }/**
      * <code>repeated double geo_point_2d = 8 [json_name = "geoPoint2d"];</code>
@@ -196,20 +196,20 @@ public object StationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("setGeoPoint2D")
-    public operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.set(index: kotlin.Int, value: kotlin.Double) {
+    operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.set(index: kotlin.Int, value: kotlin.Double) {
       _builder.setGeoPoint2D(index, value)
     }/**
      * <code>repeated double geo_point_2d = 8 [json_name = "geoPoint2d"];</code>
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("clearGeoPoint2D")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.clear() {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, GeoPoint2DProxy>.clear() {
       _builder.clearGeoPoint2D()
     }
     /**
      * <code>string code_ligne = 9 [json_name = "codeLigne"];</code>
      */
-    public var codeLigne: kotlin.String
+    var codeLigne: kotlin.String
       @JvmName("getCodeLigne")
       get() = _builder.getCodeLigne()
       @JvmName("setCodeLigne")
@@ -219,14 +219,14 @@ public object StationKt {
     /**
      * <code>string code_ligne = 9 [json_name = "codeLigne"];</code>
      */
-    public fun clearCodeLigne() {
+    fun clearCodeLigne() {
       _builder.clearCodeLigne()
     }
 
     /**
      * <code>double x_l93 = 10 [json_name = "xL93"];</code>
      */
-    public var xL93: kotlin.Double
+    var xL93: kotlin.Double
       @JvmName("getXL93")
       get() = _builder.getXL93()
       @JvmName("setXL93")
@@ -236,7 +236,7 @@ public object StationKt {
     /**
      * <code>double x_l93 = 10 [json_name = "xL93"];</code>
      */
-    public fun clearXL93() {
+    fun clearXL93() {
       _builder.clearXL93()
     }
 
@@ -245,11 +245,11 @@ public object StationKt {
      * generics.
      */
     @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
-    public class CGeoProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    class CGeoProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
     /**
      * <code>repeated double c_geo = 11 [json_name = "cGeo"];</code>
      */
-     public val cGeo: com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>
+     val cGeo: com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>
       @kotlin.jvm.JvmSynthetic
       get() = com.google.protobuf.kotlin.DslList(
         _builder.getCGeoList()
@@ -260,7 +260,7 @@ public object StationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("addCGeo")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.add(value: kotlin.Double) {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.add(value: kotlin.Double) {
       _builder.addCGeo(value)
     }/**
      * <code>repeated double c_geo = 11 [json_name = "cGeo"];</code>
@@ -269,7 +269,7 @@ public object StationKt {
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("plusAssignCGeo")
     @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.plusAssign(value: kotlin.Double) {
+    inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.plusAssign(value: kotlin.Double) {
       add(value)
     }/**
      * <code>repeated double c_geo = 11 [json_name = "cGeo"];</code>
@@ -277,7 +277,7 @@ public object StationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("addAllCGeo")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.addAll(values: kotlin.collections.Iterable<kotlin.Double>) {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.addAll(values: kotlin.collections.Iterable<kotlin.Double>) {
       _builder.addAllCGeo(values)
     }/**
      * <code>repeated double c_geo = 11 [json_name = "cGeo"];</code>
@@ -286,7 +286,7 @@ public object StationKt {
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("plusAssignAllCGeo")
     @Suppress("NOTHING_TO_INLINE")
-    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.Double>) {
+    inline operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.Double>) {
       addAll(values)
     }/**
      * <code>repeated double c_geo = 11 [json_name = "cGeo"];</code>
@@ -295,20 +295,20 @@ public object StationKt {
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("setCGeo")
-    public operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.set(index: kotlin.Int, value: kotlin.Double) {
+    operator fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.set(index: kotlin.Int, value: kotlin.Double) {
       _builder.setCGeo(index, value)
     }/**
      * <code>repeated double c_geo = 11 [json_name = "cGeo"];</code>
      */
     @kotlin.jvm.JvmSynthetic
     @kotlin.jvm.JvmName("clearCGeo")
-    public fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.clear() {
+    fun com.google.protobuf.kotlin.DslList<kotlin.Double, CGeoProxy>.clear() {
       _builder.clearCGeo()
     }
     /**
      * <code>int64 rg_troncon = 12 [json_name = "rgTroncon", jstype = JS_NUMBER];</code>
      */
-    public var rgTroncon: kotlin.Long
+    var rgTroncon: kotlin.Long
       @JvmName("getRgTroncon")
       get() = _builder.getRgTroncon()
       @JvmName("setRgTroncon")
@@ -318,14 +318,14 @@ public object StationKt {
     /**
      * <code>int64 rg_troncon = 12 [json_name = "rgTroncon", jstype = JS_NUMBER];</code>
      */
-    public fun clearRgTroncon() {
+    fun clearRgTroncon() {
       _builder.clearRgTroncon()
     }
 
     /**
      * <code>.trainstation.v1alpha1.Geometry geo_shape = 13 [json_name = "geoShape"];</code>
      */
-    public var geoShape: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry
+    var geoShape: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry
       @JvmName("getGeoShape")
       get() = _builder.getGeoShape()
       @JvmName("setGeoShape")
@@ -335,21 +335,21 @@ public object StationKt {
     /**
      * <code>.trainstation.v1alpha1.Geometry geo_shape = 13 [json_name = "geoShape"];</code>
      */
-    public fun clearGeoShape() {
+    fun clearGeoShape() {
       _builder.clearGeoShape()
     }
     /**
      * <code>.trainstation.v1alpha1.Geometry geo_shape = 13 [json_name = "geoShape"];</code>
      * @return Whether the geoShape field is set.
      */
-    public fun hasGeoShape(): kotlin.Boolean {
+    fun hasGeoShape(): kotlin.Boolean {
       return _builder.hasGeoShape()
     }
 
     /**
      * <code>string pk = 14 [json_name = "pk"];</code>
      */
-    public var pk: kotlin.String
+    var pk: kotlin.String
       @JvmName("getPk")
       get() = _builder.getPk()
       @JvmName("setPk")
@@ -359,14 +359,14 @@ public object StationKt {
     /**
      * <code>string pk = 14 [json_name = "pk"];</code>
      */
-    public fun clearPk() {
+    fun clearPk() {
       _builder.clearPk()
     }
 
     /**
      * <code>int64 idreseau = 15 [json_name = "idreseau", jstype = JS_NUMBER];</code>
      */
-    public var idreseau: kotlin.Long
+    var idreseau: kotlin.Long
       @JvmName("getIdreseau")
       get() = _builder.getIdreseau()
       @JvmName("setIdreseau")
@@ -376,14 +376,14 @@ public object StationKt {
     /**
      * <code>int64 idreseau = 15 [json_name = "idreseau", jstype = JS_NUMBER];</code>
      */
-    public fun clearIdreseau() {
+    fun clearIdreseau() {
       _builder.clearIdreseau()
     }
 
     /**
      * <code>string departemen = 16 [json_name = "departemen"];</code>
      */
-    public var departemen: kotlin.String
+    var departemen: kotlin.String
       @JvmName("getDepartemen")
       get() = _builder.getDepartemen()
       @JvmName("setDepartemen")
@@ -393,14 +393,14 @@ public object StationKt {
     /**
      * <code>string departemen = 16 [json_name = "departemen"];</code>
      */
-    public fun clearDepartemen() {
+    fun clearDepartemen() {
       _builder.clearDepartemen()
     }
 
     /**
      * <code>double y_l93 = 17 [json_name = "yL93"];</code>
      */
-    public var yL93: kotlin.Double
+    var yL93: kotlin.Double
       @JvmName("getYL93")
       get() = _builder.getYL93()
       @JvmName("setYL93")
@@ -410,14 +410,14 @@ public object StationKt {
     /**
      * <code>double y_l93 = 17 [json_name = "yL93"];</code>
      */
-    public fun clearYL93() {
+    fun clearYL93() {
       _builder.clearYL93()
     }
 
     /**
      * <code>string fret = 18 [json_name = "fret"];</code>
      */
-    public var fret: kotlin.String
+    var fret: kotlin.String
       @JvmName("getFret")
       get() = _builder.getFret()
       @JvmName("setFret")
@@ -427,14 +427,14 @@ public object StationKt {
     /**
      * <code>string fret = 18 [json_name = "fret"];</code>
      */
-    public fun clearFret() {
+    fun clearFret() {
       _builder.clearFret()
     }
 
     /**
      * <code>bool is_favorite = 19 [json_name = "isFavorite"];</code>
      */
-    public var isFavorite: kotlin.Boolean
+    var isFavorite: kotlin.Boolean
       @JvmName("getIsFavorite")
       get() = _builder.getIsFavorite()
       @JvmName("setIsFavorite")
@@ -444,14 +444,14 @@ public object StationKt {
     /**
      * <code>bool is_favorite = 19 [json_name = "isFavorite"];</code>
      */
-    public fun clearIsFavorite() {
+    fun clearIsFavorite() {
       _builder.clearIsFavorite()
     }
   }
 }
-public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station =
+inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station.copy(block: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station =
   com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationKt.Dsl._create(this.toBuilder()).apply { block() }._build()
 
-public val com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.StationOrBuilder.geoShapeOrNull: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry?
+val com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.StationOrBuilder.geoShapeOrNull: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry?
   get() = if (hasGeoShape()) getGeoShape() else null
 

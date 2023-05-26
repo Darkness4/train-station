@@ -6,7 +6,6 @@ object TestUtils {
     fun createStation(id: String) =
         Station(
             id = id,
-            datasetid = "datasetid",
             isFavorite = false,
             commune = "commune",
             yWgs84 = 1.0,

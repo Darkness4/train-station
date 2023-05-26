@@ -11,12 +11,12 @@ import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getOneStation
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.setFavoriteOneStationRequest
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class StationRepositoryImpl
 @Inject
@@ -116,8 +116,7 @@ constructor(
                 val entity = Station.fromGrpc(it)
                 database.stationDao().insert(entity)
                 State.Success(entity)
-            }
-                ?: State.Failure(Exception("Element not found."))
+            } ?: State.Failure(Exception("Element not found."))
         } catch (e: Throwable) {
             State.Failure(e)
         }

@@ -9,7 +9,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * </pre>
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.52.0)",
+    value = "by gRPC proto compiler (version 1.55.1)",
     comments = "Source: trainstation/v1alpha1/station.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class StationAPIGrpc {
@@ -159,14 +159,14 @@ public final class StationAPIGrpc {
    * The API needs the user to be authenticated via the AuthAPI.
    * </pre>
    */
-  public static abstract class StationAPIImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      * <pre>
      * GetManyStations fetch a paginated list of station.
      * </pre>
      */
-    public void getManyStations(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest request,
+    default void getManyStations(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest request,
         io.grpc.stub.StreamObserver<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetManyStationsMethod(), responseObserver);
     }
@@ -176,7 +176,7 @@ public final class StationAPIGrpc {
      * GetOneStation fetches the details of a station.
      * </pre>
      */
-    public void getOneStation(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest request,
+    default void getOneStation(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest request,
         io.grpc.stub.StreamObserver<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetOneStationMethod(), responseObserver);
     }
@@ -186,45 +186,36 @@ public final class StationAPIGrpc {
      * SetFavoriteOneStation set a station to favorite for a user.
      * </pre>
      */
-    public void setFavoriteOneStation(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationRequest request,
+    default void setFavoriteOneStation(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationRequest request,
         io.grpc.stub.StreamObserver<com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSetFavoriteOneStationMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getGetManyStationsMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest,
-                com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsResponse>(
-                  this, METHODID_GET_MANY_STATIONS)))
-          .addMethod(
-            getGetOneStationMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest,
-                com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse>(
-                  this, METHODID_GET_ONE_STATION)))
-          .addMethod(
-            getSetFavoriteOneStationMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationRequest,
-                com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse>(
-                  this, METHODID_SET_FAVORITE_ONE_STATION)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service StationAPI.
    * <pre>
    * StationAPI handles train stations from the SNCF.
    * The API needs the user to be authenticated via the AuthAPI.
    * </pre>
    */
-  public static final class StationAPIStub extends io.grpc.stub.AbstractAsyncStub<StationAPIStub> {
+  public static abstract class StationAPIImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return StationAPIGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service StationAPI.
+   * <pre>
+   * StationAPI handles train stations from the SNCF.
+   * The API needs the user to be authenticated via the AuthAPI.
+   * </pre>
+   */
+  public static final class StationAPIStub
+      extends io.grpc.stub.AbstractAsyncStub<StationAPIStub> {
     private StationAPIStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -271,12 +262,14 @@ public final class StationAPIGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service StationAPI.
    * <pre>
    * StationAPI handles train stations from the SNCF.
    * The API needs the user to be authenticated via the AuthAPI.
    * </pre>
    */
-  public static final class StationAPIBlockingStub extends io.grpc.stub.AbstractBlockingStub<StationAPIBlockingStub> {
+  public static final class StationAPIBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<StationAPIBlockingStub> {
     private StationAPIBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -320,12 +313,14 @@ public final class StationAPIGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service StationAPI.
    * <pre>
    * StationAPI handles train stations from the SNCF.
    * The API needs the user to be authenticated via the AuthAPI.
    * </pre>
    */
-  public static final class StationAPIFutureStub extends io.grpc.stub.AbstractFutureStub<StationAPIFutureStub> {
+  public static final class StationAPIFutureStub
+      extends io.grpc.stub.AbstractFutureStub<StationAPIFutureStub> {
     private StationAPIFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -380,10 +375,10 @@ public final class StationAPIGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final StationAPIImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(StationAPIImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -418,6 +413,32 @@ public final class StationAPIGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getGetManyStationsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest,
+              com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsResponse>(
+                service, METHODID_GET_MANY_STATIONS)))
+        .addMethod(
+          getGetOneStationMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest,
+              com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse>(
+                service, METHODID_GET_ONE_STATION)))
+        .addMethod(
+          getSetFavoriteOneStationMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationRequest,
+              com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse>(
+                service, METHODID_SET_FAVORITE_ONE_STATION)))
+        .build();
   }
 
   private static volatile io.grpc.ServiceDescriptor serviceDescriptor;

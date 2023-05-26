@@ -14,6 +14,7 @@ public final class AuthProto {
 
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
@@ -24,6 +25,7 @@ public final class AuthProto {
     java.lang.String getProvider();
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
@@ -36,7 +38,7 @@ public final class AuthProto {
 
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
@@ -45,7 +47,7 @@ public final class AuthProto {
     java.lang.String getType();
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
@@ -56,7 +58,7 @@ public final class AuthProto {
 
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -65,7 +67,7 @@ public final class AuthProto {
     java.lang.String getProviderAccountId();
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -76,7 +78,7 @@ public final class AuthProto {
 
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -85,7 +87,7 @@ public final class AuthProto {
     java.lang.String getAccessToken();
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -116,6 +118,7 @@ public final class AuthProto {
     private java.lang.String provider_;
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
@@ -129,6 +132,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
@@ -143,6 +147,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
@@ -158,6 +163,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
@@ -170,6 +176,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
+     **
      * ID of the provider used for this account.
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
@@ -188,7 +195,7 @@ public final class AuthProto {
     private java.lang.String type_;
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
@@ -200,7 +207,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
@@ -213,7 +220,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
@@ -227,7 +234,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
@@ -238,7 +245,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * Provider's type for this account, oauth or oidc. 
+     ** Provider's type for this account, oauth or oidc. 
      * </pre>
      *
      * <code>string type = 2 [json_name = "type"];</code>
@@ -255,7 +262,7 @@ public final class AuthProto {
     private java.lang.String providerAccountId_;
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -267,7 +274,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -280,7 +287,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -294,7 +301,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -305,7 +312,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * The provider account ID. 
+     ** The provider account ID. 
      * </pre>
      *
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -322,7 +329,7 @@ public final class AuthProto {
     private java.lang.String accessToken_;
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -334,7 +341,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -347,7 +354,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -361,7 +368,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -372,7 +379,7 @@ public final class AuthProto {
     }
     /**
      * <pre>
-     * The provider access_token. 
+     ** The provider access_token. 
      * </pre>
      *
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -486,6 +493,7 @@ public final class AuthProto {
 
       /**
        * <pre>
+       **
        * ID of the provider used for this account.
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
@@ -499,6 +507,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
+       **
        * ID of the provider used for this account.
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
@@ -513,6 +522,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
+       **
        * ID of the provider used for this account.
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
@@ -529,6 +539,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
+       **
        * ID of the provider used for this account.
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
@@ -543,6 +554,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
+       **
        * ID of the provider used for this account.
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
@@ -560,7 +572,7 @@ public final class AuthProto {
 
       /**
        * <pre>
-       * Provider's type for this account, oauth or oidc. 
+       ** Provider's type for this account, oauth or oidc. 
        * </pre>
        *
        * <code>string type = 2 [json_name = "type"];</code>
@@ -572,7 +584,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * Provider's type for this account, oauth or oidc. 
+       ** Provider's type for this account, oauth or oidc. 
        * </pre>
        *
        * <code>string type = 2 [json_name = "type"];</code>
@@ -585,7 +597,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * Provider's type for this account, oauth or oidc. 
+       ** Provider's type for this account, oauth or oidc. 
        * </pre>
        *
        * <code>string type = 2 [json_name = "type"];</code>
@@ -600,7 +612,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * Provider's type for this account, oauth or oidc. 
+       ** Provider's type for this account, oauth or oidc. 
        * </pre>
        *
        * <code>string type = 2 [json_name = "type"];</code>
@@ -613,7 +625,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * Provider's type for this account, oauth or oidc. 
+       ** Provider's type for this account, oauth or oidc. 
        * </pre>
        *
        * <code>string type = 2 [json_name = "type"];</code>
@@ -629,7 +641,7 @@ public final class AuthProto {
 
       /**
        * <pre>
-       * The provider account ID. 
+       ** The provider account ID. 
        * </pre>
        *
        * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -641,7 +653,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * The provider account ID. 
+       ** The provider account ID. 
        * </pre>
        *
        * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -654,7 +666,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * The provider account ID. 
+       ** The provider account ID. 
        * </pre>
        *
        * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -669,7 +681,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * The provider account ID. 
+       ** The provider account ID. 
        * </pre>
        *
        * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -682,7 +694,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * The provider account ID. 
+       ** The provider account ID. 
        * </pre>
        *
        * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
@@ -698,7 +710,7 @@ public final class AuthProto {
 
       /**
        * <pre>
-       * The provider access_token. 
+       ** The provider access_token. 
        * </pre>
        *
        * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -710,7 +722,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * The provider access_token. 
+       ** The provider access_token. 
        * </pre>
        *
        * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -723,7 +735,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * The provider access_token. 
+       ** The provider access_token. 
        * </pre>
        *
        * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -738,7 +750,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * The provider access_token. 
+       ** The provider access_token. 
        * </pre>
        *
        * <code>string access_token = 4 [json_name = "accessToken"];</code>
@@ -751,7 +763,7 @@ public final class AuthProto {
       }
       /**
        * <pre>
-       * The provider access_token. 
+       ** The provider access_token. 
        * </pre>
        *
        * <code>string access_token = 4 [json_name = "accessToken"];</code>
