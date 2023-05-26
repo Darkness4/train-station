@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/Darkness4/train-station-api/logger"
-	"github.com/golang-jwt/jwt/v4"
+	"github.com/golang-jwt/jwt/v5"
 	"go.uber.org/zap"
 )
 
