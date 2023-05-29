@@ -132,7 +132,7 @@ android {
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
     packaging {
         resources {
