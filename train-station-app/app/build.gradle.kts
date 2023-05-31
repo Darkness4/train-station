@@ -1,8 +1,6 @@
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.*
-import com.google.protobuf.gradle.*
-import java.util.Properties
+import com.google.protobuf.gradle.id
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -28,7 +26,7 @@ spotless {
         endWithNewline()
     }
     kotlin {
-        target("**/*.kt")
+        target("**/*.kt", "**/*.kts")
         targetExclude("src/main/java/com/example/trainstationapp/data/grpc/**/*.kt")
         ktfmt("0.44").kotlinlangStyle()
         trimTrailingWhitespace()
@@ -53,9 +51,7 @@ android {
     namespace = "com.example.trainstationapp"
     compileSdk = 33
 
-    buildFeatures {
-        compose = true
-    }
+    buildFeatures { compose = true }
 
     defaultConfig {
         applicationId = "com.example.trainstationapp"
@@ -69,36 +65,40 @@ android {
         }
         resValue("string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: ""))
         resValue("string", "github_client_id", (secureProps.getProperty("GITHUB_CLIENT_ID") ?: ""))
-        resValue("string", "github_client_secret", (secureProps.getProperty("GITHUB_CLIENT_SECRET") ?: ""))
+        resValue(
+            "string",
+            "github_client_secret",
+            (secureProps.getProperty("GITHUB_CLIENT_SECRET") ?: "")
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        vectorDrawables { useSupportLibrary = true }
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.incremental" to "true",
-                    "room.expandProjection" to "true"
-                )
+                arguments +=
+                    mapOf(
+                        "room.schemaLocation" to "$projectDir/schemas",
+                        "room.incremental" to "true",
+                        "room.expandProjection" to "true"
+                    )
             }
         }
     }
 
     signingConfigs {
         create("release") {
-            val properties = Properties().apply {
-                val propertiesFile = rootProject.file("key.properties")
-                if (propertiesFile.exists()) {
-                    load(FileInputStream(propertiesFile))
-                }
+            val propertiesFile = rootProject.file("key.properties")
+            if (propertiesFile.exists()) {
+                val properties = Properties().apply { load(FileInputStream(propertiesFile)) }
+                keyAlias = properties.getProperty("keyAlias")
+                keyPassword = properties.getProperty("keyPassword")
+                storeFile =
+                    if (file(properties.getProperty("storeFile")).exists())
+                        File(properties.getProperty("storeFile"))
+                    else null
+                storePassword = properties.getProperty("storePassword")
             }
-            keyAlias = properties.getProperty("keyAlias")
-            keyPassword = properties.getProperty("keyPassword")
-            storeFile = if (file(properties.getProperty("storeFile")).exists()) File(properties.getProperty("storeFile")) else null
-            storePassword = properties.getProperty("storePassword")
         }
     }
 
@@ -106,13 +106,19 @@ android {
         create("staging") {
             initWith(getByName("release"))
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             applicationIdSuffix = ".staging"
         }
 
         getByName("release") {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
 
             signingConfig = signingConfigs.getByName("release")
         }
@@ -125,32 +131,16 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    testOptions {
-        unitTests.all {
-            it.useJUnitPlatform()
-        }
-    }
+    composeOptions { kotlinCompilerExtensionVersion = "1.4.7" }
+    packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
+    testOptions { unitTests.all { it.useJUnitPlatform() } }
 }
 
 protobuf {
-    protoc {
-        artifact = libs.protoc.asProvider().get().toString()
-    }
+    protoc { artifact = libs.protoc.asProvider().get().toString() }
     plugins {
-        id("grpc") {
-            artifact = libs.protoc.gen.grpc.java.get().toString()
-        }
-        id("grpckt") {
-            artifact = "${libs.protoc.gen.grpc.kotlin.get()}:jdk8@jar"
-        }
+        id("grpc") { artifact = libs.protoc.gen.grpc.java.get().toString() }
+        id("grpckt") { artifact = "${libs.protoc.gen.grpc.kotlin.get()}:jdk8@jar" }
     }
     generateProtoTasks {
         all().forEach {
@@ -158,7 +148,6 @@ protobuf {
                 id("grpc") {
                     option("lite")
                     outputSubDir = "java"
-
                 }
                 id("grpckt") {
                     option("lite")
@@ -166,12 +155,8 @@ protobuf {
                 }
             }
             it.builtins {
-                id("java") {
-                    option("lite")
-                }
-                id("kotlin") {
-                    option("lite")
-                }
+                id("java") { option("lite") }
+                id("kotlin") { option("lite") }
             }
         }
     }
