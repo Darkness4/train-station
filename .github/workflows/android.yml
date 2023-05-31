@@ -274,5 +274,6 @@ jobs:
       - name: Release
         run: |
           gh release create ${GITHUB_REF#refs/*/} -t ${GITHUB_REF#refs/*/} app-release.apk app-release.aab --generate-notes
+        working-directory: .
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
