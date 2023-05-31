@@ -275,7 +275,7 @@ jobs:
         id: github_release
         uses: heinrichreimer/github-changelog-generator-action@v2.3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_TOKEN }}
           onlyLastTag: 'true'
           issues: true
           issuesWoLabels: true
@@ -298,5 +298,4 @@ jobs:
             app-release.apk
             app-release.aab
           body: ${{ steps.github_release.outputs.changelog }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_TOKEN }}
