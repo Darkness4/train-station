@@ -271,31 +271,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: app-aab
-      - name: Build Changelog
-        id: github_release
-        uses: heinrichreimer/github-changelog-generator-action@v2.3
-        with:
-          token: ${{ secrets.PERSONAL_TOKEN }}
-          onlyLastTag: 'true'
-          issues: true
-          issuesWoLabels: true
-          pullRequests: true
-          prWoLabels: true
-          filterByMilestone: true
-          author: true
-          unreleased: true
-          compareLink: true
-          httpCache: true
-          verbose: true
-      - name: Echo changelog
-        env:
-          CHANGELOG: ${{ steps.github_release.outputs.changelog }}
-        run: echo "$CHANGELOG"
       - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            app-release.apk
-            app-release.aab
-          body: ${{ steps.github_release.outputs.changelog }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${GITHUB_REF#refs/*/} -t ${GITHUB_REF#refs/*/} app-release.apk app-release.aab --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
