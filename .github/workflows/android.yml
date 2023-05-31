@@ -298,4 +298,4 @@ jobs:
             app-release.apk
             app-release.aab
           body: ${{ steps.github_release.outputs.changelog }}
-          token: ${{ secrets.PERSONAL_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
