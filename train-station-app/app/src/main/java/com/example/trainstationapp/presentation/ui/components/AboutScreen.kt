@@ -1,6 +1,5 @@
 package com.example.trainstationapp.presentation.ui.components
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.example.trainstationapp.R
 import com.example.trainstationapp.presentation.ui.theme.TrainStationAppTheme
 import com.example.trainstationapp.presentation.ui.theme.Typography
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 @Composable
 fun AboutScreen(modifier: Modifier = Modifier) {
@@ -73,13 +71,6 @@ fun AboutScreen(modifier: Modifier = Modifier) {
                 }
             ) {
                 Text(stringResource(R.string.api_specs))
-            }
-            ElevatedButton(
-                onClick = {
-                    context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
-                }
-            ) {
-                Text(stringResource(R.string.licences))
             }
         }
     }

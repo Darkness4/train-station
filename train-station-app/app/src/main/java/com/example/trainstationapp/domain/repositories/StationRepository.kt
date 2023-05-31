@@ -5,9 +5,9 @@ import com.example.trainstationapp.domain.entities.Station
 import kotlinx.coroutines.flow.Flow
 
 interface StationRepository {
-    fun watchPages(search: String, token: String): Flow<PagingData<Station>>
+    fun watchPages(search: String): Flow<PagingData<Station>>
 
-    fun watchOne(id: String, token: String): Flow<Station>
+    fun watchOne(id: String): Flow<Station>
 
-    suspend fun makeFavoriteOne(id: String, value: Boolean, token: String): Station
+    suspend fun makeFavoriteOne(id: String, value: Boolean): Station
 }

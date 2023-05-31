@@ -33,8 +33,6 @@ data class Station(
     val fret: String = ""
 ) : Parcelable {
 
-    fun toggleFavorite() = apply { isFavorite = !isFavorite }
-
     @SuppressLint("ParcelCreator")
     @Parcelize
     data class Geometry(
@@ -49,7 +47,7 @@ data class Station(
                 )
         }
 
-        fun asGrpcModel() =
+        fun asGrpcModel(): StationProto.Geometry =
             StationProto.Geometry.newBuilder().setType(type).addAllCoordinates(coordinates).build()
     }
 

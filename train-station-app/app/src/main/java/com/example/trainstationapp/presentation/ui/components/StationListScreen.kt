@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -40,7 +39,6 @@ import androidx.paging.compose.itemKey
 import com.example.trainstationapp.R
 import com.example.trainstationapp.presentation.ui.theme.TrainStationAppTheme
 import com.example.trainstationapp.presentation.viewmodels.StationListViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun StationListScreen(
@@ -88,7 +86,7 @@ fun StationListScreen(
                     StationItem(
                         station = item,
                         onFavorite = { station ->
-                           viewModel.makeFavorite(station.id, !station.isFavorite)
+                            viewModel.makeFavorite(station.id, !station.isFavorite)
                         },
                         onClick = { navController.navigate(Route.Detail(item.id).route) }
                     )

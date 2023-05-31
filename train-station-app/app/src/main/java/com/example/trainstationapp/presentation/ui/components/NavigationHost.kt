@@ -1,6 +1,14 @@
 package com.example.trainstationapp.presentation.ui.components
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,8 +28,6 @@ sealed class Route(val route: String) {
 
     object Stations : Route("stations")
 
-    object About : Route("about")
-
     class Detail(id: String) : Route("stations/${id}")
 }
 
@@ -40,12 +46,28 @@ fun NavigationHost(
             LoginScreen(navController = navController, viewModel = hiltViewModel<LoginViewModel>())
         }
         composable(Route.Stations.route) {
-            StationListScreen(
-                navController = navController,
-                viewModel = hiltViewModel<StationListViewModel>()
-            )
+            var state by remember { mutableStateOf(0) }
+            val titles = listOf("Stations", "About")
+            Column {
+                TabRow(selectedTabIndex = state) {
+                    titles.forEachIndexed { index, title ->
+                        Tab(
+                            text = { Text(title) },
+                            selected = state == index,
+                            onClick = { state = index }
+                        )
+                    }
+                }
+                when (state) {
+                    0 ->
+                        StationListScreen(
+                            navController = navController,
+                            viewModel = hiltViewModel<StationListViewModel>()
+                        )
+                    1 -> AboutScreen()
+                }
+            }
         }
-        composable(Route.About.route) { AboutScreen() }
         composable(
             Route.Detail("{id}").route,
             arguments = listOf(navArgument("id") { type = NavType.StringType })

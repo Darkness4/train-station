@@ -14,8 +14,7 @@ plugins {
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.protobuf)
     alias(libs.plugins.ksp)
-    id("com.google.android.gms.oss-licenses-plugin")
-    id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
 }
 
 spotless {
@@ -134,6 +133,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 protobuf {
@@ -237,7 +241,6 @@ dependencies {
     implementation(libs.maps.ktx)
     implementation(libs.play.services.maps)
     implementation(libs.android.maps.utils)
-    implementation(libs.play.services.oss.licenses)
 
     // Logging
     implementation(libs.timber)
@@ -257,7 +260,7 @@ dependencies {
 
     testImplementation(libs.mockk)
 
-    testImplementation(libs.kotest.runner.junit4)
+    testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.property)
 

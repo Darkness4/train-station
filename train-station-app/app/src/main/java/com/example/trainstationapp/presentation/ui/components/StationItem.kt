@@ -35,9 +35,7 @@ fun StationItem(
             Text(station.libelle, style = Typography.headlineMedium)
             Text(station.id, modifier = Modifier.padding(top = 16.dp))
         }
-        IconButton(
-            onClick = { onFavorite(station) }
-        ) {
+        IconButton(onClick = { onFavorite(station) }) {
             if (station.isFavorite) {
                 Icon(
                     painterResource(R.drawable.ic_baseline_star_24),

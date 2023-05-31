@@ -79,7 +79,7 @@ services:
    go mod download
    ```
 
-4. ```sh
+2. ```sh
    # Inside: ./train-station-api
    make
    ./bin/train-station-api
@@ -131,11 +131,9 @@ erDiagram
     Station }|..|{ User : favorite
 ```
 
-
-
 ### Technologies used
 
-- SQLBoiler for database-first approach 
+- SQLBoiler for database-first approach
 - go-migrate for database migrations
 - gRPC as HTTP server and main entrypoint
 - urfave/cli for the CLI tooling
@@ -184,94 +182,100 @@ pnpm run build
 
 ### Architecture
 
-![image-20201129022715761](assets/image-20201129022715761.png)
+```mermaid
+flowchart TD
+	oauth[OAuth provider]
+	subgraph data[Data Layer]
+		subgraph cache[Cache]
+          	oauthDataStore
+         	Room
+         	jwtDataStore
+        end
+        oauth
+        StationRepositoryImpl
+        authAPI
+        stationAPI
+		StationRemoteMediator
+
+    end
+    
+    subgraph domain[Domain Layer]
+		StationRepository
+    end
+
+    subgraph presentation[Presentation Layer]
+		LoginViewModel
+		DetailViewModel
+		StationListViewModel
+		MainActivity
+    end
+
+    Room-->StationRepositoryImpl
+    StationRepositoryImpl-->|implements|StationRepository
+    stationAPI-->StationRepositoryImpl
+    stationAPI-->StationRemoteMediator
+    jwtDataStore-->StationRemoteMediator
+    jwtDataStore-->StationRepositoryImpl
+    StationRemoteMediator-->StationRepositoryImpl
+    authAPI-->LoginViewModel
+    jwtDataStore-->LoginViewModel
+    oauthDataStore-->LoginViewModel
+    StationRepository-->DetailViewModel
+    StationRepository-->StationListViewModel
+    oauth-->MainActivity
+    oauthDataStore-->MainActivity
+```
 
 The **Data** layer:
 
 - The Data layer runs under Kotlin Coroutines and Kotlin Flow.
-- _Room_ is the application's cache
-  - The cache temporarily stores the `StationModel`
+- _Room_ and the *DataStores* is the application's cache
+  - The cache temporarily stores the `Stations`
   - The cache is observable using Kotlin Flow
   - _Room_ is able to provide a [`PagingSource`](https://developer.android.com/reference/kotlin/androidx/paging/PagingSource). The `PagingSource` is able to load pages of data stored in a [`PagingData`](https://developer.android.com/reference/kotlin/androidx/paging/PagingData).
   - _Room_ executes requests in a Kotlin coroutine in the [IO thread](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
-- _Retrofit_ is the HTTP client
-  - The HTTP client provides `Paginated<StationModel>` (a `List<StationModel>` per page).
-  - The HTTP client executes requests in a Kotlin coroutine
+- _stationAPI_ is a gRPC data source which permits to retrieves `Stations`. It needs a JWT token to fetch datas.
+- *OAuth provider* gives the OAuth Access Token which is use to authenticate and identify users. The accessToken is cached inside the *oauthDataStore*. Upon receiving the OAuth Access Token, the *authAPI* tries to fetch a JWT token.
 - `StationRemoteMediator` loads pages from the cache or from HTTP responses depending on connectivity.
   - The logic can be summarised as follows:
     - It loads the next/previous/initial page by making an HTTP request
-    - It **caches the `StationModel` of the HTTP response**.
+    - It **caches the `Stations` of the HTTP response**.
     - It implements [`RemoteMediator`](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator), mediating between the local and remote source.
 - The `StationRepositoryImpl` implements `StationRepository` and executes CRUD methods.
   - For asynchronous actions, the `StationModel` of the response is cached and returned.
   - For a watch action (`watch`/`watchOne`), we observe the cache directly **without making an HTTP request**.
   - For paged data, we create and run the [`Pager`](https://developer.android.com/reference/kotlin/androidx/paging/Pager) to **retrieve the `PagingData` from the cache.** Depending on whether we consume the `PagingData<Station>` stream, `Pager` will contact `StationRemoteMediator` to load more page data.
-  - The `StationModel` data is transformed into a `Station` (entity). We thus separate the responsibilities between models and entities.
 
 In the **Domain** layer:
 
-- Entities and business code are defined here.
+- Entities and contracts are defined here.
 - Currently, our `stationRepository` satisfies most use cases (displaying a list of `Stations`, displaying details of a `Station`, updating a `Station`...).
-- We add the `toggleFavorite` method to the `Station` entity.
 
-Dans la couche **Presentation** :
+In the **Presentation** layer :
 
-- Data is observable in the `ViewModel` as [`StateFlow`](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
-- In the main page:
-  - The `MainActivity` contains a `ViewPager2` and a `TabLayout`. The `ViewPager2` displays the `Fragments`. The `TabLayout` is the top banner displaying the page (see mockup.). The link between the two is provided by a `TabLayoutMediator`.
-  - In the `StationListFragment`, the `RecyclerView` displaying the stations has 2 adapters.
-    - The `StationsAdapter` which implements the `PagingDataAdapter` and displays the paged `PagingData<Station>` in the `RecyclerView`.
-    - `StationLoadStateAdapter` which implements the `LoadStateAdapter` and allows pages to load (or displays page load errors)
-  - The `MainViewModel` (ViewModel of the main page):
-    - observes user actions ("load details page", "manually refresh page" and "bookmark or not")
-    - exposes the `Flow<PagingData<Station>>` observable so that it can be stored in the `StationsAdapter` (with the `stationsAdapter.submitData` method)
-  - The `AuthViewModel`:
-    - allows user to login. Since, the View Model is scoped to the `MainActivity` the user session is stored.
-- In the details page:
-  - There is a Google Maps that displays the position of the train station
-  - `DetailsViewModel` loads the station details and exposes an obersable `StateFlow<Station>`
-- In both pages:
-  - The result of an **asynchronous** action is observable as `networkStatus: StateFlow<Result<Unit>`. Depending on the result, a [_Toast_](https://developer.android.com/guide/topics/ui/notifiers/toasts) will be displayed if an error occurs.
+- Data is observable in the `ViewModels`. The `ViewModels` act as the middle man between the presentation layer and domain layer. This is to follow the **[Modern Android App Architecture](https://developer.android.com/topic/architecture)**.
+- The `MainActivity` renders a `Scaffold` with its `TopAppBar`. Inside that scaffold is a `NavigationHost` composable.
+- The `NavigationHost` renders a page based on a route:
+  - The default route is `/login`, and shows a login button. The button triggers a redirection to the OAuth provider, which then send the resulting OAuth Access Token to the `MainActivity` and triggers the `authAPI` to fetch a JWT. Upon receiving a JWT, the user is authenticated and is redirected to the `/stations` route.
+  - The `/stations` route shows a `LazyColumn` which listen to a `Flow<PagingData<Station>>`. This allows lazy loading of the data, and therefore, the lazy loading of "station cards". The page also shows a "About" page. When the user push on a "station card", the user is redirected to the `/details` route. 
+  - The `/details` route shows the position of the train station on Google Maps and details about that station on a Bottom Sheet.
 
 ### Technologies used
 
 #### Android dependencies and AndroidX
 
-- Room, as a cache
-- Retrofit + OkHttp 4, as an HTTP client
-- Data Binding, for bidirectional data and view binding
-- ViewModel and StateFlow, to do MVVM and avoid fragment/activities lifecycle issues
-- ViewPager 2, as a horizontal navigation host
+- Room and Protobuf DataStore, as a cache.
+- Retrofit + OkHttp 4 + gRPC, as data sources.
+- Jetpack Compose, for bidirectional data binding and UI development.
+- ViewModel and StateFlow, to follow the Modern Android App Architecture and avoid fragment/activities lifecycle issues
 - Paging 3, as a solution for paged data
-- Android KTX, for Kotlin extensions, helping to use certain dependencies
 - Hilt, for dependency injection
 - Google Maps SDK for Android
-- Firebase Auth for authentication
 
 #### Kotlin in general
 
-- Kotlin Coroutines + Kotlin Flow, pour l'asynchrone
-- Kotlinx.serialization, pour la serialisation en JSON
-
-### References
-
-#### Codelabs
-
-- [Kotlin Android Fundamentals](https://developer.android.com/courses/kotlin-android-fundamentals/overview)
-- [Android Paging](https://developer.android.com/codelabs/android-paging)
-- [Use Kotlin Coroutines in your Android App](https://developer.android.com/codelabs/kotlin-coroutines)
-
-#### Documentations
-
-- [Android KTX](https://developer.android.com/kotlin/ktx)
-- [Data Binding](https://developer.android.com/topic/libraries/data-binding)
-- [StateFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
-- [Guide to App Architecture](https://developer.android.com/jetpack/guide)
-- [Android Hilt](https://developer.android.com/training/dependency-injection/hilt-android) / [Dagger Hilt](https://dagger.dev/hilt/)
-- [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
-- [Google Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk/overview)
-- [Create swipe views with tabs using ViewPager2](https://developer.android.com/guide/navigation/navigation-swipe-view-2)
-- [Paging 3 Overview](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
+- Kotlin Coroutines + Kotlin Flow, for async
+- Kotlinx.serialization, for JSON serialization
 
 # LICENSE
 

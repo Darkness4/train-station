@@ -1,8 +1,11 @@
 package com.example.trainstationapp.data.repositories
 
+import androidx.datastore.core.DataStore
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeysDao
 import com.example.trainstationapp.data.database.StationDao
+import com.example.trainstationapp.data.datastore.Session
+import com.example.trainstationapp.data.datastore.jwt
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIGrpcKt
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getOneStationRequest
@@ -13,8 +16,8 @@ import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.utils.TestUtils
 import io.grpc.Status
 import io.grpc.StatusException
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.WordSpec
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.mockk.Called
 import io.mockk.Runs
 import io.mockk.clearAllMocks
@@ -25,6 +28,7 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.flow.flow
 
 class StationRepositoryImplTest :
     WordSpec({
@@ -32,7 +36,8 @@ class StationRepositoryImplTest :
         val local = mockk<Database>()
         val stationDao = mockk<StationDao>()
         val remoteKeysDao = mockk<RemoteKeysDao>()
-        val repository = StationRepositoryImpl(remote, local)
+        val auth = mockk<DataStore<Session.Jwt>>()
+        val repository = StationRepositoryImpl(remote, local, auth)
 
         beforeTest {
             clearAllMocks()
@@ -51,14 +56,17 @@ class StationRepositoryImplTest :
                         }
                     coEvery { stationDao.insert(any<Station>()) } just Runs
                     val station = TestUtils.createStation("0")
-                    coEvery { remote.getOneStation(any()) } coAnswers
+                    coEvery { remote.getOneStation(any(), any()) } coAnswers
                         {
-                            getOneStationResponse { this.station = station.asGrpcModel() }
+                            getOneStationResponse {
+                                this.station =
+                                    station.copy(isFavorite = !station.isFavorite).asGrpcModel()
+                            }
                         }
+                    coEvery { auth.data } coAnswers { flow { emit(jwt { token = "token" }) } }
 
                     // Act
-                    val result =
-                        repository.makeFavoriteOne(station.id, !station.isFavorite, "token")
+                    repository.makeFavoriteOne(station.id, !station.isFavorite)
 
                     // Assert
                     coVerify {
@@ -80,18 +88,20 @@ class StationRepositoryImplTest :
                             any()
                         )
                     }
-                    coVerify { stationDao.insert(station.apply { isFavorite = !isFavorite }) }
-                    result.isSuccess.shouldBeTrue()
+                    coVerify { stationDao.insert(station.copy(isFavorite = !station.isFavorite)) }
                 }
 
-                "return Failure on throw" {
+                "throw" {
                     // Arrange
                     coEvery { remote.setFavoriteOneStation(any(), any()) } throws
                         StatusException(Status.NOT_FOUND)
+                    coEvery { auth.data } coAnswers { flow { emit(jwt { token = "token" }) } }
                     val station = TestUtils.createStation("0")
 
                     // Act
-                    val result = repository.makeFavoriteOne(station.id, station.isFavorite, "token")
+                    shouldThrow<StatusException> {
+                        repository.makeFavoriteOne(station.id, station.isFavorite)
+                    }
 
                     // Assert
                     coVerify {
@@ -105,7 +115,6 @@ class StationRepositoryImplTest :
                         )
                     }
                     verify { stationDao wasNot Called }
-                    result.isFailure.shouldBeTrue()
                 }
             }
     })

@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                                 shadowElevation = 16.dp,
                             ) {
                                 TopAppBar(
-                                    title = { Text(stringResource(R.string.app_name)) },
+                                    title = { Text(stringResource(R.string.title_activity_main)) },
                                     navigationIcon = {
                                         if (canPop) {
                                             IconButton(onClick = { navController.popBackStack() }) {

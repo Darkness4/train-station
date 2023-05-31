@@ -68,6 +68,9 @@ constructor(
     val isOnline: StateFlow<Boolean> =
         jwtDataStore.data
             .map { !it.token.isNullOrEmpty() }
-            .catch { e -> _errorState.value = e.toString() }
+            .catch { e ->
+                Timber.e(e)
+                _errorState.value = e.toString()
+            }
             .stateIn(viewModelScope, SharingStarted.Lazily, false)
 }

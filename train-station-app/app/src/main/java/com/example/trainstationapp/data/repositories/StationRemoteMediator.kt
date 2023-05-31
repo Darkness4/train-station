@@ -1,5 +1,6 @@
 package com.example.trainstationapp.data.repositories
 
+import androidx.datastore.core.DataStore
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -7,11 +8,13 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeys
+import com.example.trainstationapp.data.datastore.Session
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIGrpcKt
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getManyStationsRequest
 import com.example.trainstationapp.domain.entities.Station
 import io.grpc.StatusException
 import java.io.IOException
+import kotlinx.coroutines.flow.first
 
 /**
  * This `StationRemoteMediator` handles paging from a layered data source.
@@ -22,9 +25,9 @@ import java.io.IOException
 @ExperimentalPagingApi
 class StationRemoteMediator(
     private val search: String,
-    private val service: StationAPIGrpcKt.StationAPICoroutineStub,
+    private val stationAPI: StationAPIGrpcKt.StationAPICoroutineStub,
     private val database: Database,
-    private val token: String
+    private val jwtDataStore: DataStore<Session.Jwt>,
 ) : RemoteMediator<Int, Station>() {
     companion object {
         private const val STARTING_PAGE_INDEX = 1
@@ -86,16 +89,16 @@ class StationRemoteMediator(
             }
 
         return try {
+            val jwt = jwtDataStore.data.first()
             val resp =
-                service.getManyStations(
+                stationAPI.getManyStations(
                     getManyStationsRequest {
-                        query = search
+                        this.query = search
                         this.page = page.toLong()
-                        limit = state.config.pageSize.toLong()
-                        token = this@StationRemoteMediator.token
+                        this.limit = state.config.pageSize.toLong()
+                        token = jwt.token
                     }
                 )
-
             val items = resp.stations.dataList
             val endOfPaginationReached = items.isEmpty()
             database.withTransaction {

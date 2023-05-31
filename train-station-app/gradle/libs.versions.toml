@@ -20,7 +20,6 @@ activity-compose = "1.7.2"
 compose-bom = "2023.05.01"
 maps = "2.11.4"
 play-services-maps = "18.1.0"
-play-services-oss-licenses = "17.0.1"
 timber = "5.0.1"
 paging = "3.1.1"
 paging-compose = "1.0.0-alpha20"
@@ -36,6 +35,7 @@ espresso-core = "3.5.1"
 browser = "1.5.0"
 appcompat = "1.6.1"
 material = "1.9.0"
+google-services = "4.3.15"
 
 [libraries]
 # Coroutines
@@ -100,7 +100,6 @@ browser = { group = "androidx.browser", name = "browser", version.ref = "browser
 maps-ktx = { group = "com.google.maps.android", name = "maps-compose", version.ref = "maps" }
 android-maps-utils = { group = "com.google.maps.android", name = "maps-compose-utils", version.ref = "maps" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "play-services-maps" }
-play-services-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "play-services-oss-licenses" }
 
 # Logging
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
@@ -119,7 +118,7 @@ retrofit2-kotlinx-serialization-converter = { group = "com.jakewharton.retrofit"
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
-kotest-runner-junit4 = { group = "io.kotest", name = "kotest-runner-junit4", version.ref = "kotest" }
+kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
 kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { group = "io.kotest", name = "kotest-property", version.ref = "kotest" }
 
@@ -139,5 +138,6 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 hiltAndroid = { id = 'com.google.dagger.hilt.android', version.ref = "hilt" }
 protobuf = { id = 'com.google.protobuf', version.ref = "protobuf-plugin" }
 ksp = { id = 'com.google.devtools.ksp', version.ref = "ksp" }
+google-services = { id = 'com.google.gms.google-services', version.ref = "google-services" }
 
 [bundles]
