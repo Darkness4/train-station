@@ -74,15 +74,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments +=
-                    mapOf(
-                        "room.schemaLocation" to "$projectDir/schemas",
-                        "room.incremental" to "true",
-                        "room.expandProjection" to "true"
-                    )
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
+            arg("room.expandProjection", "true")
         }
     }
 
@@ -95,7 +90,7 @@ android {
                 keyPassword = properties.getProperty("keyPassword")
                 storeFile =
                     if (file(properties.getProperty("storeFile")).exists())
-                        File(properties.getProperty("storeFile"))
+                        file(properties.getProperty("storeFile"))
                     else null
                 storePassword = properties.getProperty("storePassword")
             }
