@@ -17,6 +17,7 @@ import (
 	"github.com/Darkness4/train-station-api/jwt"
 	"github.com/Darkness4/train-station-api/logger"
 	"github.com/Darkness4/train-station-api/sncf"
+	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/joho/godotenv"
 	"github.com/urfave/cli/v2"
 	"go.uber.org/zap"
@@ -143,7 +144,18 @@ var app = &cli.App{
 			return err
 		}
 
-		opts := []grpc.ServerOption{}
+		opts := []grpc.ServerOption{
+			grpc.ChainUnaryInterceptor(
+				logging.UnaryServerInterceptor(
+					logger.InterceptorLogger(logger.I),
+				),
+			),
+			grpc.ChainStreamInterceptor(
+				logging.StreamServerInterceptor(
+					logger.InterceptorLogger(logger.I),
+				),
+			),
+		}
 		if tls {
 			creds, err := credentials.NewServerTLSFromFile(certFile, keyFile)
 			if err != nil {

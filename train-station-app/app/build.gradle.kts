@@ -1,16 +1,13 @@
-import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.*
 import com.google.protobuf.gradle.*
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import java.util.Properties
 import java.io.FileInputStream
 
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.kotlinKapt)
     alias(libs.plugins.kotlinParcelize)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.spotless)
@@ -89,8 +86,6 @@ android {
                 )
             }
         }
-
-        manifestPlaceholders["appAuthRedirectScheme"] = "com.example.trainstationapp"
     }
 
     signingConfigs {
@@ -132,7 +127,7 @@ android {
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
     packaging {
         resources {
@@ -143,24 +138,27 @@ android {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf}"
+        artifact = libs.protoc.asProvider().get().toString()
     }
     plugins {
         id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:${libs.versions.grpc}"
+            artifact = libs.protoc.gen.grpc.java.get().toString()
         }
         id("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:${libs.versions.grpc.kotlin.plugin}:jdk8@jar"
+            artifact = "${libs.protoc.gen.grpc.kotlin.get()}:jdk8@jar"
         }
     }
     generateProtoTasks {
-        ofSourceSet("main").forEach {
+        all().forEach {
             it.plugins {
                 id("grpc") {
                     option("lite")
+                    outputSubDir = "java"
+
                 }
                 id("grpckt") {
                     option("lite")
+                    outputSubDir = "java"
                 }
             }
             it.builtins {
@@ -179,6 +177,9 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.browser)
+    implementation(libs.appcompat)
+    implementation(libs.material)
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlinx.coroutines.test)
 
@@ -187,10 +188,8 @@ dependencies {
 
     // Dagger Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-
-    // Authentication
-    implementation(libs.appauth)
+    implementation(libs.hiltx.navigation.compose)
+    kapt(libs.hilt.android.compiler)
 
     // gRPC
     implementation(libs.grpc.kotlin.stub)
@@ -213,6 +212,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.lifecycle.viewmodel.savedstate)
+    implementation(libs.lifecycle.runtime.compose)
 
     // Navigation
     implementation(libs.navigation.compose)
@@ -225,7 +225,12 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.foundation)
+    implementation(libs.constraintlayout)
+    implementation(libs.constraintlayout.compose)
+    implementation(libs.coordinatorlayout)
     debugImplementation(libs.ui.test.manifest)
+    androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
 
     // Google Services

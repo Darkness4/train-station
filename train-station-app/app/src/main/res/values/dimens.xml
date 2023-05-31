@@ -1,8 +1,0 @@
-<resources>
-    <dimen name="marginStart_details">16dp</dimen>
-    <dimen name="marginTop_details">16dp</dimen>
-    <dimen name="marginEnd_details">16dp</dimen>
-    <dimen name="marginBottom_details">16dp</dimen>
-    <dimen name="marginStart_about">16dp</dimen>
-    <dimen name="marginTop_about">16dp</dimen>
-</resources>

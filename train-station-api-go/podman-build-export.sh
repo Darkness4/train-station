@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 # Build your amd64 architecture container
 podman build \
   --tag "ghcr.io/darkness4/train-station-api:dev" \

@@ -12,25 +12,25 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "stations")
 data class Station(
-    @PrimaryKey val id: String,
-    @ColumnInfo(name = "is_favorite") var isFavorite: Boolean,
-    val commune: String,
-    @ColumnInfo(name = "y_wgs84") val yWgs84: Double,
-    @ColumnInfo(name = "x_wgs84") val xWgs84: Double,
-    val libelle: String,
-    val idgaia: String,
-    val voyageurs: String,
-    @ColumnInfo(name = "geo_point_2d") val geoPoint2d: List<Double>,
-    @ColumnInfo(name = "code_ligne") val codeLigne: String,
-    @ColumnInfo(name = "x_l93") val xL93: Double,
-    @ColumnInfo(name = "c_geo") val cGeo: List<Double>,
-    @ColumnInfo(name = "rg_troncon") val rgTroncon: Long,
-    @Embedded(prefix = "geo_shape_") val geoShape: Geometry,
-    val pk: String,
-    val idreseau: Long,
-    val departemen: String,
-    @ColumnInfo(name = "y_l93") val yL93: Double,
-    val fret: String
+    @PrimaryKey val id: String = "",
+    @ColumnInfo(name = "is_favorite") var isFavorite: Boolean = false,
+    val commune: String = "",
+    @ColumnInfo(name = "y_wgs84") val yWgs84: Double = 0.0,
+    @ColumnInfo(name = "x_wgs84") val xWgs84: Double = 0.0,
+    val libelle: String = "",
+    val idgaia: String = "",
+    val voyageurs: String = "",
+    @ColumnInfo(name = "geo_point_2d") val geoPoint2d: List<Double> = emptyList(),
+    @ColumnInfo(name = "code_ligne") val codeLigne: String = "",
+    @ColumnInfo(name = "x_l93") val xL93: Double = 0.0,
+    @ColumnInfo(name = "c_geo") val cGeo: List<Double> = emptyList(),
+    @ColumnInfo(name = "rg_troncon") val rgTroncon: Long = 0,
+    @Embedded(prefix = "geo_shape_") val geoShape: Geometry = Geometry(),
+    val pk: String = "",
+    val idreseau: Long = 0,
+    val departemen: String = "",
+    @ColumnInfo(name = "y_l93") val yL93: Double = 0.0,
+    val fret: String = ""
 ) : Parcelable {
 
     fun toggleFavorite() = apply { isFavorite = !isFavorite }
@@ -38,8 +38,8 @@ data class Station(
     @SuppressLint("ParcelCreator")
     @Parcelize
     data class Geometry(
-        val type: String,
-        val coordinates: List<Double>,
+        val type: String = "",
+        val coordinates: List<Double> = emptyList(),
     ) : Parcelable {
         companion object {
             fun fromGrpc(model: StationProto.Geometry) =
@@ -48,6 +48,7 @@ data class Station(
                     model.coordinatesList,
                 )
         }
+
         fun asGrpcModel() =
             StationProto.Geometry.newBuilder().setType(type).addAllCoordinates(coordinates).build()
     }
@@ -77,7 +78,7 @@ data class Station(
             )
     }
 
-    fun asGrpcModel() =
+    fun asGrpcModel(): StationProto.Station =
         StationProto.Station.newBuilder()
             .setId(id)
             .setIsFavorite(isFavorite)

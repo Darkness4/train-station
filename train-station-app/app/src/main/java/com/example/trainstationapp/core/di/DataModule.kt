@@ -10,9 +10,11 @@ import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeysDao
 import com.example.trainstationapp.data.database.StationDao
 import com.example.trainstationapp.data.database.converters.ListConverters
-import com.example.trainstationapp.data.datastore.JwtOuterClass.Jwt
 import com.example.trainstationapp.data.datastore.JwtSerializer
+import com.example.trainstationapp.data.datastore.OAuthSerializer
+import com.example.trainstationapp.data.datastore.Session
 import com.example.trainstationapp.data.github.GithubApi
+import com.example.trainstationapp.data.github.GithubLogin
 import com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthAPIGrpcKt
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIGrpcKt
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -21,8 +23,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.grpc.ManagedChannel
-import io.grpc.ManagedChannelBuilder
+import io.grpc.Grpc
+import io.grpc.TlsChannelCredentials
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +32,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asExecutor
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import net.openid.appauth.AuthorizationService
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,31 +40,25 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
+
     @Provides
     @Singleton
-    fun provideGrpcTransport(): ManagedChannel {
-        return ManagedChannelBuilder.forAddress("train.the-end-is-never-the-end.pw", 443)
-            .useTransportSecurity()
-            .executor(Dispatchers.IO.asExecutor())
-            .build()
+    fun provideStationAPI(): StationAPIGrpcKt.StationAPICoroutineStub {
+        return StationAPIGrpcKt.StationAPICoroutineStub(
+            Grpc.newChannelBuilder("api.train.mnguyen.fr:443", TlsChannelCredentials.create())
+                .executor(Dispatchers.IO.asExecutor())
+                .build()
+        )
     }
 
     @Provides
     @Singleton
-    fun provideStationAPI(channel: ManagedChannel): StationAPIGrpcKt.StationAPICoroutineStub {
-        return StationAPIGrpcKt.StationAPICoroutineStub(channel)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthAPI(channel: ManagedChannel): AuthAPIGrpcKt.AuthAPICoroutineStub {
-        return AuthAPIGrpcKt.AuthAPICoroutineStub(channel)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthorizationService(@ApplicationContext context: Context): AuthorizationService {
-        return AuthorizationService(context)
+    fun provideAuthAPI(): AuthAPIGrpcKt.AuthAPICoroutineStub {
+        return AuthAPIGrpcKt.AuthAPICoroutineStub(
+            Grpc.newChannelBuilder("api.train.mnguyen.fr:443", TlsChannelCredentials.create())
+                .executor(Dispatchers.IO.asExecutor())
+                .build()
+        )
     }
 
     @ExperimentalSerializationApi
@@ -76,6 +71,18 @@ object DataModule {
             .client(client)
             .build()
             .create(GithubApi::class.java)
+    }
+
+    @ExperimentalSerializationApi
+    @Provides
+    @Singleton
+    fun provideGithubLogin(client: OkHttpClient, json: Json): GithubLogin {
+        return Retrofit.Builder()
+            .baseUrl(GithubLogin.BASE_URL)
+            .addConverterFactory(json.asConverterFactory(GithubLogin.CONTENT_TYPE.toMediaType()))
+            .client(client)
+            .build()
+            .create(GithubLogin::class.java)
     }
 
     @Provides
@@ -91,7 +98,12 @@ object DataModule {
         }
     }
 
-    @Singleton @Provides fun provideJson() = Json { isLenient = true }
+    @Singleton
+    @Provides
+    fun provideJson() = Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+    }
 
     @Singleton
     @Provides
@@ -104,11 +116,21 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideJwtDataStore(@ApplicationContext context: Context): DataStore<Jwt> {
+    fun provideJwtDataStore(@ApplicationContext context: Context): DataStore<Session.Jwt> {
         return DataStoreFactory.create(
             serializer = JwtSerializer,
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
             produceFile = { context.dataStoreFile("jwt.pb") }
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideOAuthDataStore(@ApplicationContext context: Context): DataStore<Session.OAuth> {
+        return DataStoreFactory.create(
+            serializer = OAuthSerializer,
+            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+            produceFile = { context.dataStoreFile("oauth.pb") }
         )
     }
 

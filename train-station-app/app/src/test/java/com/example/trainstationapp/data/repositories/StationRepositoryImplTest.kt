@@ -45,12 +45,16 @@ class StationRepositoryImplTest :
                 "make one favorite" {
                     // Arrange
                     val slot = slot<StationProto.SetFavoriteOneStationRequest>()
-                    coEvery { remote.setFavoriteOneStation(capture(slot), any()) } coAnswers { setFavoriteOneStationResponse {} }
+                    coEvery { remote.setFavoriteOneStation(capture(slot), any()) } coAnswers
+                        {
+                            setFavoriteOneStationResponse {}
+                        }
                     coEvery { stationDao.insert(any<Station>()) } just Runs
                     val station = TestUtils.createStation("0")
-                    coEvery { remote.getOneStation(any()) } coAnswers { getOneStationResponse {
-                        this.station = station.asGrpcModel()
-                    } }
+                    coEvery { remote.getOneStation(any()) } coAnswers
+                        {
+                            getOneStationResponse { this.station = station.asGrpcModel() }
+                        }
 
                     // Act
                     val result =
@@ -61,17 +65,19 @@ class StationRepositoryImplTest :
                         remote.setFavoriteOneStation(
                             setFavoriteOneStationRequest {
                                 id = station.id
-                                token = "Bearer token"
+                                token = "token"
                                 value = !station.isFavorite
-                            }, any()
+                            },
+                            any()
                         )
                     }
                     coVerify {
                         remote.getOneStation(
                             getOneStationRequest {
                                 id = station.id
-                                token = "Bearer token"
-                            }, any()
+                                token = "token"
+                            },
+                            any()
                         )
                     }
                     coVerify { stationDao.insert(station.apply { isFavorite = !isFavorite }) }
@@ -80,8 +86,8 @@ class StationRepositoryImplTest :
 
                 "return Failure on throw" {
                     // Arrange
-                    coEvery { remote.setFavoriteOneStation(any(), any()) } throws StatusException(
-                        Status.NOT_FOUND)
+                    coEvery { remote.setFavoriteOneStation(any(), any()) } throws
+                        StatusException(Status.NOT_FOUND)
                     val station = TestUtils.createStation("0")
 
                     // Act
@@ -92,9 +98,10 @@ class StationRepositoryImplTest :
                         remote.setFavoriteOneStation(
                             setFavoriteOneStationRequest {
                                 id = station.id
-                                token = "Bearer token"
+                                token = "token"
                                 value = station.isFavorite
-                            }, any()
+                            },
+                            any()
                         )
                     }
                     verify { stationDao wasNot Called }

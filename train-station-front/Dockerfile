@@ -1,6 +1,6 @@
 FROM registry-1.docker.io/library/node:18-alpine as base
 
-RUN wget -qO- https://get.pnpm.io/v6.16.js | node - add --global pnpm && \
+RUN npm install -g pnpm && \
   rm -rf /usr/local/lib/node_modules/npm/ /usr/local/bin/npm && \
   rm -rf /opt/yarn-v* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 

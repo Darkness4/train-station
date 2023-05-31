@@ -9,7 +9,7 @@
 
 	export let data: PageData;
 
-	let searchQuery: string = '';
+	let searchQuery = '';
 
 	function search(search: string) {
 		return goto(`${$page.url.pathname}?s=${search}`);

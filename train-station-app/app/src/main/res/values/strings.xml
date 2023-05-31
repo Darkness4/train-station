@@ -7,27 +7,26 @@
     <string name="refresh_the_page">Refresh the page</string>
     <string name="refresh">Refresh</string>
     <string name="favorite_icon_description">Favorite Icon</string>
-    <string name="departement_label">Département :</string>
-    <string name="commune_label">Commune :</string>
+    <string name="departement_label">Departement:</string>
+    <string name="commune_label">Commune:</string>
     <string name="title_activity_details">Details</string>
     <string name="about">
-        Une application créée par Marc NGUYEN et JB RUBIO dans le cadre du projet Web + Android.
+        An application created by Marc NGUYEN and JB RUBIO as part of the Web + Android project.
     </string>
     <string name="project_url">https://github.com/Darkness4/train-station</string>
     <string name="source_code">Source code</string>
     <string name="licences">Licences</string>
-    <string name="api_endpoints_description">
-        L\'URL de l\'API utilisé est sur <a href="https://train-station.cleverapps.io/">train-station.cleverapps.io</a>.\n
-        Où les points de sorties sont :\n
-        \t<b>GET / POST /stations</b>\n
-        \t<b>GET / PATCH /stations/:recordid</b>
+    <string name="api_url">api.train.mnguyen.fr</string>
+
+    <string name="about_api_url">
+        The URL of the API used is at %1$s.
     </string>
-    <string name="data_description">
-        Les données affichées dans la liste est le nom de la station  de train (libellé) et leur identifiant unique.\n
-        \n
-        Les données affichées dans les détails sont la position sur Google Maps, le libellé, le département et la commune de la station de train.
+    <string name="data_description_1">
+        The data displayed in the list is the name of the train station (label) and their unique identifier.
     </string>
-    <string name="latitude_label">Latitude :</string>
-    <string name="longitude_label">Longitude :</string>
+    <string name="data_description_2">The data displayed in the details is the position on Google Maps, the name, department and commune of the train station.</string>
+    <string name="latitude_label">Latitude:</string>
+    <string name="longitude_label">Longitude:</string>
     <string name="sign_in_with_github">Sign In with Github</string>
+    <string name="api_specs">API specs</string>
 </resources>

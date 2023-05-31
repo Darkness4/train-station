@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    package="com.example.trainstationapp">
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".AndroidApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:exported="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:name=".AndroidApplication"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TrainStationApp"
-        tools:targetApi="31">
+        android:theme="@style/Theme.TrainStationApp">
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -28,36 +29,24 @@
             android:value="@string/maps_api_key" />
 
         <activity
-            android:name=".presentation.ui.LoginActivity"
-            android:exported="true"
-            android:label="Sign in"
-            android:theme="@style/Theme.TrainStationApp.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".presentation.ui.DetailsActivity"
-            android:label="@string/title_activity_details"
-            android:parentActivityName=".presentation.ui.MainActivity"
-            android:theme="@style/Theme.TrainStationApp.NoActionBar" />
-
-        <activity
             android:name=".presentation.ui.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.TrainStationApp.NoActionBar">
+            android:theme="@style/Theme.TrainStationApp">
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="true"
+                android:order="1">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="train.the-end-is-never-the-end.pw"
-                    android:scheme="https" />
+                <data android:scheme="com.example.trainstationapp" />
+                <data android:host="oauth2" />
             </intent-filter>
         </activity>
     </application>

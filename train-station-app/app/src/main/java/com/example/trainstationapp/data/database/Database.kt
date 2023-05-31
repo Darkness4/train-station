@@ -10,5 +10,6 @@ import com.example.trainstationapp.domain.entities.Station
 @TypeConverters(ListConverters::class)
 abstract class Database : RoomDatabase() {
     abstract fun stationDao(): StationDao
+
     abstract fun remoteKeysDao(): RemoteKeysDao
 }

@@ -1,63 +1,58 @@
 package com.example.trainstationapp.presentation.viewmodels
 
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.trainstationapp.core.state.State
-import com.example.trainstationapp.core.state.map
+import com.example.trainstationapp.data.datastore.Session
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
-class DetailsViewModel
+class DetailViewModel
 @AssistedInject
 constructor(
     private val stationRepository: StationRepository,
-    @Assisted initialStation: Station,
-    @Assisted token: String
+    jwtDataStore: DataStore<Session.Jwt>,
+    @Assisted initialStationId: String,
 ) : ViewModel() {
-    init {
-        fetch(initialStation, token)
-    }
 
-    private val _networkStatus = MutableStateFlow<State<Unit>?>(null)
-    val networkStatus: StateFlow<State<Unit>?>
-        get() = _networkStatus
-
-    val station =
-        stationRepository
-            .watchOne(initialStation)
-            .mapNotNull { it.getOrNull() } // Only take successful values
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val station: StateFlow<Station?> =
+        jwtDataStore.data
+            .flatMapLatest { stationRepository.watchOne(initialStationId, it.token) }
+            .catch { e -> _errorState.value = e.toString() }
             .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    private fun fetch(station: Station, token: String) {
-        viewModelScope.launch(Dispatchers.Main) {
-            _networkStatus.value = stationRepository.findOne(station, token).map {}
-        }
+    private val _errorState = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?>
+        get() = _errorState
+
+    fun clearError() {
+        _errorState.value = null
     }
 
     @dagger.assisted.AssistedFactory
     fun interface AssistedFactory {
-        fun create(initialStation: Station, token: String): DetailsViewModel
+        fun create(initialStationId: String): DetailViewModel
     }
 
     companion object {
         fun AssistedFactory.provideFactory(
-            initialStation: Station,
-            token: String
+            initialStationId: String,
         ): ViewModelProvider.Factory =
             object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return this@provideFactory.create(initialStation, token) as T
+                    return this@provideFactory.create(initialStationId) as T
                 }
             }
     }
