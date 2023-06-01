@@ -67,6 +67,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/darkness4/train-station-front:latest
+            ghcr.io/darkness4/train-station-front:dev
             ghcr.io/darkness4/train-station-front:${{ steps.get_version.outputs.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

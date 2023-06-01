@@ -122,6 +122,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/darkness4/train-station-api:latest
+            ghcr.io/darkness4/train-station-api:dev
             ghcr.io/darkness4/train-station-api:${{ steps.get_version.outputs.VERSION }}
           build-args: |
             ${{ steps.get_version.outputs.VERSION }}
