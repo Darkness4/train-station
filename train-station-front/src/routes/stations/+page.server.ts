@@ -1,7 +1,7 @@
 import { stationClient } from '$lib/server/api';
-import type { PageServerLoad } from './$types';
-import clone from 'just-clone';
 import { redirect } from '@sveltejs/kit';
+import clone from 'just-clone';
+import type { PageServerLoad } from './$types';
 
 export const load = (async ({ url, locals }) => {
 	const page = parseInt(url.searchParams.get('page') ?? '1');
@@ -13,7 +13,7 @@ export const load = (async ({ url, locals }) => {
 
 	// TODO: handle error
 	const { response } = await stationClient.getManyStations({
-		limit: 10,
+		limit: 12,
 		page: page,
 		query: searchQuery,
 		token: session.token

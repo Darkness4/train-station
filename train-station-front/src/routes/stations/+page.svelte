@@ -40,8 +40,10 @@
 	<title>Stations list</title>
 </svelte:head>
 
-<section class="section">
-	<Search bind:value={searchQuery} onConfirm={() => search(searchQuery)} />
+<section>
+	<div class="flex justify-center">
+		<Search bind:value={searchQuery} onConfirm={() => search(searchQuery)} />
+	</div>
 
 	<Pager
 		page={data.stations.page}

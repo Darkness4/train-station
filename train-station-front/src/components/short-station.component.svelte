@@ -11,22 +11,24 @@
 	}
 </script>
 
-<article>
-	<div class="grid">
-		<hgroup>
-			<h1>{station.libelle}</h1>
-			<h2>{station.id}</h2>
-		</hgroup>
-		<div>
-			<button on:click={onClick}>
-				<span>Details</span>
-			</button>
-			<button on:click={onClickFavorite}>
-				<i class="material-icons" aria-hidden="true"
-					>{station.isFavorite ? 'favorite' : 'favorite_border'}</i
-				>
-				<span>Favorite</span>
-			</button>
-		</div>
+<article class="m-2">
+	<hgroup>
+		<h1>{station.libelle}</h1>
+		<h2 class="text-ellipsis overflow-hidden whitespace-nowrap max-md:max-w-xs">{station.id}</h2>
+	</hgroup>
+	<div>
+		<button on:click={onClick}>
+			<span class="align-middle">Details</span>
+		</button>
+		<button on:click={onClickFavorite}>
+			<span
+				class="material-symbols-outlined align-middle"
+				style={station.isFavorite
+					? "font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;"
+					: ''}
+				aria-hidden="true">star</span
+			>
+			<span class="align-middle">Favorite</span>
+		</button>
 	</div>
 </article>

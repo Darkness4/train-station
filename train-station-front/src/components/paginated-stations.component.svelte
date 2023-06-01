@@ -7,9 +7,9 @@
 	export let onFavorite: (station: Station) => unknown;
 </script>
 
-<section id="stations" class="section">
+<section id="stations" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 	{#if stations.count === 0}
-		<h1 class="title">No data.</h1>
+		<h1>No data.</h1>
 	{:else}
 		{#each stations.data as station}
 			<ShortStation

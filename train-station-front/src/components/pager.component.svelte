@@ -29,17 +29,25 @@
 	}
 </script>
 
-<nav aria-label="pagination">
-	<ul>
+<nav aria-label="pagination" class="px-4 flex justify-center">
+	<ul class="max-md:hidden">
 		<li>
-			<button disabled={page <= startPage} on:click={goToPrevious}>Previous</button>
+			<button
+				class="rounded-full w-12 h-12 flex items-center justify-center"
+				disabled={page <= startPage}
+				on:click={goToPrevious}><span class="material-symbols-outlined">arrow_back</span></button
+			>
 		</li>
 	</ul>
 
-	<ul class="pagination-list">
+	<ul class="pagination-list grow flex justify-center">
 		{#if page > startPage}
 			<li>
-				<button on:click={goToStart} aria-label="Goto page {startPage}">{startPage}</button>
+				<button
+					class="rounded-full w-12 h-12 flex items-center justify-center"
+					on:click={goToStart}
+					aria-label="Goto page {startPage}">{startPage}</button
+				>
 			</li>
 		{/if}
 		{#if prevPage > startPage}
@@ -47,15 +55,28 @@
 				<span>&hellip;</span>
 			</li>
 			<li>
-				<button on:click={goToPrevious} aria-label="Goto page {prevPage}">{prevPage}</button>
+				<button
+					class="rounded-full w-12 h-12 flex items-center justify-center"
+					on:click={goToPrevious}
+					aria-label="Goto page {prevPage}">{prevPage}</button
+				>
 			</li>
 		{/if}
 		<li>
-			<button on:click={goToCurrent} aria-label="Page {page}" aria-current="page">{page}</button>
+			<button
+				class="rounded-full w-12 h-12 flex items-center justify-center"
+				on:click={goToCurrent}
+				aria-label="Page {page}"
+				aria-current="page">{page}</button
+			>
 		</li>
 		{#if nextPage < pageCount}
 			<li>
-				<button on:click={goToNext} aria-label="Goto page {nextPage}">{nextPage}</button>
+				<button
+					class="rounded-full w-12 h-12 flex items-center justify-center"
+					on:click={goToNext}
+					aria-label="Goto page {nextPage}">{nextPage}</button
+				>
 			</li>
 			<li>
 				<span>&hellip;</span>
@@ -63,13 +84,22 @@
 		{/if}
 		{#if page < pageCount}
 			<li>
-				<button on:click={goToLast} aria-label="Goto page {pageCount}">{pageCount}</button>
+				<button
+					class="rounded-full w-12 h-12 flex items-center justify-center"
+					on:click={goToLast}
+					aria-label="Goto page {pageCount}">{pageCount}</button
+				>
 			</li>
 		{/if}
 	</ul>
-	<ul>
+
+	<ul class="max-md:hidden">
 		<li>
-			<button disabled={page >= pageCount} on:click={goToNext}>Next page</button>
+			<button
+				class="rounded-full w-12 h-12 flex items-center justify-center"
+				disabled={page >= pageCount}
+				on:click={goToNext}><span class="material-symbols-outlined">arrow_forward</span></button
+			>
 		</li>
 	</ul>
 </nav>

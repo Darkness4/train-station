@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- First Pyramid -->
+  <polygon points="200,500 300,400 400,500" fill="#FF6384" />
+  <polygon points="275,400 300,375 325,400" fill="#FF6384" />
+  <polygon points="250,325 300,275 350,325" fill="#FF6384" />
+
+  <!-- Second Pyramid -->
+  <polygon points="500,500 600,400 700,500" fill="#36A2EB" />
+  <polygon points="575,400 600,375 625,400" fill="#36A2EB" />
+  <polygon points="550,325 600,275 650,325" fill="#36A2EB" />
+
+  <!-- Third Pyramid -->
+  <polygon points="300,200 400,100 500,200" fill="#FFCE56" />
+  <polygon points="375,100 400,75 425,100" fill="#FFCE56" />
+  <polygon points="350,25 400,-25 450,25" fill="#FFCE56" />
+
+  <!-- Fourth Pyramid -->
+  <polygon points="600,200 700,100 800,200" fill="#4BC0C0" />
+  <polygon points="675,100 700,75 725,100" fill="#4BC0C0" />
+  <polygon points="650,25 700,-25 750,25" fill="#4BC0C0" />
+</svg>
