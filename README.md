@@ -188,15 +188,13 @@ flowchart TD
 	subgraph data[Data Layer]
 		subgraph cache[Cache]
           	oauthDataStore
-         	Room
          	jwtDataStore
+         	Room
         end
         oauth
         StationRepositoryImpl
         authAPI
         stationAPI
-		StationRemoteMediator
-
     end
     
     subgraph domain[Domain Layer]
@@ -211,14 +209,11 @@ flowchart TD
     end
 
     Room-->StationRepositoryImpl
+    jwtDataStore-->StationRepositoryImpl
     StationRepositoryImpl-->|implements|StationRepository
     stationAPI-->StationRepositoryImpl
-    stationAPI-->StationRemoteMediator
-    jwtDataStore-->StationRemoteMediator
-    jwtDataStore-->StationRepositoryImpl
-    StationRemoteMediator-->StationRepositoryImpl
-    authAPI-->LoginViewModel
     jwtDataStore-->LoginViewModel
+    authAPI-->LoginViewModel
     oauthDataStore-->LoginViewModel
     StationRepository-->DetailViewModel
     StationRepository-->StationListViewModel
@@ -236,15 +231,10 @@ The **Data** layer:
   - _Room_ executes requests in a Kotlin coroutine in the [IO thread](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
 - _stationAPI_ is a gRPC data source which permits to retrieves `Stations`. It needs a JWT token to fetch datas.
 - *OAuth provider* gives the OAuth Access Token which is use to authenticate and identify users. The accessToken is cached inside the *oauthDataStore*. Upon receiving the OAuth Access Token, the *authAPI* tries to fetch a JWT token.
-- `StationRemoteMediator` loads pages from the cache or from HTTP responses depending on connectivity.
-  - The logic can be summarised as follows:
-    - It loads the next/previous/initial page by making an HTTP request
-    - It **caches the `Stations` of the HTTP response**.
-    - It implements [`RemoteMediator`](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator), mediating between the local and remote source.
 - The `StationRepositoryImpl` implements `StationRepository` and executes CRUD methods.
-  - For asynchronous actions, the `StationModel` of the response is cached and returned.
-  - For a watch action (`watch`/`watchOne`), we observe the cache directly **without making an HTTP request**.
-  - For paged data, we create and run the [`Pager`](https://developer.android.com/reference/kotlin/androidx/paging/Pager) to **retrieve the `PagingData` from the cache.** Depending on whether we consume the `PagingData<Station>` stream, `Pager` will contact `StationRemoteMediator` to load more page data.
+  - For asynchronous actions, the `Station` of the response is cached and returned.
+  - For a watch action (`watch`/`watchOne`), we observe the cache and may fetch the initial values from a data source.
+  - For paged data, we create and run the [`Pager`](https://developer.android.com/reference/kotlin/androidx/paging/Pager) to **retrieve the `PagingData` from the cache.** The pager uses the `StationRemoteMediator` which is responsible to fetch and cache pages of `Station` from a data source.
 
 In the **Domain** layer:
 
