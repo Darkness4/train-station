@@ -12,8 +12,8 @@ devDependencies:
     specifier: latest
     version: 0.8.2
   '@auth/sveltekit':
-    specifier: 0.3.2
-    version: 0.3.2(@sveltejs/kit@1.20.2)(svelte@3.59.1)
+    specifier: 0.3.3
+    version: 0.3.3(@sveltejs/kit@1.20.2)(svelte@3.59.1)
   '@grpc/grpc-js':
     specifier: 1.8.15
     version: 1.8.15
@@ -131,8 +131,8 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: true
 
-  /@auth/sveltekit@0.3.2(@sveltejs/kit@1.20.2)(svelte@3.59.1):
-    resolution: {integrity: sha512-w1hui6QKsO2P0PLIpk0Hh217vJ12uq40ZqLEgZKh/Ozz2l3IPqjPifnGoXR94/K+VgPjR4Xdu/UPOTwawIuI8A==}
+  /@auth/sveltekit@0.3.3(@sveltejs/kit@1.20.2)(svelte@3.59.1):
+    resolution: {integrity: sha512-Yj+xHiqxWmJoq6ZJijDufiqonw33Zk2JjAPFJ6DvISVURUSMz/co0B5MS6rcW/1iER+t86opzjbQUjmmB1BKCQ==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
       svelte: ^3.54.0
