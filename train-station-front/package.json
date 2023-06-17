@@ -37,7 +37,7 @@
 		"@typescript-eslint/parser": "5.59.11",
 		"autoprefixer": "10.4.14",
 		"depcheck": "1.4.3",
-		"eslint": "8.42.0",
+		"eslint": "8.43.0",
 		"eslint-config-prettier": "8.8.0",
 		"eslint-plugin-svelte3": "4.0.0",
 		"just-clone": "6.2.0",
