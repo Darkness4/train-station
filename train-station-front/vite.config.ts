@@ -1,12 +1,10 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { imagetools } from 'vite-imagetools';
+import { defineConfig } from 'vitest/config';
 
-/** @type {import('vite').UserConfig} */
-const config = {
+export default defineConfig({
 	plugins: [sveltekit(), imagetools()],
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	}
-};
-
-export default config;
+});
