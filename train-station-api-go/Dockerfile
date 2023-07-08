@@ -30,7 +30,6 @@ WORKDIR /app
 
 COPY --from=builder /out/train-station-api-go .
 COPY --from=certs /etc/ssl/certs /etc/ssl/certs
-COPY ./db/migrations ./migrations
 
 ADD https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.13/grpc_health_probe-$TARGETOS-$TARGETARCH /bin/grpc_health_probe
 

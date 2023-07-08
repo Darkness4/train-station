@@ -3,13 +3,14 @@ package db
 import (
 	"context"
 	"database/sql"
+	"embed"
 
 	"github.com/Darkness4/train-station-api/db/models"
 	"github.com/Darkness4/train-station-api/db/types"
 	"github.com/Darkness4/train-station-api/logger"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/sqlite"
-	"github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 	"go.uber.org/zap"
@@ -19,6 +20,9 @@ type DB struct {
 	*sql.DB
 }
 
+//go:embed migrations/*.sql
+var migrations embed.FS
+
 func (db *DB) InitialMigration() {
 	dbDriver, err := sqlite.WithInstance(db.DB, &sqlite.Config{
 		NoTxWrap: true,
@@ -26,15 +30,14 @@ func (db *DB) InitialMigration() {
 	if err != nil {
 		logger.I.Panic("failed to attach db", zap.Error(err))
 	}
-	var f file.File
-	fileDriver, err := f.Open("file://migrations")
+	iofsDriver, err := iofs.New(migrations, "migrations")
 	if err != nil {
 		logger.I.Panic("failed to load migrations", zap.Error(err))
 	}
-	defer fileDriver.Close()
+	defer iofsDriver.Close()
 	m, err := migrate.NewWithInstance(
-		"file",
-		fileDriver,
+		"iofs",
+		iofsDriver,
 		"sqlite",
 		dbDriver,
 	)
@@ -53,7 +56,7 @@ func (db *DB) InitialMigration() {
 		logger.I.Panic("Failed to fetch DB version.", zap.Error(err))
 	} else {
 		logger.I.Info("DB version detected.", zap.Uint("version", version))
-		if new, err := fileDriver.Next(version); err != nil {
+		if new, err := iofsDriver.Next(version); err != nil {
 			logger.I.Info("Latest DB version.", zap.Uint("version", version))
 		} else {
 			logger.I.Warn("New DB version detected.", zap.Uint("actual", version), zap.Uint("new", new))
@@ -86,7 +89,11 @@ func (db *DB) CreateManyStation(ctx context.Context, models []*models.Station) e
 	return tx.Commit()
 }
 
-func (db *DB) FindOneStationAndFavorite(ctx context.Context, id string, userID string) (*types.StationAndFavorite, error) {
+func (db *DB) FindOneStationAndFavorite(
+	ctx context.Context,
+	id string,
+	userID string,
+) (*types.StationAndFavorite, error) {
 	logger.I.Debug(
 		"FindOneStationAndFavorite called",
 		zap.String("id", id),
@@ -121,7 +128,10 @@ func (db *DB) FindManyStationAndFavorite(
 	queries := []qm.QueryMod{
 		qm.Select("stations.*, CASE WHEN favorites.user_id IS NULL THEN 0 ELSE 1 END AS favorite"),
 		qm.From(models.TableNames.Stations),
-		qm.LeftOuterJoin("favorites on favorites.station_id = stations.id AND favorites.user_id = ?", userID),
+		qm.LeftOuterJoin(
+			"favorites on favorites.station_id = stations.id AND favorites.user_id = ?",
+			userID,
+		),
 		qm.Limit(limit),
 		qm.Offset(offset),
 		qm.OrderBy("libelle"),
