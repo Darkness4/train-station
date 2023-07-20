@@ -10,7 +10,7 @@ overrides:
 devDependencies:
   '@auth/core':
     specifier: latest
-    version: 0.8.4
+    version: 0.10.0
   '@auth/sveltekit':
     specifier: 0.3.3
     version: 0.3.3(@sveltejs/kit@1.20.4)(svelte@4.0.0)
@@ -123,8 +123,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.18
     dev: true
 
-  /@auth/core@0.8.4:
-    resolution: {integrity: sha512-08aDVHar85akYaU9vRZ8O5Ydup9T/PS+4ehrBS5AvRW6cU3/4XMHtkU4ePtOiOVn69VgbAHShetm9VcnWwtjxg==}
+  /@auth/core@0.10.0:
+    resolution: {integrity: sha512-mmvAzFUcDHG0m6avQ6/sYI3wtQtt3Tjbk4wCr27OlCeNnlzqK8lDQJIDFbJOTXEu/dNUx8sUQ0xMp7A6GAaHQw==}
     peerDependencies:
       nodemailer: ^6.8.0
     peerDependenciesMeta:
@@ -145,7 +145,7 @@ packages:
       '@sveltejs/kit': ^1.0.0
       svelte: ^3.54.0
     dependencies:
-      '@auth/core': 0.8.4
+      '@auth/core': 0.10.0
       '@sveltejs/kit': 1.20.4(svelte@4.0.0)(vite@4.3.9)
       svelte: 4.0.0
     transitivePeerDependencies:
@@ -2747,7 +2747,7 @@ packages:
       levn: 0.4.1
       prelude-ls: 1.2.1
       type-check: 0.4.0
-      word-wrap: 1.2.3
+      word-wrap: 1.2.4
     dev: true
 
   /p-limit@3.1.0:
@@ -3950,8 +3950,8 @@ packages:
       stackback: 0.0.2
     dev: true
 
-  /word-wrap@1.2.3:
-    resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
+  /word-wrap@1.2.4:
+    resolution: {integrity: sha512-2V81OA4ugVo5pRo46hAoD2ivUJx8jXmWXfUkY4KFNw0hEptvN0QfH3K4nHiwzGeKl5rFKedV48QVoqYavy4YpA==}
     engines: {node: '>=0.10.0'}
     dev: true
 
