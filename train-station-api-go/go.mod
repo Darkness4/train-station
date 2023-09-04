@@ -6,27 +6,27 @@ require (
 	github.com/friendsofgo/errors v0.9.2
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/golang-migrate/migrate/v4 v4.16.2
-	github.com/google/uuid v1.3.0
-	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.5
+	github.com/google/uuid v1.3.1
+	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0
 	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.8.4
 	github.com/urfave/cli/v2 v2.25.7
-	github.com/volatiletech/sqlboiler/v4 v4.14.2
-	github.com/volatiletech/strmangle v0.0.4
-	go.uber.org/zap v1.24.0
-	google.golang.org/grpc v1.56.1
+	github.com/volatiletech/sqlboiler/v4 v4.15.0
+	github.com/volatiletech/strmangle v0.0.5
+	go.uber.org/zap v1.25.0
+	google.golang.org/grpc v1.57.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.3.0
-	google.golang.org/protobuf v1.30.0
-	modernc.org/sqlite v1.23.1
+	google.golang.org/protobuf v1.31.0
+	modernc.org/sqlite v1.25.0
 )
 
 require (
-	cloud.google.com/go v0.110.2 // indirect
-	cloud.google.com/go/compute v1.19.3 // indirect
+	cloud.google.com/go v0.110.6 // indirect
+	cloud.google.com/go/compute v1.23.0 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
-	cloud.google.com/go/iam v1.0.1 // indirect
-	cloud.google.com/go/longrunning v0.4.2 // indirect
-	cloud.google.com/go/spanner v1.46.0 // indirect
+	cloud.google.com/go/iam v1.1.1 // indirect
+	cloud.google.com/go/longrunning v0.5.1 // indirect
+	cloud.google.com/go/spanner v1.47.0 // indirect
 	cloud.google.com/go/storage v1.30.1 // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.2 // indirect
@@ -96,7 +96,7 @@ require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/s2a-go v0.1.4 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
-	github.com/googleapis/gax-go/v2 v2.9.1 // indirect
+	github.com/googleapis/gax-go/v2 v2.11.0 // indirect
 	github.com/gsterjov/go-libsecret v0.0.0-20161001094733-a6f4afe4910c // indirect
 	github.com/hailocab/go-hostpool v0.0.0-20160125115350-e80d13ce29ed // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -171,30 +171,30 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/crypto v0.10.0 // indirect
-	golang.org/x/exp v0.0.0-20230315142452-642cacee5cc0 // indirect
-	golang.org/x/mod v0.11.0 // indirect
-	golang.org/x/net v0.11.0 // indirect
+	golang.org/x/crypto v0.12.0 // indirect
+	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
+	golang.org/x/mod v0.12.0 // indirect
+	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/oauth2 v0.8.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
-	golang.org/x/sys v0.9.0 // indirect
-	golang.org/x/term v0.9.0 // indirect
-	golang.org/x/text v0.10.0 // indirect
+	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/term v0.11.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
-	golang.org/x/tools v0.10.0 // indirect
+	golang.org/x/tools v0.12.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
-	google.golang.org/api v0.124.0 // indirect
+	google.golang.org/api v0.126.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20230525234025-438c736192d0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20230525234020-1aefcd67740a // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230530153820-e85fd2cbaebc // indirect
+	google.golang.org/genproto v0.0.0-20230803162519-f966b187b2e5 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20230726155614-23370e0ffb3e // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230822172742-b8732ec3820d // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	lukechampine.com/uint128 v1.3.0 // indirect
 	modernc.org/b v1.0.4 // indirect
 	modernc.org/cc/v3 v3.41.0 // indirect
-	modernc.org/ccgo/v3 v3.16.14 // indirect
+	modernc.org/ccgo/v3 v3.16.15 // indirect
 	modernc.org/db v1.0.9 // indirect
 	modernc.org/file v1.0.7 // indirect
 	modernc.org/fileutil v1.1.2 // indirect
@@ -202,12 +202,12 @@ require (
 	modernc.org/internal v1.0.7 // indirect
 	modernc.org/libc v1.24.1 // indirect
 	modernc.org/lldb v1.0.6 // indirect
-	modernc.org/mathutil v1.5.0 // indirect
-	modernc.org/memory v1.6.0 // indirect
+	modernc.org/mathutil v1.6.0 // indirect
+	modernc.org/memory v1.7.1 // indirect
 	modernc.org/opt v0.1.3 // indirect
 	modernc.org/ql v1.4.6 // indirect
 	modernc.org/sortutil v1.1.1 // indirect
-	modernc.org/strutil v1.1.3 // indirect
+	modernc.org/strutil v1.2.0 // indirect
 	modernc.org/token v1.1.0 // indirect
 	modernc.org/zappy v1.0.8 // indirect
 )
