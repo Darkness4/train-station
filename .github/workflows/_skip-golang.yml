@@ -8,16 +8,16 @@ on:
 
 jobs:
   lint-go:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No lint required"'
 
   test-go:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No test required"'
 
   build-go:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No build required"'

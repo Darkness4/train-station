@@ -8,6 +8,6 @@ on:
 
 jobs:
   build-deploy-svelte:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No build required"'

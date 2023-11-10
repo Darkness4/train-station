@@ -8,26 +8,26 @@ on:
 
 jobs:
   check-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No lint required"'
 
   test-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No test required"'
 
   build-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No build required"'
 
   package-apk-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No package apk required"'
 
   package-aab-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: 'echo "No package aab required"'
