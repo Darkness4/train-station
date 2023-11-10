@@ -16,6 +16,9 @@
 		"format": "prettier --write .",
 		"depcheck": "depcheck"
 	},
+	"trustedDependencies": [
+		"sharp"
+	],
 	"devDependencies": {
 		"@auth/core": "0.13.0",
 		"@auth/sveltekit": "0.3.6",

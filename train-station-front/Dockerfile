@@ -8,13 +8,13 @@ FROM scratch as lean-pnpm
 
 COPY --from=base / /
 
-FROM lean-pnpm as builder
+FROM oven/bun:1.0 as builder
 
 WORKDIR /app
-COPY svelte.config.js .npmrc package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY svelte.config.js .npmrc package.json bun.lockb ./
+RUN bun install --frozen-lockfile
 COPY . .
-RUN pnpm run build
+RUN bun run build
 
 # ---
 FROM lean-pnpm
@@ -23,11 +23,7 @@ ENV NODE_ENV=production
 RUN apk add --no-cache tini
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm fetch --prod
-
 COPY --from=builder /app/build ./build
-RUN pnpm install -r --ignore-scripts --offline --prod
 
 RUN chown node:node .
 USER node

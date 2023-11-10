@@ -16,6 +16,7 @@ public final class AuthProto {
      * <pre>
      **
      * ID of the provider used for this account.
+     *
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
@@ -27,6 +28,7 @@ public final class AuthProto {
      * <pre>
      **
      * ID of the provider used for this account.
+     *
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
@@ -120,6 +122,7 @@ public final class AuthProto {
      * <pre>
      **
      * ID of the provider used for this account.
+     *
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
@@ -134,6 +137,7 @@ public final class AuthProto {
      * <pre>
      **
      * ID of the provider used for this account.
+     *
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
@@ -149,6 +153,7 @@ public final class AuthProto {
      * <pre>
      **
      * ID of the provider used for this account.
+     *
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
@@ -165,19 +170,21 @@ public final class AuthProto {
      * <pre>
      **
      * ID of the provider used for this account.
+     *
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
      * <code>string provider = 1 [json_name = "provider"];</code>
      */
     private void clearProvider() {
-      
+
       provider_ = getDefaultInstance().getProvider();
     }
     /**
      * <pre>
      **
      * ID of the provider used for this account.
+     *
      * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
      * </pre>
      *
@@ -188,7 +195,7 @@ public final class AuthProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       provider_ = value.toStringUtf8();
-      
+
     }
 
     public static final int TYPE_FIELD_NUMBER = 2;
@@ -240,7 +247,7 @@ public final class AuthProto {
      * <code>string type = 2 [json_name = "type"];</code>
      */
     private void clearType() {
-      
+
       type_ = getDefaultInstance().getType();
     }
     /**
@@ -255,7 +262,7 @@ public final class AuthProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       type_ = value.toStringUtf8();
-      
+
     }
 
     public static final int PROVIDER_ACCOUNT_ID_FIELD_NUMBER = 3;
@@ -307,7 +314,7 @@ public final class AuthProto {
      * <code>string provider_account_id = 3 [json_name = "providerAccountId"];</code>
      */
     private void clearProviderAccountId() {
-      
+
       providerAccountId_ = getDefaultInstance().getProviderAccountId();
     }
     /**
@@ -322,7 +329,7 @@ public final class AuthProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       providerAccountId_ = value.toStringUtf8();
-      
+
     }
 
     public static final int ACCESS_TOKEN_FIELD_NUMBER = 4;
@@ -374,7 +381,7 @@ public final class AuthProto {
      * <code>string access_token = 4 [json_name = "accessToken"];</code>
      */
     private void clearAccessToken() {
-      
+
       accessToken_ = getDefaultInstance().getAccessToken();
     }
     /**
@@ -389,7 +396,7 @@ public final class AuthProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       accessToken_ = value.toStringUtf8();
-      
+
     }
 
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account parseFrom(
@@ -442,10 +449,12 @@ public final class AuthProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -495,6 +504,7 @@ public final class AuthProto {
        * <pre>
        **
        * ID of the provider used for this account.
+       *
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
        *
@@ -509,6 +519,7 @@ public final class AuthProto {
        * <pre>
        **
        * ID of the provider used for this account.
+       *
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
        *
@@ -524,6 +535,7 @@ public final class AuthProto {
        * <pre>
        **
        * ID of the provider used for this account.
+       *
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
        *
@@ -541,6 +553,7 @@ public final class AuthProto {
        * <pre>
        **
        * ID of the provider used for this account.
+       *
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
        *
@@ -556,6 +569,7 @@ public final class AuthProto {
        * <pre>
        **
        * ID of the provider used for this account.
+       *
        * Based on the ID of the provider, it will check the access token on the OAuth/OIDC Provider.
        * </pre>
        *
@@ -902,7 +916,7 @@ public final class AuthProto {
     private void setAccount(com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.Account value) {
       value.getClass();
   account_ = value;
-      
+
       }
     /**
      * <code>.auth.v1alpha1.Account account = 1 [json_name = "account"];</code>
@@ -917,13 +931,13 @@ public final class AuthProto {
       } else {
         account_ = value;
       }
-      
+
     }
     /**
      * <code>.auth.v1alpha1.Account account = 1 [json_name = "account"];</code>
      */
     private void clearAccount() {  account_ = null;
-      
+
     }
 
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTRequest parseFrom(
@@ -976,10 +990,12 @@ public final class AuthProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1202,7 +1218,7 @@ public final class AuthProto {
      * <code>string token = 1 [json_name = "token"];</code>
      */
     private void clearToken() {
-      
+
       token_ = getDefaultInstance().getToken();
     }
     /**
@@ -1213,7 +1229,7 @@ public final class AuthProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       token_ = value.toStringUtf8();
-      
+
     }
 
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse parseFrom(
@@ -1266,10 +1282,12 @@ public final class AuthProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.auth.v1alpha1.AuthProto.GetJWTResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)

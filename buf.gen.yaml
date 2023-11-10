@@ -9,11 +9,11 @@ managed:
   optimize_for: LITE_RUNTIME
 plugins:
   - name: go
-    out: ./train-station-api-go/gen/go
+    out: ./go/gen/go
     opt:
       - paths=source_relative
   - name: go-grpc
-    out: ./train-station-api-go/gen/go
+    out: ./go/gen/go
     opt:
       - paths=source_relative
   - name: ts

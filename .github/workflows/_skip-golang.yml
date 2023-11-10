@@ -4,7 +4,7 @@ on:
   pull_request:
     paths-ignore:
       - .github/workflows/golang.yml
-      - train-station-api-go/**
+      - go/**
 
 jobs:
   lint-go:

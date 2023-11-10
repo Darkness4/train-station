@@ -68,7 +68,7 @@ public final class HealthProto {
      * <code>string service = 1 [json_name = "service"];</code>
      */
     private void clearService() {
-      
+
       service_ = getDefaultInstance().getService();
     }
     /**
@@ -79,7 +79,7 @@ public final class HealthProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       service_ = value.toStringUtf8();
-      
+
     }
 
     public static com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest parseFrom(
@@ -132,10 +132,12 @@ public final class HealthProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -472,13 +474,13 @@ public final class HealthProto {
      */
     private void setStatus(com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse.ServingStatus value) {
       status_ = value.getNumber();
-      
+
     }
     /**
      * <code>.grpc.health.v1.HealthCheckResponse.ServingStatus status = 1 [json_name = "status"];</code>
      */
     private void clearStatus() {
-      
+
       status_ = 0;
     }
 
@@ -532,10 +534,12 @@ public final class HealthProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)

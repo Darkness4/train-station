@@ -93,7 +93,7 @@ public final class StationProto {
      * <code>string query = 1 [json_name = "query"];</code>
      */
     private void clearQuery() {
-      
+
       query_ = getDefaultInstance().getQuery();
     }
     /**
@@ -104,7 +104,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       query_ = value.toStringUtf8();
-      
+
     }
 
     public static final int LIMIT_FIELD_NUMBER = 2;
@@ -129,7 +129,7 @@ public final class StationProto {
      * <code>int64 limit = 2 [json_name = "limit", jstype = JS_NUMBER];</code>
      */
     private void clearLimit() {
-      
+
       limit_ = 0L;
     }
 
@@ -155,7 +155,7 @@ public final class StationProto {
      * <code>int64 page = 3 [json_name = "page", jstype = JS_NUMBER];</code>
      */
     private void clearPage() {
-      
+
       page_ = 0L;
     }
 
@@ -192,7 +192,7 @@ public final class StationProto {
      * <code>string token = 4 [json_name = "token"];</code>
      */
     private void clearToken() {
-      
+
       token_ = getDefaultInstance().getToken();
     }
     /**
@@ -203,7 +203,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       token_ = value.toStringUtf8();
-      
+
     }
 
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest parseFrom(
@@ -256,10 +256,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -580,7 +582,7 @@ public final class StationProto {
     private void setStations(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation value) {
       value.getClass();
   stations_ = value;
-      
+
       }
     /**
      * <code>.trainstation.v1alpha1.PaginatedStation stations = 1 [json_name = "stations"];</code>
@@ -595,13 +597,13 @@ public final class StationProto {
       } else {
         stations_ = value;
       }
-      
+
     }
     /**
      * <code>.trainstation.v1alpha1.PaginatedStation stations = 1 [json_name = "stations"];</code>
      */
     private void clearStations() {  stations_ = null;
-      
+
     }
 
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsResponse parseFrom(
@@ -654,10 +656,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -893,7 +897,7 @@ public final class StationProto {
      * <code>string id = 1 [json_name = "id"];</code>
      */
     private void clearId() {
-      
+
       id_ = getDefaultInstance().getId();
     }
     /**
@@ -904,7 +908,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       id_ = value.toStringUtf8();
-      
+
     }
 
     public static final int TOKEN_FIELD_NUMBER = 2;
@@ -940,7 +944,7 @@ public final class StationProto {
      * <code>string token = 2 [json_name = "token"];</code>
      */
     private void clearToken() {
-      
+
       token_ = getDefaultInstance().getToken();
     }
     /**
@@ -951,7 +955,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       token_ = value.toStringUtf8();
-      
+
     }
 
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest parseFrom(
@@ -1004,10 +1008,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1270,7 +1276,7 @@ public final class StationProto {
     private void setStation(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station value) {
       value.getClass();
   station_ = value;
-      
+
       }
     /**
      * <code>.trainstation.v1alpha1.Station station = 1 [json_name = "station"];</code>
@@ -1285,13 +1291,13 @@ public final class StationProto {
       } else {
         station_ = value;
       }
-      
+
     }
     /**
      * <code>.trainstation.v1alpha1.Station station = 1 [json_name = "station"];</code>
      */
     private void clearStation() {  station_ = null;
-      
+
     }
 
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse parseFrom(
@@ -1344,10 +1350,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1589,7 +1597,7 @@ public final class StationProto {
      * <code>string id = 1 [json_name = "id"];</code>
      */
     private void clearId() {
-      
+
       id_ = getDefaultInstance().getId();
     }
     /**
@@ -1600,7 +1608,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       id_ = value.toStringUtf8();
-      
+
     }
 
     public static final int TOKEN_FIELD_NUMBER = 2;
@@ -1636,7 +1644,7 @@ public final class StationProto {
      * <code>string token = 2 [json_name = "token"];</code>
      */
     private void clearToken() {
-      
+
       token_ = getDefaultInstance().getToken();
     }
     /**
@@ -1647,7 +1655,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       token_ = value.toStringUtf8();
-      
+
     }
 
     public static final int VALUE_FIELD_NUMBER = 3;
@@ -1672,7 +1680,7 @@ public final class StationProto {
      * <code>bool value = 3 [json_name = "value"];</code>
      */
     private void clearValue() {
-      
+
       value_ = false;
     }
 
@@ -1726,10 +1734,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2038,10 +2048,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2323,7 +2335,7 @@ public final class StationProto {
      * <code>int64 count = 2 [json_name = "count", jstype = JS_NUMBER];</code>
      */
     private void clearCount() {
-      
+
       count_ = 0L;
     }
 
@@ -2349,7 +2361,7 @@ public final class StationProto {
      * <code>int64 total = 3 [json_name = "total", jstype = JS_NUMBER];</code>
      */
     private void clearTotal() {
-      
+
       total_ = 0L;
     }
 
@@ -2375,7 +2387,7 @@ public final class StationProto {
      * <code>int64 page = 4 [json_name = "page", jstype = JS_NUMBER];</code>
      */
     private void clearPage() {
-      
+
       page_ = 0L;
     }
 
@@ -2401,7 +2413,7 @@ public final class StationProto {
      * <code>int64 page_count = 5 [json_name = "pageCount", jstype = JS_NUMBER];</code>
      */
     private void clearPageCount() {
-      
+
       pageCount_ = 0L;
     }
 
@@ -2455,10 +2467,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3047,7 +3061,7 @@ public final class StationProto {
      * <code>string id = 1 [json_name = "id"];</code>
      */
     private void clearId() {
-      
+
       id_ = getDefaultInstance().getId();
     }
     /**
@@ -3058,7 +3072,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       id_ = value.toStringUtf8();
-      
+
     }
 
     public static final int COMMUNE_FIELD_NUMBER = 2;
@@ -3094,7 +3108,7 @@ public final class StationProto {
      * <code>string commune = 2 [json_name = "commune"];</code>
      */
     private void clearCommune() {
-      
+
       commune_ = getDefaultInstance().getCommune();
     }
     /**
@@ -3105,7 +3119,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       commune_ = value.toStringUtf8();
-      
+
     }
 
     public static final int Y_WGS84_FIELD_NUMBER = 3;
@@ -3130,7 +3144,7 @@ public final class StationProto {
      * <code>double y_wgs84 = 3 [json_name = "yWgs84"];</code>
      */
     private void clearYWgs84() {
-      
+
       yWgs84_ = 0D;
     }
 
@@ -3156,7 +3170,7 @@ public final class StationProto {
      * <code>double x_wgs84 = 4 [json_name = "xWgs84"];</code>
      */
     private void clearXWgs84() {
-      
+
       xWgs84_ = 0D;
     }
 
@@ -3193,7 +3207,7 @@ public final class StationProto {
      * <code>string libelle = 5 [json_name = "libelle"];</code>
      */
     private void clearLibelle() {
-      
+
       libelle_ = getDefaultInstance().getLibelle();
     }
     /**
@@ -3204,7 +3218,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       libelle_ = value.toStringUtf8();
-      
+
     }
 
     public static final int IDGAIA_FIELD_NUMBER = 6;
@@ -3240,7 +3254,7 @@ public final class StationProto {
      * <code>string idgaia = 6 [json_name = "idgaia"];</code>
      */
     private void clearIdgaia() {
-      
+
       idgaia_ = getDefaultInstance().getIdgaia();
     }
     /**
@@ -3251,7 +3265,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       idgaia_ = value.toStringUtf8();
-      
+
     }
 
     public static final int VOYAGEURS_FIELD_NUMBER = 7;
@@ -3287,7 +3301,7 @@ public final class StationProto {
      * <code>string voyageurs = 7 [json_name = "voyageurs"];</code>
      */
     private void clearVoyageurs() {
-      
+
       voyageurs_ = getDefaultInstance().getVoyageurs();
     }
     /**
@@ -3298,7 +3312,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       voyageurs_ = value.toStringUtf8();
-      
+
     }
 
     public static final int GEO_POINT_2D_FIELD_NUMBER = 8;
@@ -3405,7 +3419,7 @@ public final class StationProto {
      * <code>string code_ligne = 9 [json_name = "codeLigne"];</code>
      */
     private void clearCodeLigne() {
-      
+
       codeLigne_ = getDefaultInstance().getCodeLigne();
     }
     /**
@@ -3416,7 +3430,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       codeLigne_ = value.toStringUtf8();
-      
+
     }
 
     public static final int X_L93_FIELD_NUMBER = 10;
@@ -3441,7 +3455,7 @@ public final class StationProto {
      * <code>double x_l93 = 10 [json_name = "xL93"];</code>
      */
     private void clearXL93() {
-      
+
       xL93_ = 0D;
     }
 
@@ -3538,7 +3552,7 @@ public final class StationProto {
      * <code>int64 rg_troncon = 12 [json_name = "rgTroncon", jstype = JS_NUMBER];</code>
      */
     private void clearRgTroncon() {
-      
+
       rgTroncon_ = 0L;
     }
 
@@ -3564,7 +3578,7 @@ public final class StationProto {
     private void setGeoShape(com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry value) {
       value.getClass();
   geoShape_ = value;
-      
+
       }
     /**
      * <code>.trainstation.v1alpha1.Geometry geo_shape = 13 [json_name = "geoShape"];</code>
@@ -3579,13 +3593,13 @@ public final class StationProto {
       } else {
         geoShape_ = value;
       }
-      
+
     }
     /**
      * <code>.trainstation.v1alpha1.Geometry geo_shape = 13 [json_name = "geoShape"];</code>
      */
     private void clearGeoShape() {  geoShape_ = null;
-      
+
     }
 
     public static final int PK_FIELD_NUMBER = 14;
@@ -3621,7 +3635,7 @@ public final class StationProto {
      * <code>string pk = 14 [json_name = "pk"];</code>
      */
     private void clearPk() {
-      
+
       pk_ = getDefaultInstance().getPk();
     }
     /**
@@ -3632,7 +3646,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       pk_ = value.toStringUtf8();
-      
+
     }
 
     public static final int IDRESEAU_FIELD_NUMBER = 15;
@@ -3657,7 +3671,7 @@ public final class StationProto {
      * <code>int64 idreseau = 15 [json_name = "idreseau", jstype = JS_NUMBER];</code>
      */
     private void clearIdreseau() {
-      
+
       idreseau_ = 0L;
     }
 
@@ -3694,7 +3708,7 @@ public final class StationProto {
      * <code>string departemen = 16 [json_name = "departemen"];</code>
      */
     private void clearDepartemen() {
-      
+
       departemen_ = getDefaultInstance().getDepartemen();
     }
     /**
@@ -3705,7 +3719,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       departemen_ = value.toStringUtf8();
-      
+
     }
 
     public static final int Y_L93_FIELD_NUMBER = 17;
@@ -3730,7 +3744,7 @@ public final class StationProto {
      * <code>double y_l93 = 17 [json_name = "yL93"];</code>
      */
     private void clearYL93() {
-      
+
       yL93_ = 0D;
     }
 
@@ -3767,7 +3781,7 @@ public final class StationProto {
      * <code>string fret = 18 [json_name = "fret"];</code>
      */
     private void clearFret() {
-      
+
       fret_ = getDefaultInstance().getFret();
     }
     /**
@@ -3778,7 +3792,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       fret_ = value.toStringUtf8();
-      
+
     }
 
     public static final int IS_FAVORITE_FIELD_NUMBER = 19;
@@ -3803,7 +3817,7 @@ public final class StationProto {
      * <code>bool is_favorite = 19 [json_name = "isFavorite"];</code>
      */
     private void clearIsFavorite() {
-      
+
       isFavorite_ = false;
     }
 
@@ -3857,10 +3871,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Station parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4897,7 +4913,7 @@ public final class StationProto {
      * <code>string type = 1 [json_name = "type"];</code>
      */
     private void clearType() {
-      
+
       type_ = getDefaultInstance().getType();
     }
     /**
@@ -4908,7 +4924,7 @@ public final class StationProto {
         com.google.protobuf.ByteString value) {
       checkByteStringIsUtf8(value);
       type_ = value.toStringUtf8();
-      
+
     }
 
     public static final int COORDINATES_FIELD_NUMBER = 2;
@@ -5032,10 +5048,12 @@ public final class StationProto {
       return com.google.protobuf.GeneratedMessageLite.parseFrom(
           DEFAULT_INSTANCE, input, extensionRegistry);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return parseDelimitedFrom(DEFAULT_INSTANCE, input);
     }
+
     public static com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
