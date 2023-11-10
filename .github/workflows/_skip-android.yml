@@ -4,7 +4,7 @@ on:
   pull_request:
     paths-ignore:
       - .github/workflows/android.yml
-      - train-station-app/**
+      - app/**
 
 jobs:
   check-android:

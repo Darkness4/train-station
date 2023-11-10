@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/android.yaml
-      - train-station-app/**
+      - app/**
     tags:
       - '*'
     branches:
@@ -12,11 +12,11 @@ on:
   pull_request:
     paths:
       - .github/workflows/android.yaml
-      - train-station-app/**
+      - app/**
 
 defaults:
   run:
-    working-directory: train-station-app
+    working-directory: app
 
 jobs:
   build-android:
@@ -172,7 +172,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-apk
-          path: train-station-app/app/build/outputs/apk/release/app-release.apk
+          path: app/app/build/outputs/apk/release/app-release.apk
 
       # Staging
       - name: Package Staging with Gradle
@@ -185,7 +185,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-apk
-          path: train-station-app/app/build/outputs/apk/staging/app-staging-unsigned.apk
+          path: app/app/build/outputs/apk/staging/app-staging-unsigned.apk
 
   package-aab-android:
     needs:
@@ -236,7 +236,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-aab
-          path: train-station-app/app/build/outputs/bundle/release/app-release.aab
+          path: app/app/build/outputs/bundle/release/app-release.aab
 
       # Staging
       - name: Bundle Staging with Gradle
@@ -249,7 +249,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-aab
-          path: train-station-app/app/build/outputs/bundle/staging/app-staging.aab
+          path: app/app/build/outputs/bundle/staging/app-staging.aab
 
   deploy-android:
     needs:

@@ -25,18 +25,18 @@ plugins:
       - index.md
       - source_relative
   - name: java
-    out: ./train-station-app/app/src/main/java
+    out: ./app/app/src/main/java
     opt:
       - lite
   - name: kotlin
-    out: ./train-station-app/app/src/main/java
+    out: ./app/app/src/main/java
     opt:
       - lite
   - name: grpc-java
-    out: ./train-station-app/app/src/main/java
+    out: ./app/app/src/main/java
     opt:
       - lite
   - name: grpc-kotlin
-    out: ./train-station-app/app/src/main/java
+    out: ./app/app/src/main/java
     opt:
       - lite
