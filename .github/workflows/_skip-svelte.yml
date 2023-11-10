@@ -4,7 +4,7 @@ on:
   pull_request:
     paths-ignore:
       - .github/workflows/svelte.yml
-      - train-station-front/**
+      - front/**
 
 jobs:
   build-deploy-svelte:

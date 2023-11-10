@@ -17,7 +17,7 @@ plugins:
     opt:
       - paths=source_relative
   - name: ts
-    out: ./train-station-front/gen/ts
+    out: ./front/gen/ts
   - name: doc
     out: ./docs
     opt:
