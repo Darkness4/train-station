@@ -1,41 +1,40 @@
 [versions]
-agp = "8.2.0-alpha07"
-kotlin = "1.8.22"
-spotless = "6.19.0"
-ksp = "1.8.22-1.0.11"
-coroutines = "1.7.1"
-core-ktx = "1.10.1"
-hilt = "2.46.1"
-appauth = "0.11.1"
-protobuf = "3.23.2"
-protobuf-plugin = "0.9.3"
-grpc = "1.55.1"
-grpc-kotlin-plugin = "1.3.0"
-okhttp = "4.11.0"
-room = "2.5.1"
+agp = "8.2.0-rc03"
+kotlin = "1.9.20"
+spotless = "6.22.0"
+ksp = "1.9.20-1.0.14"
+coroutines = "1.7.3"
+core-ktx = "1.12.0"
+hilt = "2.48.1"
+protobuf = "3.25.0"
+protobuf-plugin = "0.9.4"
+grpc = "1.59.0"
+grpc-kotlin-plugin = "1.4.0"
+okhttp = "4.12.0"
+room = "2.6.0"
 datastore = "1.0.0"
-lifecycle = "2.6.1"
-navigation-compose = "2.6.0"
-activity-compose = "1.7.2"
-compose-bom = "2023.06.00"
-maps = "2.11.4"
-play-services-maps = "18.1.0"
+lifecycle = "2.6.2"
+navigation-compose = "2.7.5"
+activity-compose = "1.8.0"
+compose-bom = "2023.10.01"
+maps = "4.1.1"
+play-services-maps = "18.2.0"
 timber = "5.0.1"
-paging = "3.1.1"
-paging-compose = "1.0.0-alpha20"
-kotlinx-serialization-json = "1.5.1"
+paging = "3.2.1"
+paging-compose = "3.3.0-alpha02"
+kotlinx-serialization-json = "1.6.0"
 retrofit = "2.9.0"
 retrofit2-kotlinx-serialization-converter = "1.0.0"
-leakcanary = "2.11"
-mockk = "1.13.5"
-kotest = "5.6.2"
+leakcanary = "2.12"
+mockk = "1.13.8"
+kotest = "5.8.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
-browser = "1.5.0"
+browser = "1.6.0"
 appcompat = "1.6.1"
-material = "1.9.0"
-google-services = "4.3.15"
+material = "1.10.0"
+google-services = "4.4.0"
 
 [libraries]
 # Coroutines
@@ -48,7 +47,7 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx
 
 # Dagger Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hiltx-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.0.0" }
+hiltx-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.1.0" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 
 # gRPC
@@ -112,7 +111,7 @@ paging-compose = { group = "androidx.paging", name = "paging-compose", version.r
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 # Retrofit
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version = "retrofit" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit2-kotlinx-serialization-converter = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2-kotlinx-serialization-converter" }
 
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
