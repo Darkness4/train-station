@@ -42,7 +42,7 @@
 		"material-symbols": "0.14.0",
 		"next-auth": "4.24.5",
 		"postcss": "8.4.31",
-		"prettier": "3.0.3",
+		"prettier": "3.1.0",
 		"prettier-plugin-svelte": "3.1.0",
 		"sass": "1.69.5",
 		"svelte": "4.2.3",
