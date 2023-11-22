@@ -9,8 +9,8 @@ devDependencies:
     specifier: 0.18.3
     version: 0.18.3
   '@auth/sveltekit':
-    specifier: 0.3.13
-    version: 0.3.13(@sveltejs/kit@1.27.6)(svelte@4.2.5)
+    specifier: 0.3.14
+    version: 0.3.14(@sveltejs/kit@1.27.6)(svelte@4.2.5)
   '@grpc/grpc-js':
     specifier: 1.9.11
     version: 1.9.11
@@ -125,22 +125,6 @@ packages:
       '@jridgewell/trace-mapping': 0.3.20
     dev: true
 
-  /@auth/core@0.18.2:
-    resolution: {integrity: sha512-pjTS0ReNNgZgUJPuuAwlp9wA+wu5ko0fX1KTTCgbuYioo9OVvUz6L3LV9+1hS4BtFw6yBtv6fVCLwCDu68/dQw==}
-    peerDependencies:
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      nodemailer:
-        optional: true
-    dependencies:
-      '@panva/hkdf': 1.1.1
-      cookie: 0.5.0
-      jose: 5.1.0
-      oauth4webapi: 2.3.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
-    dev: true
-
   /@auth/core@0.18.3:
     resolution: {integrity: sha512-YXQWxi3pKxngt+2vo3dq8+wDANlUH8nhQgX6EVdd3Enfe3vweBtHqzaWrtWzQnVb8wdGxdhxaoOlYroEBE+/yw==}
     peerDependencies:
@@ -157,13 +141,13 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: true
 
-  /@auth/sveltekit@0.3.13(@sveltejs/kit@1.27.6)(svelte@4.2.5):
-    resolution: {integrity: sha512-fymj7A9dQiqGIiXxcEiTprfcp6fplFuplH0Yu8Aiis3dDrnbR3EHyAdzTLWKbhOaXHR+qkZ7hiTOKBwWJ5jL9Q==}
+  /@auth/sveltekit@0.3.14(@sveltejs/kit@1.27.6)(svelte@4.2.5):
+    resolution: {integrity: sha512-Ealyi4uM4V42tk4UhhRQ+iZKah0OOp12siXwgDsCj1uBOCeZwL97RkvdMDX7pg18zBP/h2qFAuMWjW5q7bSYxA==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
       svelte: ^3.54.0 || ^4.0.0
     dependencies:
-      '@auth/core': 0.18.2
+      '@auth/core': 0.18.3
       '@sveltejs/kit': 1.27.6(svelte@4.2.5)(vite@5.0.0)
       svelte: 4.2.5
     transitivePeerDependencies:
