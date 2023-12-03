@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.0-rc03"
+agp = "8.2.0"
 kotlin = "1.9.20"
 spotless = "6.22.0"
 ksp = "1.9.20-1.0.14"
