@@ -24,8 +24,8 @@ devDependencies:
     specifier: 2.9.2
     version: 2.9.2(@grpc/grpc-js@1.9.12)
   '@protobuf-ts/runtime':
-    specifier: 2.9.1
-    version: 2.9.1
+    specifier: 2.9.2
+    version: 2.9.2
   '@protobuf-ts/runtime-rpc':
     specifier: 2.9.1
     version: 2.9.1
@@ -724,17 +724,13 @@ packages:
   /@protobuf-ts/runtime-rpc@2.9.1:
     resolution: {integrity: sha512-pzO20J6s07LTWcj8hKAXh/dAacU5HIVir6SANKXXH8G0pn0VIIB4FFECq5Hbv25/8PQoOGZ7iApq/DMHaSjGhg==}
     dependencies:
-      '@protobuf-ts/runtime': 2.9.1
+      '@protobuf-ts/runtime': 2.9.2
     dev: true
 
   /@protobuf-ts/runtime-rpc@2.9.2:
     resolution: {integrity: sha512-5NKxpIuL4DMckJMDOUqCH8KnHNIosqAzOwf9ooO+UjJIGTk268FvYYe5u0V1/bXByJgPU/nHC9+S4Pm6LKTTjg==}
     dependencies:
       '@protobuf-ts/runtime': 2.9.2
-    dev: true
-
-  /@protobuf-ts/runtime@2.9.1:
-    resolution: {integrity: sha512-ZTc8b+pQ6bwxZa3qg9/IO/M/brRkvr0tic9cSGgAsDByfPrtatT2300wTIRLDk8X9WTW1tT+FhyqmcrbMHTeww==}
     dev: true
 
   /@protobuf-ts/runtime@2.9.2:
