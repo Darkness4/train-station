@@ -6,7 +6,7 @@ import { redirect } from '@sveltejs/kit';
 export const load = (async ({ params, locals }) => {
 	const session = (await locals.getSession()) as Session | null;
 	if (!session || !session.token) {
-		throw redirect(302, '/');
+		redirect(302, '/');
 	}
 
 	// TODO: handle error

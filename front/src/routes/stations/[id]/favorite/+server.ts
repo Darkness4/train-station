@@ -5,7 +5,7 @@ import type { RequestHandler } from './$types';
 export const POST = (async ({ request, locals }) => {
 	const session = (await locals.getSession()) as Session | null;
 	if (!session || !session.token) {
-		throw redirect(302, '/');
+		redirect(302, '/');
 	}
 
 	const data = await request.json();

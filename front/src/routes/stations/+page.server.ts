@@ -8,7 +8,7 @@ export const load = (async ({ url, locals }) => {
 	const searchQuery = url.searchParams.get('s') ?? '';
 	const session = (await locals.getSession()) as Session | null;
 	if (!session || !session.token) {
-		throw redirect(302, '/');
+		redirect(302, '/');
 	}
 
 	// TODO: handle error
