@@ -66,8 +66,8 @@ devDependencies:
     specifier: 6.2.0
     version: 6.2.0
   material-symbols:
-    specifier: 0.14.3
-    version: 0.14.3
+    specifier: 0.14.4
+    version: 0.14.4
   next-auth:
     specifier: 4.24.5
     version: 4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
@@ -2880,8 +2880,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /material-symbols@0.14.3:
-    resolution: {integrity: sha512-oys7SbIaPz1sfUCMVYlEE5HJGzh0GMoUK0jCGH7hAqO9iW/b9dnSAeYgOQp2s1ifQP5Y+Q4+Fcujay/ASzvy2w==}
+  /material-symbols@0.14.4:
+    resolution: {integrity: sha512-a4gUxar/H+enN+hc5b/XE3Sroqyb9eT9hqkoTl6HXoW2mIajQ9mLW1T1tgjfq6KX6zqU1aLOV27mddUSHrgYAA==}
     dev: true
 
   /mdn-data@2.0.30:
