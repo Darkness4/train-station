@@ -30,8 +30,8 @@ devDependencies:
     specifier: 2.9.3
     version: 2.9.3
   '@sveltejs/adapter-node':
-    specifier: 2.1.1
-    version: 2.1.1(@sveltejs/kit@2.3.0)
+    specifier: 3.0.0
+    version: 3.0.0(@sveltejs/kit@2.3.0)
   '@sveltejs/kit':
     specifier: 2.3.0
     version: 2.3.0(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.8)(vite@5.0.11)
@@ -1141,8 +1141,8 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@sveltejs/adapter-node@2.1.1(@sveltejs/kit@2.3.0):
-    resolution: {integrity: sha512-ypAqdvjoyfOEgucDbY3P6DM6nLEQ7OwiWMfyITKF8svffe9FIx1ow6uELJd1BzbCrouYndkQfc5m6ihj0xxqTg==}
+  /@sveltejs/adapter-node@3.0.0(@sveltejs/kit@2.3.0):
+    resolution: {integrity: sha512-+nmnMhgWB0c1C2kLcWXp/r1zmY22ayhO8zD2oyxy4VUHYPOKt1uEmFVvLCzF7jg5aYlTtstjmrzNdP2l0MiLoQ==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
