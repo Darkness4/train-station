@@ -12,8 +12,8 @@ devDependencies:
     specifier: 0.5.3
     version: 0.5.3(@sveltejs/kit@2.3.2)(svelte@4.2.8)
   '@grpc/grpc-js':
-    specifier: 1.9.13
-    version: 1.9.13
+    specifier: 1.9.14
+    version: 1.9.14
   '@picocss/pico':
     specifier: 1.5.11
     version: 1.5.11
@@ -22,7 +22,7 @@ devDependencies:
     version: 1.40.1
   '@protobuf-ts/grpc-transport':
     specifier: 2.9.3
-    version: 2.9.3(@grpc/grpc-js@1.9.13)
+    version: 2.9.3(@grpc/grpc-js@1.9.14)
   '@protobuf-ts/runtime':
     specifier: 2.9.3
     version: 2.9.3
@@ -533,8 +533,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@grpc/grpc-js@1.9.13:
-    resolution: {integrity: sha512-OEZZu9v9AA+7/tghMDE8o5DAMD5THVnwSqDWuh7PPYO5287rTyqy0xEHT6/e4pbqSrhyLPdQFsam4TwFQVVIIw==}
+  /@grpc/grpc-js@1.9.14:
+    resolution: {integrity: sha512-nOpuzZ2G3IuMFN+UPPpKrC6NsLmWsTqSsm66IRfnBt1D4pwTqE27lmbpcPM+l2Ua4gE7PfjRHI6uedAy7hoXUw==}
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.10
@@ -923,12 +923,12 @@ packages:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
 
-  /@protobuf-ts/grpc-transport@2.9.3(@grpc/grpc-js@1.9.13):
+  /@protobuf-ts/grpc-transport@2.9.3(@grpc/grpc-js@1.9.14):
     resolution: {integrity: sha512-2TarJgLrvhHVBpxgJonPeZzEtqlbQJeSTpFZjkNI5Ye+18r8SUIcvZhl4LLS1q4zjIQl/O7lZt/x27PTNglLpg==}
     peerDependencies:
       '@grpc/grpc-js': ^1.6.0
     dependencies:
-      '@grpc/grpc-js': 1.9.13
+      '@grpc/grpc-js': 1.9.14
       '@protobuf-ts/runtime': 2.9.3
       '@protobuf-ts/runtime-rpc': 2.9.3
     dev: true
