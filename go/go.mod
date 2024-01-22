@@ -11,7 +11,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.8.4
 	github.com/urfave/cli/v2 v2.27.1
-	github.com/volatiletech/sqlboiler/v4 v4.15.0
+	github.com/volatiletech/sqlboiler/v4 v4.16.1
 	github.com/volatiletech/strmangle v0.0.6
 	go.uber.org/zap v1.26.0
 	google.golang.org/grpc v1.60.1
