@@ -40,7 +40,7 @@
 		"eslint-config-prettier": "9.1.0",
 		"eslint-plugin-svelte": "2.35.1",
 		"just-clone": "6.2.0",
-		"material-symbols": "0.14.5",
+		"material-symbols": "0.14.6",
 		"next-auth": "4.24.5",
 		"postcss": "8.4.33",
 		"prettier": "3.2.4",
