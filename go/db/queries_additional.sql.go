@@ -15,8 +15,9 @@ func (q *Queries) CreateManyStationsWithTx(
 		return err
 	}
 	defer tx.Rollback()
+	qtx := q.WithTx(tx)
 	for _, s := range stations {
-		if err := q.CreateStation(ctx, CreateStationParams(s)); err != nil {
+		if err := qtx.CreateStation(ctx, CreateStationParams(s)); err != nil {
 			return err
 		}
 	}
@@ -29,10 +30,11 @@ func (q *Queries) ClearWithTx(ctx context.Context, db *sql.DB) error {
 		return err
 	}
 	defer tx.Rollback()
-	if err := q.DeleteAllFavorites(ctx); err != nil {
+	qtx := q.WithTx(tx)
+	if err := qtx.DeleteAllFavorites(ctx); err != nil {
 		return err
 	}
-	if err := q.DeleteAllStations(ctx); err != nil {
+	if err := qtx.DeleteAllStations(ctx); err != nil {
 		return err
 	}
 	return tx.Commit()

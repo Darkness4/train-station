@@ -81,18 +81,7 @@ func (suite *DBTestSuite) TestCreateManyStation() {
 			ctx := context.Background()
 
 			// Act
-
-			err := func() error {
-				tx, err := suite.db.BeginTx(ctx, nil)
-				if err != nil {
-					return err
-				}
-				defer tx.Rollback()
-				if err := suite.q.CreateManyStationsWithTx(ctx, suite.db, tt.input...); err != nil {
-					return err
-				}
-				return tx.Commit()
-			}()
+			err := suite.q.CreateManyStationsWithTx(ctx, suite.db, tt.input...)
 
 			// Assert
 			if tt.isError {
