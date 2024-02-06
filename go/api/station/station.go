@@ -6,7 +6,6 @@ import (
 
 	"github.com/Darkness4/train-station/go/api/mappers"
 	"github.com/Darkness4/train-station/go/db"
-	"github.com/Darkness4/train-station/go/db/models"
 	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/go/trainstation/v1alpha1"
 	"github.com/Darkness4/train-station/go/jwt"
 	"github.com/Darkness4/train-station/go/logger"
@@ -17,19 +16,19 @@ import (
 
 type stationAPIServer struct {
 	trainstationv1alpha1.UnimplementedStationAPIServer
-	db  *db.DB
+	q   *db.Queries
 	jwt *jwt.Service
 }
 
-func New(db *db.DB, jwt *jwt.Service) *stationAPIServer {
-	if db == nil {
-		logger.I.Panic("db is nil")
+func New(q *db.Queries, jwt *jwt.Service) *stationAPIServer {
+	if q == nil {
+		logger.I.Panic("q is nil")
 	}
 	if jwt == nil {
 		logger.I.Panic("jwt is nil")
 	}
 	return &stationAPIServer{
-		db:  db,
+		q:   q,
 		jwt: jwt,
 	}
 }
@@ -44,19 +43,21 @@ func (s *stationAPIServer) GetManyStations(
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
-	total, err := s.db.CountStations(ctx, req.GetQuery())
+	total, err := s.q.CountStations(ctx, req.GetQuery())
 	if err != nil {
 		logger.I.Error("count station failed", zap.Error(err), zap.Any("req", req))
 		return nil, err
 	}
 	pageCount := total/req.GetLimit() + 1
 
-	res, err := s.db.FindManyStationAndFavorite(
+	res, err := s.q.FindManyStationAndFavorite(
 		ctx,
-		userID,
-		req.GetQuery(),
-		int(req.GetLimit()),
-		int(req.GetPage()),
+		db.FindManyStationAndFavoriteParams{
+			UserID: userID,
+			Search: req.GetQuery(),
+			Limit:  req.GetLimit(),
+			Page:   req.GetPage(),
+		},
 	)
 	if err == sql.ErrNoRows {
 		return &trainstationv1alpha1.GetManyStationsResponse{
@@ -93,7 +94,10 @@ func (s *stationAPIServer) GetOneStation(
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
-	res, err := s.db.FindOneStationAndFavorite(ctx, req.GetId(), userID)
+	res, err := s.q.FindOneStationAndFavorite(ctx, db.FindOneStationAndFavoriteParams{
+		UserID: userID,
+		ID:     req.GetId(),
+	})
 	if err == sql.ErrNoRows {
 		return nil, status.Error(codes.NotFound, "station not found")
 	}
@@ -101,8 +105,6 @@ func (s *stationAPIServer) GetOneStation(
 		Station: mappers.StationAndFavoriteFromDB(res),
 	}, nil
 }
-
-type favoriteSetter func(ctx context.Context, m *models.Favorite) error
 
 func (s *stationAPIServer) SetFavoriteOneStation(
 	ctx context.Context,
@@ -114,18 +116,21 @@ func (s *stationAPIServer) SetFavoriteOneStation(
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
-	var fn favoriteSetter
 	if req.GetValue() {
-		fn = s.db.CreateFavorite
-	} else {
-		fn = s.db.DeleteFavorite
-	}
+		if err := s.q.CreateFavorite(ctx, db.CreateFavoriteParams{
+			StationID: req.GetId(),
+			UserID:    userID,
+		}); err != nil {
+			return nil, err
+		}
 
-	if err := fn(ctx, &models.Favorite{
-		StationID: req.Id,
-		UserID:    userID,
-	}); err != nil {
-		return nil, err
+	} else {
+		if err := s.q.DeleteFavorite(ctx, db.DeleteFavoriteParams{
+			StationID: req.GetId(),
+			UserID:    userID,
+		}); err != nil {
+			return nil, err
+		}
 	}
 
 	return &trainstationv1alpha1.SetFavoriteOneStationResponse{}, nil

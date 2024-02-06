@@ -3,7 +3,7 @@ package mappers
 import (
 	"encoding/json"
 
-	"github.com/Darkness4/train-station/go/db/types"
+	"github.com/Darkness4/train-station/go/db"
 	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/go/trainstation/v1alpha1"
 	"github.com/Darkness4/train-station/go/logger"
 	"go.uber.org/zap"
@@ -25,34 +25,36 @@ func stringToGeo(in string) *trainstationv1alpha1.Geometry {
 	return &out
 }
 
-func StationAndFavoritesFromDB(ss []*types.StationAndFavorite) []*trainstationv1alpha1.Station {
+func StationAndFavoritesFromDB(
+	ss []db.FindManyStationAndFavoriteRow,
+) []*trainstationv1alpha1.Station {
 	rr := make([]*trainstationv1alpha1.Station, 0, len(ss))
 	for _, s := range ss {
-		rr = append(rr, StationAndFavoriteFromDB(s))
+		rr = append(rr, StationAndFavoriteFromDB(db.FindOneStationAndFavoriteRow(s)))
 	}
 	return rr
 }
 
-func StationAndFavoriteFromDB(s *types.StationAndFavorite) *trainstationv1alpha1.Station {
+func StationAndFavoriteFromDB(s db.FindOneStationAndFavoriteRow) *trainstationv1alpha1.Station {
 	return &trainstationv1alpha1.Station{
-		Id:          s.ID,
-		Commune:     s.Commune,
-		YWgs84:      s.YWGS84,
-		XWgs84:      s.XWGS84,
-		Libelle:     s.Libelle,
-		Idgaia:      s.Idgaia,
-		Voyageurs:   s.Voyageurs,
-		GeoPoint_2D: stringToCoordinates(s.GeoPoint2D),
-		CodeLigne:   s.CodeLigne,
-		XL93:        s.XL93,
-		CGeo:        stringToCoordinates(s.CGeo),
-		RgTroncon:   s.RGTroncon,
-		GeoShape:    stringToGeo(s.GeoShape),
-		Pk:          s.PK,
-		Idreseau:    s.Idreseau,
-		Departemen:  s.Departemen,
-		YL93:        s.YL93,
-		Fret:        s.Fret,
+		Id:          s.Station.ID,
+		Commune:     s.Station.Commune,
+		YWgs84:      s.Station.YWgs84,
+		XWgs84:      s.Station.XWgs84,
+		Libelle:     s.Station.Libelle,
+		Idgaia:      s.Station.Idgaia,
+		Voyageurs:   s.Station.Voyageurs,
+		GeoPoint_2D: stringToCoordinates(s.Station.GeoPoint2d),
+		CodeLigne:   s.Station.CodeLigne,
+		XL93:        s.Station.XL93,
+		CGeo:        stringToCoordinates(s.Station.CGeo),
+		RgTroncon:   s.Station.RgTroncon,
+		GeoShape:    stringToGeo(s.Station.GeoShape),
+		Pk:          s.Station.Pk,
+		Idreseau:    s.Station.Idreseau,
+		Departemen:  s.Station.Departemen,
+		YL93:        s.Station.YL93,
+		Fret:        s.Station.Fret,
 		IsFavorite:  s.Favorite,
 	}
 }

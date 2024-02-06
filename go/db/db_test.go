@@ -7,33 +7,30 @@ import (
 	"testing"
 
 	"github.com/Darkness4/train-station/go/db"
-	"github.com/Darkness4/train-station/go/db/models"
-	"github.com/Darkness4/train-station/go/db/types"
 	"github.com/Darkness4/train-station/go/logger"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/suite"
-	"github.com/volatiletech/sqlboiler/v4/boil"
 	"go.uber.org/zap"
 	_ "modernc.org/sqlite"
 )
 
-func fakeStation(id string) *models.Station {
-	return &models.Station{
+func fakeStation(id string) db.Station {
+	return db.Station{
 		ID:         id,
 		Commune:    "commune",
-		YWGS84:     1.0,
-		XWGS84:     1.0,
+		YWgs84:     1.0,
+		XWgs84:     1.0,
 		Libelle:    "libelle",
 		Idgaia:     "idgaia",
 		Voyageurs:  "voyageurs",
-		GeoPoint2D: "geopoint2d",
+		GeoPoint2d: "geopoint2d",
 		CodeLigne:  "codeligne",
 		XL93:       1.0,
 		CGeo:       "cgeo",
-		RGTroncon:  1,
+		RgTroncon:  1,
 		GeoShape:   "geoshape",
-		PK:         "pk",
+		Pk:         "pk",
 		Idreseau:   1,
 		Departemen: "departement",
 		YL93:       1.0,
@@ -43,7 +40,8 @@ func fakeStation(id string) *models.Station {
 
 type DBTestSuite struct {
 	suite.Suite
-	db *db.DB
+	db *sql.DB
+	q  *db.Queries
 }
 
 func (suite *DBTestSuite) BeforeTest(suiteName, testName string) {
@@ -51,8 +49,9 @@ func (suite *DBTestSuite) BeforeTest(suiteName, testName string) {
 	if err != nil {
 		logger.I.Panic("failed to open db", zap.Error(err))
 	}
-	suite.db = &db.DB{d}
-	suite.db.InitialMigration()
+	suite.db = d
+	db.InitialMigration(d)
+	suite.q = db.New(suite.db)
 }
 
 func (suite *DBTestSuite) AfterTest(suiteName, testName string) {
@@ -61,14 +60,14 @@ func (suite *DBTestSuite) AfterTest(suiteName, testName string) {
 
 func (suite *DBTestSuite) TestCreateManyStation() {
 	tests := []struct {
-		input         []*models.Station
+		input         []db.Station
 		isError       bool
 		errorContains []string
 		expectedCount int64
 		title         string
 	}{
 		{
-			input: []*models.Station{
+			input: []db.Station{
 				fakeStation("id"),
 				fakeStation("id2"),
 			},
@@ -82,7 +81,18 @@ func (suite *DBTestSuite) TestCreateManyStation() {
 			ctx := context.Background()
 
 			// Act
-			err := suite.db.CreateManyStation(ctx, tt.input)
+
+			err := func() error {
+				tx, err := suite.db.BeginTx(ctx, nil)
+				if err != nil {
+					return err
+				}
+				defer tx.Rollback()
+				if err := suite.q.CreateManyStationsWithTx(ctx, suite.db, tt.input...); err != nil {
+					return err
+				}
+				return tx.Commit()
+			}()
 
 			// Assert
 			if tt.isError {
@@ -92,7 +102,7 @@ func (suite *DBTestSuite) TestCreateManyStation() {
 				}
 			} else {
 				suite.Require().NoError(err)
-				count, err := models.Stations().Count(ctx, suite.db)
+				count, err := suite.q.CountStations(ctx, "")
 				suite.Require().NoError(err)
 				suite.Require().EqualValues(tt.expectedCount, count)
 			}
@@ -102,23 +112,24 @@ func (suite *DBTestSuite) TestCreateManyStation() {
 
 func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 	// Arrange
-	err := fakeStation("id").Insert(context.Background(), suite.db, boil.Infer())
+	ctx := context.Background()
+	err := suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id")))
 	suite.Require().NoError(err)
-	err = fakeStation("id2").Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id2")))
 	suite.Require().NoError(err)
-	err = fakeStation("id3").Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id3")))
 	suite.Require().NoError(err)
-	m := models.Favorite{
+	m := db.Favorite{
 		StationID: "id2",
 		UserID:    "userid",
 	}
-	err = m.Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateFavorite(ctx, db.CreateFavoriteParams(m))
 	suite.Require().NoError(err)
-	m = models.Favorite{
+	m = db.Favorite{
 		StationID: "id3",
 		UserID:    "otheruser",
 	}
-	err = m.Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateFavorite(ctx, db.CreateFavoriteParams(m))
 	suite.Require().NoError(err)
 
 	tests := []struct {
@@ -126,7 +137,7 @@ func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 			id     string
 			userID string
 		}
-		expected      *types.StationAndFavorite
+		expected      db.FindOneStationAndFavoriteRow
 		isError       bool
 		errorContains []string
 		title         string
@@ -139,8 +150,8 @@ func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 				id:     "id",
 				userID: "userid",
 			},
-			expected: &types.StationAndFavorite{
-				Station: *fakeStation("id"),
+			expected: db.FindOneStationAndFavoriteRow{
+				Station: fakeStation("id"),
 			},
 			title: "Positive test: find one with no favorite",
 		},
@@ -152,8 +163,8 @@ func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 				id:     "id2",
 				userID: "userid",
 			},
-			expected: &types.StationAndFavorite{
-				Station:  *fakeStation("id2"),
+			expected: db.FindOneStationAndFavoriteRow{
+				Station:  fakeStation("id2"),
 				Favorite: true,
 			},
 			title: "Positive test: find one with favorite by us",
@@ -166,8 +177,8 @@ func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 				id:     "id3",
 				userID: "userid",
 			},
-			expected: &types.StationAndFavorite{
-				Station: *fakeStation("id3"),
+			expected: db.FindOneStationAndFavoriteRow{
+				Station: fakeStation("id3"),
 			},
 			title: "Positive test: find one with favorite by someone else",
 		},
@@ -189,7 +200,10 @@ func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 		suite.Run(tt.title, func() {
 			// Act
 			ctx := context.Background()
-			got, err := suite.db.FindOneStationAndFavorite(ctx, tt.input.id, tt.input.userID)
+			got, err := suite.q.FindOneStationAndFavorite(ctx, db.FindOneStationAndFavoriteParams{
+				UserID: tt.input.userID,
+				ID:     tt.input.id,
+			})
 
 			// Assert
 			if tt.isError {
@@ -207,33 +221,34 @@ func (suite *DBTestSuite) TestFindOneStationAndFavorite() {
 
 func (suite *DBTestSuite) TestFindManyFindManyStationAndFavorite() {
 	// Arrange
-	err := fakeStation("id").Insert(context.Background(), suite.db, boil.Infer())
+	ctx := context.Background()
+	err := suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id")))
 	suite.Require().NoError(err)
-	err = fakeStation("id2").Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id2")))
 	suite.Require().NoError(err)
-	err = fakeStation("id3").Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id3")))
 	suite.Require().NoError(err)
-	m := models.Favorite{
+	m := db.Favorite{
 		StationID: "id2",
 		UserID:    "userid",
 	}
-	err = m.Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateFavorite(ctx, db.CreateFavoriteParams(m))
 	suite.Require().NoError(err)
-	m = models.Favorite{
+	m = db.Favorite{
 		StationID: "id3",
 		UserID:    "otheruser",
 	}
-	err = m.Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateFavorite(ctx, db.CreateFavoriteParams(m))
 	suite.Require().NoError(err)
 
 	tests := []struct {
 		input struct {
 			userID string
 			search string
-			limit  int
-			page   int
+			limit  int64
+			page   int64
 		}
-		expected      []*types.StationAndFavorite
+		expected      []db.FindManyStationAndFavoriteRow
 		isError       bool
 		errorContains []string
 		title         string
@@ -242,24 +257,24 @@ func (suite *DBTestSuite) TestFindManyFindManyStationAndFavorite() {
 			input: struct {
 				userID string
 				search string
-				limit  int
-				page   int
+				limit  int64
+				page   int64
 			}{
 				userID: "userid",
 				search: "",
 				limit:  100,
 				page:   1,
 			},
-			expected: []*types.StationAndFavorite{
+			expected: []db.FindManyStationAndFavoriteRow{
 				{
-					Station: *fakeStation("id"),
+					Station: fakeStation("id"),
 				},
 				{
-					Station:  *fakeStation("id2"),
+					Station:  fakeStation("id2"),
 					Favorite: true,
 				},
 				{
-					Station: *fakeStation("id3"),
+					Station: fakeStation("id3"),
 				},
 			},
 			title: "Positive test: find all station",
@@ -270,12 +285,14 @@ func (suite *DBTestSuite) TestFindManyFindManyStationAndFavorite() {
 		suite.Run(tt.title, func() {
 			// Act
 			ctx := context.Background()
-			got, err := suite.db.FindManyStationAndFavorite(
+			got, err := suite.q.FindManyStationAndFavorite(
 				ctx,
-				tt.input.userID,
-				tt.input.search,
-				tt.input.limit,
-				tt.input.page,
+				db.FindManyStationAndFavoriteParams{
+					UserID: tt.input.userID,
+					Search: tt.input.search,
+					Page:   tt.input.page,
+					Limit:  tt.input.limit,
+				},
 			)
 
 			// Assert
@@ -294,22 +311,23 @@ func (suite *DBTestSuite) TestFindManyFindManyStationAndFavorite() {
 
 func (suite *DBTestSuite) TestCreateFavorite() {
 	// Arrange
-	err := fakeStation("id").Insert(context.Background(), suite.db, boil.Infer())
+	ctx := context.Background()
+	err := suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id")))
 	suite.Require().NoError(err)
-	err = fakeStation("id2").Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id2")))
 	suite.Require().NoError(err)
-	err = fakeStation("id3").Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id3")))
 	suite.Require().NoError(err)
 
 	tests := []struct {
-		input         models.Favorite
+		input         db.Favorite
 		expected      int64
 		isError       bool
 		errorContains []string
 		title         string
 	}{
 		{
-			input: models.Favorite{
+			input: db.Favorite{
 				StationID: "id",
 				UserID:    "userid",
 			},
@@ -317,7 +335,7 @@ func (suite *DBTestSuite) TestCreateFavorite() {
 			title:    "Positive test: find one with no favorite",
 		},
 		{
-			input: models.Favorite{
+			input: db.Favorite{
 				StationID: "idnonexists",
 				UserID:    "userid",
 			},
@@ -326,7 +344,7 @@ func (suite *DBTestSuite) TestCreateFavorite() {
 			title:         "Negative test: cannot create favorite on non existant station",
 		},
 		{
-			input: models.Favorite{
+			input: db.Favorite{
 				StationID: "idnonexists",
 				UserID:    "",
 			},
@@ -340,7 +358,7 @@ func (suite *DBTestSuite) TestCreateFavorite() {
 		suite.Run(tt.title, func() {
 			// Act
 			ctx := context.Background()
-			err := suite.db.CreateFavorite(ctx, &tt.input)
+			err := suite.q.CreateFavorite(ctx, db.CreateFavoriteParams(tt.input))
 
 			// Assert
 			if tt.isError {
@@ -350,7 +368,7 @@ func (suite *DBTestSuite) TestCreateFavorite() {
 				}
 			} else {
 				suite.Require().NoError(err)
-				count, err := models.Favorites().Count(ctx, suite.db)
+				count, err := suite.q.CountFavorites(ctx)
 				suite.Require().NoError(err)
 				suite.Require().EqualValues(tt.expected, count)
 			}
@@ -360,34 +378,35 @@ func (suite *DBTestSuite) TestCreateFavorite() {
 
 func (suite *DBTestSuite) TestDeleteFavorite() {
 	// Arrange
-	err := fakeStation("id").Insert(context.Background(), suite.db, boil.Infer())
+	ctx := context.Background()
+	err := suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id")))
 	suite.Require().NoError(err)
-	err = fakeStation("id2").Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id2")))
 	suite.Require().NoError(err)
-	err = fakeStation("id3").Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateStation(ctx, db.CreateStationParams(fakeStation("id3")))
 	suite.Require().NoError(err)
-	m := models.Favorite{
+	m := db.Favorite{
 		StationID: "id2",
 		UserID:    "userid",
 	}
-	err = m.Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateFavorite(ctx, db.CreateFavoriteParams(m))
 	suite.Require().NoError(err)
-	m = models.Favorite{
+	m = db.Favorite{
 		StationID: "id3",
 		UserID:    "otheruser",
 	}
-	err = m.Insert(context.Background(), suite.db, boil.Infer())
+	err = suite.q.CreateFavorite(ctx, db.CreateFavoriteParams(m))
 	suite.Require().NoError(err)
 
 	tests := []struct {
-		input         models.Favorite
+		input         db.Favorite
 		expected      int64
 		isError       bool
 		errorContains []string
 		title         string
 	}{
 		{
-			input: models.Favorite{
+			input: db.Favorite{
 				StationID: "idnonexists",
 				UserID:    "userid",
 			},
@@ -395,7 +414,7 @@ func (suite *DBTestSuite) TestDeleteFavorite() {
 			title:    "Positive test: do nothing on unknown delete",
 		},
 		{
-			input: models.Favorite{
+			input: db.Favorite{
 				StationID: "id2",
 				UserID:    "userid",
 			},
@@ -408,7 +427,7 @@ func (suite *DBTestSuite) TestDeleteFavorite() {
 		suite.Run(tt.title, func() {
 			// Act
 			ctx := context.Background()
-			err := suite.db.DeleteFavorite(ctx, &tt.input)
+			err := suite.q.DeleteFavorite(ctx, db.DeleteFavoriteParams(tt.input))
 
 			// Assert
 			if tt.isError {
@@ -418,7 +437,7 @@ func (suite *DBTestSuite) TestDeleteFavorite() {
 				}
 			} else {
 				suite.Require().NoError(err)
-				count, err := models.Favorites().Count(ctx, suite.db)
+				count, err := suite.q.CountFavorites(ctx)
 				suite.Require().NoError(err)
 				suite.Require().EqualValues(tt.expected, count)
 			}

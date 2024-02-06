@@ -42,16 +42,19 @@ bin/train-station-api-linux-s390x: $(GO_SRCS)
 	CGO_ENABLED=0 GOOS=linux GOARCH=s390x go build -ldflags '-X main.version=${VERSION} -s -w' -o "$@" ./main.go
 
 
+golint := $(shell which golangci-lint)
+ifeq ($(golint),)
+golint := $(shell go env GOPATH)/bin/golangci-lint
+endif
+
+migrate := $(shell which migrate)
 ifeq ($(migrate),)
 migrate := $(shell go env GOPATH)/bin/migrate
 endif
 
-ifeq ($(sqlboiler),)
-sqlboiler := $(shell go env GOPATH)/bin/sqlboiler
-endif
-
-ifeq ($(golint),)
-golint := $(shell go env GOPATH)/bin/golangci-lint
+sqlc := $(shell which sqlc)
+ifeq ($(sqlc),)
+sqlc := $(shell go env GOPATH)/bin/sqlc
 endif
 
 bin/checksums.txt: $(addprefix bin/,$(bins))
@@ -99,16 +102,15 @@ lint: $(golint)
 $(migrate):
 	go install -tags 'sqlite3' github.com/golang-migrate/migrate/v4/cmd/migrate
 
-$(sqlboiler):
-	go install github.com/volatiletech/sqlboiler/v4
-	go install github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-sqlite3
+$(sqlc):
+	go install github.com/sqlc-dev/sqlc/cmd/sqlc
 
 $(golint):
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 .PHONY: sql
-sql:
-	sqlboiler sqlite3
+sql: $(sqlc)
+	$(sqlc) generate
 
 .PHONY: grpc
 grpc: $(PROTOS)

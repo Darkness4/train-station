@@ -1,0 +1,11 @@
+version: '2'
+sql:
+  - engine: 'sqlite'
+    queries: 'db/queries.sql'
+    schema: 'db/migrations'
+    database:
+      uri: 'sqlite3://db.sqlite3'
+    gen:
+      go:
+        package: 'db'
+        out: 'db'
