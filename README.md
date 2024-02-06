@@ -133,7 +133,7 @@ erDiagram
 
 ### Technologies used
 
-- SQLBoiler for database-first approach
+- sqlc for database-first approach and type-safe SQL
 - go-migrate for database migrations
 - gRPC as HTTP server and main entrypoint
 - urfave/cli for the CLI tooling
@@ -196,7 +196,7 @@ flowchart TD
         authAPI
         stationAPI
     end
-    
+
     subgraph domain[Domain Layer]
 		StationRepository
     end
@@ -224,13 +224,13 @@ flowchart TD
 The **Data** layer:
 
 - The Data layer runs under Kotlin Coroutines and Kotlin Flow.
-- _Room_ and the *DataStores* is the application's cache
+- _Room_ and the _DataStores_ is the application's cache
   - The cache temporarily stores the `Stations`
   - The cache is observable using Kotlin Flow
   - _Room_ is able to provide a [`PagingSource`](https://developer.android.com/reference/kotlin/androidx/paging/PagingSource). The `PagingSource` is able to load pages of data stored in a [`PagingData`](https://developer.android.com/reference/kotlin/androidx/paging/PagingData).
   - _Room_ executes requests in a Kotlin coroutine in the [IO thread](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
 - _stationAPI_ is a gRPC data source which permits to retrieves `Stations`. It needs a JWT token to fetch datas.
-- *OAuth provider* gives the OAuth Access Token which is use to authenticate and identify users. The accessToken is cached inside the *oauthDataStore*. Upon receiving the OAuth Access Token, the *authAPI* tries to fetch a JWT token.
+- _OAuth provider_ gives the OAuth Access Token which is use to authenticate and identify users. The accessToken is cached inside the _oauthDataStore_. Upon receiving the OAuth Access Token, the _authAPI_ tries to fetch a JWT token.
 - The `StationRepositoryImpl` implements `StationRepository` and executes CRUD methods.
   - For asynchronous actions, the `Station` of the response is cached and returned.
   - For a watch action (`watch`/`watchOne`), we observe the cache and may fetch the initial values from a data source.
@@ -247,7 +247,7 @@ In the **Presentation** layer :
 - The `MainActivity` renders a `Scaffold` with its `TopAppBar`. Inside that scaffold is a `NavigationHost` composable.
 - The `NavigationHost` renders a page based on a route:
   - The default route is `/login`, and shows a login button. The button triggers a redirection to the OAuth provider, which then send the resulting OAuth Access Token to the `MainActivity` and triggers the `authAPI` to fetch a JWT. Upon receiving a JWT, the user is authenticated and is redirected to the `/stations` route.
-  - The `/stations` route shows a `LazyColumn` which listen to a `Flow<PagingData<Station>>`. This allows lazy loading of the data, and therefore, the lazy loading of "station cards". The page also shows a "About" page. When the user push on a "station card", the user is redirected to the `/details` route. 
+  - The `/stations` route shows a `LazyColumn` which listen to a `Flow<PagingData<Station>>`. This allows lazy loading of the data, and therefore, the lazy loading of "station cards". The page also shows a "About" page. When the user push on a "station card", the user is redirected to the `/details` route.
   - The `/details` route shows the position of the train station on Google Maps and details about that station on a Bottom Sheet.
 
 ### Technologies used
