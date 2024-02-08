@@ -20,8 +20,8 @@
 		"sharp"
 	],
 	"devDependencies": {
-		"@auth/core": "0.26.2",
-		"@auth/sveltekit": "0.12.2",
+		"@auth/core": "0.26.3",
+		"@auth/sveltekit": "0.12.3",
 		"@grpc/grpc-js": "1.10.0",
 		"@picocss/pico": "1.5.11",
 		"@playwright/test": "1.41.2",
@@ -42,7 +42,7 @@
 		"just-clone": "6.2.0",
 		"material-symbols": "0.14.7",
 		"next-auth": "4.24.5",
-		"postcss": "8.4.34",
+		"postcss": "8.4.35",
 		"prettier": "3.2.5",
 		"prettier-plugin-svelte": "3.1.2",
 		"sass": "1.70.0",
