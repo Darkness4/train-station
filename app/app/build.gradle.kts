@@ -126,7 +126,7 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
     }
-    composeOptions { kotlinCompilerExtensionVersion = "1.5.5" }
+    composeOptions { kotlinCompilerExtensionVersion = "1.5.9" }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
     testOptions { unitTests.all { it.useJUnitPlatform() } }
 }
