@@ -34,7 +34,7 @@ espresso-core = "3.5.1"
 browser = "1.7.0"
 appcompat = "1.6.1"
 material = "1.11.0"
-google-services = "4.4.0"
+google-services = "4.4.1"
 
 [libraries]
 # Coroutines
