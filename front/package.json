@@ -23,7 +23,7 @@
 		"@auth/core": "0.26.3",
 		"@auth/sveltekit": "0.12.3",
 		"@grpc/grpc-js": "1.10.0",
-		"@picocss/pico": "1.5.12",
+		"@picocss/pico": "2.0.0",
 		"@playwright/test": "1.41.2",
 		"@protobuf-ts/grpc-transport": "2.9.3",
 		"@protobuf-ts/runtime": "2.9.3",
