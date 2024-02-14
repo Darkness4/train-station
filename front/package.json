@@ -20,7 +20,7 @@
 		"sharp"
 	],
 	"devDependencies": {
-		"@auth/core": "0.26.3",
+		"@auth/core": "0.27.0",
 		"@auth/sveltekit": "0.12.3",
 		"@grpc/grpc-js": "1.10.0",
 		"@picocss/pico": "2.0.0",
