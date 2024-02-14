@@ -21,7 +21,7 @@
 	],
 	"devDependencies": {
 		"@auth/core": "0.27.0",
-		"@auth/sveltekit": "0.12.3",
+		"@auth/sveltekit": "0.13.0",
 		"@grpc/grpc-js": "1.10.0",
 		"@picocss/pico": "2.0.0",
 		"@playwright/test": "1.41.2",
