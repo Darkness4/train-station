@@ -15,7 +15,7 @@ require (
 	google.golang.org/grpc v1.61.1
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.3.0
 	google.golang.org/protobuf v1.32.0
-	modernc.org/sqlite v1.28.0
+	modernc.org/sqlite v1.29.1
 )
 
 require (
@@ -107,6 +107,7 @@ require (
 	github.com/hashicorp/go-hclog v1.2.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.2 // indirect
+	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.14.1 // indirect
@@ -185,7 +186,7 @@ require (
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.19.0 // indirect
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
+	golang.org/x/exp v0.0.0-20231108232855-2478ac86f678 // indirect
 	golang.org/x/mod v0.15.0 // indirect
 	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/oauth2 v0.15.0 // indirect
@@ -211,6 +212,7 @@ require (
 	modernc.org/db v1.0.9 // indirect
 	modernc.org/file v1.0.7 // indirect
 	modernc.org/fileutil v1.2.0 // indirect
+	modernc.org/gc/v3 v3.0.0-20240107210532-573471604cb6 // indirect
 	modernc.org/golex v1.1.0 // indirect
 	modernc.org/internal v1.0.7 // indirect
 	modernc.org/libc v1.41.0 // indirect
