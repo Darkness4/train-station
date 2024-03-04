@@ -15,8 +15,8 @@ devDependencies:
     specifier: 1.10.1
     version: 1.10.1
   '@picocss/pico':
-    specifier: 2.0.3
-    version: 2.0.3
+    specifier: 2.0.6
+    version: 2.0.6
   '@playwright/test':
     specifier: 1.42.0
     version: 1.42.0
@@ -920,8 +920,8 @@ packages:
     resolution: {integrity: sha512-dhPeilub1NuIG0X5Kvhh9lH4iW3ZsHlnzwgwbOlgwQ2wG1IqFzsgHqmKPk3WzsdWAeaxKJxgM0+W433RmN45GA==}
     dev: true
 
-  /@picocss/pico@2.0.3:
-    resolution: {integrity: sha512-uIWvDcZnbA+oo4mpz8LeA05huCWbDnUz8Ad2NZXTFn6SrEXBtIdKDu+/bOD4oI8hJHp6dUEEvDLim2+qqSgruQ==}
+  /@picocss/pico@2.0.6:
+    resolution: {integrity: sha512-/d8qsykowelD6g8k8JYgmCagOIulCPHMEc2NC4u7OjmpQLmtSetLhEbt0j1n3fPNJVcrT84dRp0RfJBn3wJROA==}
     engines: {node: '>=18.19.0'}
     dev: true
 
