@@ -15,7 +15,7 @@ require (
 	google.golang.org/grpc v1.62.1
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.3.0
 	google.golang.org/protobuf v1.32.0
-	modernc.org/sqlite v1.29.2
+	modernc.org/sqlite v1.29.3
 )
 
 require (
@@ -132,7 +132,7 @@ require (
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/mattn/go-sqlite3 v1.14.18 // indirect
+	github.com/mattn/go-sqlite3 v1.14.22 // indirect
 	github.com/microsoft/go-mssqldb v1.0.0 // indirect
 	github.com/minio/asm2plan9s v0.0.0-20200509001527-cdd76441f9d8 // indirect
 	github.com/minio/c2goasm v0.0.0-20190812172519-36a3d3bbc4f3 // indirect
@@ -211,7 +211,7 @@ require (
 	modernc.org/ccgo/v3 v3.16.15 // indirect
 	modernc.org/db v1.0.9 // indirect
 	modernc.org/file v1.0.7 // indirect
-	modernc.org/fileutil v1.2.0 // indirect
+	modernc.org/fileutil v1.3.0 // indirect
 	modernc.org/gc/v3 v3.0.0-20240107210532-573471604cb6 // indirect
 	modernc.org/golex v1.1.0 // indirect
 	modernc.org/internal v1.0.7 // indirect
