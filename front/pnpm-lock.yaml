@@ -12,8 +12,8 @@ devDependencies:
     specifier: 0.14.0
     version: 0.14.0(@sveltejs/kit@2.5.3)(svelte@4.2.12)
   '@grpc/grpc-js':
-    specifier: 1.10.1
-    version: 1.10.1
+    specifier: 1.10.2
+    version: 1.10.2
   '@picocss/pico':
     specifier: 2.0.6
     version: 2.0.6
@@ -22,7 +22,7 @@ devDependencies:
     version: 1.42.1
   '@protobuf-ts/grpc-transport':
     specifier: 2.9.3
-    version: 2.9.3(@grpc/grpc-js@1.10.1)
+    version: 2.9.3(@grpc/grpc-js@1.10.2)
   '@protobuf-ts/runtime':
     specifier: 2.9.3
     version: 2.9.3
@@ -534,12 +534,12 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@grpc/grpc-js@1.10.1:
-    resolution: {integrity: sha512-55ONqFytZExfOIjF1RjXPcVmT/jJqFzbbDqxK9jmRV4nxiYWtL9hENSW1Jfx0SdZfrvoqd44YJ/GJTqfRrawSQ==}
-    engines: {node: ^8.13.0 || >=10.10.0}
+  /@grpc/grpc-js@1.10.2:
+    resolution: {integrity: sha512-lSbgu8iayAod8O0YcoXK3+bMFGThY2svtN35Zlm9VepsB3jfyIcoupKknEht7Kh9Q8ITjsp0J4KpYo9l4+FhNg==}
+    engines: {node: '>=12.10.0'}
     dependencies:
       '@grpc/proto-loader': 0.7.10
-      '@types/node': 20.11.25
+      '@js-sdsl/ordered-map': 4.4.2
     dev: true
 
   /@grpc/proto-loader@0.7.10:
@@ -810,6 +810,10 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
+  /@js-sdsl/ordered-map@4.4.2:
+    resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
+    dev: true
+
   /@next/env@14.1.0:
     resolution: {integrity: sha512-Py8zIo+02ht82brwwhTg36iogzFqGLPXlRGKQw5s+qP/kMNc4MAyDeEwBKDijk6zTIbegEgu8Qy7C1LboslQAw==}
     dev: true
@@ -944,12 +948,12 @@ packages:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
 
-  /@protobuf-ts/grpc-transport@2.9.3(@grpc/grpc-js@1.10.1):
+  /@protobuf-ts/grpc-transport@2.9.3(@grpc/grpc-js@1.10.2):
     resolution: {integrity: sha512-2TarJgLrvhHVBpxgJonPeZzEtqlbQJeSTpFZjkNI5Ye+18r8SUIcvZhl4LLS1q4zjIQl/O7lZt/x27PTNglLpg==}
     peerDependencies:
       '@grpc/grpc-js': ^1.6.0
     dependencies:
-      '@grpc/grpc-js': 1.10.1
+      '@grpc/grpc-js': 1.10.2
       '@protobuf-ts/runtime': 2.9.3
       '@protobuf-ts/runtime-rpc': 2.9.3
     dev: true
