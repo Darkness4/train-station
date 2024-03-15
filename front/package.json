@@ -27,7 +27,7 @@
 		"@playwright/test": "1.42.1",
 		"@protobuf-ts/grpc-transport": "2.9.4",
 		"@protobuf-ts/runtime": "2.9.4",
-		"@protobuf-ts/runtime-rpc": "2.9.3",
+		"@protobuf-ts/runtime-rpc": "2.9.4",
 		"@sveltejs/adapter-node": "4.0.1",
 		"@sveltejs/kit": "2.5.3",
 		"@sveltejs/vite-plugin-svelte": "3.0.2",
