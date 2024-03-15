@@ -29,7 +29,7 @@
 		"@protobuf-ts/runtime": "2.9.4",
 		"@protobuf-ts/runtime-rpc": "2.9.3",
 		"@sveltejs/adapter-node": "4.0.1",
-		"@sveltejs/kit": "2.5.3",
+		"@sveltejs/kit": "2.5.4",
 		"@sveltejs/vite-plugin-svelte": "3.0.2",
 		"@types/node": "20.11.26",
 		"@typescript-eslint/eslint-plugin": "7.1.1",
