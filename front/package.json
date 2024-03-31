@@ -28,7 +28,7 @@
 		"@protobuf-ts/grpc-transport": "2.9.4",
 		"@protobuf-ts/runtime": "2.9.4",
 		"@protobuf-ts/runtime-rpc": "2.9.4",
-		"@sveltejs/adapter-node": "4.0.1",
+		"@sveltejs/adapter-node": "5.0.1",
 		"@sveltejs/kit": "2.5.5",
 		"@sveltejs/vite-plugin-svelte": "3.0.2",
 		"@types/node": "20.12.2",
