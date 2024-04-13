@@ -24,7 +24,7 @@
 		"@auth/sveltekit": "0.15.0",
 		"@grpc/grpc-js": "1.10.6",
 		"@picocss/pico": "2.0.6",
-		"@playwright/test": "1.43.0",
+		"@playwright/test": "1.43.1",
 		"@protobuf-ts/grpc-transport": "2.9.4",
 		"@protobuf-ts/runtime": "2.9.4",
 		"@protobuf-ts/runtime-rpc": "2.9.4",
