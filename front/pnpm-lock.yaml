@@ -12,8 +12,8 @@ importers:
         specifier: 0.30.0
         version: 0.30.0
       '@auth/sveltekit':
-        specifier: 1.0.0
-        version: 1.0.0(@sveltejs/kit@2.5.7(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)
+        specifier: 1.0.1
+        version: 1.0.1(@sveltejs/kit@2.5.7(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)
       '@grpc/grpc-js':
         specifier: 1.10.6
         version: 1.10.6
@@ -139,8 +139,8 @@ packages:
       nodemailer:
         optional: true
 
-  '@auth/sveltekit@1.0.0':
-    resolution: {integrity: sha512-q14RQMEBSnyrkygC8HWQmqhGbHftlxXz1YwRIneKTMOB573wuRoW35q27Qjp7JZn1CiHDc+sgxyAOAkQvPkyvg==}
+  '@auth/sveltekit@1.0.1':
+    resolution: {integrity: sha512-PNV/r20o1fRNs72CjwMgiw4Ti12BYm/GVpuMbTzNxHE+eZLWuw4MZY05LtMvy9VmN8LWlEKxTmAQKj7nUmYJNA==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0 || ^2.0.0
       svelte: ^3.54.0 || ^4.0.0 || ^5
@@ -2557,7 +2557,7 @@ snapshots:
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
 
-  '@auth/sveltekit@1.0.0(@sveltejs/kit@2.5.7(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)':
+  '@auth/sveltekit@1.0.1(@sveltejs/kit@2.5.7(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)':
     dependencies:
       '@auth/core': 0.30.0
       '@sveltejs/kit': 2.5.7(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0)))(svelte@4.2.14)(vite@5.2.10(@types/node@20.12.7)(sass@1.75.0))
