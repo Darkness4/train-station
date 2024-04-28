@@ -1,4 +1,4 @@
-FROM registry-1.docker.io/library/node:21-alpine as base
+FROM registry-1.docker.io/library/node:22-alpine as base
 
 RUN npm install -g pnpm && \
   rm -rf /usr/local/lib/node_modules/npm/ /usr/local/bin/npm && \
