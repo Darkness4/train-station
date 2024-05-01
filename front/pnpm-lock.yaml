@@ -105,8 +105,8 @@ importers:
         specifier: 5.2.10
         version: 5.2.10(@types/node@20.12.7)(sass@1.75.0)
       vite-imagetools:
-        specifier: 7.0.1
-        version: 7.0.1(rollup@4.13.0)
+        specifier: 7.0.2
+        version: 7.0.2(rollup@4.13.0)
       vitest:
         specifier: 1.5.2
         version: 1.5.2(@types/node@20.12.7)(sass@1.75.0)
@@ -2398,8 +2398,8 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
 
-  vite-imagetools@7.0.1:
-    resolution: {integrity: sha512-23jnLhkTH0HR9Vd9LxMYnajOLeo0RJNEAHhtlsQP6kfPuOBoTzt54rWbEWB9jmhEXAOflLQpM+FrmilVPAoyGA==}
+  vite-imagetools@7.0.2:
+    resolution: {integrity: sha512-sA98fIhfIqPdt5qKAMMrQtBzdqK44dlmv4jEUlJMmn4GzR8CdXjKGiyU/GKUFxjReuPi0fK/dd0JhiZixZt06A==}
     engines: {node: '>=18.0.0'}
 
   vite-node@1.5.2:
@@ -4768,7 +4768,7 @@ snapshots:
 
   uuid@8.3.2: {}
 
-  vite-imagetools@7.0.1(rollup@4.13.0):
+  vite-imagetools@7.0.2(rollup@4.13.0):
     dependencies:
       '@rollup/pluginutils': 5.1.0(rollup@4.13.0)
       imagetools-core: 7.0.0
