@@ -22,7 +22,7 @@
 	"devDependencies": {
 		"@auth/core": "0.30.0",
 		"@auth/sveltekit": "1.0.1",
-		"@grpc/grpc-js": "1.10.6",
+		"@grpc/grpc-js": "1.10.7",
 		"@picocss/pico": "2.0.6",
 		"@playwright/test": "1.43.1",
 		"@protobuf-ts/grpc-transport": "2.9.4",

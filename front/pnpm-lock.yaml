@@ -15,8 +15,8 @@ importers:
         specifier: 1.0.1
         version: 1.0.1(@sveltejs/kit@2.5.7(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.15)(vite@5.2.10(@types/node@20.12.7)(sass@1.76.0)))(svelte@4.2.15)(vite@5.2.10(@types/node@20.12.7)(sass@1.76.0)))(svelte@4.2.15)
       '@grpc/grpc-js':
-        specifier: 1.10.6
-        version: 1.10.6
+        specifier: 1.10.7
+        version: 1.10.7
       '@picocss/pico':
         specifier: 2.0.6
         version: 2.0.6
@@ -25,7 +25,7 @@ importers:
         version: 1.43.1
       '@protobuf-ts/grpc-transport':
         specifier: 2.9.4
-        version: 2.9.4(@grpc/grpc-js@1.10.6)
+        version: 2.9.4(@grpc/grpc-js@1.10.7)
       '@protobuf-ts/runtime':
         specifier: 2.9.4
         version: 2.9.4
@@ -361,12 +361,12 @@ packages:
     resolution: {integrity: sha512-5WoDz3Y19Bg2BnErkZTp0en+c/i9PvgFS7MBe1+m60HjFr0hrphlAGp4yzI7pxpt4xShln4ZyYp4neJm8hmOkQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@grpc/grpc-js@1.10.6':
-    resolution: {integrity: sha512-xP58G7wDQ4TCmN/cMUHh00DS7SRDv/+lC+xFLrTkMIN8h55X5NhZMLYbvy7dSELP15qlI6hPhNCRWVMtZMwqLA==}
+  '@grpc/grpc-js@1.10.7':
+    resolution: {integrity: sha512-ZMBVjSeDAz3tFSehyO6Pd08xZT1HfIwq3opbeM4cDlBh52gmwp0wVIPcQur53NN0ac68HMZ/7SF2rGRD5KmVmg==}
     engines: {node: '>=12.10.0'}
 
-  '@grpc/proto-loader@0.7.10':
-    resolution: {integrity: sha512-CAqDfoaQ8ykFd9zqBDn4k6iWT9loLAlc2ETmDFS9JCD70gDcnA4L3AFEo2iV7KyAtAAHFW9ftq1Fz+Vsgq80RQ==}
+  '@grpc/proto-loader@0.7.13':
+    resolution: {integrity: sha512-AiXO/bfe9bmxBjxxtYxFAXGZvMaN5s8kO+jBHAJCON8rJoB5YS/D6X7ZNc6XQkuHNmyl4CYaMI1fJ/Gn27RGGw==}
     engines: {node: '>=6'}
     hasBin: true
 
@@ -2733,12 +2733,12 @@ snapshots:
 
   '@eslint/js@9.1.1': {}
 
-  '@grpc/grpc-js@1.10.6':
+  '@grpc/grpc-js@1.10.7':
     dependencies:
-      '@grpc/proto-loader': 0.7.10
+      '@grpc/proto-loader': 0.7.13
       '@js-sdsl/ordered-map': 4.4.2
 
-  '@grpc/proto-loader@0.7.10':
+  '@grpc/proto-loader@0.7.13':
     dependencies:
       lodash.camelcase: 4.3.0
       long: 5.2.3
@@ -2920,9 +2920,9 @@ snapshots:
 
   '@polka/url@1.0.0-next.24': {}
 
-  '@protobuf-ts/grpc-transport@2.9.4(@grpc/grpc-js@1.10.6)':
+  '@protobuf-ts/grpc-transport@2.9.4(@grpc/grpc-js@1.10.7)':
     dependencies:
-      '@grpc/grpc-js': 1.10.6
+      '@grpc/grpc-js': 1.10.7
       '@protobuf-ts/runtime': 2.9.4
       '@protobuf-ts/runtime-rpc': 2.9.4
 
