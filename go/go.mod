@@ -13,7 +13,7 @@ require (
 	github.com/urfave/cli/v2 v2.27.2
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.64.0
-	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.3.0
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.4.0
 	google.golang.org/protobuf v1.34.1
 	modernc.org/sqlite v1.29.10
 )
