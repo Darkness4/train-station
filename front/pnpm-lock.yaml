@@ -63,8 +63,8 @@ importers:
         specifier: 9.1.0
         version: 9.1.0(eslint@9.4.0)
       eslint-plugin-svelte:
-        specifier: 2.39.2
-        version: 2.39.2(eslint@9.4.0)(svelte@4.2.18)
+        specifier: 2.39.3
+        version: 2.39.3(eslint@9.4.0)(svelte@4.2.18)
       just-clone:
         specifier: 6.2.0
         version: 6.2.0
@@ -1251,8 +1251,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-plugin-svelte@2.39.2:
-    resolution: {integrity: sha512-liJMHhWnNqnimPpw0lSKiG/fQXla+ySp0NjXirB6l9A9LrBY2AjUfL0HMKkBEil5PaFn5F2rp6EqW85NDjRdSA==}
+  eslint-plugin-svelte@2.39.3:
+    resolution: {integrity: sha512-uXsHW+VOSHRI3VgoDit4CURKos9wDque6CuaBNw8z6UyF5Rfc2XHmNEsRvvOd+VmMUtS+wC9bvwArv2tt4TFGA==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0-0 || ^9.0.0-0
@@ -2267,8 +2267,8 @@ packages:
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
 
-  svelte-eslint-parser@0.36.0:
-    resolution: {integrity: sha512-/6YmUSr0FAVxW8dXNdIMydBnddPMHzaHirAZ7RrT21XYdgGGZMh0LQG6CZsvAFS4r2Y4ItUuCQc8TQ3urB30mQ==}
+  svelte-eslint-parser@0.37.0:
+    resolution: {integrity: sha512-AXd5ar7dcOK+H86JomxcSaWevhs2J7o/xOwg+kDQu98uuATpm+tE5Twp7u8UQCdbWKB34Idu/CZyHmTOxfSQMw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.115
@@ -3599,7 +3599,7 @@ snapshots:
     dependencies:
       eslint: 9.4.0
 
-  eslint-plugin-svelte@2.39.2(eslint@9.4.0)(svelte@4.2.18):
+  eslint-plugin-svelte@2.39.3(eslint@9.4.0)(svelte@4.2.18):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.4.0)
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -3612,7 +3612,7 @@ snapshots:
       postcss-safe-parser: 6.0.0(postcss@8.4.38)
       postcss-selector-parser: 6.0.16
       semver: 7.6.2
-      svelte-eslint-parser: 0.36.0(svelte@4.2.18)
+      svelte-eslint-parser: 0.37.0(svelte@4.2.18)
     optionalDependencies:
       svelte: 4.2.18
     transitivePeerDependencies:
@@ -4492,7 +4492,7 @@ snapshots:
     dependencies:
       color: 4.2.3
       detect-libc: 2.0.2
-      semver: 7.6.0
+      semver: 7.6.2
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.33.2
       '@img/sharp-darwin-x64': 0.33.2
@@ -4632,7 +4632,7 @@ snapshots:
       - stylus
       - sugarss
 
-  svelte-eslint-parser@0.36.0(svelte@4.2.18):
+  svelte-eslint-parser@0.37.0(svelte@4.2.18):
     dependencies:
       eslint-scope: 7.2.2
       eslint-visitor-keys: 3.4.3
