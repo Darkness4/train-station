@@ -38,7 +38,7 @@
 		"depcheck": "1.4.7",
 		"eslint": "9.6.0",
 		"eslint-config-prettier": "9.1.0",
-		"eslint-plugin-svelte": "2.40.0",
+		"eslint-plugin-svelte": "2.41.0",
 		"just-clone": "6.2.0",
 		"material-symbols": "0.20.0",
 		"next-auth": "4.24.7",
