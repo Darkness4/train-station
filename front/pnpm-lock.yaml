@@ -69,8 +69,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0
       material-symbols:
-        specifier: 0.20.0
-        version: 0.20.0
+        specifier: 0.21.0
+        version: 0.21.0
       next-auth:
         specifier: 4.24.7
         version: 4.24.7(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.77.6))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1699,8 +1699,8 @@ packages:
     resolution: {integrity: sha512-S1+hd+dIrC8EZqKyT9DstTH/0Z+f76kmmvZnkfQVmOpDEF9iVgdYif3Q/pIWHmCoo59bQVGW0kVL3e2nl+9+Sw==}
     engines: {node: '>=12'}
 
-  material-symbols@0.20.0:
-    resolution: {integrity: sha512-bTxLbVDimYqe1+iY0qcWXJSqoxKfQhzfdVLlvi8DegHAuSJ93oXhMjHY95zOVcgKUsLjszR2heIYhLWjobE1BQ==}
+  material-symbols@0.21.0:
+    resolution: {integrity: sha512-MCQPYV+E0pKyYYjMhuI3DEK0lBNXoTVGl+5eAq3/ybXpqFioGPyBfdXYW6M5G+Naa6VF0Q1Yzh7BCRqT1G56bw==}
 
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
@@ -4070,7 +4070,7 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  material-symbols@0.20.0: {}
+  material-symbols@0.21.0: {}
 
   mdn-data@2.0.30: {}
 
