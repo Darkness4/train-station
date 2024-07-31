@@ -90,8 +90,8 @@ importers:
         specifier: 4.2.18
         version: 4.2.18
       svelte-check:
-        specifier: 3.8.4
-        version: 3.8.4(postcss-load-config@4.0.2(postcss@8.4.40))(postcss@8.4.40)(sass@1.77.8)(svelte@4.2.18)
+        specifier: 3.8.5
+        version: 3.8.5(postcss-load-config@4.0.2(postcss@8.4.40))(postcss@8.4.40)(sass@1.77.8)(svelte@4.2.18)
       tailwindcss:
         specifier: 3.4.7
         version: 3.4.7
@@ -2237,8 +2237,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  svelte-check@3.8.4:
-    resolution: {integrity: sha512-61aHMkdinWyH8BkkTX9jPLYxYzaAAz/FK/VQqdr2FiCQQ/q04WCwDlpGbHff1GdrMYTmW8chlTFvRWL9k0A8vg==}
+  svelte-check@3.8.5:
+    resolution: {integrity: sha512-3OGGgr9+bJ/+1nbPgsvulkLC48xBsqsgtc8Wam281H4G9F5v3mYGa2bHRsPuwHC5brKl4AxJH95QF73kmfihGQ==}
     hasBin: true
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
@@ -2523,7 +2523,7 @@ snapshots:
   '@ampproject/remapping@2.2.1':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
-      '@jridgewell/trace-mapping': 0.3.22
+      '@jridgewell/trace-mapping': 0.3.25
 
   '@ampproject/remapping@2.3.0':
     dependencies:
@@ -2556,7 +2556,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.23.9
       '@jridgewell/gen-mapping': 0.3.3
-      '@jridgewell/trace-mapping': 0.3.22
+      '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
 
   '@babel/helper-environment-visitor@7.22.20': {}
@@ -2830,7 +2830,7 @@ snapshots:
     dependencies:
       '@jridgewell/set-array': 1.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
-      '@jridgewell/trace-mapping': 0.3.22
+      '@jridgewell/trace-mapping': 0.3.25
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
@@ -4535,11 +4535,11 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svelte-check@3.8.4(postcss-load-config@4.0.2(postcss@8.4.40))(postcss@8.4.40)(sass@1.77.8)(svelte@4.2.18):
+  svelte-check@3.8.5(postcss-load-config@4.0.2(postcss@8.4.40))(postcss@8.4.40)(sass@1.77.8)(svelte@4.2.18):
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.22
+      '@jridgewell/trace-mapping': 0.3.25
       chokidar: 3.6.0
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       sade: 1.8.1
       svelte: 4.2.18
       svelte-preprocess: 5.1.3(postcss-load-config@4.0.2(postcss@8.4.40))(postcss@8.4.40)(sass@1.77.8)(svelte@4.2.18)(typescript@5.5.4)
