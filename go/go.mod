@@ -2,7 +2,7 @@ module github.com/Darkness4/train-station/go
 
 go 1.22
 
-toolchain go1.22.6
+toolchain go1.23.0
 
 require (
 	github.com/golang-jwt/jwt/v5 v5.2.1
