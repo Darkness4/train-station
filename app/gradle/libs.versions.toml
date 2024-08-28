@@ -1,6 +1,6 @@
 [versions]
 agp = "8.5.2"
-kotlin = "1.9.22"
+kotlin = "1.9.25"
 spotless = "6.25.0"
 ksp = "1.9.23-1.0.20"
 coroutines = "1.8.1"
