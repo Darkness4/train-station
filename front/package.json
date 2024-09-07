@@ -42,7 +42,7 @@
 		"just-clone": "6.2.0",
 		"material-symbols": "0.22.2",
 		"next-auth": "4.24.7",
-		"postcss": "8.4.44",
+		"postcss": "8.4.45",
 		"prettier": "3.3.3",
 		"prettier-plugin-svelte": "3.2.6",
 		"sass": "1.77.8",
