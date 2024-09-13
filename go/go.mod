@@ -14,7 +14,7 @@ require (
 	github.com/stretchr/testify v1.9.0
 	github.com/urfave/cli/v2 v2.27.4
 	go.uber.org/zap v1.27.0
-	google.golang.org/grpc v1.66.1
+	google.golang.org/grpc v1.66.2
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.5.1
 	google.golang.org/protobuf v1.34.2
 	modernc.org/sqlite v1.32.0
