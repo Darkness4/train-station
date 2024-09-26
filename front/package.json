@@ -31,7 +31,7 @@
 		"@sveltejs/adapter-node": "5.2.4",
 		"@sveltejs/kit": "2.5.28",
 		"@sveltejs/vite-plugin-svelte": "3.1.2",
-		"@types/node": "20.16.7",
+		"@types/node": "20.16.9",
 		"@typescript-eslint/eslint-plugin": "8.7.0",
 		"@typescript-eslint/parser": "8.7.0",
 		"autoprefixer": "10.4.20",
