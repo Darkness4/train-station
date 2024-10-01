@@ -69,8 +69,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0
       material-symbols:
-        specifier: 0.23.0
-        version: 0.23.0
+        specifier: 0.24.0
+        version: 0.24.0
       next-auth:
         specifier: 4.24.8
         version: 4.24.8(@auth/core@0.35.3)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1714,8 +1714,8 @@ packages:
   magic-string@0.30.11:
     resolution: {integrity: sha512-+Wri9p0QHMy+545hKww7YAu5NyzF8iomPL/RQazugQ9+Ez4Ic3mERMd8ZTX5rfK944j+560ZJi8iAwgak1Ac7A==}
 
-  material-symbols@0.23.0:
-    resolution: {integrity: sha512-ciq9bPgw5bFGC807lT3KgbvU97bC7w6DeUQmqLXdIHD28L/FD9ajvX11swtQXcMV/nEjQ/fI6u5NVtli18qUqQ==}
+  material-symbols@0.24.0:
+    resolution: {integrity: sha512-PfQ6S+vuYmm9F8f4xUwF8RfahbKxBPFbkfIe6du66Lyh5jFohqC4s2J87PB8L8T76TwqsnJLza1Wnt08NKtBtw==}
 
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
@@ -4019,7 +4019,7 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  material-symbols@0.23.0: {}
+  material-symbols@0.24.0: {}
 
   mdn-data@2.0.30: {}
 
