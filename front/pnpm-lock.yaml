@@ -15,8 +15,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0(@sveltejs/kit@2.6.3(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.4)))(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.4)))(svelte@4.2.19)
       '@grpc/grpc-js':
-        specifier: 1.12.1
-        version: 1.12.1
+        specifier: 1.12.2
+        version: 1.12.2
       '@picocss/pico':
         specifier: 2.0.6
         version: 2.0.6
@@ -25,7 +25,7 @@ importers:
         version: 1.47.2
       '@protobuf-ts/grpc-transport':
         specifier: 2.9.4
-        version: 2.9.4(@grpc/grpc-js@1.12.1)
+        version: 2.9.4(@grpc/grpc-js@1.12.2)
       '@protobuf-ts/runtime':
         specifier: 2.9.4
         version: 2.9.4
@@ -387,8 +387,8 @@ packages:
     resolution: {integrity: sha512-vH9PiIMMwvhCx31Af3HiGzsVNULDbyVkHXwlemn/B0TFj/00ho3y55efXrUZTfQipxoHC5u4xq6zblww1zm1Ig==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@grpc/grpc-js@1.12.1':
-    resolution: {integrity: sha512-VYrLinJNeW3idIZHTy7BsVL7bsPF9+l89WDYTDV8o1QYJzkf3BSoPXdfaz4c8DyeY12LGSaS8m8BgbT8W66h6Q==}
+  '@grpc/grpc-js@1.12.2':
+    resolution: {integrity: sha512-bgxdZmgTrJZX50OjyVwz3+mNEnCTNkh3cIqGPWVNeW9jX6bn1ZkU80uPd+67/ZpIJIjRQ9qaHCjhavyoWYxumg==}
     engines: {node: '>=12.10.0'}
 
   '@grpc/proto-loader@0.7.13':
@@ -2664,7 +2664,7 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
-  '@grpc/grpc-js@1.12.1':
+  '@grpc/grpc-js@1.12.2':
     dependencies:
       '@grpc/proto-loader': 0.7.13
       '@js-sdsl/ordered-map': 4.4.2
@@ -2856,9 +2856,9 @@ snapshots:
 
   '@polka/url@1.0.0-next.24': {}
 
-  '@protobuf-ts/grpc-transport@2.9.4(@grpc/grpc-js@1.12.1)':
+  '@protobuf-ts/grpc-transport@2.9.4(@grpc/grpc-js@1.12.2)':
     dependencies:
-      '@grpc/grpc-js': 1.12.1
+      '@grpc/grpc-js': 1.12.2
       '@protobuf-ts/runtime': 2.9.4
       '@protobuf-ts/runtime-rpc': 2.9.4
 
