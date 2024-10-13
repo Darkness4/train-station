@@ -12,8 +12,8 @@ importers:
         specifier: 0.37.0
         version: 0.37.0
       '@auth/sveltekit':
-        specifier: 1.6.0
-        version: 1.6.0(@sveltejs/kit@2.6.4(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)
+        specifier: 1.7.0
+        version: 1.7.0(@sveltejs/kit@2.6.4(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)
       '@grpc/grpc-js':
         specifier: 1.12.2
         version: 1.12.2
@@ -125,20 +125,6 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@auth/core@0.36.0':
-    resolution: {integrity: sha512-tK+TEYHdM0nkW2uUxAZylpKk2nIf3jsAWzi920E5irxJlymihWzI8nQcz9McfmKux7lmtdpC6TiysayFP7sLYg==}
-    peerDependencies:
-      '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.2
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      '@simplewebauthn/browser':
-        optional: true
-      '@simplewebauthn/server':
-        optional: true
-      nodemailer:
-        optional: true
-
   '@auth/core@0.37.0':
     resolution: {integrity: sha512-LybAgfFC5dta3Mu3al0UbnzMGVBpZRqLMvvXupQOfETtPNlL7rXgTO13EVRTCdvPqMQrVYjODUDvgVfQM1M3Qg==}
     peerDependencies:
@@ -153,8 +139,8 @@ packages:
       nodemailer:
         optional: true
 
-  '@auth/sveltekit@1.6.0':
-    resolution: {integrity: sha512-YSzSNCK4FplbS1A4keoNPNurh801O1fpbI157LAhZpm5YRC02oIQPWZM3iA2KMZS5BInb5qGdSyj55bmDssY8A==}
+  '@auth/sveltekit@1.7.0':
+    resolution: {integrity: sha512-DrwD8XaDKziYXuXY6+1nib4qbDHQcqXnQDfRwPj7ap56rbfPP69M9Gz90gyRB7qDJC4pdFI5W7FmlcABZNQNpw==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.3
@@ -1894,9 +1880,6 @@ packages:
     resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
     engines: {node: '>=0.10.0'}
 
-  oauth4webapi@2.17.0:
-    resolution: {integrity: sha512-lbC0Z7uzAFNFyzEYRIC+pkSVvDHJTbEW+dYlSBAlCYDe6RxUkJ26bClhk8ocBZip1wfI9uKTe0fm4Ib4RHn6uQ==}
-
   oauth4webapi@3.0.0:
     resolution: {integrity: sha512-Rw9SxQYuQX9J41VgM4rVNGtm1ng0Qcd8ndv7JmhmwqQ3hHBokX+WjV379IJhKk7bVPHefgvrDgHoO/rB2dY7YA==}
 
@@ -2559,16 +2542,6 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@auth/core@0.36.0':
-    dependencies:
-      '@panva/hkdf': 1.2.1
-      '@types/cookie': 0.6.0
-      cookie: 0.7.1
-      jose: 5.9.3
-      oauth4webapi: 2.17.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
-
   '@auth/core@0.37.0':
     dependencies:
       '@panva/hkdf': 1.2.1
@@ -2579,9 +2552,9 @@ snapshots:
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
 
-  '@auth/sveltekit@1.6.0(@sveltejs/kit@2.6.4(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)':
+  '@auth/sveltekit@1.7.0(@sveltejs/kit@2.6.4(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)':
     dependencies:
-      '@auth/core': 0.36.0
+      '@auth/core': 0.37.0
       '@sveltejs/kit': 2.6.4(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5))
       set-cookie-parser: 2.6.0
       svelte: 4.2.19
@@ -4182,8 +4155,6 @@ snapshots:
   normalize-path@3.0.0: {}
 
   normalize-range@0.1.2: {}
-
-  oauth4webapi@2.17.0: {}
 
   oauth4webapi@3.0.0: {}
 
