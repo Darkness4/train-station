@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@auth/core':
-        specifier: 0.36.0
-        version: 0.36.0
+        specifier: 0.37.0
+        version: 0.37.0
       '@auth/sveltekit':
         specifier: 1.6.0
         version: 1.6.0(@sveltejs/kit@2.6.4(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)(vite@5.4.8(@types/node@20.16.11)(sass@1.79.5)))(svelte@4.2.19)
@@ -73,7 +73,7 @@ importers:
         version: 0.24.0
       next-auth:
         specifier: 4.24.8
-        version: 4.24.8(@auth/core@0.36.0)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 4.24.8(@auth/core@0.37.0)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -127,6 +127,20 @@ packages:
 
   '@auth/core@0.36.0':
     resolution: {integrity: sha512-tK+TEYHdM0nkW2uUxAZylpKk2nIf3jsAWzi920E5irxJlymihWzI8nQcz9McfmKux7lmtdpC6TiysayFP7sLYg==}
+    peerDependencies:
+      '@simplewebauthn/browser': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
+      '@simplewebauthn/server':
+        optional: true
+      nodemailer:
+        optional: true
+
+  '@auth/core@0.37.0':
+    resolution: {integrity: sha512-LybAgfFC5dta3Mu3al0UbnzMGVBpZRqLMvvXupQOfETtPNlL7rXgTO13EVRTCdvPqMQrVYjODUDvgVfQM1M3Qg==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.2
@@ -1883,6 +1897,9 @@ packages:
   oauth4webapi@2.17.0:
     resolution: {integrity: sha512-lbC0Z7uzAFNFyzEYRIC+pkSVvDHJTbEW+dYlSBAlCYDe6RxUkJ26bClhk8ocBZip1wfI9uKTe0fm4Ib4RHn6uQ==}
 
+  oauth4webapi@3.0.0:
+    resolution: {integrity: sha512-Rw9SxQYuQX9J41VgM4rVNGtm1ng0Qcd8ndv7JmhmwqQ3hHBokX+WjV379IJhKk7bVPHefgvrDgHoO/rB2dY7YA==}
+
   oauth@0.9.15:
     resolution: {integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==}
 
@@ -2549,6 +2566,16 @@ snapshots:
       cookie: 0.7.1
       jose: 5.9.3
       oauth4webapi: 2.17.0
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
+
+  '@auth/core@0.37.0':
+    dependencies:
+      '@panva/hkdf': 1.2.1
+      '@types/cookie': 0.6.0
+      cookie: 0.7.1
+      jose: 5.9.3
+      oauth4webapi: 3.0.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
 
@@ -4105,7 +4132,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-auth@4.24.8(@auth/core@0.36.0)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next-auth@4.24.8(@auth/core@0.37.0)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.23.9
       '@panva/hkdf': 1.1.1
@@ -4120,7 +4147,7 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 8.3.2
     optionalDependencies:
-      '@auth/core': 0.36.0
+      '@auth/core': 0.37.0
 
   next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5):
     dependencies:
@@ -4157,6 +4184,8 @@ snapshots:
   normalize-range@0.1.2: {}
 
   oauth4webapi@2.17.0: {}
+
+  oauth4webapi@3.0.0: {}
 
   oauth@0.9.15: {}
 
