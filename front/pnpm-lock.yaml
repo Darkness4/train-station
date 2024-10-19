@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@auth/core':
-        specifier: 0.37.0
-        version: 0.37.0
+        specifier: 0.37.1
+        version: 0.37.1
       '@auth/sveltekit':
         specifier: 1.7.1
         version: 1.7.1(@sveltejs/kit@2.7.1(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.9(@types/node@20.16.12)(sass@1.79.5)))(svelte@4.2.19)(vite@5.4.9(@types/node@20.16.12)(sass@1.79.5)))(svelte@4.2.19)
@@ -73,7 +73,7 @@ importers:
         version: 0.25.1
       next-auth:
         specifier: 4.24.8
-        version: 4.24.8(@auth/core@0.37.0)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 4.24.8(@auth/core@0.37.1)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -124,20 +124,6 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
-
-  '@auth/core@0.37.0':
-    resolution: {integrity: sha512-LybAgfFC5dta3Mu3al0UbnzMGVBpZRqLMvvXupQOfETtPNlL7rXgTO13EVRTCdvPqMQrVYjODUDvgVfQM1M3Qg==}
-    peerDependencies:
-      '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.2
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      '@simplewebauthn/browser':
-        optional: true
-      '@simplewebauthn/server':
-        optional: true
-      nodemailer:
-        optional: true
 
   '@auth/core@0.37.1':
     resolution: {integrity: sha512-85PosPEZXHKZhEaAH5DVCig2N1Cu5PC8CbWX03Dw9g1JISLHyrRT0RZRcaWlgmz+0Ua4N52sFRX+g9WARQaUlA==}
@@ -2559,16 +2545,6 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@auth/core@0.37.0':
-    dependencies:
-      '@panva/hkdf': 1.2.1
-      '@types/cookie': 0.6.0
-      cookie: 0.7.1
-      jose: 5.9.3
-      oauth4webapi: 3.0.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
-
   '@auth/core@0.37.1':
     dependencies:
       '@panva/hkdf': 1.2.1
@@ -4132,7 +4108,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-auth@4.24.8(@auth/core@0.37.0)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next-auth@4.24.8(@auth/core@0.37.1)(next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.23.9
       '@panva/hkdf': 1.1.1
@@ -4147,7 +4123,7 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 8.3.2
     optionalDependencies:
-      '@auth/core': 0.37.0
+      '@auth/core': 0.37.1
 
   next@14.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.5):
     dependencies:
