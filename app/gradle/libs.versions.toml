@@ -2,7 +2,7 @@
 agp = "8.5.2"
 kotlin = "1.9.22"
 spotless = "6.25.0"
-ksp = "1.9.23-1.0.20"
+ksp = "2.0.21-1.0.26"
 coroutines = "1.9.0"
 core-ktx = "1.13.1"
 hilt = "2.52"
