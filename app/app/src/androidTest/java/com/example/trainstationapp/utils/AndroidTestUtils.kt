@@ -23,6 +23,6 @@ object AndroidTestUtils {
             idreseau = 1,
             departemen = "departemen",
             yL93 = 1.0,
-            fret = "fret"
+            fret = "fret",
         )
 }

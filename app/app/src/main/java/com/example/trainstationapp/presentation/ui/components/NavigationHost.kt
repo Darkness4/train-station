@@ -54,7 +54,7 @@ fun NavigationHost(
                         Tab(
                             text = { Text(title) },
                             selected = state == index,
-                            onClick = { state = index }
+                            onClick = { state = index },
                         )
                     }
                 }
@@ -62,7 +62,7 @@ fun NavigationHost(
                     0 ->
                         StationListScreen(
                             navController = navController,
-                            viewModel = hiltViewModel<StationListViewModel>()
+                            viewModel = hiltViewModel<StationListViewModel>(),
                         )
                     1 -> AboutScreen()
                 }
@@ -70,7 +70,7 @@ fun NavigationHost(
         }
         composable(
             Route.Detail("{id}").route,
-            arguments = listOf(navArgument("id") { type = NavType.StringType })
+            arguments = listOf(navArgument("id") { type = NavType.StringType }),
         ) {
             val stationId = it.arguments?.getString("id")!!
             DetailScreen(

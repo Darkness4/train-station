@@ -11,11 +11,7 @@ interface GithubApi {
         const val CONTENT_TYPE = "application/vnd.github+json"
     }
 
-    @Serializable
-    data class User(
-        val login: String,
-        val id: Long,
-    )
+    @Serializable data class User(val id: Long)
 
     @Headers("X-GitHub-Api-Version: 2022-11-28", "Accept: application/vnd.github+json")
     @GET("user")

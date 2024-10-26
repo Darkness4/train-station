@@ -120,7 +120,7 @@ object DataModule {
         return DataStoreFactory.create(
             serializer = JwtSerializer,
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-            produceFile = { context.dataStoreFile("jwt.pb") }
+            produceFile = { context.dataStoreFile("jwt.pb") },
         )
     }
 
@@ -130,7 +130,7 @@ object DataModule {
         return DataStoreFactory.create(
             serializer = OAuthSerializer,
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-            produceFile = { context.dataStoreFile("oauth.pb") }
+            produceFile = { context.dataStoreFile("oauth.pb") },
         )
     }
 

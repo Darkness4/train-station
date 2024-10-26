@@ -16,10 +16,8 @@ import timber.log.Timber
 
 class DetailViewModel
 @AssistedInject
-constructor(
-    stationRepository: StationRepository,
-    @Assisted initialStationId: String,
-) : ViewModel() {
+constructor(stationRepository: StationRepository, @Assisted initialStationId: String) :
+    ViewModel() {
 
     val station: StateFlow<Station?> =
         stationRepository
@@ -44,9 +42,7 @@ constructor(
     }
 
     companion object {
-        fun AssistedFactory.provideFactory(
-            initialStationId: String,
-        ): ViewModelProvider.Factory =
+        fun AssistedFactory.provideFactory(initialStationId: String): ViewModelProvider.Factory =
             object : ViewModelProvider.Factory {
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {

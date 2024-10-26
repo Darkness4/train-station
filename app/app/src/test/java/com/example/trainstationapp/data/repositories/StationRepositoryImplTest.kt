@@ -76,7 +76,7 @@ class StationRepositoryImplTest :
                                 token = "token"
                                 value = !station.isFavorite
                             },
-                            any()
+                            any(),
                         )
                     }
                     coVerify {
@@ -85,7 +85,7 @@ class StationRepositoryImplTest :
                                 id = station.id
                                 token = "token"
                             },
-                            any()
+                            any(),
                         )
                     }
                     coVerify { stationDao.insert(station.copy(isFavorite = !station.isFavorite)) }
@@ -111,7 +111,7 @@ class StationRepositoryImplTest :
                                 token = "token"
                                 value = station.isFavorite
                             },
-                            any()
+                            any(),
                         )
                     }
                     verify { stationDao wasNot Called }

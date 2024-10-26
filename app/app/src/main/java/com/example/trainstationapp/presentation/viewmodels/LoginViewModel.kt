@@ -25,7 +25,7 @@ class LoginViewModel
 constructor(
     jwtDataStore: DataStore<Session.Jwt>,
     oauthDataStore: DataStore<Session.OAuth>,
-    auth: AuthAPIGrpcKt.AuthAPICoroutineStub
+    auth: AuthAPIGrpcKt.AuthAPICoroutineStub,
 ) : ViewModel() {
     init {
         viewModelScope.launch {

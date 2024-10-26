@@ -13,7 +13,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -69,13 +69,10 @@ fun StationListScreen(
                     .padding(16.dp)
                     .background(
                         MaterialTheme.colorScheme.background,
-                        shape = RoundedCornerShape(4.dp)
+                        shape = RoundedCornerShape(4.dp),
                     ),
         )
-        LazyColumn(
-            state = lazyListState,
-            modifier = Modifier.fillMaxSize(),
-        ) {
+        LazyColumn(state = lazyListState, modifier = Modifier.fillMaxSize()) {
             items(
                 count = stations.itemCount,
                 key = stations.itemKey { it.id },
@@ -88,9 +85,9 @@ fun StationListScreen(
                         onFavorite = { station ->
                             viewModel.makeFavorite(station.id, !station.isFavorite)
                         },
-                        onClick = { navController.navigate(Route.Detail(item.id).route) }
+                        onClick = { navController.navigate(Route.Detail(item.id).route) },
                     )
-                    Divider()
+                    HorizontalDivider()
                 }
             }
         }
@@ -113,9 +110,7 @@ fun SearchBar(
         leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "Search") },
         trailingIcon = {
             if (search.isNotEmpty()) {
-                IconButton(
-                    onClick = onSearchClear,
-                ) {
+                IconButton(onClick = onSearchClear) {
                     Icon(imageVector = Icons.Default.Clear, contentDescription = "Clear")
                 }
             }
@@ -126,17 +121,13 @@ fun SearchBar(
     )
 }
 
-@Preview(
-    showBackground = true,
-)
+@Preview(showBackground = true)
 @Composable
 fun SearchBarPreview() {
     TrainStationAppTheme { SearchBar() }
 }
 
-@Preview(
-    showBackground = true,
-)
+@Preview(showBackground = true)
 @Composable
 fun StationListScreenPreview() {
     TrainStationAppTheme { StationListScreen() }

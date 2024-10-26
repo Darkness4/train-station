@@ -64,7 +64,7 @@ class StationRemoteMediator(
      */
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Station>
+        state: PagingState<Int, Station>,
     ): MediatorResult {
         val page =
             when (loadType) {

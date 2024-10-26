@@ -50,9 +50,12 @@ spotless {
 
 android {
     namespace = "com.example.trainstationapp"
-    compileSdk = 34
+    compileSdk = 35
 
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "com.example.trainstationapp"
@@ -69,7 +72,7 @@ android {
         resValue(
             "string",
             "github_client_secret",
-            (secureProps.getProperty("GITHUB_CLIENT_SECRET") ?: "")
+            (secureProps.getProperty("GITHUB_CLIENT_SECRET") ?: ""),
         )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -102,18 +105,20 @@ android {
         create("staging") {
             initWith(getByName("release"))
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
             applicationIdSuffix = ".staging"
         }
 
         getByName("release") {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
 
             signingConfig = signingConfigs.getByName("release")

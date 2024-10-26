@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -70,21 +71,20 @@ class MainActivity : ComponentActivity() {
             TrainStationAppTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     Scaffold(
                         topBar = {
-                            Surface(
-                                shadowElevation = 16.dp,
-                            ) {
+                            Surface(shadowElevation = 16.dp) {
                                 TopAppBar(
                                     title = { Text(stringResource(R.string.title_activity_main)) },
                                     navigationIcon = {
                                         if (canPop) {
                                             IconButton(onClick = { navController.popBackStack() }) {
                                                 Icon(
-                                                    imageVector = Icons.Filled.ArrowBack,
-                                                    contentDescription = "Back"
+                                                    imageVector =
+                                                        Icons.AutoMirrored.Filled.ArrowBack,
+                                                    contentDescription = "Back",
                                                 )
                                             }
                                         }
@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
                         NavigationHost(
                             navController = navController,
                             detailViewModelFactory = assisted,
-                            modifier = Modifier.padding(contentPadding)
+                            modifier = Modifier.padding(contentPadding),
                         )
                     }
                 }

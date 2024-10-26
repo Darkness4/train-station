@@ -27,23 +27,23 @@ fun AboutScreen(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier.fillMaxWidth().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Text(
             stringResource(R.string.app_name),
             style = Typography.titleLarge,
             textAlign = TextAlign.Justify,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Text(
             stringResource(R.string.about),
             textAlign = TextAlign.Justify,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Text(
             stringResource(R.string.about_api_url, stringResource(R.string.api_url)),
             textAlign = TextAlign.Justify,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Text(
             buildAnnotatedString {
@@ -52,12 +52,9 @@ fun AboutScreen(modifier: Modifier = Modifier) {
                 append(stringResource(R.string.data_description_2))
             },
             textAlign = TextAlign.Justify,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth(),
-        ) {
+        )
+        Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
             ElevatedButton(
                 onClick = { uriHandler.openUri(context.getString(R.string.project_url)) }
             ) {
@@ -76,10 +73,7 @@ fun AboutScreen(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AboutScreenPreview() {
     TrainStationAppTheme { AboutScreen() }

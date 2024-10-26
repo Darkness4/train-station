@@ -55,7 +55,7 @@ constructor(
                         database = database,
                         stationAPI = stationAPI,
                     ),
-                pagingSourceFactory = pagingSourceFactory
+                pagingSourceFactory = pagingSourceFactory,
             )
             .flow
             .flowOn(Dispatchers.Default)
@@ -76,8 +76,7 @@ constructor(
             response.station?.let {
                 val entity = Station.fromGrpc(it)
                 database.stationDao().insert(entity)
-            }
-                ?: throw Exception("Element not found.")
+            } ?: throw Exception("Element not found.")
 
             database.stationDao().watchById(id)
         }
@@ -104,7 +103,6 @@ constructor(
             val entity = Station.fromGrpc(it)
             database.stationDao().insert(entity)
             entity
-        }
-            ?: throw Exception("Element not found.")
+        } ?: throw Exception("Element not found.")
     }
 }

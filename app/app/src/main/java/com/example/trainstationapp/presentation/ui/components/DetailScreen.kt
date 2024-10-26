@@ -43,7 +43,7 @@ fun DetailScreen(
     val station by viewModel.station.collectAsState()
     val scaffoldState =
         rememberBottomSheetScaffoldState(
-            bottomSheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded),
+            bottomSheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
         )
     val cameraPositionState = rememberCameraPositionState {}
 
@@ -51,10 +51,7 @@ fun DetailScreen(
         station?.let {
             val position = LatLng(it.yWgs84, it.xWgs84)
             cameraPositionState.move(
-                CameraUpdateFactory.newLatLngZoom(
-                    position,
-                    DEFAULT_ZOOM_LEVEL,
-                )
+                CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM_LEVEL)
             )
         }
     }
@@ -67,32 +64,23 @@ fun DetailScreen(
         }
     }
 
-    GoogleMap(
-        modifier = modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState,
-    ) {
+    GoogleMap(modifier = modifier.fillMaxSize(), cameraPositionState = cameraPositionState) {
         station?.let {
             val position = LatLng(it.yWgs84, it.xWgs84)
-            Marker(
-                state = MarkerState(position = position),
-                title = it.libelle,
-            )
+            Marker(state = MarkerState(position = position), title = it.libelle)
         }
     }
 
     station?.let {
         BottomSheetScaffold(
             scaffoldState = scaffoldState,
-            sheetContent = { DescriptionCard(station = it) }
+            sheetContent = { DescriptionCard(station = it) },
         ) {}
     }
 }
 
 @Composable
-fun DescriptionCard(
-    modifier: Modifier = Modifier,
-    station: Station,
-) {
+fun DescriptionCard(modifier: Modifier = Modifier, station: Station) {
     ConstraintLayout(modifier = modifier.padding(16.dp)) {
         val (
             libelle,
@@ -112,7 +100,7 @@ fun DescriptionCard(
                 Modifier.constrainAs(libelle) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
-                }
+                },
         )
         Text(
             stringResource(R.string.departement_label),
@@ -120,7 +108,7 @@ fun DescriptionCard(
                 Modifier.constrainAs(departementLabel) {
                     top.linkTo(libelle.bottom, margin = 16.dp)
                     start.linkTo(parent.start)
-                }
+                },
         )
         Text(
             station.departemen,
@@ -129,7 +117,7 @@ fun DescriptionCard(
                     top.linkTo(departementLabel.top)
                     bottom.linkTo(departementLabel.bottom)
                     start.linkTo(departementLabel.end, margin = 16.dp)
-                }
+                },
         )
         Text(
             stringResource(R.string.commune_label),
@@ -137,7 +125,7 @@ fun DescriptionCard(
                 Modifier.constrainAs(communeLabel) {
                     top.linkTo(departementLabel.bottom, margin = 16.dp)
                     start.linkTo(parent.start)
-                }
+                },
         )
         Text(
             station.commune,
@@ -146,7 +134,7 @@ fun DescriptionCard(
                     top.linkTo(communeLabel.top)
                     bottom.linkTo(communeLabel.bottom)
                     start.linkTo(departement.start)
-                }
+                },
         )
         Text(
             stringResource(R.string.latitude_label),
@@ -154,7 +142,7 @@ fun DescriptionCard(
                 Modifier.constrainAs(latitudeLabel) {
                     top.linkTo(communeLabel.bottom, margin = 16.dp)
                     start.linkTo(parent.start)
-                }
+                },
         )
         Text(
             station.yWgs84.toString(),
@@ -163,7 +151,7 @@ fun DescriptionCard(
                     top.linkTo(latitudeLabel.top)
                     bottom.linkTo(latitudeLabel.bottom)
                     start.linkTo(departement.start)
-                }
+                },
         )
         Text(
             stringResource(R.string.longitude_label),
@@ -171,7 +159,7 @@ fun DescriptionCard(
                 Modifier.constrainAs(longitudeLabel) {
                     top.linkTo(latitudeLabel.bottom, margin = 16.dp)
                     start.linkTo(parent.start)
-                }
+                },
         )
         Text(
             station.xWgs84.toString(),
@@ -180,7 +168,7 @@ fun DescriptionCard(
                     top.linkTo(longitudeLabel.top)
                     bottom.linkTo(longitudeLabel.bottom)
                     start.linkTo(departement.start)
-                }
+                },
         )
     }
 }

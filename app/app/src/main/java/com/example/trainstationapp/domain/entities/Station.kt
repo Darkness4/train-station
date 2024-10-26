@@ -30,21 +30,15 @@ data class Station(
     val idreseau: Long = 0,
     val departemen: String = "",
     @ColumnInfo(name = "y_l93") val yL93: Double = 0.0,
-    val fret: String = ""
+    val fret: String = "",
 ) : Parcelable {
 
     @SuppressLint("ParcelCreator")
     @Parcelize
-    data class Geometry(
-        val type: String = "",
-        val coordinates: List<Double> = emptyList(),
-    ) : Parcelable {
+    data class Geometry(val type: String = "", val coordinates: List<Double> = emptyList()) :
+        Parcelable {
         companion object {
-            fun fromGrpc(model: StationProto.Geometry) =
-                Geometry(
-                    model.type,
-                    model.coordinatesList,
-                )
+            fun fromGrpc(model: StationProto.Geometry) = Geometry(model.type, model.coordinatesList)
         }
 
         fun asGrpcModel(): StationProto.Geometry =

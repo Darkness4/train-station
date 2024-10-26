@@ -29,7 +29,7 @@ fun StationItem(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.fillMaxWidth().clickable { onClick(station) }.padding(16.dp)
+        modifier = modifier.fillMaxWidth().clickable { onClick(station) }.padding(16.dp),
     ) {
         Column(modifier = Modifier.weight(2f)) {
             Text(station.libelle, style = Typography.headlineMedium)
@@ -51,18 +51,8 @@ fun StationItem(
     }
 }
 
-@Preview(
-    showBackground = true,
-)
+@Preview(showBackground = true)
 @Composable
 fun StationItemPreview() {
-    TrainStationAppTheme {
-        StationItem(
-            station =
-                Station(
-                    id = "id",
-                    libelle = "libelle",
-                )
-        )
-    }
+    TrainStationAppTheme { StationItem(station = Station(id = "id", libelle = "libelle")) }
 }
