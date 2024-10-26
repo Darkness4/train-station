@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { Station } from '$gen/ts/trainstation/v1alpha1/station';
 
-	export let station: Station;
+	interface Props {
+		station: Station;
+	}
+
+	let { station }: Props = $props();
 </script>
 
 <section>
@@ -14,7 +18,7 @@
 		allowfullscreen
 		src="https://www.google.com/maps/embed/v1/view?key=AIzaSyB7n9cGoEeEzl7LryVhC2HR0ukP2sqgWwo&zoom=18&maptype=satellite
 				&center={station.yWgs84},{station.xWgs84}"
-	/>
+	></iframe>
 
 	<article>
 		<h1>

@@ -1,14 +1,15 @@
 import { stationClient } from '$lib/server/api';
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import clone from 'just-clone';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ url, locals }) => {
 	const page = parseInt(url.searchParams.get('page') ?? '1');
 	const searchQuery = url.searchParams.get('s') ?? '';
-	const session = (await locals.getSession()) as Session | null;
-	if (!session || !session.token) {
-		redirect(302, '/');
+	if (!locals.session?.token) {
+		error(401, {
+			message: 'Unauthorized'
+		});
 	}
 
 	// TODO: handle error
@@ -16,13 +17,12 @@ export const load = (async ({ url, locals }) => {
 		limit: 12,
 		page: page,
 		query: searchQuery,
-		token: session.token
+		token: locals.session?.token
 	});
 	if (!response.stations) {
 		throw new Error('no data');
 	}
 	return {
-		stations: clone(response.stations),
-		session: session
+		stations: clone(response.stations)
 	};
 }) satisfies PageServerLoad;

@@ -3,7 +3,8 @@
 	import '../app.scss';
 
 	import { page } from '$app/stores';
-	import { signOut } from '@auth/sveltekit/client';
+
+	let { children } = $props();
 </script>
 
 {#if $page.data.session}
@@ -23,9 +24,9 @@
 					<img src={$page.data.session.user.image} alt="avatar" class="h-8 w-8" />
 				{/if}
 			</li>
-			<!-- svelte-ignore a11y-invalid-attribute -->
+			<!-- svelte-ignore a11y_invalid_attribute -->
 			<li>
-				<a on:click={() => signOut()} href="#" role="button">Log out</a>
+				<a href="/auth/signout" role="button">Log out</a>
 			</li>
 		</ul>
 	</nav>
@@ -33,10 +34,10 @@
 
 <main class="relative">
 	<div
-		class="absolute inset-0 z-0 w-full h-full bg-cover bg-center"
+		class="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
 		style="background-image: url('{background}');"
-	/>
+	></div>
 	<div class="relative z-10">
-		<slot />
+		{@render children?.()}
 	</div>
 </main>

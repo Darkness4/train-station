@@ -5,11 +5,10 @@
 	import PaginatedStations from '$components/paginated-stations.component.svelte';
 	import Search from '$components/search.component.svelte';
 	import type { Station } from '$gen/ts/trainstation/v1alpha1/station';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
+	let { data } = $props();
 
-	let searchQuery = '';
+	let searchQuery = $state('');
 
 	function search(search: string) {
 		return goto(`${$page.url.pathname}?s=${search}`);

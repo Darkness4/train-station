@@ -1,25 +1,22 @@
 import { stationClient } from '$lib/server/api';
-import type { PageServerLoad } from './$types';
+import { fail } from '@sveltejs/kit';
 import clone from 'just-clone';
-import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params, locals }) => {
-	const session = (await locals.getSession()) as Session | null;
-	if (!session || !session.token) {
-		redirect(302, '/');
+	if (!locals.session?.token) {
+		return fail(401);
 	}
-
 	// TODO: handle error
 	const { response } = await stationClient.getOneStation({
 		id: params.id,
-		token: session.token
+		token: locals.session?.token
 	});
 	if (!response.station) {
 		throw new Error('no data');
 	}
 	return {
 		id: params.id,
-		station: clone(response.station),
-		session: session
+		station: clone(response.station)
 	};
 }) satisfies PageServerLoad;

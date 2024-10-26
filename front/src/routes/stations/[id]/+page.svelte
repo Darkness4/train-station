@@ -1,8 +1,7 @@
 <script lang="ts">
 	import DetailStation from '$components/detail-station.component.svelte';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
+	let { data } = $props();
 </script>
 
 <svelte:head>

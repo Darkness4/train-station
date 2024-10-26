@@ -1,28 +1,17 @@
-// See https://kit.svelte.dev/docs/types#app
+// See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
+import type { Session } from '$lib/server/session';
+
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			session: Session | null;
+		}
 		// interface PageData {}
+		// interface PageState {}
 		// interface Platform {}
 	}
 }
 
-interface Account {
-	provider: string;
-	type: string;
-	providerAccountId: string;
-	access_token: string;
-}
-
-interface Session {
-	token?: string;
-	user?: {
-		name?: string | null;
-		email?: string | null;
-		image?: string | null;
-		id?: string | null;
-	};
-	expires: ISODateString;
-}
+export {};

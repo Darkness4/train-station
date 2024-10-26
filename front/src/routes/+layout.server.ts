@@ -1,12 +1,10 @@
 import { redirect } from '@sveltejs/kit';
-import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ url, locals }) => {
-	const session = await locals.getSession();
-	if (!session?.user && url.pathname !== '/' && !url.pathname.startsWith('/oauth2')) {
+export async function load({ url, locals }) {
+	if (!locals?.session && url.pathname !== '/' && !url.pathname.startsWith('/oauth2')) {
 		redirect(302, '/');
 	}
 	return {
-		session: session
+		session: locals?.session
 	};
-};
+}

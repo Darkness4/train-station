@@ -1,11 +1,12 @@
 import { stationClient } from '$lib/server/api';
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const POST = (async ({ request, locals }) => {
-	const session = (await locals.getSession()) as Session | null;
-	if (!session || !session.token) {
-		redirect(302, '/');
+	if (!locals.session?.token) {
+		error(401, {
+			message: 'Unauthorized'
+		});
 	}
 
 	const data = await request.json();
@@ -18,7 +19,7 @@ export const POST = (async ({ request, locals }) => {
 	await stationClient.setFavoriteOneStation({
 		id: id,
 		value: value,
-		token: session.token
+		token: locals.session?.token
 	});
 
 	return new Response();

@@ -31,14 +31,14 @@ func (s *authAPIServer) GetJWT(
 	req *authv1alpha1.GetJWTRequest,
 ) (*authv1alpha1.GetJWTResponse, error) {
 	logger.I.Debug("GetJWT called", zap.Any("req", req))
-	userID, err := auth.Validate(ctx, req.GetAccount())
+	userInfo, err := auth.Validate(ctx, req.GetAccount())
 	if err != nil {
 		logger.I.Error("user failed to authenticate", zap.Error(err), zap.Any("req", req))
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticated: %s", err)
 	}
-	token := s.jwt.CreateToken(userID)
+	token := s.jwt.CreateToken(userInfo.UserID, userInfo.Name, userInfo.Picture)
 	logger.I.Debug("GetJWT success", zap.Any("token", token))
 	return &authv1alpha1.GetJWTResponse{
-		Token: s.jwt.CreateToken(userID),
+		Token: s.jwt.CreateToken(userInfo.UserID, userInfo.Name, userInfo.Picture),
 	}, nil
 }

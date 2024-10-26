@@ -21,11 +21,22 @@ func New(secret []byte) *Service {
 	}
 }
 
-func (s *Service) CreateToken(subject string) string {
-	claims := &jwt.RegisteredClaims{
-		Subject:   subject,
-		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
-		Issuer:    "train station API",
+type Claims struct {
+	jwt.RegisteredClaims
+	Name    string `json:"name"`
+	Picture string `json:"picture"`
+}
+
+func (s *Service) CreateToken(subject string, name string, picture string) string {
+	claims := &Claims{
+		RegisteredClaims: jwt.RegisteredClaims{
+			Subject:   subject,
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+			Issuer:    "train station API",
+		},
+		Name:    name,
+		Picture: picture,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, claims)
 	signed, err := token.SignedString(s.secret)

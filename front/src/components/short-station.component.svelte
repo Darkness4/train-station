@@ -1,26 +1,33 @@
 <script lang="ts">
 	import type { Station } from '$gen/ts/trainstation/v1alpha1/station';
 
-	export let station: Station;
-	export let onClick: () => unknown;
-	export let onFavorite: () => unknown;
+	interface Props {
+		station: Station;
+		onClick: (station: Station) => unknown;
+		onFavorite: (station: Station) => unknown;
+	}
+
+	let { station, onClick, onFavorite }: Props = $props();
 
 	function onClickFavorite() {
-		onFavorite();
-		station.isFavorite = !station.isFavorite;
+		onFavorite(station);
+		station = {
+			...station,
+			isFavorite: !station.isFavorite
+		};
 	}
 </script>
 
 <article class="m-2">
 	<hgroup>
 		<h1>{station.libelle}</h1>
-		<h2 class="text-ellipsis overflow-hidden whitespace-nowrap max-md:max-w-xs">{station.id}</h2>
+		<h2 class="overflow-hidden text-ellipsis whitespace-nowrap max-md:max-w-xs">{station.id}</h2>
 	</hgroup>
 	<div>
-		<button on:click={onClick}>
+		<button onclick={() => onClick(station)}>
 			<span class="align-middle">Details</span>
 		</button>
-		<button on:click={onClickFavorite}>
+		<button onclick={onClickFavorite}>
 			<span
 				class="material-symbols-outlined align-middle"
 				style={station.isFavorite
