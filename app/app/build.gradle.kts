@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.protobuf)
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.compose.compiler)
 }
 
 spotless {
@@ -28,7 +29,7 @@ spotless {
     kotlin {
         target("**/*.kt", "**/*.kts")
         targetExclude("src/main/java/com/example/trainstationapp/data/grpc/**/*.kt")
-        ktfmt("0.44").kotlinlangStyle()
+        ktfmt("0.52").kotlinlangStyle()
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()
@@ -56,7 +57,7 @@ android {
     defaultConfig {
         applicationId = "com.example.trainstationapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
         val secureProps = Properties()
@@ -126,7 +127,6 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
     }
-    composeOptions { kotlinCompilerExtensionVersion = "1.5.10" }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
     testOptions { unitTests.all { it.useJUnitPlatform() } }
 }

@@ -1,8 +1,8 @@
 [versions]
-agp = "8.5.2"
-kotlin = "1.9.22"
+agp = "8.7.1"
+kotlin = "2.0.21"
 spotless = "6.25.0"
-ksp = "1.9.23-1.0.20"
+ksp = "2.0.21-1.0.26"
 coroutines = "1.9.0"
 core-ktx = "1.13.1"
 hilt = "2.52"
@@ -18,11 +18,11 @@ navigation-compose = "2.8.3"
 activity-compose = "1.9.3"
 compose-bom = "2024.10.00"
 maps = "6.1.2"
-play-services-maps = "18.2.0"
+play-services-maps = "19.0.0"
 timber = "5.0.1"
 paging = "3.3.2"
 paging-compose = "3.3.2"
-kotlinx-serialization-json = "1.6.3"
+kotlinx-serialization-json = "1.7.3"
 retrofit = "2.11.0"
 retrofit2-kotlinx-serialization-converter = "1.0.0"
 leakcanary = "2.14"
@@ -138,5 +138,6 @@ hiltAndroid = { id = 'com.google.dagger.hilt.android', version.ref = "hilt" }
 protobuf = { id = 'com.google.protobuf', version.ref = "protobuf-plugin" }
 ksp = { id = 'com.google.devtools.ksp', version.ref = "ksp" }
 google-services = { id = 'com.google.gms.google-services', version.ref = "google-services" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [bundles]
