@@ -46,7 +46,7 @@
 		"eslint": "9.14.0",
 		"eslint-config-prettier": "9.1.0",
 		"eslint-plugin-svelte": "2.46.0",
-		"globals": "15.11.0",
+		"globals": "15.12.0",
 		"jsonwebtoken": "9.0.2",
 		"just-clone": "6.2.0",
 		"material-symbols": "0.26.0",
