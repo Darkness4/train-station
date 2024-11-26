@@ -37,7 +37,7 @@
 		"@sveltejs/vite-plugin-svelte": "4.0.1",
 		"@types/eslint": "9.6.1",
 		"@types/jsonwebtoken": "^9.0.7",
-		"@types/node": "22.9.3",
+		"@types/node": "22.10.0",
 		"@typescript-eslint/eslint-plugin": "8.15.0",
 		"@typescript-eslint/parser": "8.15.0",
 		"arctic": "2.3.0",
