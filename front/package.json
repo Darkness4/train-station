@@ -51,7 +51,7 @@
 		"just-clone": "6.2.0",
 		"material-symbols": "0.27.1",
 		"postcss": "8.4.49",
-		"prettier": "3.3.3",
+		"prettier": "3.4.1",
 		"prettier-plugin-svelte": "3.3.2",
 		"prettier-plugin-tailwindcss": "0.6.9",
 		"sass": "1.81.0",
