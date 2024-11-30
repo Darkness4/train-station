@@ -1,4 +1,4 @@
-FROM oven/bun:1.1.37 AS base
+FROM oven/bun:1.1.38 AS base
 WORKDIR /usr/src/app
 
 # ------------------
