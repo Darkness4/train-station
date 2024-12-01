@@ -43,7 +43,7 @@
 		"arctic": "2.3.0",
 		"autoprefixer": "10.4.20",
 		"depcheck": "1.4.7",
-		"eslint": "9.15.0",
+		"eslint": "9.16.0",
 		"eslint-config-prettier": "9.1.0",
 		"eslint-plugin-svelte": "2.46.1",
 		"globals": "15.12.0",
