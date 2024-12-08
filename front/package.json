@@ -25,7 +25,7 @@
 		"sharp"
 	],
 	"devDependencies": {
-		"@eslint/js": "^9.13.0",
+		"@eslint/js": "9.16.0",
 		"@grpc/grpc-js": "1.12.4",
 		"@picocss/pico": "2.0.6",
 		"@playwright/test": "1.49.0",
