@@ -94,8 +94,6 @@ jobs:
           tags: ghcr.io/darkness4/train-station-api:latest
           build-args: |
             VERSION=dev
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Login to GHCR
         if: startsWith(github.ref, 'refs/tags/')
@@ -126,5 +124,3 @@ jobs:
             ghcr.io/darkness4/train-station-api:${{ steps.get_version.outputs.VERSION }}
           build-args: |
             ${{ steps.get_version.outputs.VERSION }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max

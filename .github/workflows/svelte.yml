@@ -39,8 +39,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: false
           tags: ghcr.io/darkness4/train-station-front:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Login to GHCR
         if: startsWith(github.ref, 'refs/tags/')
@@ -69,5 +67,3 @@ jobs:
             ghcr.io/darkness4/train-station-front:latest
             ghcr.io/darkness4/train-station-front:dev
             ghcr.io/darkness4/train-station-front:${{ steps.get_version.outputs.VERSION }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
