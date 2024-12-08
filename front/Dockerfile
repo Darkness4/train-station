@@ -2,7 +2,7 @@ FROM oven/bun:1.1.38 AS base
 WORKDIR /usr/src/app
 
 # ------------------
-FROM base as builder
+FROM base AS builder
 # ------------------
 
 WORKDIR /app
