@@ -1,5 +1,6 @@
 import { github } from '$lib/server/oauth';
 import { createSession, setSessionTokenCookie } from '$lib/server/session';
+import { redirect } from '@sveltejs/kit';
 
 import type { OAuth2Tokens } from 'arctic';
 import type { RequestEvent } from './$types';
@@ -41,10 +42,5 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
 	const session = await createSession(githubAccessToken, userResult.id.toString());
 	setSessionTokenCookie(event, session);
-	return new Response(null, {
-		status: 302,
-		headers: {
-			Location: '/'
-		}
-	});
+	return redirect(302, '/');
 }

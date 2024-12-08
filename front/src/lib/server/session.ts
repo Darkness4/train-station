@@ -8,7 +8,7 @@ export function setSessionTokenCookie(event: RequestEvent, session: Session): vo
 		httpOnly: true,
 		path: '/',
 		secure: import.meta.env.PROD,
-		sameSite: 'strict',
+		sameSite: 'lax',
 		expires: session.expiresAt
 	});
 }
@@ -18,7 +18,7 @@ export function deleteSessionTokenCookie(event: RequestEvent): void {
 		httpOnly: true,
 		path: '/',
 		secure: import.meta.env.PROD,
-		sameSite: 'strict',
+		sameSite: 'lax',
 		maxAge: 0
 	});
 }
