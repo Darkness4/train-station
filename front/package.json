@@ -50,7 +50,7 @@
 		"jsonwebtoken": "9.0.2",
 		"just-clone": "6.2.0",
 		"material-symbols": "0.27.2",
-		"postcss": "8.4.49",
+		"postcss": "8.5.1",
 		"prettier": "3.4.2",
 		"prettier-plugin-svelte": "3.3.3",
 		"prettier-plugin-tailwindcss": "0.6.11",
