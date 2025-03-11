@@ -41,7 +41,7 @@
 		"@typescript-eslint/eslint-plugin": "8.24.1",
 		"@typescript-eslint/parser": "8.24.1",
 		"arctic": "3.5.0",
-		"autoprefixer": "10.4.20",
+		"autoprefixer": "10.4.21",
 		"depcheck": "1.4.7",
 		"eslint": "9.21.0",
 		"eslint-config-prettier": "9.1.0",
