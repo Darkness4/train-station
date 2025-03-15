@@ -944,10 +944,10 @@
     "@rollup/plugin-node-resolve" "^16.0.0"
     rollup "^4.9.5"
 
-"@sveltejs/kit@2.19.0":
-  version "2.19.0"
-  resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-2.19.0.tgz"
-  integrity sha512-UTx28Ad4sYsLU//gqkEo5aFOPFBRT2uXCmXTsURqhurDCvzkVwXruJgBcHDaMiK6RKKpYRteDUaXYqZyGPgCXQ==
+"@sveltejs/kit@2.19.1":
+  version "2.19.1"
+  resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-2.19.1.tgz"
+  integrity sha512-1u8FGWtT+V0eBSQpDtsjINhQd6RTjadvEgVApdNVxbUeOXmQTDENTeRiZw2i1lNUx1/5Wa65CHzxtMh3P3yviw==
   dependencies:
     "@types/cookie" "^0.6.0"
     cookie "^0.6.0"
