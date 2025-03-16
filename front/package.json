@@ -27,7 +27,7 @@
 	"devDependencies": {
 		"@eslint/js": "9.21.0",
 		"@grpc/grpc-js": "1.13.0",
-		"@picocss/pico": "2.0.6",
+		"@picocss/pico": "2.1.1",
 		"@playwright/test": "1.51.0",
 		"@protobuf-ts/grpc-transport": "2.9.5",
 		"@protobuf-ts/runtime": "2.9.5",
