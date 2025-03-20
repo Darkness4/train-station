@@ -668,15 +668,15 @@
   dependencies:
     "@protobuf-ts/runtime" "^2.9.6"
 
-"@protobuf-ts/runtime@2.9.5", "@protobuf-ts/runtime@^2.9.5":
-  version "2.9.5"
-  resolved "https://registry.npmjs.org/@protobuf-ts/runtime/-/runtime-2.9.5.tgz"
-  integrity sha512-SsumigRe3IqNTCQvVZUqDQExsKF72eyAMiWlYb5Jwj3eU4z8UH7JLlSfb/Wjidz4b/chTN6zh5AXBSKl0Asm3A==
-
-"@protobuf-ts/runtime@^2.9.6":
+"@protobuf-ts/runtime@2.9.6", "@protobuf-ts/runtime@^2.9.6":
   version "2.9.6"
   resolved "https://registry.npmjs.org/@protobuf-ts/runtime/-/runtime-2.9.6.tgz"
   integrity sha512-C0CfpKx4n4LBbUrajOdRj2BTbd3qBoK0SiKWLq7RgCoU6xiN4wesBMFHUOBp3fFzKeZwgU8Q2KtzaqzIvPLRXg==
+
+"@protobuf-ts/runtime@^2.9.5":
+  version "2.9.5"
+  resolved "https://registry.npmjs.org/@protobuf-ts/runtime/-/runtime-2.9.5.tgz"
+  integrity sha512-SsumigRe3IqNTCQvVZUqDQExsKF72eyAMiWlYb5Jwj3eU4z8UH7JLlSfb/Wjidz4b/chTN6zh5AXBSKl0Asm3A==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
