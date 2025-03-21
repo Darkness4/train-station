@@ -49,7 +49,7 @@
 		"globals": "15.15.0",
 		"jsonwebtoken": "9.0.2",
 		"just-clone": "6.2.0",
-		"material-symbols": "0.29.1",
+		"material-symbols": "0.29.2",
 		"postcss": "8.5.3",
 		"prettier": "3.5.3",
 		"prettier-plugin-svelte": "3.3.3",
