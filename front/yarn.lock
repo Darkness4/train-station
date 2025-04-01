@@ -3408,10 +3408,10 @@ svelte-eslint-parser@^0.43.0:
     postcss "^8.4.39"
     postcss-scss "^4.0.9"
 
-svelte@5.25.3:
-  version "5.25.3"
-  resolved "https://registry.npmjs.org/svelte/-/svelte-5.25.3.tgz"
-  integrity sha512-J9rcZ/xVJonAoESqVGHHZhrNdVbrCfkdB41BP6eiwHMoFShD9it3yZXApVYMHdGfCshBsZCKsajwJeBbS/M1zg==
+svelte@5.25.5:
+  version "5.25.5"
+  resolved "https://registry.npmjs.org/svelte/-/svelte-5.25.5.tgz"
+  integrity sha512-ULi9rkVWQJyJYZSpy6SIgSTchWadyWG1QYAUx3JAXL2gXrnhdXtoB20KmXGSNdtNyquq3eYd/gkwAkLcL5PGWw==
   dependencies:
     "@ampproject/remapping" "^2.3.0"
     "@jridgewell/sourcemap-codec" "^1.5.0"
