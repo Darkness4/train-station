@@ -2052,10 +2052,10 @@ esquery@^1.5.0:
   dependencies:
     estraverse "^5.1.0"
 
-esrap@^1.4.3:
-  version "1.4.5"
-  resolved "https://registry.npmjs.org/esrap/-/esrap-1.4.5.tgz"
-  integrity sha512-CjNMjkBWWZeHn+VX+gS8YvFwJ5+NDhg8aWZBSFJPR8qQduDNjbJodA2WcwCm7uQa5Rjqj+nZvVmceg1RbHFB9g==
+esrap@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.npmjs.org/esrap/-/esrap-1.4.6.tgz"
+  integrity sha512-F/D2mADJ9SHY3IwksD4DAXjTt7qt7GWUf3/8RhCNWmC/67tyb55dpimHmy7EplakFaflV0R/PC+fdSPqrRHAQw==
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
@@ -3408,10 +3408,10 @@ svelte-eslint-parser@^0.43.0:
     postcss "^8.4.39"
     postcss-scss "^4.0.9"
 
-svelte@5.25.5:
-  version "5.25.5"
-  resolved "https://registry.npmjs.org/svelte/-/svelte-5.25.5.tgz"
-  integrity sha512-ULi9rkVWQJyJYZSpy6SIgSTchWadyWG1QYAUx3JAXL2gXrnhdXtoB20KmXGSNdtNyquq3eYd/gkwAkLcL5PGWw==
+svelte@5.25.6:
+  version "5.25.6"
+  resolved "https://registry.npmjs.org/svelte/-/svelte-5.25.6.tgz"
+  integrity sha512-RGkaeAXDuJdvhA1fdSM5GgD++vYfJYijZL0uN6kM2s/TRJ663jktBhZlF0qjzAJGR/34PtaeT3G8MKJY1EKeqg==
   dependencies:
     "@ampproject/remapping" "^2.3.0"
     "@jridgewell/sourcemap-codec" "^1.5.0"
@@ -3422,7 +3422,7 @@ svelte@5.25.5:
     axobject-query "^4.1.0"
     clsx "^2.1.1"
     esm-env "^1.2.1"
-    esrap "^1.4.3"
+    esrap "^1.4.6"
     is-reference "^3.0.3"
     locate-character "^3.0.0"
     magic-string "^0.30.11"
