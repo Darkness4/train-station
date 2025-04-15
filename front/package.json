@@ -33,7 +33,7 @@
 		"@protobuf-ts/runtime": "2.9.6",
 		"@protobuf-ts/runtime-rpc": "2.9.6",
 		"@sveltejs/adapter-node": "5.2.12",
-		"@sveltejs/kit": "2.20.5",
+		"@sveltejs/kit": "2.20.7",
 		"@sveltejs/vite-plugin-svelte": "5.0.3",
 		"@types/eslint": "9.6.1",
 		"@types/jsonwebtoken": "^9.0.7",
