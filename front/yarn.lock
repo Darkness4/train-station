@@ -651,25 +651,37 @@
   resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.28.tgz"
   integrity sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==
 
-"@protobuf-ts/grpc-transport@2.9.6":
-  version "2.9.6"
-  resolved "https://registry.npmjs.org/@protobuf-ts/grpc-transport/-/grpc-transport-2.9.6.tgz"
-  integrity sha512-MdL6aiIhlEdXn0ZVmMfFtXtNPze21vqUW3w+E3MDqv/hgyPf5jpvQeRz+9+lu2flPfXRf+2w2d+6nWpMv25o6Q==
+"@protobuf-ts/grpc-transport@2.10.0":
+  version "2.10.0"
+  resolved "https://registry.npmjs.org/@protobuf-ts/grpc-transport/-/grpc-transport-2.10.0.tgz"
+  integrity sha512-GdY9DPT7cCodcLakZJvOAS5lH5ntrOMinYLRPdg+7iXxvtDOqxoHgv0Ggote4E1oN/M5M3wilpmeECkDVSuJxw==
   dependencies:
-    "@protobuf-ts/runtime" "^2.9.6"
-    "@protobuf-ts/runtime-rpc" "^2.9.6"
+    "@protobuf-ts/runtime" "^2.10.0"
+    "@protobuf-ts/runtime-rpc" "^2.10.0"
 
-"@protobuf-ts/runtime-rpc@2.9.6", "@protobuf-ts/runtime-rpc@^2.9.6":
+"@protobuf-ts/runtime-rpc@2.9.6":
   version "2.9.6"
   resolved "https://registry.npmjs.org/@protobuf-ts/runtime-rpc/-/runtime-rpc-2.9.6.tgz"
   integrity sha512-0UeqDRzNxgsh08lY5eWzFJNfD3gZ8Xf+WG1HzbIAbVAigzigwjwsYNNhTeas5H3gco1U5owTzCg177aambKOOw==
   dependencies:
     "@protobuf-ts/runtime" "^2.9.6"
 
+"@protobuf-ts/runtime-rpc@^2.10.0":
+  version "2.10.0"
+  resolved "https://registry.npmjs.org/@protobuf-ts/runtime-rpc/-/runtime-rpc-2.10.0.tgz"
+  integrity sha512-8CS/XPv3+pMK4v8UKhtCdvbS4h9l7aqlteKdRt0/UbIKZ8n0qHj6hX8cBhz2ngvohxCOS0N08zPr9aCLBNhW3Q==
+  dependencies:
+    "@protobuf-ts/runtime" "^2.10.0"
+
 "@protobuf-ts/runtime@2.9.6", "@protobuf-ts/runtime@^2.9.6":
   version "2.9.6"
   resolved "https://registry.npmjs.org/@protobuf-ts/runtime/-/runtime-2.9.6.tgz"
   integrity sha512-C0CfpKx4n4LBbUrajOdRj2BTbd3qBoK0SiKWLq7RgCoU6xiN4wesBMFHUOBp3fFzKeZwgU8Q2KtzaqzIvPLRXg==
+
+"@protobuf-ts/runtime@^2.10.0":
+  version "2.10.0"
+  resolved "https://registry.npmjs.org/@protobuf-ts/runtime/-/runtime-2.10.0.tgz"
+  integrity sha512-ypYwGg9Pn3W/2lZ7/HW60hONGuSdzphvOY8Dq7LeNttymDe0y3LaTUUMRpuGqOT6FfrWEMnfQbyqU8AAreo8wA==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
