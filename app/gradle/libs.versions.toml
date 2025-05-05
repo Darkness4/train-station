@@ -92,7 +92,7 @@ ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.1" }
-coordinatorlayout = { group = "androidx.coordinatorlayout", name = "coordinatorlayout", version = "1.2.0" }
+coordinatorlayout = { group = "androidx.coordinatorlayout", name = "coordinatorlayout", version = "1.3.0" }
 browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
 # Google Services
