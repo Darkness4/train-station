@@ -1058,10 +1058,10 @@
   dependencies:
     undici-types "~6.19.8"
 
-"@types/node@22.15.3":
-  version "22.15.3"
-  resolved "https://registry.npmjs.org/@types/node/-/node-22.15.3.tgz"
-  integrity sha512-lX7HFZeHf4QG/J7tBZqrCAXwz9J5RD56Y6MpP0eJkka8p+K0RY/yBTW7CYFJ4VGCclxqOLKmiGP5juQc6MKgcw==
+"@types/node@22.15.10":
+  version "22.15.10"
+  resolved "https://registry.npmjs.org/@types/node/-/node-22.15.10.tgz"
+  integrity sha512-j2U4KRlgZ9Q8tVO/KDAvXu68vutX4kxoRysL6Q22oEU4ZFT2A16aIyqiIWAwFBZkvKep2UOcSGNoLe/6BI0nrg==
   dependencies:
     undici-types "~6.21.0"
 
