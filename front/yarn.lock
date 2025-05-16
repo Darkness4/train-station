@@ -2817,10 +2817,10 @@ magic-string@^0.30.3:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.0"
 
-material-symbols@0.31.2:
-  version "0.31.2"
-  resolved "https://registry.npmjs.org/material-symbols/-/material-symbols-0.31.2.tgz"
-  integrity sha512-WANME7n9kqLNG1mcdcTuvbxkMuBQ64ktK/18d44/p/wZF0XkYXjXWs62cp4qnYGjtWABvUM3ZTB096MJsLbNSw==
+material-symbols@0.31.3:
+  version "0.31.3"
+  resolved "https://registry.npmjs.org/material-symbols/-/material-symbols-0.31.3.tgz"
+  integrity sha512-4mpGvxNUd5KtIS79xY51SGNc73pjGE70me36DrEHv6PiGO0UahX9/1zhMFd3tsSEO5KgKI80JYIPD4dTYg2y0A==
 
 math-intrinsics@^1.1.0:
   version "1.1.0"
