@@ -287,10 +287,10 @@
     "@eslint/core" "^0.14.0"
     levn "^0.4.1"
 
-"@grpc/grpc-js@1.13.3":
-  version "1.13.3"
-  resolved "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.13.3.tgz"
-  integrity sha512-FTXHdOoPbZrBjlVLHuKbDZnsTxXv2BlHF57xw6LuThXacXvtkahEPED0CKMk6obZDf65Hv4k3z62eyPNpvinIg==
+"@grpc/grpc-js@1.13.4":
+  version "1.13.4"
+  resolved "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.13.4.tgz"
+  integrity sha512-GsFaMXCkMqkKIvwCQjCrwH+GHbPKBjhwo/8ZuUkWHqbI73Kky9I+pQltrlT0+MWpedCoosda53lgjYfyEPgxBg==
   dependencies:
     "@grpc/proto-loader" "^0.7.13"
     "@js-sdsl/ordered-map" "^4.4.2"
