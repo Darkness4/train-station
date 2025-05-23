@@ -1313,10 +1313,10 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-arctic@3.6.1:
-  version "3.6.1"
-  resolved "https://registry.npmjs.org/arctic/-/arctic-3.6.1.tgz"
-  integrity sha512-zM3a1Y+HAhdXF3MFtNnesyI4X4f0yW7SsNGVeR1gYyZ6TSqH1346GUMU4dNDplTEoxWOxEjl7wrhXgkNTqUacw==
+arctic@3.7.0:
+  version "3.7.0"
+  resolved "https://registry.npmjs.org/arctic/-/arctic-3.7.0.tgz"
+  integrity sha512-ZMQ+f6VazDgUJOd+qNV+H7GohNSYal1mVjm5kEaZfE2Ifb7Ss70w+Q7xpJC87qZDkMZIXYf0pTIYZA0OPasSbw==
   dependencies:
     "@oslojs/crypto" "1.0.1"
     "@oslojs/encoding" "1.1.0"
