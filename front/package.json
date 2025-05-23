@@ -40,7 +40,7 @@
 		"@types/node": "22.15.21",
 		"@typescript-eslint/eslint-plugin": "8.32.1",
 		"@typescript-eslint/parser": "8.32.1",
-		"arctic": "3.6.1",
+		"arctic": "3.7.0",
 		"autoprefixer": "10.4.21",
 		"depcheck": "1.4.7",
 		"eslint": "9.27.0",
