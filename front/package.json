@@ -29,7 +29,7 @@
 		"@grpc/grpc-js": "1.13.4",
 		"@picocss/pico": "2.1.1",
 		"@playwright/test": "1.53.1",
-		"@protobuf-ts/grpc-transport": "2.10.0",
+		"@protobuf-ts/grpc-transport": "2.11.1",
 		"@protobuf-ts/runtime": "2.10.0",
 		"@protobuf-ts/runtime-rpc": "2.10.0",
 		"@sveltejs/adapter-node": "5.2.12",
