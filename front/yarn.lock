@@ -671,14 +671,7 @@
     "@protobuf-ts/runtime" "^2.11.1"
     "@protobuf-ts/runtime-rpc" "^2.11.1"
 
-"@protobuf-ts/runtime-rpc@2.10.0":
-  version "2.10.0"
-  resolved "https://registry.npmjs.org/@protobuf-ts/runtime-rpc/-/runtime-rpc-2.10.0.tgz"
-  integrity sha512-8CS/XPv3+pMK4v8UKhtCdvbS4h9l7aqlteKdRt0/UbIKZ8n0qHj6hX8cBhz2ngvohxCOS0N08zPr9aCLBNhW3Q==
-  dependencies:
-    "@protobuf-ts/runtime" "^2.10.0"
-
-"@protobuf-ts/runtime-rpc@^2.11.1":
+"@protobuf-ts/runtime-rpc@2.11.1", "@protobuf-ts/runtime-rpc@^2.11.1":
   version "2.11.1"
   resolved "https://registry.npmjs.org/@protobuf-ts/runtime-rpc/-/runtime-rpc-2.11.1.tgz"
   integrity sha512-4CqqUmNA+/uMz00+d3CYKgElXO9VrEbucjnBFEjqI4GuDrEQ32MaI3q+9qPBvIGOlL4PmHXrzM32vBPWRhQKWQ==
@@ -689,11 +682,6 @@
   version "2.11.1"
   resolved "https://registry.npmjs.org/@protobuf-ts/runtime/-/runtime-2.11.1.tgz"
   integrity sha512-KuDaT1IfHkugM2pyz+FwiY80ejWrkH1pAtOBOZFuR6SXEFTsnb/jiQWQ1rCIrcKx2BtyxnxW6BWwsVSA/Ie+WQ==
-
-"@protobuf-ts/runtime@^2.10.0":
-  version "2.10.0"
-  resolved "https://registry.npmjs.org/@protobuf-ts/runtime/-/runtime-2.10.0.tgz"
-  integrity sha512-ypYwGg9Pn3W/2lZ7/HW60hONGuSdzphvOY8Dq7LeNttymDe0y3LaTUUMRpuGqOT6FfrWEMnfQbyqU8AAreo8wA==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
