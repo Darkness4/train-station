@@ -17,7 +17,7 @@ require (
 	google.golang.org/grpc v1.73.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.5.1
 	google.golang.org/protobuf v1.36.6
-	modernc.org/sqlite v1.37.1
+	modernc.org/sqlite v1.38.0
 )
 
 require (
@@ -209,11 +209,11 @@ require (
 	modernc.org/b v1.0.4 // indirect
 	modernc.org/db v1.0.9 // indirect
 	modernc.org/file v1.0.7 // indirect
-	modernc.org/fileutil v1.3.1 // indirect
+	modernc.org/fileutil v1.3.3 // indirect
 	modernc.org/gc/v3 v3.0.0-20241004144649-1aea3fae8852 // indirect
 	modernc.org/golex v1.1.0 // indirect
 	modernc.org/internal v1.0.7 // indirect
-	modernc.org/libc v1.65.7 // indirect
+	modernc.org/libc v1.65.10 // indirect
 	modernc.org/lldb v1.0.6 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
