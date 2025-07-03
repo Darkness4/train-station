@@ -2579,10 +2579,10 @@ magic-string@^0.30.3:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.0"
 
-material-symbols@0.31.9:
-  version "0.31.9"
-  resolved "https://registry.npmjs.org/material-symbols/-/material-symbols-0.31.9.tgz"
-  integrity sha512-WCuJh+pgPtOq3scouRkztK+RBRj4XGHe2Jy2F8xD5T/dyLn09nP1fCJib0sf92jD/OaTE4C8/dzgIc54FkDDqA==
+material-symbols@0.32.0:
+  version "0.32.0"
+  resolved "https://registry.npmjs.org/material-symbols/-/material-symbols-0.32.0.tgz"
+  integrity sha512-qpYGTPbaIUo7pgZF5WipR6bBACxf7+Q3sIZgayWCI3Upbo7lkCdR2CP0k1sLru34wP74ewZiKUvUr2P6iTUqHw==
 
 merge2@^1.3.0:
   version "1.4.1"
