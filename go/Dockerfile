@@ -3,7 +3,7 @@ FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/alpine:latest AS cer
 RUN apk update && apk add --no-cache ca-certificates
 
 # ---
-FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/golang:1.24.4 AS builder
+FROM --platform=$BUILDPLATFORM registry-1.docker.io/library/golang:1.24.5 AS builder
 WORKDIR /build/
 COPY go.mod go.sum ./
 RUN go mod download
