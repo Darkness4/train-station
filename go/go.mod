@@ -17,7 +17,7 @@ require (
 	google.golang.org/grpc v1.73.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.5.1
 	google.golang.org/protobuf v1.36.6
-	modernc.org/sqlite v1.38.1
+	modernc.org/sqlite v1.38.2
 )
 
 require (
