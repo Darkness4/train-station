@@ -886,20 +886,20 @@
   resolved "https://registry.npmjs.org/@sveltejs/acorn-typescript/-/acorn-typescript-1.0.5.tgz"
   integrity sha512-IwQk4yfwLdibDlrXVE04jTZYlLnwsTT2PIOQQGNLWfjavGifnk1JD1LcZjZaBTRcxZu2FfPfNLOE04DSu9lqtQ==
 
-"@sveltejs/adapter-node@5.3.1":
-  version "5.3.1"
-  resolved "https://registry.npmjs.org/@sveltejs/adapter-node/-/adapter-node-5.3.1.tgz"
-  integrity sha512-PSoGfa9atkmuixe7jvuS2tsUohVZF20So87ASzfMRGTTNqEd8s48KAodlv3CzHwq9XO/BM8KsQLpqqsr/6dmuA==
+"@sveltejs/adapter-node@5.3.2":
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-node/-/adapter-node-5.3.2.tgz#70a4fe12a3121ed936e911a05d1c50b9d74e8e02"
+  integrity sha512-nBJSipMb1KLjnAM7uzb+YpnA1VWKb+WdR+0mXEnXI6K1A3XYWbjkcjnW20ubg07sicK8XaGY/FAX3PItw39qBQ==
   dependencies:
     "@rollup/plugin-commonjs" "^28.0.1"
     "@rollup/plugin-json" "^6.1.0"
     "@rollup/plugin-node-resolve" "^16.0.0"
     rollup "^4.9.5"
 
-"@sveltejs/kit@2.36.3":
-  version "2.36.3"
-  resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-2.36.3.tgz"
-  integrity sha512-MVzwZz1GFznEQbL3f0i2v9AIc3lZH01izQj6XfIrthmZAwOzyXJCgXbLRss8vk//HfYsE4w6Tz+ukbf3rScPNQ==
+"@sveltejs/kit@2.42.2":
+  version "2.42.2"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-2.42.2.tgz#bc6316fbe884798ae36854f35f228f5ef1eddf57"
+  integrity sha512-FcNICFvlSYjPiAgk8BpqTEnXkaUj6I6wDwpQBxKMpsYhUc2Q5STgsVpXOG5LqwFpUAoLAXQ4wdWul7EcAG67JQ==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     "@sveltejs/acorn-typescript" "^1.0.5"
