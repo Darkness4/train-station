@@ -19,8 +19,9 @@ import (
 	"github.com/Darkness4/train-station/go/sncf"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/joho/godotenv"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
-	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
@@ -40,6 +41,11 @@ var (
 
 	version string
 )
+
+func init() {
+	log.Logger = log.Logger.Level(zerolog.InfoLevel)
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
+}
 
 var flags = []cli.Flag{
 	&cli.StringFlag{
@@ -85,7 +91,7 @@ var flags = []cli.Flag{
 		Action: func(ctx *cli.Context, s string) (err error) {
 			jwtSecret, err = base64.StdEncoding.DecodeString(s)
 			if err != nil {
-				logger.I.Panic("failed to decode JWT", zap.Error(err))
+				log.Panic().Err(err).Msg("failed to decode JWT")
 			}
 			return nil
 		},
@@ -96,7 +102,8 @@ var flags = []cli.Flag{
 		Value:   false,
 		Action: func(ctx *cli.Context, s bool) error {
 			if s {
-				logger.EnableDebug()
+				log.Logger = log.Logger.Level(zerolog.DebugLevel)
+				zerolog.SetGlobalLevel(zerolog.DebugLevel)
 			}
 			return nil
 		},
@@ -115,51 +122,51 @@ var app = &cli.App{
 
 		d, err := sql.Open("sqlite", dbFile)
 		if err != nil {
-			logger.I.Error("db failed", zap.Error(err))
+			log.Err(err).Msg("db failed")
 			return err
 		}
 		db.InitialMigration(d)
 		q := db.New(d)
 
 		go func() {
-			logger.I.Info("downloading initial data...")
+			log.Info().Msg("downloading initial data...")
 			stations, err := sncf.Download(ctx)
 			if err != nil {
-				logger.I.Panic("failed to download initial data", zap.Error(err))
+				log.Panic().Err(err).Msg("failed to download initial data")
 			}
-			logger.I.Info("clearing database...")
+			log.Info().Msg("clearing database...")
 			if err := q.ClearWithTx(ctx, d); err != nil {
-				logger.I.Panic("failed to clear db", zap.Error(err))
+				log.Panic().Err(err).Msg("failed to clear db")
 			}
-			logger.I.Info("inserting new data in database...")
+			log.Info().Msg("inserting new data in database...")
 			if err := q.CreateManyStationsWithTx(ctx, d, mappers.StationsFromSNCF(stations)...); err != nil {
-				logger.I.Panic("failed to insert initial data", zap.Error(err))
+				log.Panic().Err(err).Msg("failed to insert initial data")
 			}
-			logger.I.Info("initialized database successfully")
+			log.Info().Msg("initialized database successfully")
 		}()
 
 		lis, err := net.Listen("tcp", listenAddress)
 		if err != nil {
-			logger.I.Error("listen failed", zap.Error(err))
+			log.Err(err).Msg("listen failed")
 			return err
 		}
 
 		opts := []grpc.ServerOption{
 			grpc.ChainUnaryInterceptor(
 				logging.UnaryServerInterceptor(
-					logger.InterceptorLogger(logger.I),
+					logger.InterceptorLogger(log.Logger),
 				),
 			),
 			grpc.ChainStreamInterceptor(
 				logging.StreamServerInterceptor(
-					logger.InterceptorLogger(logger.I),
+					logger.InterceptorLogger(log.Logger),
 				),
 			),
 		}
 		if tls {
 			creds, err := credentials.NewServerTLSFromFile(certFile, keyFile)
 			if err != nil {
-				logger.I.Fatal("failed to load certificates", zap.Error(err))
+				log.Fatal().Err(err).Msg("failed to load certificates")
 			}
 			opts = append(opts, grpc.Creds(creds))
 		}
@@ -177,7 +184,7 @@ var app = &cli.App{
 			auth.NewAPI(j),
 		)
 
-		logger.I.Info("serving...")
+		log.Info().Msg("serving...")
 
 		return server.Serve(lis)
 	},
@@ -187,6 +194,6 @@ func main() {
 	_ = godotenv.Load(".env.local")
 	_ = godotenv.Load(".env")
 	if err := app.Run(os.Args); err != nil {
-		logger.I.Fatal("app crashed", zap.Error(err))
+		log.Fatal().Err(err).Msg("app crashed")
 	}
 }

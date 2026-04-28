@@ -8,8 +8,7 @@ import (
 	"github.com/Darkness4/train-station/go/db"
 	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/go/trainstation/v1alpha1"
 	"github.com/Darkness4/train-station/go/jwt"
-	"github.com/Darkness4/train-station/go/logger"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -22,10 +21,10 @@ type stationAPIServer struct {
 
 func New(q *db.Queries, jwt *jwt.Service) *stationAPIServer {
 	if q == nil {
-		logger.I.Panic("q is nil")
+		log.Panic().Msg("q is nil")
 	}
 	if jwt == nil {
-		logger.I.Panic("jwt is nil")
+		log.Panic().Msg("jwt is nil")
 	}
 	return &stationAPIServer{
 		q:   q,
@@ -39,13 +38,13 @@ func (s *stationAPIServer) GetManyStations(
 ) (*trainstationv1alpha1.GetManyStationsResponse, error) {
 	userID, err := s.jwt.Validate(req.GetToken())
 	if err != nil {
-		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
+		log.Err(err).Any("req", req).Msg("authentication error")
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
 	total, err := s.q.CountStations(ctx, req.GetQuery())
 	if err != nil {
-		logger.I.Error("count station failed", zap.Error(err), zap.Any("req", req))
+		log.Err(err).Any("req", req).Msg("count station failed")
 		return nil, err
 	}
 	pageCount := total/req.GetLimit() + 1
@@ -90,7 +89,7 @@ func (s *stationAPIServer) GetOneStation(
 ) (*trainstationv1alpha1.GetOneStationResponse, error) {
 	userID, err := s.jwt.Validate(req.GetToken())
 	if err != nil {
-		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
+		log.Err(err).Any("req", req).Msg("authentication error")
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 
@@ -112,7 +111,7 @@ func (s *stationAPIServer) SetFavoriteOneStation(
 ) (*trainstationv1alpha1.SetFavoriteOneStationResponse, error) {
 	userID, err := s.jwt.Validate(req.GetToken())
 	if err != nil {
-		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
+		log.Err(err).Any("req", req).Msg("authentication error")
 		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
 	}
 

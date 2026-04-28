@@ -10,8 +10,7 @@ import (
 
 	"github.com/Darkness4/train-station/go/auth/github"
 	authv1alpha1 "github.com/Darkness4/train-station/go/gen/go/auth/v1alpha1"
-	"github.com/Darkness4/train-station/go/logger"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 )
 
 var (
@@ -52,10 +51,14 @@ func Validate(ctx context.Context, account *authv1alpha1.Account) (UserInfo, err
 		}
 		var u github.User
 		if err := json.NewDecoder(resp.Body).Decode(&u); err != nil {
-			logger.I.Panic("failed to decode a github API response", zap.Error(err))
+			log.Panic().Err(err).Msg("failed to decode a github API response")
 		}
 		if account.GetProviderAccountId() != strconv.FormatInt(u.ID, 10) {
-			return UserInfo{}, fmt.Errorf("%v: %s", ErrInvalidAccountID, account.GetProviderAccountId())
+			return UserInfo{}, fmt.Errorf(
+				"%v: %s",
+				ErrInvalidAccountID,
+				account.GetProviderAccountId(),
+			)
 		}
 
 		var username = u.Name

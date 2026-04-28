@@ -4,9 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/Darkness4/train-station/go/logger"
 	"github.com/golang-jwt/jwt/v5"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 )
 
 var ErrInvalidToken = errors.New("invalid JWT token")
@@ -41,7 +40,7 @@ func (s *Service) CreateToken(subject string, name string, picture string) strin
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, claims)
 	signed, err := token.SignedString(s.secret)
 	if err != nil {
-		logger.I.Panic("failed to sign jwt", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to sign jwt")
 	}
 	return signed
 }

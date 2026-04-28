@@ -5,8 +5,7 @@ import (
 	"time"
 
 	healthv1 "github.com/Darkness4/train-station/go/gen/go/grpc/health/v1"
-	"github.com/Darkness4/train-station/go/logger"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 )
 
 type health struct {
@@ -38,7 +37,7 @@ func (h *health) Watch(
 			if err := stream.Send(&healthv1.HealthCheckResponse{
 				Status: healthv1.HealthCheckResponse_SERVING,
 			}); err != nil {
-				logger.I.Error("healthcheck send failed", zap.Error(err))
+				log.Err(err).Msg("healthcheck send failed")
 			}
 
 			select {

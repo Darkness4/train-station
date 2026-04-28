@@ -5,14 +5,13 @@ import (
 
 	"github.com/Darkness4/train-station/go/db"
 	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/go/trainstation/v1alpha1"
-	"github.com/Darkness4/train-station/go/logger"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 )
 
 func stringToCoordinates(in string) []float64 {
 	var out []float64
 	if err := json.Unmarshal([]byte(in), &out); err != nil {
-		logger.I.Panic("failed to convert", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to convert")
 	}
 	return out
 }
@@ -20,7 +19,7 @@ func stringToCoordinates(in string) []float64 {
 func stringToGeo(in string) *trainstationv1alpha1.Geometry {
 	var out trainstationv1alpha1.Geometry
 	if err := json.Unmarshal([]byte(in), &out); err != nil {
-		logger.I.Panic("failed to convert", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to convert")
 	}
 	return &out
 }

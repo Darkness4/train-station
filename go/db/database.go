@@ -4,11 +4,10 @@ import (
 	"database/sql"
 	"embed"
 
-	"github.com/Darkness4/train-station/go/logger"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/sqlite"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 )
 
 //go:embed migrations/*.sql
@@ -19,13 +18,17 @@ func InitialMigration(db *sql.DB) {
 		NoTxWrap: true,
 	})
 	if err != nil {
-		logger.I.Panic("failed to attach db", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to attach db")
 	}
 	iofsDriver, err := iofs.New(migrations, "migrations")
 	if err != nil {
-		logger.I.Panic("failed to load migrations", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to load migrations")
 	}
-	defer iofsDriver.Close()
+	defer func() {
+		if err := iofsDriver.Close(); err != nil {
+			log.Err(err).Msg("failed to close migration source")
+		}
+	}()
 	m, err := migrate.NewWithInstance(
 		"iofs",
 		iofsDriver,
@@ -33,28 +36,28 @@ func InitialMigration(db *sql.DB) {
 		dbDriver,
 	)
 	if err != nil {
-		logger.I.Panic("failed to load db", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to load db")
 	}
 	if version, dirty, err := m.Version(); err == migrate.ErrNilVersion {
-		logger.I.Warn("No migrations detected. Attempting initial migration...")
+		log.Warn().Msg("No migrations detected. Attempting initial migration...")
 		if err = m.Up(); err != nil {
-			logger.I.Panic("failed to migrate db", zap.Error(err))
+			log.Panic().Err(err).Msg("failed to migrate db")
 		}
-		logger.I.Info("DB migrated.")
+		log.Info().Msg("DB migrated.")
 	} else if dirty {
-		logger.I.Panic("DB is in dirty state.")
+		log.Panic().Msg("DB is in dirty state.")
 	} else if err != nil {
-		logger.I.Panic("Failed to fetch DB version.", zap.Error(err))
+		log.Panic().Err(err).Msg("Failed to fetch DB version.")
 	} else {
-		logger.I.Info("DB version detected.", zap.Uint("version", version))
+		log.Info().Uint("version", version).Msg("DB version detected.")
 		if new, err := iofsDriver.Next(version); err != nil {
-			logger.I.Info("Latest DB version.", zap.Uint("version", version))
+			log.Info().Uint("version", version).Msg("Latest DB version.")
 		} else {
-			logger.I.Warn("New DB version detected.", zap.Uint("actual", version), zap.Uint("new", new))
+			log.Warn().Uint("actual", version).Uint("new", new).Msg("New DB version detected.")
 			if err = m.Up(); err != nil {
-				logger.I.Panic("failed to migrate db", zap.Error(err))
+				log.Panic().Err(err).Msg("failed to migrate db")
 			}
-			logger.I.Info("DB migrated.")
+			log.Info().Msg("DB migrated.")
 		}
 	}
 }

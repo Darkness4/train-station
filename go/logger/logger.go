@@ -2,65 +2,37 @@ package logger
 
 import (
 	"context"
-	"os"
 
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+	"github.com/rs/zerolog"
 )
 
-var I *zap.Logger
-
-var atom = zap.NewAtomicLevel()
-
-func init() {
-	config := zap.NewProductionEncoderConfig()
-	config.TimeKey = "timestamp"
-	config.EncodeTime = zapcore.ISO8601TimeEncoder
-	config.EncodeLevel = zapcore.CapitalColorLevelEncoder
-	config.EncodeCaller = zapcore.FullCallerEncoder
-	I = zap.New(zapcore.NewCore(
-		zapcore.NewConsoleEncoder(config),
-		zapcore.Lock(os.Stdout),
-		atom,
-	))
-	atom.SetLevel(zap.InfoLevel)
-}
-
-// InterceptorLogger adapts zap logger to interceptor logger.
-func InterceptorLogger(l *zap.Logger) logging.Logger {
+// InterceptorLogger adapts zerolog logger to interceptor logger.
+func InterceptorLogger(l zerolog.Logger) logging.Logger {
 	return logging.LoggerFunc(
 		func(ctx context.Context, lvl logging.Level, msg string, fields ...any) {
-			f := make([]zap.Field, 0, len(fields)/2)
-
-			for i := 0; i < len(fields); i += 2 {
-				key := fields[i]
-				value := fields[i+1]
-
-				switch v := value.(type) {
-				case string:
-					f = append(f, zap.String(key.(string), v))
-				case int:
-					f = append(f, zap.Int(key.(string), v))
-				case bool:
-					f = append(f, zap.Bool(key.(string), v))
-				default:
-					f = append(f, zap.Any(key.(string), v))
-				}
-			}
-
-			logger := l.WithOptions(zap.AddCallerSkip(1)).With(f...)
+			var logEvent *zerolog.Event
 
 			switch lvl {
+			case logging.LevelDebug:
+				logEvent = l.Debug()
+			case logging.LevelInfo:
+				logEvent = l.Info()
 			case logging.LevelWarn:
-				logger.Warn(msg)
+				logEvent = l.Warn()
 			case logging.LevelError:
-				logger.Error(msg)
+				logEvent = l.Error()
+			default:
+				logEvent = l.Info()
 			}
+
+			for i := 0; i < len(fields); i += 2 {
+				key := fields[i].(string)
+				value := fields[i+1]
+				logEvent = logEvent.Any(key, value)
+			}
+
+			logEvent.Msg(msg)
 		},
 	)
-}
-
-func EnableDebug() {
-	atom.SetLevel(zap.DebugLevel)
 }
