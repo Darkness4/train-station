@@ -1,10 +1,10 @@
-package mappers
+package station
 
 import (
 	"encoding/json"
 
 	"github.com/Darkness4/train-station/go/db"
-	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/go/trainstation/v1alpha1"
+	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/trainstation/v1alpha1"
 	"github.com/rs/zerolog/log"
 )
 
