@@ -49,7 +49,8 @@ func (suite *DBTestSuite) BeforeTest(suiteName, testName string) {
 		log.Panic().Err(err).Msg("failed to open db")
 	}
 	suite.db = d
-	db.InitialMigration(d)
+	err = db.Migrate(d, "up")
+	suite.Require().NoError(err)
 	suite.q = db.New(suite.db)
 }
 

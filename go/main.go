@@ -18,7 +18,7 @@ import (
 	"github.com/Darkness4/train-station/go/db/mappers"
 	"github.com/Darkness4/train-station/go/gen/grpc/health/v1/healthv1connect"
 	"github.com/Darkness4/train-station/go/gen/trainstation/v1alpha1/trainstationv1alpha1connect"
-	"github.com/Darkness4/train-station/go/jwks"
+	"github.com/Darkness4/train-station/go/introspection"
 	"github.com/Darkness4/train-station/go/sncf"
 	internaltls "github.com/Darkness4/train-station/go/tls"
 	"github.com/go-chi/chi/v5"
@@ -30,6 +30,9 @@ import (
 	"github.com/urfave/cli/v3"
 
 	godeltaprof "github.com/grafana/pyroscope-go/godeltaprof/http/pprof"
+
+	"connectrpc.com/connect"
+	"connectrpc.com/validate"
 
 	_ "modernc.org/sqlite"
 )
@@ -49,8 +52,10 @@ var (
 
 	dbFile string
 
-	jwksURL           string
-	jwksRefreshPeriod time.Duration
+	introspectionUrl          string
+	introspectionCachePeriod  time.Duration
+	introspectionClientID     string
+	introspectionClientSecret string
 
 	version string
 )
@@ -92,18 +97,32 @@ var flags = []cli.Flag{
 		Sources:     cli.NewValueSourceChain(cli.EnvVar("DB_PATH")),
 	},
 	&cli.StringFlag{
-		Name:        "jwks.url",
+		Name:        "introspection.url",
 		Required:    true,
-		Usage:       "JWKS URL used to validate incomming JWTs.",
-		Destination: &jwksURL,
-		Sources:     cli.NewValueSourceChain(cli.EnvVar("JWKS_URL")),
+		Usage:       "Token Introspection URL used to validate incoming access tokens.",
+		Destination: &introspectionUrl,
+		Sources:     cli.NewValueSourceChain(cli.EnvVar("INTROSPECTION_URL")),
 	},
 	&cli.DurationFlag{
-		Name:        "jwks.refresh-period",
+		Name:        "introspection.cache-period",
 		Value:       time.Hour,
-		Usage:       "JWKS refresh period.",
-		Destination: &jwksRefreshPeriod,
-		Sources:     cli.NewValueSourceChain(cli.EnvVar("JWKS_REFRESH_PERIOD")),
+		Usage:       "Token Introspection cache period.",
+		Destination: &introspectionCachePeriod,
+		Sources:     cli.NewValueSourceChain(cli.EnvVar("INTROSPECTION_CACHE_PERIOD")),
+	},
+	&cli.StringFlag{
+		Name:        "introspection.client-id",
+		Required:    true,
+		Usage:       "Token Introspection client ID.",
+		Destination: &introspectionClientID,
+		Sources:     cli.NewValueSourceChain(cli.EnvVar("INTROSPECTION_CLIENT_ID")),
+	},
+	&cli.StringFlag{
+		Name:        "introspection.client-secret",
+		Required:    true,
+		Usage:       "Token Introspection client secret.",
+		Destination: &introspectionClientSecret,
+		Sources:     cli.NewValueSourceChain(cli.EnvVar("INTROSPECTION_CLIENT_SECRET")),
 	},
 }
 
@@ -125,7 +144,7 @@ var app = &cli.Command{
 			log.Err(err).Msg("db failed")
 			return err
 		}
-		db.InitialMigration(d)
+		db.Migrate(d, "up")
 		q := db.New(d)
 
 		log.Info().Msg("downloading initial data...")
@@ -152,10 +171,12 @@ var app = &cli.Command{
 			return fmt.Errorf("cannot setup server TLS config: %w", err)
 		}
 
-		jwks := jwks.NewService(jwksURL)
-		if err := jwks.Refresh(ctx); err != nil {
-			return fmt.Errorf("failed to refresh JWKS: %w", err)
-		}
+		introspect := introspection.NewService(introspection.Config{
+			Endpoint:     introspectionUrl,
+			ClientID:     introspectionClientID,
+			ClientSecret: introspectionClientSecret,
+			CacheTTL:     introspectionCachePeriod,
+		})
 
 		r := chi.NewMux()
 		r.Use(middleware.RequestID)
@@ -168,14 +189,20 @@ var app = &cli.Command{
 		r.HandleFunc("GET /debug/pprof/delta_heap", godeltaprof.Heap)
 		r.HandleFunc("GET /debug/pprof/delta_block", godeltaprof.Block)
 		r.HandleFunc("GET /debug/pprof/delta_mutex", godeltaprof.Mutex)
-		r.Handle(healthv1connect.NewHealthHandler(health.New()))
+		r.Mount(healthv1connect.NewHealthHandler(health.New()))
 
-		path, handler := trainstationv1alpha1connect.NewStationAPIHandler(station.NewAPIHandler(q))
-		r.Handle(path, jwks.AuthMiddleware(handler))
+		path, handler := trainstationv1alpha1connect.NewStationAPIHandler(
+			station.NewAPIHandler(q),
+			connect.WithInterceptors(validate.NewInterceptor()),
+		)
+		r.Mount(path, introspect.AuthMiddleware(handler))
 
 		ongoingCtx, stopOngoingGracefully := context.WithCancel(
 			log.Logger.WithContext(context.Background()),
 		)
+		p := new(http.Protocols)
+		p.SetHTTP1(true)
+		p.SetUnencryptedHTTP2(true)
 		srv := &http.Server{
 			Addr:         listenAddress,
 			TLSConfig:    tlsConfig,
@@ -183,10 +210,9 @@ var app = &cli.Command{
 			ReadTimeout:  5 * time.Second,
 			WriteTimeout: 10 * time.Second,
 			IdleTimeout:  30 * time.Second,
+			Protocols:    p,
 			BaseContext:  func(_ net.Listener) context.Context { return ongoingCtx },
 		}
-
-		go jwks.RefreshLoop(ctx, jwksRefreshPeriod)
 
 		go func() {
 			log.Info().Str("address", srv.Addr).Msg("starting private server")

@@ -1,9 +1,11 @@
-package jwks
+package introspection
 
 import (
 	"context"
 	"net/http"
 	"strings"
+
+	"github.com/rs/zerolog/log"
 )
 
 type contextKey string
@@ -12,47 +14,43 @@ var (
 	subjectKey contextKey = "subject"
 )
 
-// AuthMiddleware returns a middleware that validates the JWT using the JWKS Service.
-// On success, it injects the 'sub' claim into the request context.
+// AuthMiddleware validates the token via OAuth2 introspection and injects claims into the context.
 func (s *Service) AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
+			log.Debug().Msg("Authorization header missing")
 			http.Error(w, "Authorization header missing", http.StatusUnauthorized)
 			return
 		}
 
-		// Expecting "Bearer <token>"
 		parts := strings.Split(authHeader, " ")
 		if len(parts) != 2 || !strings.EqualFold(parts[0], "Bearer") {
+			log.Debug().Str("header", authHeader).Msg("Invalid authorization format")
 			http.Error(w, "Invalid authorization format", http.StatusUnauthorized)
 			return
 		}
 
 		token := parts[1]
 
-		// Validate using our Service
-		_, claims, err := s.Validate(token)
+		// Validate using the introspection service.
+		// We pass r.Context() so that if the client cancels the request,
+		// the introspection network call is also canceled.
+		resp, err := s.Validate(r.Context(), token)
 		if err != nil {
-			http.Error(w, "Invalid token", http.StatusUnauthorized)
+			log.Debug().Err(err).Msg("Introspection failed")
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 
-		// Ensure the subject exists
-		if claims.Subject == "" {
-			http.Error(w, "Token missing subject claim", http.StatusUnauthorized)
-			return
-		}
+		// Inject the subject and optionally scopes into the context
+		ctx := context.WithValue(r.Context(), subjectKey, resp.Subject)
 
-		// Add subject to context using the private struct key
-		ctx := context.WithValue(r.Context(), subjectKey, claims.Subject)
-
-		// Continue with the new context
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
-// GetSubject is a helper function to retrieve the subject from a context.
+// GetSubject retrieves the 'sub' claim from the context.
 func GetSubject(ctx context.Context) (string, bool) {
 	sub, ok := ctx.Value(subjectKey).(string)
 	return sub, ok

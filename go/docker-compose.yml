@@ -24,5 +24,13 @@ services:
       init-permissions:
         condition: service_completed_successfully
 
+  dex:
+    image: ghcr.io/dexidp/dex:latest
+    ports:
+      - '5556:5556'
+    command: dex serve /etc/dex/config.yaml
+    volumes:
+      - ./docker/dex/config.docker.yaml:/etc/dex/config.yaml
+
 volumes:
   store:

@@ -1,0 +1,29 @@
+issuer: http://localhost:5556
+storage:
+  type: memory
+web:
+  http: 0.0.0.0:5556
+telemetry:
+  http: 0.0.0.0:5558
+
+# Configuration for static clients
+staticClients:
+  - id: train-station
+    redirectURIs:
+      - 'http://localhost:5173/auth/callback'
+    name: 'Train Station'
+    secret: zYXYZSgEba6usrvj6lsjX5zQHEwaEi6mVbC5ulAlJ7zyV5QMzEdRYNoPZJnparTs
+    public: true
+  - id: train-station-api
+    name: 'Train Station API'
+    secret: xo72oHz1Re11Clz7jHbtWjaILQzqOSNK3WLmsAnBug2YazxdqXRdhtPyhgdBRBIY
+    public: false
+
+enablePasswordDB: true
+
+staticPasswords:
+  - email: 'admin@example.com'
+    # bcrypted "password"
+    hash: '$2b$12$acCCsOuwI09Lg81y5A/w2egiCLcPu934ct4TAgBHgzfahut.9Oir6'
+    username: 'admin'
+    userID: '08a515ad-1111-2222-3333-1234567890ab'

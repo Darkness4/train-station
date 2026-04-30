@@ -9,7 +9,7 @@ import (
 	"github.com/Darkness4/train-station/go/db"
 	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/trainstation/v1alpha1"
 	"github.com/Darkness4/train-station/go/gen/trainstation/v1alpha1/trainstationv1alpha1connect"
-	"github.com/Darkness4/train-station/go/jwks"
+	"github.com/Darkness4/train-station/go/introspection"
 	"github.com/rs/zerolog/log"
 )
 
@@ -23,16 +23,14 @@ func NewAPIHandler(q *db.Queries) *StationAPIHandler {
 	if q == nil {
 		log.Panic().Msg("q is nil")
 	}
-	return &StationAPIHandler{
-		q: q,
-	}
+	return &StationAPIHandler{q: q}
 }
 
 func (s *StationAPIHandler) GetManyStations(
 	ctx context.Context,
 	req *connect.Request[trainstationv1alpha1.GetManyStationsRequest],
 ) (*connect.Response[trainstationv1alpha1.GetManyStationsResponse], error) {
-	userID, ok := jwks.GetSubject(ctx)
+	userID, ok := introspection.GetSubject(ctx)
 	if !ok {
 		log.Panic().Msg("failed to get subject, AuthMiddleware was not called")
 	}
@@ -86,7 +84,7 @@ func (s *StationAPIHandler) GetOneStation(
 	ctx context.Context,
 	req *connect.Request[trainstationv1alpha1.GetOneStationRequest],
 ) (*connect.Response[trainstationv1alpha1.GetOneStationResponse], error) {
-	userID, ok := jwks.GetSubject(ctx)
+	userID, ok := introspection.GetSubject(ctx)
 	if !ok {
 		log.Panic().Msg("failed to get subject, AuthMiddleware was not called")
 	}
@@ -109,7 +107,7 @@ func (s *StationAPIHandler) SetFavoriteOneStation(
 	ctx context.Context,
 	req *connect.Request[trainstationv1alpha1.SetFavoriteOneStationRequest],
 ) (*connect.Response[trainstationv1alpha1.SetFavoriteOneStationResponse], error) {
-	userID, ok := jwks.GetSubject(ctx)
+	userID, ok := introspection.GetSubject(ctx)
 	if !ok {
 		log.Panic().Msg("failed to get subject, AuthMiddleware was not called")
 	}

@@ -26,7 +26,6 @@ type GetManyStationsRequest struct {
 	Query         string                 `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
 	Limit         int64                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
 	Page          int64                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
-	Token         string                 `protobuf:"bytes,4,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -82,13 +81,6 @@ func (x *GetManyStationsRequest) GetPage() int64 {
 	return 0
 }
 
-func (x *GetManyStationsRequest) GetToken() string {
-	if x != nil {
-		return x.Token
-	}
-	return ""
-}
-
 type GetManyStationsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Stations      *PaginatedStation      `protobuf:"bytes,1,opt,name=stations,proto3" json:"stations,omitempty"`
@@ -136,7 +128,6 @@ func (x *GetManyStationsResponse) GetStations() *PaginatedStation {
 type GetOneStationRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -174,13 +165,6 @@ func (*GetOneStationRequest) Descriptor() ([]byte, []int) {
 func (x *GetOneStationRequest) GetId() string {
 	if x != nil {
 		return x.Id
-	}
-	return ""
-}
-
-func (x *GetOneStationRequest) GetToken() string {
-	if x != nil {
-		return x.Token
 	}
 	return ""
 }
@@ -232,7 +216,6 @@ func (x *GetOneStationResponse) GetStation() *Station {
 type SetFavoriteOneStationRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	Value         bool                   `protobuf:"varint,3,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -271,13 +254,6 @@ func (*SetFavoriteOneStationRequest) Descriptor() ([]byte, []int) {
 func (x *SetFavoriteOneStationRequest) GetId() string {
 	if x != nil {
 		return x.Id
-	}
-	return ""
-}
-
-func (x *SetFavoriteOneStationRequest) GetToken() string {
-	if x != nil {
-		return x.Token
 	}
 	return ""
 }
@@ -645,31 +621,28 @@ var File_trainstation_v1alpha1_station_proto protoreflect.FileDescriptor
 
 const file_trainstation_v1alpha1_station_proto_rawDesc = "" +
 	"\n" +
-	"#trainstation/v1alpha1/station.proto\x12\x15trainstation.v1alpha1\"v\n" +
+	"#trainstation/v1alpha1/station.proto\x12\x15trainstation.v1alpha1\"X\n" +
 	"\x16GetManyStationsRequest\x12\x14\n" +
-	"\x05query\x18\x01 \x01(\tR\x05query\x12\x18\n" +
-	"\x05limit\x18\x02 \x01(\x03B\x020\x02R\x05limit\x12\x16\n" +
-	"\x04page\x18\x03 \x01(\x03B\x020\x02R\x04page\x12\x14\n" +
-	"\x05token\x18\x04 \x01(\tR\x05token\"^\n" +
+	"\x05query\x18\x01 \x01(\tR\x05query\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x03R\x05limit\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x03R\x04page\"^\n" +
 	"\x17GetManyStationsResponse\x12C\n" +
-	"\bstations\x18\x01 \x01(\v2'.trainstation.v1alpha1.PaginatedStationR\bstations\"<\n" +
+	"\bstations\x18\x01 \x01(\v2'.trainstation.v1alpha1.PaginatedStationR\bstations\"&\n" +
 	"\x14GetOneStationRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\"Q\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"Q\n" +
 	"\x15GetOneStationResponse\x128\n" +
-	"\astation\x18\x01 \x01(\v2\x1e.trainstation.v1alpha1.StationR\astation\"Z\n" +
+	"\astation\x18\x01 \x01(\v2\x1e.trainstation.v1alpha1.StationR\astation\"D\n" +
 	"\x1cSetFavoriteOneStationRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\x12\x14\n" +
 	"\x05value\x18\x03 \x01(\bR\x05value\"\x1f\n" +
-	"\x1dSetFavoriteOneStationResponse\"\xb5\x01\n" +
+	"\x1dSetFavoriteOneStationResponse\"\xa5\x01\n" +
 	"\x10PaginatedStation\x122\n" +
-	"\x04data\x18\x01 \x03(\v2\x1e.trainstation.v1alpha1.StationR\x04data\x12\x18\n" +
-	"\x05count\x18\x02 \x01(\x03B\x020\x02R\x05count\x12\x18\n" +
-	"\x05total\x18\x03 \x01(\x03B\x020\x02R\x05total\x12\x16\n" +
-	"\x04page\x18\x04 \x01(\x03B\x020\x02R\x04page\x12!\n" +
+	"\x04data\x18\x01 \x03(\v2\x1e.trainstation.v1alpha1.StationR\x04data\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x03R\x05count\x12\x14\n" +
+	"\x05total\x18\x03 \x01(\x03R\x05total\x12\x12\n" +
+	"\x04page\x18\x04 \x01(\x03R\x04page\x12\x1d\n" +
 	"\n" +
-	"page_count\x18\x05 \x01(\x03B\x020\x02R\tpageCount\"\x9b\x04\n" +
+	"page_count\x18\x05 \x01(\x03R\tpageCount\"\x93\x04\n" +
 	"\aStation\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
 	"\acommune\x18\x02 \x01(\tR\acommune\x12\x17\n" +
@@ -684,12 +657,12 @@ const file_trainstation_v1alpha1_station_proto_rawDesc = "" +
 	"code_ligne\x18\t \x01(\tR\tcodeLigne\x12\x13\n" +
 	"\x05x_l93\x18\n" +
 	" \x01(\x01R\x04xL93\x12\x13\n" +
-	"\x05c_geo\x18\v \x03(\x01R\x04cGeo\x12!\n" +
+	"\x05c_geo\x18\v \x03(\x01R\x04cGeo\x12\x1d\n" +
 	"\n" +
-	"rg_troncon\x18\f \x01(\x03B\x020\x02R\trgTroncon\x12<\n" +
+	"rg_troncon\x18\f \x01(\x03R\trgTroncon\x12<\n" +
 	"\tgeo_shape\x18\r \x01(\v2\x1f.trainstation.v1alpha1.GeometryR\bgeoShape\x12\x0e\n" +
-	"\x02pk\x18\x0e \x01(\tR\x02pk\x12\x1e\n" +
-	"\bidreseau\x18\x0f \x01(\x03B\x020\x02R\bidreseau\x12\x1e\n" +
+	"\x02pk\x18\x0e \x01(\tR\x02pk\x12\x1a\n" +
+	"\bidreseau\x18\x0f \x01(\x03R\bidreseau\x12\x1e\n" +
 	"\n" +
 	"departemen\x18\x10 \x01(\tR\n" +
 	"departemen\x12\x13\n" +
