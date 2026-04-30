@@ -1,11 +1,11 @@
-import { stationClient } from '$lib/server/api';
 import { error } from '@sveltejs/kit';
+import { getStationClient } from '$lib/server/api';
 import type { RequestHandler } from './$types';
 
 export const POST = (async ({ request, locals }) => {
-	if (!locals.session?.token) {
+	if (!locals.session?.accessToken) {
 		error(401, {
-			message: 'Unauthorized'
+			message: 'Unauthorized',
 		});
 	}
 
@@ -16,11 +16,17 @@ export const POST = (async ({ request, locals }) => {
 	const value = data.value;
 
 	// TODO: handle error
-	await stationClient.setFavoriteOneStation({
-		id: id,
-		value: value,
-		token: locals.session?.token
-	});
+	await getStationClient().setFavoriteOneStation(
+		{
+			id: id,
+			value: value,
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${locals.session.accessToken}`,
+			},
+		},
+	);
 
 	return new Response();
 }) satisfies RequestHandler;

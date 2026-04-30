@@ -1,13 +1,13 @@
 <script lang="ts">
 	interface Props {
-		startPage: number;
-		pageCount: number;
-		page: number;
-		goto: (page: number) => unknown;
+		startPage: bigint;
+		pageCount: bigint;
+		page: bigint;
+		goto: (page: bigint) => unknown;
 	}
 	let { startPage, pageCount, page, goto }: Props = $props();
-	let nextPage = $derived(page + 1);
-	let prevPage = $derived(page - 1);
+	let nextPage = $derived(page + 1n);
+	let prevPage = $derived(page - 1n);
 
 	function goToStart() {
 		goto(startPage);
@@ -34,10 +34,13 @@
 	<ul class="max-md:hidden">
 		<li>
 			<button
+				type="button"
 				class="flex h-12 w-12 items-center justify-center rounded-full"
 				disabled={page <= startPage}
-				onclick={goToPrevious}><span class="material-symbols-outlined">arrow_back</span></button
+				onclick={goToPrevious}
 			>
+				<span class="material-symbols-outlined">arrow_back</span>
+			</button>
 		</li>
 	</ul>
 
@@ -45,51 +48,62 @@
 		{#if page > startPage}
 			<li>
 				<button
+					type="button"
 					class="flex h-12 w-12 items-center justify-center rounded-full"
 					onclick={goToStart}
-					aria-label="Goto page {startPage}">{startPage}</button
+					aria-label="Goto page {startPage}"
 				>
+					{startPage}
+				</button>
 			</li>
 		{/if}
 		{#if prevPage > startPage}
-			<li>
-				<span>&hellip;</span>
-			</li>
+			<li><span>&hellip;</span></li>
 			<li>
 				<button
+					type="button"
 					class="flex h-12 w-12 items-center justify-center rounded-full"
 					onclick={goToPrevious}
-					aria-label="Goto page {prevPage}">{prevPage}</button
+					aria-label="Goto page {prevPage}"
 				>
+					{prevPage}
+				</button>
 			</li>
 		{/if}
 		<li>
 			<button
+				type="button"
 				class="flex h-12 w-12 items-center justify-center rounded-full"
 				onclick={goToCurrent}
 				aria-label="Page {page}"
-				aria-current="page">{page}</button
+				aria-current="page"
 			>
+				{page}
+			</button>
 		</li>
 		{#if nextPage < pageCount}
 			<li>
 				<button
+					type="button"
 					class="flex h-12 w-12 items-center justify-center rounded-full"
 					onclick={goToNext}
-					aria-label="Goto page {nextPage}">{nextPage}</button
+					aria-label="Goto page {nextPage}"
 				>
+					{nextPage}
+				</button>
 			</li>
-			<li>
-				<span>&hellip;</span>
-			</li>
+			<li><span>&hellip;</span></li>
 		{/if}
 		{#if page < pageCount}
 			<li>
 				<button
+					type="button"
 					class="flex h-12 w-12 items-center justify-center rounded-full"
 					onclick={goToLast}
-					aria-label="Goto page {pageCount}">{pageCount}</button
+					aria-label="Goto page {pageCount}"
 				>
+					{pageCount}
+				</button>
 			</li>
 		{/if}
 	</ul>
@@ -97,10 +111,13 @@
 	<ul class="max-md:hidden">
 		<li>
 			<button
+				type="button"
 				class="flex h-12 w-12 items-center justify-center rounded-full"
 				disabled={page >= pageCount}
-				onclick={goToNext}><span class="material-symbols-outlined">arrow_forward</span></button
+				onclick={goToNext}
 			>
+				<span class="material-symbols-outlined">arrow_forward</span>
+			</button>
 		</li>
 	</ul>
 </nav>

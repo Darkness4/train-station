@@ -1,12 +1,7 @@
 ignores:
-  - next-auth
   - '@types/eslint'
   - '@typescript-eslint/eslint-plugin'
   - '@typescript-eslint/parser'
-  - autoprefixer
-  - postcss
-  - prettier-plugin-svelte
-  - prettier-plugin-tailwindcss
   - $env
   - $gen
   - $lib

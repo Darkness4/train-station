@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Station } from '$gen/ts/trainstation/v1alpha1/station';
+	import type { Station } from '$gen/ts/trainstation/v1alpha1/station_pb';
 
 	interface Props {
 		station: Station;
@@ -21,9 +21,7 @@
 	></iframe>
 
 	<article>
-		<h1>
-			{station.libelle}
-		</h1>
+		<h1>{station.libelle}</h1>
 
 		<ul>
 			<li>Département: {station.departemen}</li>

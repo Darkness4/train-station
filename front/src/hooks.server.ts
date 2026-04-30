@@ -1,8 +1,6 @@
-import { TokenBucket } from '$lib/server/rate-limit';
-import { sequence } from '@sveltejs/kit/hooks';
-import { decode } from 'jsonwebtoken';
-
 import type { Handle } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
+import { TokenBucket } from '$lib/server/rate-limit';
 
 const bucket = new TokenBucket<string>(100, 1);
 
@@ -20,37 +18,35 @@ const rateLimitHandle: Handle = async ({ event, resolve }) => {
 	}
 	if (!bucket.consume(clientIP, cost)) {
 		return new Response('Too many requests', {
-			status: 429
+			status: 429,
 		});
 	}
 	return resolve(event);
 };
 
 const authHandle: Handle = async ({ event, resolve }) => {
-	const token = event.cookies.get('session') ?? null;
-	if (token === null) {
+	const accessToken = event.cookies.get('train.access_token') ?? null;
+	if (accessToken === null) {
 		event.locals.session = null;
 		return resolve(event);
 	}
 
-	const decoded = decode(token, { json: true });
-	if (!decoded || !decoded?.exp) {
+	const refreshToken = event.cookies.get('train.refresh_token') ?? null;
+	if (refreshToken === null) {
 		event.locals.session = null;
 		return resolve(event);
 	}
 
-	if (decoded.exp * 1000 < Date.now()) {
+	const username = event.cookies.get('train.username') ?? null;
+	if (username === null) {
 		event.locals.session = null;
 		return resolve(event);
 	}
 
 	event.locals.session = {
-		token: token,
-		expiresAt: new Date(decoded.exp * 1000),
-		user: {
-			name: decoded.name,
-			image: decoded.picture
-		}
+		accessToken: accessToken,
+		refreshToken: refreshToken,
+		username: username,
 	};
 
 	return resolve(event);
