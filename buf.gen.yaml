@@ -1,42 +1,43 @@
-version: v1
+version: v2
 managed:
   enabled: true
-  cc_enable_arenas: false
-  go_package_prefix:
-    default: github.com/Darkness4/train-station/trainstation/v1alpha1/gen/go
-  java_multiple_files: false
-  java_package_prefix: com.example.trainstationapp.data.grpc
-  optimize_for: LITE_RUNTIME
+  override:
+    - file_option: go_package_prefix
+      value: github.com/Darkness4/train-station/go/gen
+    - file_option: java_package_prefix
+      value: com.example.trainstationapp.data.grpc
+    - file_option: optimize_for
+      value: LITE_RUNTIME
+    - file_option: java_multiple_files
+      value: false
+  disable:
+    - file_option: go_package
+      module: buf.build/bufbuild/protovalidate
 plugins:
-  - name: go
-    out: ./go/gen/go
+  - remote: buf.build/protocolbuffers/go
+    out: ./go/gen
     opt:
       - paths=source_relative
-  - name: go-grpc
-    out: ./go/gen/go
+  - remote: buf.build/connectrpc/go
+    out: ./go/gen
     opt:
       - paths=source_relative
-  - name: ts
+  - remote: buf.build/bufbuild/es
     out: ./front/gen/ts
-  - name: doc
-    out: ./docs
-    opt:
-      - markdown
-      - index.md
-      - source_relative
-  - name: java
+    include_imports: true
+    opt: target=ts
+  - remote: buf.build/protocolbuffers/java
     out: ./app/app/src/main/java
-    opt:
-      - lite
-  - name: kotlin
+    opt: lite
+  # - name: kotlin
+  #   out: ./app/app/src/main/java
+  #   opt:
+  #     - javalite
+  - remote: buf.build/connectrpc/kotlin
     out: ./app/app/src/main/java
-    opt:
-      - lite
-  - name: grpc-java
-    out: ./app/app/src/main/java
-    opt:
-      - lite
-  - name: grpc-kotlin
-    out: ./app/app/src/main/java
-    opt:
-      - lite
+    opt: javalite
+inputs:
+  - directory: protos/trainstationapis
+  - module: buf.build/grpc/grpc:1730f7242d0f45138a638b7612d46586
+    paths:
+      - grpc/health/v1/health.proto
