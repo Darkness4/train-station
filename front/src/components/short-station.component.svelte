@@ -13,7 +13,7 @@
 		onFavorite(station);
 		station = {
 			...station,
-			isFavorite: !station.isFavorite,
+			isFavorite: !station.isFavorite
 		};
 	}
 </script>
@@ -35,8 +35,7 @@
 				style={station.isFavorite
 					? "font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;"
 					: ''}
-				aria-hidden="true"
-				>star</span
+				aria-hidden="true">star</span
 			>
 			<span class="align-middle">Favorite</span>
 		</button>

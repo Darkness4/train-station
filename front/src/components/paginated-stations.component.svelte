@@ -1,9 +1,6 @@
 <script lang="ts">
 	import ShortStation from '$components/short-station.component.svelte';
-	import type {
-		PaginatedStation,
-		Station,
-	} from '$gen/ts/trainstation/v1alpha1/station_pb';
+	import type { PaginatedStation, Station } from '$gen/ts/trainstation/v1alpha1/station_pb';
 
 	interface Props {
 		stations: PaginatedStation;

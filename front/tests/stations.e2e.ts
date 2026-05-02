@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 
 test.use({
-	storageState: 'playwright/.auth/auth.json',
+	storageState: 'playwright/.auth/auth.json'
 });
 
 test('find a station', async ({ page }) => {

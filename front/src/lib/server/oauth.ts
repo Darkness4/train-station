@@ -105,14 +105,11 @@ class OidcClient {
 		);
 	}
 
-	refreshAccessToken(
-		refreshToken: string,
-		scopes: string[],
-	): Promise<OAuth2Tokens> {
+	refreshAccessToken(refreshToken: string): Promise<OAuth2Tokens> {
 		return this.oauth2Client.refreshAccessToken(
 			this.tokenEndpoint,
 			refreshToken,
-			scopes,
+			this.scopes,
 		);
 	}
 

@@ -5,7 +5,7 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async (event) => {
 	const state = generateState();
 	const codeVerifier = generateCodeVerifier();
-	const oidcClient = await getOidcClient()
+	const oidcClient = await getOidcClient();
 	const url = oidcClient.createAuthorizationURLWithPKCE(state, codeVerifier);
 
 	// store state as cookie
@@ -14,6 +14,7 @@ export const GET: RequestHandler = async (event) => {
 		path: '/',
 		httpOnly: true,
 		maxAge: 60 * 10, // 10 min
+		sameSite: 'strict'
 	});
 
 	// store code verifier as cookie
@@ -22,12 +23,13 @@ export const GET: RequestHandler = async (event) => {
 		path: '/',
 		httpOnly: true,
 		maxAge: 60 * 10, // 10 min
+		sameSite: 'strict'
 	});
 
 	return new Response(null, {
 		status: 302,
 		headers: {
-			Location: url.toString(),
-		},
+			Location: url.toString()
+		}
 	});
 };

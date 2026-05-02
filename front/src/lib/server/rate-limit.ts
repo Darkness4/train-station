@@ -15,9 +15,7 @@ export class TokenBucket<_Key> {
 			return true;
 		}
 		const now = Date.now();
-		const refill = Math.floor(
-			(now - bucket.refilledAt) / (this.refillIntervalSeconds * 1000),
-		);
+		const refill = Math.floor((now - bucket.refilledAt) / (this.refillIntervalSeconds * 1000));
 		if (refill > 0) {
 			return Math.min(bucket.count + refill, this.max) >= cost;
 		}
@@ -30,14 +28,12 @@ export class TokenBucket<_Key> {
 		if (bucket === null) {
 			bucket = {
 				count: this.max - cost,
-				refilledAt: now,
+				refilledAt: now
 			};
 			this.storage.set(key, bucket);
 			return true;
 		}
-		const refill = Math.floor(
-			(now - bucket.refilledAt) / (this.refillIntervalSeconds * 1000),
-		);
+		const refill = Math.floor((now - bucket.refilledAt) / (this.refillIntervalSeconds * 1000));
 		if (refill > 0) {
 			bucket.count = Math.min(bucket.count + refill, this.max);
 			bucket.refilledAt = now;

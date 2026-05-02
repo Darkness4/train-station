@@ -14,7 +14,7 @@
 
 	function search(
 		event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement },
-		search: string,
+		search: string
 	) {
 		event.preventDefault();
 		return goto(resolve(`/stations?s=${search}`));
@@ -27,32 +27,29 @@
 	function onClick(station: Station) {
 		return goto(
 			resolve('/stations/[id]', {
-				id: station.id,
-			}),
+				id: station.id
+			})
 		);
 	}
 	async function onFavorite(station: Station) {
 		await fetch(`/stations/${station.id}/favorite`, {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				stationId: station.id,
-				value: !station.isFavorite,
-			}),
+				value: !station.isFavorite
+			})
 		});
 	}
 </script>
 
-<svelte:head> <title>Stations list</title> </svelte:head>
+<svelte:head><title>Stations list</title></svelte:head>
 
 <section>
 	<div class="flex justify-center">
-		<Search
-			bind:value={searchQuery}
-			onConfirm={(event) => search(event, searchQuery)}
-		/>
+		<Search bind:value={searchQuery} onConfirm={(event) => search(event, searchQuery)} />
 	</div>
 
 	<Pager

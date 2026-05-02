@@ -6,23 +6,21 @@ const authFile = 'playwright/.auth/auth.json';
 export default defineConfig({
 	webServer: {
 		command: 'bun run build && bun run preview',
-		port: 4173,
+		port: 4173
 	},
 	testMatch: '**/*.e2e.{ts,js}',
 	projects: [
 		// Setup proect
-		!fs.existsSync(authFile)
-			? { name: 'setup', testMatch: /.*\.setup\.ts/ }
-			: {},
+		!fs.existsSync(authFile) ? { name: 'setup', testMatch: /.*\.setup\.ts/ } : {},
 
 		{
 			name: 'chromium',
 			use: {
 				...devices['Desktop Chrome'],
 				// Use prepared auth state.
-				storageState: authFile,
+				storageState: authFile
 			},
-			dependencies: !fs.existsSync(authFile) ? ['setup'] : [],
+			dependencies: !fs.existsSync(authFile) ? ['setup'] : []
 		},
 
 		{
@@ -30,9 +28,9 @@ export default defineConfig({
 			use: {
 				...devices['Desktop Firefox'],
 				// Use prepared auth state.
-				storageState: authFile,
+				storageState: authFile
 			},
-			dependencies: !fs.existsSync(authFile) ? ['setup'] : [],
-		},
-	],
+			dependencies: !fs.existsSync(authFile) ? ['setup'] : []
+		}
+	]
 });
