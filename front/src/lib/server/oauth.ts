@@ -1,13 +1,14 @@
-import { CodeChallengeMethod, OAuth2Client, type OAuth2Tokens } from 'arctic';
-import jwt from 'jsonwebtoken';
-import jwksClient from 'jwks-rsa';
-import { env } from '$env/dynamic/private';
+import { CodeChallengeMethod, OAuth2Client, type OAuth2Tokens } from "arctic";
+import jwt from "jsonwebtoken";
+import jwksClient from "jwks-rsa";
+import { env } from "$env/dynamic/private";
 
 class OidcClient {
 	constructor(
 		readonly discoveryUrl: string,
 		readonly oauth2Client: OAuth2Client,
 		readonly scopes: string[],
+		readonly issuer: string,
 		readonly authorizationEndpoint: string,
 		readonly tokenEndpoint: string,
 		readonly revocationEndpoint: string | undefined,
@@ -32,45 +33,53 @@ class OidcClient {
 		const config = await response.json();
 
 		if (
-			config.grant_types_supported?.includes('authorization_code') === false
+			config.grant_types_supported?.includes("authorization_code") === false
 		) {
 			throw new Error(
-				'OIDC client does not support authorization_code grant type',
+				"OIDC client does not support authorization_code grant type",
 			);
 		}
 
-		if (config.grant_types_supported?.includes('refresh_token') === false) {
-			throw new Error('OIDC client does not support refresh_token grant type');
+		if (config.grant_types_supported?.includes("refresh_token") === false) {
+			throw new Error("OIDC client does not support refresh_token grant type");
 		}
 
-		if (config.code_challenge_methods_supported?.includes('S256') === false) {
+		if (config.code_challenge_methods_supported?.includes("S256") === false) {
 			throw new Error(
-				'OIDC client does not support S256 code challenge method',
+				"OIDC client does not support S256 code challenge method",
 			);
+		}
+
+		if (!config.issuer) {
+			throw new Error("OIDC client missing issuer");
 		}
 
 		if (!config.authorization_endpoint) {
-			throw new Error('OIDC client missing authorization_endpoint');
+			throw new Error("OIDC client missing authorization_endpoint");
 		}
 
 		if (!config.token_endpoint) {
-			throw new Error('OIDC client missing token_endpoint');
+			throw new Error("OIDC client missing token_endpoint");
 		}
 
 		if (!config.jwks_uri) {
-			throw new Error('OIDC client missing jwks_uri');
+			throw new Error("OIDC client missing jwks_uri");
 		}
 
 		return new OidcClient(
 			discoveryUrl,
 			new OAuth2Client(clientId, clientSecret, redirectUri),
 			scopes,
+			config.issuer,
 			config.authorization_endpoint,
 			config.token_endpoint,
 			config.revocation_endpoint,
 			jwksClient({
 				jwksUri: config.jwks_uri,
 				timeout: 30000,
+				cache: true,
+				cacheMaxAge: 3600,
+				rateLimit: true,
 			}),
 		);
 	}
@@ -124,13 +133,21 @@ class OidcClient {
 
 	verifyIdToken(idToken: string): Promise<jwt.JwtPayload> {
 		return new Promise((resolve, reject) => {
-			jwt.verify(idToken, this.getKey, (err, decoded) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(decoded as jwt.JwtPayload);
-				}
-			});
+			jwt.verify(
+				idToken,
+				this.getKey,
+				{
+					issuer: this.issuer,
+					audience: this.oauth2Client.clientId,
+				},
+				(err, decoded) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(decoded as jwt.JwtPayload);
+					}
+				},
+			);
 		});
 	}
 }
@@ -141,24 +158,24 @@ export const getOidcClient = async () => {
 	if (instance) return instance;
 
 	if (!env.OIDC_DISCOVERY_URL) {
-		throw new Error('Missing OIDC_DISCOVERY_URL');
+		throw new Error("Missing OIDC_DISCOVERY_URL");
 	}
 	if (!env.CLIENT_ID) {
-		throw new Error('Missing CLIENT_ID');
+		throw new Error("Missing CLIENT_ID");
 	}
 	if (!env.CLIENT_SECRET) {
-		throw new Error('Missing CLIENT_SECRET');
+		throw new Error("Missing CLIENT_SECRET");
 	}
 	if (!env.OAUTH_REDIRECT_URI) {
-		throw new Error('Missing OAUTH_REDIRECT_URI');
+		throw new Error("Missing OAUTH_REDIRECT_URI");
 	}
 
 	instance = await OidcClient.create(
-		env.OIDC_DISCOVERY_URL ?? '',
-		env.CLIENT_ID ?? '',
-		env.CLIENT_SECRET ?? '',
-		env.OAUTH_REDIRECT_URI ?? '',
-		env.OAUTH_SCOPES?.split(' ') ?? ['openid', 'profile', 'offline_access'],
+		env.OIDC_DISCOVERY_URL ?? "",
+		env.CLIENT_ID ?? "",
+		env.CLIENT_SECRET ?? "",
+		env.OAUTH_REDIRECT_URI ?? "",
+		env.OAUTH_SCOPES?.split(" ") ?? ["openid", "profile", "offline_access"],
 	);
 	return instance;
-}
+};

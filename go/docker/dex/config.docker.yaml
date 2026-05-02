@@ -8,16 +8,24 @@ telemetry:
 
 # Configuration for static clients
 staticClients:
+  # Used for login using server-side logic
   - id: train-station
     redirectURIs:
       - 'http://localhost:5173/auth/callback'
     name: 'Train Station'
     secret: zYXYZSgEba6usrvj6lsjX5zQHEwaEi6mVbC5ulAlJ7zyV5QMzEdRYNoPZJnparTs
-    public: true
+    public: false
+  # Used for introspection
   - id: train-station-api
     name: 'Train Station API'
     secret: xo72oHz1Re11Clz7jHbtWjaILQzqOSNK3WLmsAnBug2YazxdqXRdhtPyhgdBRBIY
     public: false
+  # Used for login using client-side logic
+  - id: train-station-app
+    redirectURIs:
+      - com.example.trainstationapp://oauth2
+    name: Train Station App
+    public: true
 
 enablePasswordDB: true
 
