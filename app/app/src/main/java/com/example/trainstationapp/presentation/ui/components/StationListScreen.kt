@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -31,20 +32,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import com.example.trainstationapp.R
+import com.example.trainstationapp.presentation.ui.Route
+import com.example.trainstationapp.presentation.ui.navigation.Navigator
+import com.example.trainstationapp.presentation.ui.navigation.rememberNavigationState
 import com.example.trainstationapp.presentation.ui.theme.TrainStationAppTheme
 import com.example.trainstationapp.presentation.viewmodels.StationListViewModel
 
 @Composable
 fun StationListScreen(
     viewModel: StationListViewModel,
+    navigator: Navigator,
     modifier: Modifier = Modifier,
-    navController: NavController = rememberNavController(),
 ) {
     val context = LocalContext.current
     val stations = viewModel.pages.collectAsLazyPagingItems()
@@ -85,7 +87,7 @@ fun StationListScreen(
                         onFavorite = { station ->
                             viewModel.makeFavorite(station.id, !station.isFavorite)
                         },
-                        onClick = { navController.navigate(Route.Detail(item.id).route) },
+                        onClick = { navigator.navigate(Route.Detail(item.id)) },
                     )
                     HorizontalDivider()
                 }
@@ -130,8 +132,15 @@ private fun SearchBarPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun StationListScreenPreview() {
+    val navigationState = rememberNavigationState(
+        startRoute = Route.Login,
+        topLevelRoutes = setOf(Route.Login),
+    )
+    val navigator = remember { Navigator(navigationState) }
+
     TrainStationAppTheme {
         StationListScreen(
+            navigator = navigator,
             viewModel = hiltViewModel<StationListViewModel>(),
         )
     }

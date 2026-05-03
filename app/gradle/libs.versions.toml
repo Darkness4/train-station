@@ -13,7 +13,8 @@ okhttp = "5.3.2"
 room = "2.8.4"
 datastore = "1.2.1"
 lifecycle = "2.10.0"
-navigation-compose = "2.9.8"
+nav3 = "1.1.1"
+lifecycle-viewmodel-nav3 = "2.11.0-beta01"
 activity-compose = "1.13.0"
 compose-bom = "2026.04.01"
 timber = "5.0.1"
@@ -75,7 +76,9 @@ lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecyc
 lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 
 # Navigation
-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
+androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
+androidx-lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "lifecycle-viewmodel-nav3" }
 
 # UI
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }

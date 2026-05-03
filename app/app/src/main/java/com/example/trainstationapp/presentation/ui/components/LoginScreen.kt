@@ -17,26 +17,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.trainstationapp.R
+import com.example.trainstationapp.presentation.ui.Route
+import com.example.trainstationapp.presentation.ui.navigation.Navigator
 import com.example.trainstationapp.presentation.viewmodels.LoginViewModel
 
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
+    navigator: Navigator,
     modifier: Modifier = Modifier,
-    navController: NavController = rememberNavController(),
 ) {
     val context = LocalContext.current
     val isOnline by viewModel.isOnline.collectAsState()
 
     LaunchedEffect(isOnline) {
         if (isOnline) {
-            // Move to stations
-            navController.navigate(Route.Stations.route) {
-                popUpTo(Route.Login.route) { inclusive = true }
-            }
+            navigator.navigate(Route.Stations)
         }
     }
 
