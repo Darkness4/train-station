@@ -7,10 +7,11 @@ option java_package = "com.example.trainstationapp.data.datastore";
 
 message OAuth {
   string accessToken = 1;
-  string tokenType = 2;
-  int64 userId = 3;
+  string refreshToken = 2;
+  string username = 3;
+  int64 expiresAt = 4;
 }
 
-message Jwt {
-  string token = 1;
+message CodeVerifier {
+  string value = 1;
 }

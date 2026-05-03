@@ -5,27 +5,28 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.connectrpc.getOrThrow
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.datastore.Session
-import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIGrpcKt
+import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIClientInterface
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getOneStationRequest
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.setFavoriteOneStationRequest
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.domain.repositories.StationRepository
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
 class StationRepositoryImpl
 @Inject
 constructor(
-    private val stationAPI: StationAPIGrpcKt.StationAPICoroutineStub,
+    private val stationAPI: StationAPIClientInterface,
     private val database: Database,
-    private val jwtDataStore: DataStore<Session.Jwt>,
+    private val oauthDataStore: DataStore<Session.OAuth>,
 ) : StationRepository {
     companion object {
         private const val NETWORK_PAGE_SIZE = 50
@@ -47,59 +48,64 @@ constructor(
             }
         }
         return Pager(
-                config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-                remoteMediator =
-                    StationRemoteMediator(
-                        search = search,
-                        jwtDataStore = jwtDataStore,
-                        database = database,
-                        stationAPI = stationAPI,
-                    ),
-                pagingSourceFactory = pagingSourceFactory,
-            )
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            remoteMediator =
+            StationRemoteMediator(
+                search = search,
+                oauthDataStore = oauthDataStore,
+                database = database,
+                stationAPI = stationAPI,
+            ),
+            pagingSourceFactory = pagingSourceFactory,
+        )
             .flow
             .flowOn(Dispatchers.Default)
     }
 
     /** Observe one station in the cache or the api. */
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun watchOne(id: String): Flow<Station> =
-        jwtDataStore.data.flatMapLatest { jwt ->
-            // Try to insert in database
-            val response =
-                stationAPI.getOneStation(
-                    getOneStationRequest {
-                        this.id = id
-                        this.token = jwt.token
-                    }
-                )
-            response.station?.let {
-                val entity = Station.fromGrpc(it)
-                database.stationDao().insert(entity)
-            } ?: throw Exception("Element not found.")
+    override fun watchOne(id: String): Flow<Station> = oauthDataStore.data.flatMapLatest { jwt ->
+        // Try to insert in database
+        val response =
+            stationAPI.getOneStation(
+                getOneStationRequest {
+                    this.id = id
+                },
+                headers = mapOf(
+                    "Authorization" to listOf("Bearer ${jwt.accessToken}"),
+                ),
+            )
+        response.getOrThrow().station?.let {
+            val entity = Station.fromGrpc(it)
+            database.stationDao().insert(entity)
+        } ?: throw Exception("Element not found.")
 
-            database.stationDao().watchById(id)
-        }
+        database.stationDao().watchById(id)
+    }
 
     /** Update one station in the API and cache it. */
     override suspend fun makeFavoriteOne(id: String, value: Boolean): Station {
-        val jwt = jwtDataStore.data.first()
+        val jwt = oauthDataStore.data.first()
 
         stationAPI.setFavoriteOneStation(
             setFavoriteOneStationRequest {
                 this.id = id
-                this.token = jwt.token
                 this.value = value
-            }
+            },
+            headers = mapOf(
+                "Authorization" to listOf("Bearer ${jwt.accessToken}"),
+            ),
         )
         val resp =
             stationAPI.getOneStation(
                 getOneStationRequest {
                     this.id = id
-                    this.token = jwt.token
-                }
+                },
+                headers = mapOf(
+                    "Authorization" to listOf("Bearer ${jwt.accessToken}"),
+                ),
             )
-        return resp.station?.let {
+        return resp.getOrThrow().station?.let {
             val entity = Station.fromGrpc(it)
             database.stationDao().insert(entity)
             entity

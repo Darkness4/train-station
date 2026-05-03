@@ -3,6 +3,7 @@ package com.example.trainstationapp.presentation.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -24,28 +25,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.datastore.core.DataStore
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.trainstationapp.R
-import com.example.trainstationapp.data.datastore.Session
-import com.example.trainstationapp.data.datastore.oAuth
-import com.example.trainstationapp.data.github.GithubApi
-import com.example.trainstationapp.data.github.GithubLogin
 import com.example.trainstationapp.presentation.ui.components.NavigationHost
 import com.example.trainstationapp.presentation.ui.theme.TrainStationAppTheme
 import com.example.trainstationapp.presentation.viewmodels.DetailViewModel
+import com.example.trainstationapp.presentation.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject lateinit var assisted: DetailViewModel.AssistedFactory
-    @Inject lateinit var githubLogin: GithubLogin
-    @Inject lateinit var oauthDataStore: DataStore<Session.OAuth>
-    @Inject lateinit var githubApi: GithubApi
+    @Inject
+    lateinit var assisted: DetailViewModel.AssistedFactory
+
+    private val loginViewModel: LoginViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +78,7 @@ class MainActivity : ComponentActivity() {
                                             IconButton(onClick = { navController.popBackStack() }) {
                                                 Icon(
                                                     imageVector =
-                                                        Icons.AutoMirrored.Filled.ArrowBack,
+                                                    Icons.AutoMirrored.Filled.ArrowBack,
                                                     contentDescription = "Back",
                                                 )
                                             }
@@ -91,12 +86,12 @@ class MainActivity : ComponentActivity() {
                                     },
                                 )
                             }
-                        }
+                        },
                     ) { contentPadding ->
                         NavigationHost(
-                            navController = navController,
                             detailViewModelFactory = assisted,
                             modifier = Modifier.padding(contentPadding),
+                            navController = navController,
                         )
                     }
                 }
@@ -105,26 +100,6 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun loginOAuth(code: String) {
-        lifecycleScope.launch {
-            val token =
-                githubLogin.accessToken(
-                    getString(R.string.github_client_id),
-                    getString(R.string.github_client_secret),
-                    code,
-                )
-
-            // Test oauth
-            val user = githubApi.user("${token.tokenType} ${token.accessToken}")
-            println(user)
-
-            // Store oauth
-            oauthDataStore.updateData {
-                oAuth {
-                    accessToken = token.accessToken
-                    tokenType = token.tokenType
-                    userId = user.id
-                }
-            }
-        }
+        loginViewModel.code = code
     }
 }

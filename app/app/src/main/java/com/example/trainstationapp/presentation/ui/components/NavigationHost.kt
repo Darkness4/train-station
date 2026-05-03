@@ -1,16 +1,20 @@
 package com.example.trainstationapp.presentation.ui.components
 
+import android.content.Context
+import android.content.ContextWrapper
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -28,25 +32,26 @@ sealed class Route(val route: String) {
 
     object Stations : Route("stations")
 
-    class Detail(id: String) : Route("stations/${id}")
+    class Detail(id: String) : Route("stations/$id")
 }
 
 @Composable
 fun NavigationHost(
+    detailViewModelFactory: DetailViewModel.AssistedFactory,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    detailViewModelFactory: DetailViewModel.AssistedFactory,
 ) {
+    val loginViewModel = viewModel<LoginViewModel>(viewModelStoreOwner = LocalContext.current.findActivity())
     NavHost(
         navController = navController,
         startDestination = Route.Login.route,
         modifier = modifier,
     ) {
         composable(Route.Login.route) {
-            LoginScreen(navController = navController, viewModel = hiltViewModel<LoginViewModel>())
+            LoginScreen(navController = navController, viewModel = loginViewModel)
         }
-        composable(Route.Stations.route) {
-            var state by remember { mutableStateOf(0) }
+        composable(Route.Stations.route) { backStackEntry ->
+            var state by remember { mutableIntStateOf(0) }
             val titles = listOf("Stations", "About")
             Column {
                 TabRow(selectedTabIndex = state) {
@@ -62,8 +67,9 @@ fun NavigationHost(
                     0 ->
                         StationListScreen(
                             navController = navController,
-                            viewModel = hiltViewModel<StationListViewModel>(),
+                            viewModel = hiltViewModel<StationListViewModel>(backStackEntry),
                         )
+
                     1 -> AboutScreen()
                 }
             }
@@ -71,11 +77,23 @@ fun NavigationHost(
         composable(
             Route.Detail("{id}").route,
             arguments = listOf(navArgument("id") { type = NavType.StringType }),
-        ) {
-            val stationId = it.arguments?.getString("id")!!
+        ) { backStackEntry ->
+            val stationId = backStackEntry.arguments?.getString("id")!!
             DetailScreen(
-                viewModel = viewModel(factory = detailViewModelFactory.provideFactory(stationId))
+                viewModel = viewModel(
+                    backStackEntry,
+                    factory = detailViewModelFactory.provideFactory(stationId),
+                ),
             )
         }
     }
+}
+
+fun Context.findActivity(): ComponentActivity {
+    var context = this
+    while (context is ContextWrapper) {
+        if (context is ComponentActivity) return context
+        context = context.baseContext
+    }
+    error("Not a context of activity")
 }

@@ -14,6 +14,7 @@ managed:
     - file_option: go_package
       module: buf.build/bufbuild/protovalidate
 plugins:
+  # Go
   - remote: buf.build/protocolbuffers/go
     out: ./go/gen
     opt:
@@ -22,20 +23,20 @@ plugins:
     out: ./go/gen
     opt:
       - paths=source_relative
+  # TypeScript
   - remote: buf.build/bufbuild/es
     out: ./front/gen/ts
     include_imports: true
     opt: target=ts
+  # Kotlin
   - remote: buf.build/protocolbuffers/java
     out: ./app/app/src/main/java
     opt: lite
-  # - name: kotlin
-  #   out: ./app/app/src/main/java
-  #   opt:
-  #     - javalite
+  - remote: buf.build/protocolbuffers/kotlin
+    out: ./app/app/src/main/java
+    opt: lite
   - remote: buf.build/connectrpc/kotlin
     out: ./app/app/src/main/java
-    opt: javalite
 inputs:
   - directory: protos/trainstationapis
   - module: buf.build/grpc/grpc:1730f7242d0f45138a638b7612d46586

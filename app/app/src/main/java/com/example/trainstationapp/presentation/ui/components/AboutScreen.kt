@@ -54,18 +54,19 @@ fun AboutScreen(modifier: Modifier = Modifier) {
             textAlign = TextAlign.Justify,
             modifier = Modifier.fillMaxWidth(),
         )
+        val projectUrl = stringResource(R.string.project_url)
         Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
             ElevatedButton(
-                onClick = { uriHandler.openUri(context.getString(R.string.project_url)) }
+                onClick = { uriHandler.openUri(projectUrl) },
             ) {
                 Text(stringResource(R.string.source_code))
             }
             ElevatedButton(
                 onClick = {
                     uriHandler.openUri(
-                        "https://github.com/Darkness4/train-station/blob/main/protos/trainstationapis/trainstation/v1alpha1/station.proto"
+                        "https://github.com/Darkness4/train-station/blob/main/protos/trainstationapis/trainstation/v1alpha1/station.proto",
                     )
-                }
+                },
             ) {
                 Text(stringResource(R.string.api_specs))
             }
@@ -75,6 +76,6 @@ fun AboutScreen(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun AboutScreenPreview() {
+private fun AboutScreenPreview() {
     TrainStationAppTheme { AboutScreen() }
 }

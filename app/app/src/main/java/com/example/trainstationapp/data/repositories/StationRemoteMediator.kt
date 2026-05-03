@@ -6,15 +6,17 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.connectrpc.ConnectException
+import com.connectrpc.getOrThrow
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeys
 import com.example.trainstationapp.data.datastore.Session
-import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIGrpcKt
+import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIClientInterface
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getManyStationsRequest
 import com.example.trainstationapp.domain.entities.Station
-import io.grpc.StatusException
-import java.io.IOException
+import io.ktor.http.headers
 import kotlinx.coroutines.flow.first
+import java.io.IOException
 
 /**
  * This `StationRemoteMediator` handles paging from a layered data source.
@@ -25,9 +27,9 @@ import kotlinx.coroutines.flow.first
 @ExperimentalPagingApi
 class StationRemoteMediator(
     private val search: String,
-    private val stationAPI: StationAPIGrpcKt.StationAPICoroutineStub,
+    private val stationAPI: StationAPIClientInterface,
     private val database: Database,
-    private val jwtDataStore: DataStore<Session.Jwt>,
+    private val oauthDataStore: DataStore<Session.OAuth>,
 ) : RemoteMediator<Int, Station>() {
     companion object {
         private const val STARTING_PAGE_INDEX = 1
@@ -72,34 +74,38 @@ class StationRemoteMediator(
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                     remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
                 }
+
                 LoadType.PREPEND -> {
                     val remoteKeys = getRemoteKeyForFirstItem(state)
                     remoteKeys?.prevKey
                         ?: return MediatorResult.Success(
-                            endOfPaginationReached = remoteKeys != null
+                            endOfPaginationReached = remoteKeys != null,
                         )
                 }
+
                 LoadType.APPEND -> {
                     val remoteKeys = getRemoteKeyForLastItem(state)
                     remoteKeys?.nextKey
                         ?: return MediatorResult.Success(
-                            endOfPaginationReached = remoteKeys != null
+                            endOfPaginationReached = remoteKeys != null,
                         )
                 }
             }
 
         return try {
-            val jwt = jwtDataStore.data.first()
+            val jwt = oauthDataStore.data.first()
             val resp =
                 stationAPI.getManyStations(
                     getManyStationsRequest {
                         this.query = search
                         this.page = page.toLong()
                         this.limit = state.config.pageSize.toLong()
-                        token = jwt.token
-                    }
+                    },
+                    headers = mapOf(
+                        "Authorization" to listOf("Bearer ${jwt.accessToken}"),
+                    ),
                 )
-            val items = resp.stations.dataList
+            val items = resp.getOrThrow().stations.dataList
             val endOfPaginationReached = items.isEmpty()
             database.withTransaction {
                 // clear all tables in the database
@@ -117,13 +123,13 @@ class StationRemoteMediator(
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
             MediatorResult.Error(exception)
-        } catch (exception: StatusException) {
+        } catch (exception: ConnectException) {
             MediatorResult.Error(exception)
         }
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
-        state: PagingState<Int, Station>
+        state: PagingState<Int, Station>,
     ): RemoteKeys? {
         // The paging library is trying to load data after the anchor position
         // Get the item closest to the anchor position

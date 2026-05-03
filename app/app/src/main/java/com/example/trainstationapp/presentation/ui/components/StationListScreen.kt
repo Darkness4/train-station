@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -42,9 +42,9 @@ import com.example.trainstationapp.presentation.viewmodels.StationListViewModel
 
 @Composable
 fun StationListScreen(
+    viewModel: StationListViewModel,
     modifier: Modifier = Modifier,
     navController: NavController = rememberNavController(),
-    viewModel: StationListViewModel = viewModel(),
 ) {
     val context = LocalContext.current
     val stations = viewModel.pages.collectAsLazyPagingItems()
@@ -65,12 +65,12 @@ fun StationListScreen(
             onSearchChange = { viewModel.updateSearch(it) },
             onSearchClear = { viewModel.updateSearch("") },
             modifier =
-                Modifier.fillMaxWidth()
-                    .padding(16.dp)
-                    .background(
-                        MaterialTheme.colorScheme.background,
-                        shape = RoundedCornerShape(4.dp),
-                    ),
+            Modifier.fillMaxWidth()
+                .padding(16.dp)
+                .background(
+                    MaterialTheme.colorScheme.background,
+                    shape = RoundedCornerShape(4.dp),
+                ),
         )
         LazyColumn(state = lazyListState, modifier = Modifier.fillMaxSize()) {
             items(
@@ -106,7 +106,7 @@ fun SearchBar(
         onValueChange = onSearchChange,
         placeholder = { Text(stringResource(R.string.search_train_station_hint)) },
         keyboardOptions =
-            KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
+        KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
         leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "Search") },
         trailingIcon = {
             if (search.isNotEmpty()) {
@@ -123,12 +123,16 @@ fun SearchBar(
 
 @Preview(showBackground = true)
 @Composable
-fun SearchBarPreview() {
+private fun SearchBarPreview() {
     TrainStationAppTheme { SearchBar() }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun StationListScreenPreview() {
-    TrainStationAppTheme { StationListScreen() }
+private fun StationListScreenPreview() {
+    TrainStationAppTheme {
+        StationListScreen(
+            viewModel = hiltViewModel<StationListViewModel>(),
+        )
+    }
 }
