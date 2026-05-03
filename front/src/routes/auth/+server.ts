@@ -14,7 +14,7 @@ export const GET: RequestHandler = async (event) => {
 		path: '/',
 		httpOnly: true,
 		maxAge: 60 * 10, // 10 min
-		sameSite: 'strict'
+		sameSite: 'lax' // lax is required to survive a redirection
 	});
 
 	// store code verifier as cookie
@@ -23,7 +23,7 @@ export const GET: RequestHandler = async (event) => {
 		path: '/',
 		httpOnly: true,
 		maxAge: 60 * 10, // 10 min
-		sameSite: 'strict'
+		sameSite: 'lax'
 	});
 
 	return new Response(null, {

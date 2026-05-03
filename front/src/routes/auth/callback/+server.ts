@@ -10,19 +10,22 @@ export const GET: RequestHandler = async (event) => {
 	const storedState = event.cookies.get('state');
 	const storedCodeVerifier = event.cookies.get('code_verifier');
 
-	const oidcClient = await getOidcClient();
-
 	if (!code || !state || storedState !== state || !storedCodeVerifier) {
-		return new Response('Please restart the process.', {
-			status: 400
-		});
+		return new Response(
+			`Please restart the process. State, code or code verifier not found. code: ${code}, state: ${state}, storedState: ${storedState}, storedCodeVerifier: ${storedCodeVerifier}`,
+			{
+				status: 400
+			}
+		);
 	}
+
+	const oidcClient = await getOidcClient();
 
 	let tokens: OAuth2Tokens;
 	try {
 		tokens = await oidcClient.validateAuthorizationCode(code, storedCodeVerifier);
 	} catch (e) {
-		return new Response('Please restart the process.', {
+		return new Response('Please restart the process. Code or code verifier was invalid.', {
 			statusText: e instanceof Error ? e.message : 'An error occurred',
 			status: 400
 		});
