@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	_ "embed"
+
+	"github.com/rs/zerolog/log"
 )
 
 //go:embed migrations/*.sql
@@ -71,7 +73,7 @@ func migrateUp(db *sql.DB, entries []fs.DirEntry, applied map[int]bool) error {
 		if err := executeFile(db, entry.Name(), version, true); err != nil {
 			return err
 		}
-		fmt.Printf("Applied migration: %s\n", entry.Name())
+		log.Info().Msgf("Applied migration: %s\n", entry.Name())
 	}
 	return nil
 }
@@ -99,7 +101,7 @@ func migrateDown(db *sql.DB, entries []fs.DirEntry, currentVersion int) error {
 	if err := executeFile(db, targetFile, currentVersion, false); err != nil {
 		return err
 	}
-	fmt.Printf("Rolled back migration: %s\n", targetFile)
+	log.Info().Msgf("Rolled back migration: %s\n", targetFile)
 	return nil
 }
 
