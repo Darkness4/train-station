@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import com.example.trainstationapp.R
-import com.example.trainstationapp.presentation.ui.Route
 import com.example.trainstationapp.presentation.ui.navigation.Navigator
 import com.example.trainstationapp.presentation.viewmodels.LoginViewModel
 
@@ -29,13 +28,6 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val isOnline by viewModel.isOnline.collectAsState()
-
-    LaunchedEffect(isOnline) {
-        if (isOnline) {
-            navigator.navigate(Route.Stations)
-        }
-    }
 
     val error by viewModel.error.collectAsState()
     LaunchedEffect(error) {

@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class StationRepositoryImpl
@@ -65,6 +66,9 @@ constructor(
     /** Observe one station in the cache or the api. */
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun watchOne(id: String): Flow<Station> = oauthDataStore.data.flatMapLatest { jwt ->
+        if (jwt.expiresAt <= System.currentTimeMillis()) {
+            throw IllegalStateException("Invalid token")
+        }
         // Try to insert in database
         val response =
             stationAPI.getOneStation(
@@ -85,7 +89,9 @@ constructor(
 
     /** Update one station in the API and cache it. */
     override suspend fun makeFavoriteOne(id: String, value: Boolean): Station {
-        val jwt = oauthDataStore.data.first()
+        val jwt = oauthDataStore.data.map { if (it.expiresAt > System.currentTimeMillis()) it else null }.first() ?: run {
+            throw IllegalStateException("Invalid token")
+        }
 
         stationAPI.setFavoriteOneStation(
             setFavoriteOneStationRequest {

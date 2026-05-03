@@ -16,6 +16,7 @@ import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getManyStatio
 import com.example.trainstationapp.domain.entities.Station
 import io.ktor.http.headers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import java.io.IOException
 
 /**
@@ -93,7 +94,9 @@ class StationRemoteMediator(
             }
 
         return try {
-            val jwt = oauthDataStore.data.first()
+            val jwt = oauthDataStore.data.map { if (it.expiresAt > System.currentTimeMillis()) it else null }.first() ?: run {
+                throw IllegalStateException("Invalid token")
+            }
             val resp =
                 stationAPI.getManyStations(
                     getManyStationsRequest {

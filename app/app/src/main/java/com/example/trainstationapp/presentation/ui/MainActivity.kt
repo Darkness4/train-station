@@ -20,6 +20,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -85,6 +87,16 @@ class MainActivity : ComponentActivity() {
             val navigator = remember { Navigator(navigationState) }
 
             val canPop = navigationState.backStacks[navigationState.topLevelRoute]?.size!! > 1
+
+            val isOnline by loginViewModel.isOnline.collectAsState()
+
+            LaunchedEffect(isOnline) {
+                if (isOnline) {
+                    navigator.navigate(Route.Stations)
+                } else {
+                    navigator.navigate(Route.Login)
+                }
+            }
 
             TrainStationAppTheme {
                 Surface(
