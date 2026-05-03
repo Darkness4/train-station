@@ -45,7 +45,7 @@
 		"sass-embedded": "1.99.0",
 		"svelte": "5.55.5",
 		"svelte-adapter-bun": "1.0.1",
-		"svelte-check": "4.4.6",
+		"svelte-check": "4.4.7",
 		"tailwindcss": "4.2.4",
 		"typescript": "6.0.3",
 		"typescript-eslint": "8.59.1",
