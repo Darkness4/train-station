@@ -27,10 +27,12 @@ internal class StationDaoTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        val listConverters = ListConverters.create(Json {
-            isLenient = true
-            ignoreUnknownKeys = true
-        })
+        val listConverters = ListConverters.create(
+            Json {
+                isLenient = true
+                ignoreUnknownKeys = true
+            },
+        )
         db = Room.inMemoryDatabaseBuilder(context, Database::class.java).addTypeConverter(listConverters).build()
         dao = db.stationDao()
     }
