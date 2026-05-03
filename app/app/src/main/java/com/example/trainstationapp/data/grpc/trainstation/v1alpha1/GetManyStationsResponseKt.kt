@@ -62,3 +62,4 @@ public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.St
 
 public val com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsResponseOrBuilder.stationsOrNull: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation?
   get() = if (hasStations()) getStations() else null
+

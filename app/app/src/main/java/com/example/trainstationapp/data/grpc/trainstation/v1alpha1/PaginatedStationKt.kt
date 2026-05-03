@@ -171,3 +171,4 @@ public object PaginatedStationKt {
 }
 public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation.copy(block: `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.PaginatedStationKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.PaginatedStation =
   `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.PaginatedStationKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+

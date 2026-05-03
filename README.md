@@ -11,24 +11,18 @@ Specifications are given here: [Protos](./protos) and [`docs`](./docs)
 ### Android
 
 - Fetch data from the api and display in a list and a screen with the details
-
 - Possibility to bookmark certain items per user
-
 - OAuth Authentication
-
 - Mockup:
-
   ![maquette](assets/image-20201128010714763.png)
-
 - Implementation of a search/filter system on the displayed list
-
 - Setting up a local database to display the item list in offline mode
-
 - Usage of StateFlow
 
 ## Screenshots
 
-![Screenshot_20201129-053140](assets/Screenshot_20201129-053140.png) ![Screenshot_20201129-053208](assets/Screenshot_20201129-053208.png) ![Screenshot_20201129-053214](assets/Screenshot_20201129-053214.png) ![Screenshot_20201129-053223](assets/Screenshot_20201129-053223.png)
+![stations](assets/stations.png) ![search](assets/search.png)
+![about](assets/about.png) ![details](assets/details.png)
 
 # Modern Android Development (MAD)
 
@@ -44,85 +38,143 @@ Specifications are given here: [Protos](./protos) and [`docs`](./docs)
 
 #### Production build and deployment
 
-Use docker/kubernetes/openshift to deploy the container.
+1. Deploy an identity provider (like Dex):
 
-```sh
-docker pull ghcr.io/darkness4/train-station-api:latest
-```
+   ```yaml
+   # dex.config.yaml
+   # TODO: for production, set this to the public URL of the auth server
+   issuer: http://dex.example.com:5556
 
-Available arch are: `arm64` and `amd64`.
+   # TODO: for production, change this
+   storage:
+     type: memory
+   web:
+     http: 0.0.0.0:5556
+   telemetry:
+     http: 0.0.0.0:5558
 
-An example of docker-compose.yml:
+   # Configuration for static clients
+   staticClients:
+     # Used for login using server-side logic
+     - id: train-station
+       redirectURIs:
+         # TODO: for production, change this to the public URL of the front end
+         - 'http://train.example.com:5173/auth/callback'
+       name: 'Train Station'
+       secret: zYXYZSgEba6usrvj6lsjX5zQHEwaEi6mVbC5ulAlJ7zyV5QMzEdRYNoPZJnparTs
+       public: false
+     # Used for introspection
+     - id: train-station-api
+       name: 'Train Station API'
+       secret: xo72oHz1Re11Clz7jHbtWjaILQzqOSNK3WLmsAnBug2YazxdqXRdhtPyhgdBRBIY
+       public: false
+     # Used for login using client-side logic
+     - id: train-station-app
+       redirectURIs:
+         - com.example.trainstationapp://oauth2
+       name: Train Station App
+       public: true
 
-```sh
-version: '3.9'
-services:
-  train-station-api:
-    build: ghcr.io/darkness4/train-station-api:amd64
-    ports:
-      - 3000:3000
-    volumes:
-      - ./db:/db
-    environment:
-      JWT_SECRET: <base64 secret>
-      LISTEN_ADDRESS: 0.0.0.0:3000
-      DB_PATH: /db/db.sqlite3
-      DEBUG: true
-      TLS_ENABLE: false
-```
+   enablePasswordDB: true
+
+   staticPasswords:
+     - email: 'admin@example.com'
+       # bcrypted "password"
+       hash: '$2b$12$acCCsOuwI09Lg81y5A/w2egiCLcPu934ct4TAgBHgzfahut.9Oir6'
+       username: 'admin'
+       userID: '08a515ad-1111-2222-3333-1234567890ab'
+   ```
+
+2. Setup the environment variables in the `.env` file for the API:
+
+   ```shell
+   # LISTEN_ADDRESS=:3000
+   # TLS_KEY=
+   # TLS_CERT=
+   # TLS_CLIENT_CA=
+
+   INTROSPECTION_CLIENT_SECRET=xo72oHz1Re11Clz7jHbtWjaILQzqOSNK3WLmsAnBug2YazxdqXRdhtPyhgdBRBIY
+   INTROSPECTION_CLIENT_ID=train-station-api
+   INTROSPECTION_URL=http://dex.example.com:5556/token/introspect
+   # INTROSPECTION_CACHE_PERIOD
+   ```
+
+3. Then, deploy the app:
+
+   ```yaml
+   services:
+     init-permissions:
+       image: registry-1.docker.io/library/busybox:1.37.0-uclibc
+       volumes:
+         - store:/data
+       entrypoint: ['sh', '-c']
+       command:
+         - chown -R 1000:1000 /data && chmod -R 700 /data
+
+     train-station-api:
+       build:
+         context: .
+         dockerfile: Dockerfile
+       user: '1000:1000'
+       ports:
+         - '3000:3000'
+       env_file:
+         - .env
+       environment:
+         - DB_PATH=/data/db.sqlite3
+       volumes:
+         - store:/data
+       depends_on:
+         init-permissions:
+           condition: service_completed_successfully
+
+     dex:
+       image: ghcr.io/dexidp/dex:latest
+       ports:
+         - '5556:5556'
+       command: dex serve /etc/dex/config.yaml
+       volumes:
+         - ./dex.config.yaml:/etc/dex/config.yaml
+
+   volumes:
+     store:
+   ```
+
+4. Run the app:
+
+   ```sh
+   docker compose up -d
+   ```
 
 #### Setup a development environment
 
-1. Install [golang](https://golang.org) et install the dependencies
+Just use docker-compose to deploy the development environment:
 
-   ```sh
-   go mod download
-   ```
-
-2. ```sh
-   # Inside: ./train-station-api
-   make
-   ./bin/train-station-api
-   make unit # Run unit tests
-   ```
+```sh
+cd /go
+docker compose up -d --build
+```
 
 ### Architecture
 
 ```mermaid
 flowchart TD
-	JWT
-	*sql.SQL
-	DB
-	subgraph server[gRPC server]
-        healthAPI
-        stationAPI
-        authAPI
-    end
-    *sql.SQL --> DB
-    DB --> stationAPI
-    JWT --> authAPI
-    JWT --> stationAPI
+  subgraph server[ConnectRPC server]
+      healthAPIHandler
+      stationAPIHandler
+  end
+  Introspection --> stationAPIHandler
+  DB --> stationAPIHandler
 ```
 
-If you have seen the old versions before version 2, we were using the SOLID architecture in Go. After years of experience, we realized that the SOLID architecture tells us how to organize our code and how to inject dependencies.
+- DB is filled on init.
+- `healthAPIHandler` is used to check the health of the server.
+- `stationAPIHandler` is used to manage the stations (set favorite, get many,
+  etc.)
+- `introspection` is used to introspect incoming JWT token, and to check if the
+  token is valid.
 
-However, the explicit layering adds standard code and incomprehensible "data mappings", which hinders maintainability and understanding of the project. While the SOLID architecture seems ideal for object-oriented languages such as Kotlin, for Go it adds too much boilerplate code with no benefit other than having to "pseudo-satisfy" the SOLID principles.
-
-In reality, the SOLID priciples goes against the [Effective Go](https://go.dev/doc/effective_go) recommendations which is way more important since it is the base for every Go developers, while SOLID are principles for object-oriented programming.
-
-Since SOLID offers no real benefits outside of pain, we decided to remove the explicit layering while still sticking to domain-oriented development.
-
-The contract is as follows:
-
-- Retrieve the data at the start of the program
-- Retrieve stations (several or one)
-- The user can add a station to his favorites
-
-This translates into :
-
-- Download the data in the `main.go` as the `main` function indicates the start. The data is stored in a database or cache.
-- The gRPC models are the domain entities and we serve them. This means that we translate the database models into gRPC models.
-- Define a `favoriteSetter` interface and implement it. And the database can implement the interface perfectly.
+Since we use introspection, we do not use JWKS to check if the token is valid.
 
 ### Entity relationship
 
@@ -134,92 +186,86 @@ erDiagram
 ### Technologies used
 
 - sqlc for database-first approach and type-safe SQL
-- go-migrate for database migrations
-- gRPC as HTTP server and main entrypoint
+- DIY solution for database migrations
+- ConnectRPC as HTTP server and main entrypoint
 - urfave/cli for the CLI tooling
-- JWT for session handling
-- OAuth2 for Authentication
+- [OAuth Token
+  Introspection](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-introspection-response/12/)
+  for Authentication
 
 ## Web Front-End
 
 ### Setup
 
+Start the backend:
+
+```shell
+cd ./go
+docker compose up -d
+```
+
 Install [bun](https://bun.sh) and install the dependencies:
 
 ```shell
 bun install --frozen-lockfile
-```
-
-Create a [Github OAuth App](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app), generate a secret with `openssl rand -base64 32`, and fill a `.env` file with the following content:
-
-```shell
-GITHUB_ID=<Github OAUTH App ID>
-GITHUB_SECRET=<Github OAUTH App Secret>
-AUTH_SECRET=<Random Secret>
-```
-
-Serve in development mode:
-
-```shell
 bun run dev
-```
-
-Or deploy in production:
-
-```shell
-bun run build
-# bun run preview # for demonstration
 ```
 
 ### Technologies used
 
 - SvelteKit with SSR as main web framework
-- Pure JWT as authentication helpers
-- protobuf-ts + gRPC as transport
+- OIDC Authentication
+- protobuf-es + ConnectRPC as transport
 - ViteJS for bundling and optimizing
+- MapLibre for map rendering
 
 ## Android App
 
 ### Architecture
 
-```mermaid
-flowchart TD
-	oauth[OAuth provider]
-	subgraph data[Data Layer]
-		subgraph cache[Cache]
-          	oauthDataStore
-         	jwtDataStore
-         	Room
-        end
-        oauth
-        StationRepositoryImpl
-        authAPI
-        stationAPI
-    end
+<!--
 
-    subgraph domain[Domain Layer]
-		StationRepository
-    end
+d2 code:
 
-    subgraph presentation[Presentation Layer]
-		LoginViewModel
-		DetailViewModel
-		StationListViewModel
-		MainActivity
-    end
+direction: down
 
-    Room-->StationRepositoryImpl
-    jwtDataStore-->StationRepositoryImpl
-    StationRepositoryImpl-->|implements|StationRepository
-    stationAPI-->StationRepositoryImpl
-    jwtDataStore-->LoginViewModel
-    authAPI-->LoginViewModel
-    oauthDataStore-->LoginViewModel
-    StationRepository-->DetailViewModel
-    StationRepository-->StationListViewModel
-    oauth-->MainActivity
-    oauthDataStore-->MainActivity
-```
+data: Data Layer {
+  CodeVerifierDataStore
+  oidcClient: OIDC Client
+  Room -> StationRepository
+  StationAPI -> StationRepository
+  OauthDataStore -> StationRepository
+}
+
+presentation: Presentation Layer {
+  LoginViewModel -> MainActivity
+  LoginViewModel -> LoginScreen
+  NavDisplay -> LoginRoute
+  LoginRoute -> LoginScreen
+
+  NavDisplay -> DetailRoute
+  DetailRoute -> DetailScreen
+  DetailViewModel -> DetailScreen
+
+  StationsRoute -> StationListScreen
+  StationListViewModel -> StationListScreen
+
+  MainActivity -> NavDisplay
+  NavDisplay -> StationsRoute
+
+  StationsRoute -> AboutScreen
+}
+
+data.StationRepository -> presentation.DetailViewModel
+data.StationRepository -> presentation.StationListViewModel
+data.CodeVerifierDataStore -> presentation.LoginViewModel
+data.oidcClient -> presentation.LoginViewModel
+data.OauthDataStore -> presentation.LoginViewModel
+
+
+-->
+
+![architecture-app](./assets/architecture-app.png)
 
 The **Data** layer:
 
@@ -227,40 +273,68 @@ The **Data** layer:
 - _Room_ and the _DataStores_ is the application's cache
   - The cache temporarily stores the `Stations`
   - The cache is observable using Kotlin Flow
-  - _Room_ is able to provide a [`PagingSource`](https://developer.android.com/reference/kotlin/androidx/paging/PagingSource). The `PagingSource` is able to load pages of data stored in a [`PagingData`](https://developer.android.com/reference/kotlin/androidx/paging/PagingData).
-  - _Room_ executes requests in a Kotlin coroutine in the [IO thread](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
-- _stationAPI_ is a gRPC data source which permits to retrieves `Stations`. It needs a JWT token to fetch datas.
-- _OAuth provider_ gives the OAuth Access Token which is use to authenticate and identify users. The accessToken is cached inside the _oauthDataStore_. Upon receiving the OAuth Access Token, the _authAPI_ tries to fetch a JWT token.
-- The `StationRepositoryImpl` implements `StationRepository` and executes CRUD methods.
-  - For asynchronous actions, the `Station` of the response is cached and returned.
-  - For a watch action (`watch`/`watchOne`), we observe the cache and may fetch the initial values from a data source.
-  - For paged data, we create and run the [`Pager`](https://developer.android.com/reference/kotlin/androidx/paging/Pager) to **retrieve the `PagingData` from the cache.** The pager uses the `StationRemoteMediator` which is responsible to fetch and cache pages of `Station` from a data source.
+  - _Room_ is able to provide a
+    [`PagingSource`](https://developer.android.com/reference/kotlin/androidx/paging/PagingSource).
+    The `PagingSource` is able to load pages of data stored in a
+    [`PagingData`](https://developer.android.com/reference/kotlin/androidx/paging/PagingData).
+  - _Room_ executes requests in a Kotlin coroutine in the [IO
+    thread](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html).
+- _StationAPI_ is a ConnectRPC data source which permits to retrieves
+  `Stations`. It needs a JWT token to fetch datas.
+- _OIDC Client_ uses the OAuth2 Authorization Code Flow with PKCE to fetch an
+  access token. To avoid losing the code verifier from the PKCE flow, the code
+  verifier is stored in the `codeVerifierDataStore`. The access token is cached inside the `oauthDataStore`.
+- The `StationRepository` and executes CRUD methods.
+  - For asynchronous actions, the `Station` of the response is cached and
+    returned.
+  - For a watch action (`watch`/`watchOne`), we observe the cache and may fetch
+    the initial values from a data source.
+  - For paged data, we create and run the
+    [`Pager`](https://developer.android.com/reference/kotlin/androidx/paging/Pager)
+    to **retrieve the `PagingData` from the cache.** The pager uses the
+    `StationRemoteMediator` which is responsible to fetch and cache pages of
+    `Station` from a data source.
 
 In the **Domain** layer:
 
 - Entities and contracts are defined here.
-- Currently, our `stationRepository` satisfies most use cases (displaying a list of `Stations`, displaying details of a `Station`, updating a `Station`...).
+- Currently, our `stationRepository` satisfies most use cases (displaying a list
+  of `Stations`, displaying details of a `Station`, updating a `Station`...).
 
 In the **Presentation** layer :
 
-- Data is observable in the `ViewModels`. The `ViewModels` act as the middle man between the presentation layer and domain layer. This is to follow the **[Modern Android App Architecture](https://developer.android.com/topic/architecture)**.
-- The `MainActivity` renders a `Scaffold` with its `TopAppBar`. Inside that scaffold is a `NavigationHost` composable.
+- Data is observable in the `ViewModels`. The `ViewModels` act as the middle man
+  between the presentation layer and domain layer. This is to follow the
+  **[Modern Android App
+  Architecture](https://developer.android.com/topic/architecture)**.
+- The `MainActivity` renders a `Scaffold` with its `TopAppBar`. Inside that
+  scaffold is a `NavigationHost` composable.
 - The `NavigationHost` renders a page based on a route:
-  - The default route is `/login`, and shows a login button. The button triggers a redirection to the OAuth provider, which then send the resulting OAuth Access Token to the `MainActivity` and triggers the `authAPI` to fetch a JWT. Upon receiving a JWT, the user is authenticated and is redirected to the `/stations` route.
-  - The `/stations` route shows a `LazyColumn` which listen to a `Flow<PagingData<Station>>`. This allows lazy loading of the data, and therefore, the lazy loading of "station cards". The page also shows a "About" page. When the user push on a "station card", the user is redirected to the `/details` route.
-  - The `/details` route shows the position of the train station on Google Maps and details about that station on a Bottom Sheet.
+  - The default route is `/login`, and shows a login button. The button triggers
+    a redirection to the OAuth provider, which then send the resulting OAuth
+    Access Token to the `MainActivity` and triggers the `authAPI` to fetch a
+    JWT. Upon receiving a JWT, the user is authenticated and is redirected to
+    the `/stations` route.
+  - The `/stations` route shows a `LazyColumn` which listen to a
+    `Flow<PagingData<Station>>`. This allows lazy loading of the data, and
+    therefore, the lazy loading of "station cards". The page also shows a
+    "About" page. When the user push on a "station card", the user is redirected
+    to the `/details` route.
+  - The `/details` route shows the position of the train station on Google Maps
+    and details about that station on a Bottom Sheet.
 
 ### Technologies used
 
 #### Android dependencies and AndroidX
 
 - Room and Protobuf DataStore, as a cache.
-- Retrofit + OkHttp 4 + gRPC, as data sources.
+- Retrofit + OkHttp 4 + ConnectRPC, as data sources.
 - Jetpack Compose, for bidirectional data binding and UI development.
-- ViewModel and StateFlow, to follow the Modern Android App Architecture and avoid fragment/activities lifecycle issues
+- ViewModel and StateFlow, to follow the Modern Android App Architecture and
+  avoid fragment/activities lifecycle issues
 - Paging 3, as a solution for paged data
 - Hilt, for dependency injection
-- Google Maps SDK for Android
+- MapLibre for map rendering
 
 #### Kotlin in general
 
@@ -272,7 +346,7 @@ In the **Presentation** layer :
 ```
 MIT License
 
-Copyright (c) 2021 Marc NGUYEN, Jean-Baptiste RUBIO
+Copyright (c) 2026 Marc NGUYEN, Jean-Baptiste RUBIO
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

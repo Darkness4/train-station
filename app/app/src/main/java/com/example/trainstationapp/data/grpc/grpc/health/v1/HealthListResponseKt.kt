@@ -117,3 +117,4 @@ public object HealthListResponseKt {
 }
 public inline fun com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthListResponse.copy(block: `com.example.trainstationapp.data.grpc.grpc.health.v1`.HealthListResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthListResponse =
   `com.example.trainstationapp.data.grpc.grpc.health.v1`.HealthListResponseKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+

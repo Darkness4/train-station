@@ -49,3 +49,4 @@ public object HealthCheckRequestKt {
 }
 public inline fun com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest.copy(block: `com.example.trainstationapp.data.grpc.grpc.health.v1`.HealthCheckRequestKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.grpc.health.v1.HealthProto.HealthCheckRequest =
   `com.example.trainstationapp.data.grpc.grpc.health.v1`.HealthCheckRequestKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+

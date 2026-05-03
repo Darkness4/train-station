@@ -2,307 +2,294 @@
 // @generated from file trainstation/v1alpha1/station.proto (package trainstation.v1alpha1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv2';
-import { fileDesc, messageDesc, serviceDesc } from '@bufbuild/protobuf/codegenv2';
-import type { Message } from '@bufbuild/protobuf';
+import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
+import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file trainstation/v1alpha1/station.proto.
  */
-export const file_trainstation_v1alpha1_station: GenFile =
-	/*@__PURE__*/
-	fileDesc(
-		'CiN0cmFpbnN0YXRpb24vdjFhbHBoYTEvc3RhdGlvbi5wcm90bxIVdHJhaW5zdGF0aW9uLnYxYWxwaGExIkQKFkdldE1hbnlTdGF0aW9uc1JlcXVlc3QSDQoFcXVlcnkYASABKAkSDQoFbGltaXQYAiABKAMSDAoEcGFnZRgDIAEoAyJUChdHZXRNYW55U3RhdGlvbnNSZXNwb25zZRI5CghzdGF0aW9ucxgBIAEoCzInLnRyYWluc3RhdGlvbi52MWFscGhhMS5QYWdpbmF0ZWRTdGF0aW9uIiIKFEdldE9uZVN0YXRpb25SZXF1ZXN0EgoKAmlkGAEgASgJIkgKFUdldE9uZVN0YXRpb25SZXNwb25zZRIvCgdzdGF0aW9uGAEgASgLMh4udHJhaW5zdGF0aW9uLnYxYWxwaGExLlN0YXRpb24iOQocU2V0RmF2b3JpdGVPbmVTdGF0aW9uUmVxdWVzdBIKCgJpZBgBIAEoCRINCgV2YWx1ZRgDIAEoCCIfCh1TZXRGYXZvcml0ZU9uZVN0YXRpb25SZXNwb25zZSKAAQoQUGFnaW5hdGVkU3RhdGlvbhIsCgRkYXRhGAEgAygLMh4udHJhaW5zdGF0aW9uLnYxYWxwaGExLlN0YXRpb24SDQoFY291bnQYAiABKAMSDQoFdG90YWwYAyABKAMSDAoEcGFnZRgEIAEoAxISCgpwYWdlX2NvdW50GAUgASgDIvACCgdTdGF0aW9uEgoKAmlkGAEgASgJEg8KB2NvbW11bmUYAiABKAkSDwoHeV93Z3M4NBgDIAEoARIPCgd4X3dnczg0GAQgASgBEg8KB2xpYmVsbGUYBSABKAkSDgoGaWRnYWlhGAYgASgJEhEKCXZveWFnZXVycxgHIAEoCRIUCgxnZW9fcG9pbnRfMmQYCCADKAESEgoKY29kZV9saWduZRgJIAEoCRINCgV4X2w5MxgKIAEoARINCgVjX2dlbxgLIAMoARISCgpyZ190cm9uY29uGAwgASgDEjIKCWdlb19zaGFwZRgNIAEoCzIfLnRyYWluc3RhdGlvbi52MWFscGhhMS5HZW9tZXRyeRIKCgJwaxgOIAEoCRIQCghpZHJlc2VhdRgPIAEoAxISCgpkZXBhcnRlbWVuGBAgASgJEg0KBXlfbDkzGBEgASgBEgwKBGZyZXQYEiABKAkSEwoLaXNfZmF2b3JpdGUYEyABKAgiLQoIR2VvbWV0cnkSDAoEdHlwZRgBIAEoCRITCgtjb29yZGluYXRlcxgCIAMoATL1AgoKU3RhdGlvbkFQSRJyCg9HZXRNYW55U3RhdGlvbnMSLS50cmFpbnN0YXRpb24udjFhbHBoYTEuR2V0TWFueVN0YXRpb25zUmVxdWVzdBouLnRyYWluc3RhdGlvbi52MWFscGhhMS5HZXRNYW55U3RhdGlvbnNSZXNwb25zZSIAEmwKDUdldE9uZVN0YXRpb24SKy50cmFpbnN0YXRpb24udjFhbHBoYTEuR2V0T25lU3RhdGlvblJlcXVlc3QaLC50cmFpbnN0YXRpb24udjFhbHBoYTEuR2V0T25lU3RhdGlvblJlc3BvbnNlIgAShAEKFVNldEZhdm9yaXRlT25lU3RhdGlvbhIzLnRyYWluc3RhdGlvbi52MWFscGhhMS5TZXRGYXZvcml0ZU9uZVN0YXRpb25SZXF1ZXN0GjQudHJhaW5zdGF0aW9uLnYxYWxwaGExLlNldEZhdm9yaXRlT25lU3RhdGlvblJlc3BvbnNlIgBClgIKO2NvbS5leGFtcGxlLnRyYWluc3RhdGlvbmFwcC5kYXRhLmdycGMudHJhaW5zdGF0aW9uLnYxYWxwaGExQgxTdGF0aW9uUHJvdG9IA1pUZ2l0aHViLmNvbS9EYXJrbmVzczQvdHJhaW4tc3RhdGlvbi9nby9nZW4vdHJhaW5zdGF0aW9uL3YxYWxwaGExO3RyYWluc3RhdGlvbnYxYWxwaGExogIDVFhYqgIVVHJhaW5zdGF0aW9uLlYxYWxwaGExygIVVHJhaW5zdGF0aW9uXFYxYWxwaGEx4gIhVHJhaW5zdGF0aW9uXFYxYWxwaGExXEdQQk1ldGFkYXRh6gIWVHJhaW5zdGF0aW9uOjpWMWFscGhhMWIGcHJvdG8z'
-	);
+export const file_trainstation_v1alpha1_station: GenFile = /*@__PURE__*/
+  fileDesc("CiN0cmFpbnN0YXRpb24vdjFhbHBoYTEvc3RhdGlvbi5wcm90bxIVdHJhaW5zdGF0aW9uLnYxYWxwaGExIkQKFkdldE1hbnlTdGF0aW9uc1JlcXVlc3QSDQoFcXVlcnkYASABKAkSDQoFbGltaXQYAiABKAMSDAoEcGFnZRgDIAEoAyJUChdHZXRNYW55U3RhdGlvbnNSZXNwb25zZRI5CghzdGF0aW9ucxgBIAEoCzInLnRyYWluc3RhdGlvbi52MWFscGhhMS5QYWdpbmF0ZWRTdGF0aW9uIiIKFEdldE9uZVN0YXRpb25SZXF1ZXN0EgoKAmlkGAEgASgJIkgKFUdldE9uZVN0YXRpb25SZXNwb25zZRIvCgdzdGF0aW9uGAEgASgLMh4udHJhaW5zdGF0aW9uLnYxYWxwaGExLlN0YXRpb24iOQocU2V0RmF2b3JpdGVPbmVTdGF0aW9uUmVxdWVzdBIKCgJpZBgBIAEoCRINCgV2YWx1ZRgDIAEoCCIfCh1TZXRGYXZvcml0ZU9uZVN0YXRpb25SZXNwb25zZSKAAQoQUGFnaW5hdGVkU3RhdGlvbhIsCgRkYXRhGAEgAygLMh4udHJhaW5zdGF0aW9uLnYxYWxwaGExLlN0YXRpb24SDQoFY291bnQYAiABKAMSDQoFdG90YWwYAyABKAMSDAoEcGFnZRgEIAEoAxISCgpwYWdlX2NvdW50GAUgASgDIvACCgdTdGF0aW9uEgoKAmlkGAEgASgJEg8KB2NvbW11bmUYAiABKAkSDwoHeV93Z3M4NBgDIAEoARIPCgd4X3dnczg0GAQgASgBEg8KB2xpYmVsbGUYBSABKAkSDgoGaWRnYWlhGAYgASgJEhEKCXZveWFnZXVycxgHIAEoCRIUCgxnZW9fcG9pbnRfMmQYCCADKAESEgoKY29kZV9saWduZRgJIAEoCRINCgV4X2w5MxgKIAEoARINCgVjX2dlbxgLIAMoARISCgpyZ190cm9uY29uGAwgASgDEjIKCWdlb19zaGFwZRgNIAEoCzIfLnRyYWluc3RhdGlvbi52MWFscGhhMS5HZW9tZXRyeRIKCgJwaxgOIAEoCRIQCghpZHJlc2VhdRgPIAEoAxISCgpkZXBhcnRlbWVuGBAgASgJEg0KBXlfbDkzGBEgASgBEgwKBGZyZXQYEiABKAkSEwoLaXNfZmF2b3JpdGUYEyABKAgiLQoIR2VvbWV0cnkSDAoEdHlwZRgBIAEoCRITCgtjb29yZGluYXRlcxgCIAMoATL1AgoKU3RhdGlvbkFQSRJyCg9HZXRNYW55U3RhdGlvbnMSLS50cmFpbnN0YXRpb24udjFhbHBoYTEuR2V0TWFueVN0YXRpb25zUmVxdWVzdBouLnRyYWluc3RhdGlvbi52MWFscGhhMS5HZXRNYW55U3RhdGlvbnNSZXNwb25zZSIAEmwKDUdldE9uZVN0YXRpb24SKy50cmFpbnN0YXRpb24udjFhbHBoYTEuR2V0T25lU3RhdGlvblJlcXVlc3QaLC50cmFpbnN0YXRpb24udjFhbHBoYTEuR2V0T25lU3RhdGlvblJlc3BvbnNlIgAShAEKFVNldEZhdm9yaXRlT25lU3RhdGlvbhIzLnRyYWluc3RhdGlvbi52MWFscGhhMS5TZXRGYXZvcml0ZU9uZVN0YXRpb25SZXF1ZXN0GjQudHJhaW5zdGF0aW9uLnYxYWxwaGExLlNldEZhdm9yaXRlT25lU3RhdGlvblJlc3BvbnNlIgBClgIKO2NvbS5leGFtcGxlLnRyYWluc3RhdGlvbmFwcC5kYXRhLmdycGMudHJhaW5zdGF0aW9uLnYxYWxwaGExQgxTdGF0aW9uUHJvdG9IA1pUZ2l0aHViLmNvbS9EYXJrbmVzczQvdHJhaW4tc3RhdGlvbi9nby9nZW4vdHJhaW5zdGF0aW9uL3YxYWxwaGExO3RyYWluc3RhdGlvbnYxYWxwaGExogIDVFhYqgIVVHJhaW5zdGF0aW9uLlYxYWxwaGExygIVVHJhaW5zdGF0aW9uXFYxYWxwaGEx4gIhVHJhaW5zdGF0aW9uXFYxYWxwaGExXEdQQk1ldGFkYXRh6gIWVHJhaW5zdGF0aW9uOjpWMWFscGhhMWIGcHJvdG8z");
 
 /**
  * @generated from message trainstation.v1alpha1.GetManyStationsRequest
  */
-export type GetManyStationsRequest = Message<'trainstation.v1alpha1.GetManyStationsRequest'> & {
-	/**
-	 * @generated from field: string query = 1;
-	 */
-	query: string;
+export type GetManyStationsRequest = Message<"trainstation.v1alpha1.GetManyStationsRequest"> & {
+  /**
+   * @generated from field: string query = 1;
+   */
+  query: string;
 
-	/**
-	 * @generated from field: int64 limit = 2;
-	 */
-	limit: bigint;
+  /**
+   * @generated from field: int64 limit = 2;
+   */
+  limit: bigint;
 
-	/**
-	 * @generated from field: int64 page = 3;
-	 */
-	page: bigint;
+  /**
+   * @generated from field: int64 page = 3;
+   */
+  page: bigint;
 };
 
 /**
  * Describes the message trainstation.v1alpha1.GetManyStationsRequest.
  * Use `create(GetManyStationsRequestSchema)` to create a new message.
  */
-export const GetManyStationsRequestSchema: GenMessage<GetManyStationsRequest> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 0);
+export const GetManyStationsRequestSchema: GenMessage<GetManyStationsRequest> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 0);
 
 /**
  * @generated from message trainstation.v1alpha1.GetManyStationsResponse
  */
-export type GetManyStationsResponse = Message<'trainstation.v1alpha1.GetManyStationsResponse'> & {
-	/**
-	 * @generated from field: trainstation.v1alpha1.PaginatedStation stations = 1;
-	 */
-	stations?: PaginatedStation | undefined;
+export type GetManyStationsResponse = Message<"trainstation.v1alpha1.GetManyStationsResponse"> & {
+  /**
+   * @generated from field: trainstation.v1alpha1.PaginatedStation stations = 1;
+   */
+  stations?: PaginatedStation | undefined;
 };
 
 /**
  * Describes the message trainstation.v1alpha1.GetManyStationsResponse.
  * Use `create(GetManyStationsResponseSchema)` to create a new message.
  */
-export const GetManyStationsResponseSchema: GenMessage<GetManyStationsResponse> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 1);
+export const GetManyStationsResponseSchema: GenMessage<GetManyStationsResponse> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 1);
 
 /**
  * @generated from message trainstation.v1alpha1.GetOneStationRequest
  */
-export type GetOneStationRequest = Message<'trainstation.v1alpha1.GetOneStationRequest'> & {
-	/**
-	 * @generated from field: string id = 1;
-	 */
-	id: string;
+export type GetOneStationRequest = Message<"trainstation.v1alpha1.GetOneStationRequest"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
 };
 
 /**
  * Describes the message trainstation.v1alpha1.GetOneStationRequest.
  * Use `create(GetOneStationRequestSchema)` to create a new message.
  */
-export const GetOneStationRequestSchema: GenMessage<GetOneStationRequest> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 2);
+export const GetOneStationRequestSchema: GenMessage<GetOneStationRequest> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 2);
 
 /**
  * @generated from message trainstation.v1alpha1.GetOneStationResponse
  */
-export type GetOneStationResponse = Message<'trainstation.v1alpha1.GetOneStationResponse'> & {
-	/**
-	 * @generated from field: trainstation.v1alpha1.Station station = 1;
-	 */
-	station?: Station | undefined;
+export type GetOneStationResponse = Message<"trainstation.v1alpha1.GetOneStationResponse"> & {
+  /**
+   * @generated from field: trainstation.v1alpha1.Station station = 1;
+   */
+  station?: Station | undefined;
 };
 
 /**
  * Describes the message trainstation.v1alpha1.GetOneStationResponse.
  * Use `create(GetOneStationResponseSchema)` to create a new message.
  */
-export const GetOneStationResponseSchema: GenMessage<GetOneStationResponse> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 3);
+export const GetOneStationResponseSchema: GenMessage<GetOneStationResponse> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 3);
 
 /**
  * @generated from message trainstation.v1alpha1.SetFavoriteOneStationRequest
  */
-export type SetFavoriteOneStationRequest =
-	Message<'trainstation.v1alpha1.SetFavoriteOneStationRequest'> & {
-		/**
-		 * @generated from field: string id = 1;
-		 */
-		id: string;
+export type SetFavoriteOneStationRequest = Message<"trainstation.v1alpha1.SetFavoriteOneStationRequest"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
 
-		/**
-		 * @generated from field: bool value = 3;
-		 */
-		value: boolean;
-	};
+  /**
+   * @generated from field: bool value = 3;
+   */
+  value: boolean;
+};
 
 /**
  * Describes the message trainstation.v1alpha1.SetFavoriteOneStationRequest.
  * Use `create(SetFavoriteOneStationRequestSchema)` to create a new message.
  */
-export const SetFavoriteOneStationRequestSchema: GenMessage<SetFavoriteOneStationRequest> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 4);
+export const SetFavoriteOneStationRequestSchema: GenMessage<SetFavoriteOneStationRequest> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 4);
 
 /**
  * @generated from message trainstation.v1alpha1.SetFavoriteOneStationResponse
  */
-export type SetFavoriteOneStationResponse =
-	Message<'trainstation.v1alpha1.SetFavoriteOneStationResponse'> & {};
+export type SetFavoriteOneStationResponse = Message<"trainstation.v1alpha1.SetFavoriteOneStationResponse"> & {
+};
 
 /**
  * Describes the message trainstation.v1alpha1.SetFavoriteOneStationResponse.
  * Use `create(SetFavoriteOneStationResponseSchema)` to create a new message.
  */
-export const SetFavoriteOneStationResponseSchema: GenMessage<SetFavoriteOneStationResponse> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 5);
+export const SetFavoriteOneStationResponseSchema: GenMessage<SetFavoriteOneStationResponse> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 5);
 
 /**
  * @generated from message trainstation.v1alpha1.PaginatedStation
  */
-export type PaginatedStation = Message<'trainstation.v1alpha1.PaginatedStation'> & {
-	/**
-	 * @generated from field: repeated trainstation.v1alpha1.Station data = 1;
-	 */
-	data: Station[];
+export type PaginatedStation = Message<"trainstation.v1alpha1.PaginatedStation"> & {
+  /**
+   * @generated from field: repeated trainstation.v1alpha1.Station data = 1;
+   */
+  data: Station[];
 
-	/**
-	 * @generated from field: int64 count = 2;
-	 */
-	count: bigint;
+  /**
+   * @generated from field: int64 count = 2;
+   */
+  count: bigint;
 
-	/**
-	 * @generated from field: int64 total = 3;
-	 */
-	total: bigint;
+  /**
+   * @generated from field: int64 total = 3;
+   */
+  total: bigint;
 
-	/**
-	 * @generated from field: int64 page = 4;
-	 */
-	page: bigint;
+  /**
+   * @generated from field: int64 page = 4;
+   */
+  page: bigint;
 
-	/**
-	 * @generated from field: int64 page_count = 5;
-	 */
-	pageCount: bigint;
+  /**
+   * @generated from field: int64 page_count = 5;
+   */
+  pageCount: bigint;
 };
 
 /**
  * Describes the message trainstation.v1alpha1.PaginatedStation.
  * Use `create(PaginatedStationSchema)` to create a new message.
  */
-export const PaginatedStationSchema: GenMessage<PaginatedStation> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 6);
+export const PaginatedStationSchema: GenMessage<PaginatedStation> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 6);
 
 /**
  * @generated from message trainstation.v1alpha1.Station
  */
-export type Station = Message<'trainstation.v1alpha1.Station'> & {
-	/**
-	 * @generated from field: string id = 1;
-	 */
-	id: string;
+export type Station = Message<"trainstation.v1alpha1.Station"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
 
-	/**
-	 * @generated from field: string commune = 2;
-	 */
-	commune: string;
+  /**
+   * @generated from field: string commune = 2;
+   */
+  commune: string;
 
-	/**
-	 * @generated from field: double y_wgs84 = 3;
-	 */
-	yWgs84: number;
+  /**
+   * @generated from field: double y_wgs84 = 3;
+   */
+  yWgs84: number;
 
-	/**
-	 * @generated from field: double x_wgs84 = 4;
-	 */
-	xWgs84: number;
+  /**
+   * @generated from field: double x_wgs84 = 4;
+   */
+  xWgs84: number;
 
-	/**
-	 * @generated from field: string libelle = 5;
-	 */
-	libelle: string;
+  /**
+   * @generated from field: string libelle = 5;
+   */
+  libelle: string;
 
-	/**
-	 * @generated from field: string idgaia = 6;
-	 */
-	idgaia: string;
+  /**
+   * @generated from field: string idgaia = 6;
+   */
+  idgaia: string;
 
-	/**
-	 * @generated from field: string voyageurs = 7;
-	 */
-	voyageurs: string;
+  /**
+   * @generated from field: string voyageurs = 7;
+   */
+  voyageurs: string;
 
-	/**
-	 * @generated from field: repeated double geo_point_2d = 8;
-	 */
-	geoPoint2d: number[];
+  /**
+   * @generated from field: repeated double geo_point_2d = 8;
+   */
+  geoPoint2d: number[];
 
-	/**
-	 * @generated from field: string code_ligne = 9;
-	 */
-	codeLigne: string;
+  /**
+   * @generated from field: string code_ligne = 9;
+   */
+  codeLigne: string;
 
-	/**
-	 * @generated from field: double x_l93 = 10;
-	 */
-	xL93: number;
+  /**
+   * @generated from field: double x_l93 = 10;
+   */
+  xL93: number;
 
-	/**
-	 * @generated from field: repeated double c_geo = 11;
-	 */
-	cGeo: number[];
+  /**
+   * @generated from field: repeated double c_geo = 11;
+   */
+  cGeo: number[];
 
-	/**
-	 * @generated from field: int64 rg_troncon = 12;
-	 */
-	rgTroncon: bigint;
+  /**
+   * @generated from field: int64 rg_troncon = 12;
+   */
+  rgTroncon: bigint;
 
-	/**
-	 * @generated from field: trainstation.v1alpha1.Geometry geo_shape = 13;
-	 */
-	geoShape?: Geometry | undefined;
+  /**
+   * @generated from field: trainstation.v1alpha1.Geometry geo_shape = 13;
+   */
+  geoShape?: Geometry | undefined;
 
-	/**
-	 * @generated from field: string pk = 14;
-	 */
-	pk: string;
+  /**
+   * @generated from field: string pk = 14;
+   */
+  pk: string;
 
-	/**
-	 * @generated from field: int64 idreseau = 15;
-	 */
-	idreseau: bigint;
+  /**
+   * @generated from field: int64 idreseau = 15;
+   */
+  idreseau: bigint;
 
-	/**
-	 * @generated from field: string departemen = 16;
-	 */
-	departemen: string;
+  /**
+   * @generated from field: string departemen = 16;
+   */
+  departemen: string;
 
-	/**
-	 * @generated from field: double y_l93 = 17;
-	 */
-	yL93: number;
+  /**
+   * @generated from field: double y_l93 = 17;
+   */
+  yL93: number;
 
-	/**
-	 * @generated from field: string fret = 18;
-	 */
-	fret: string;
+  /**
+   * @generated from field: string fret = 18;
+   */
+  fret: string;
 
-	/**
-	 * @generated from field: bool is_favorite = 19;
-	 */
-	isFavorite: boolean;
+  /**
+   * @generated from field: bool is_favorite = 19;
+   */
+  isFavorite: boolean;
 };
 
 /**
  * Describes the message trainstation.v1alpha1.Station.
  * Use `create(StationSchema)` to create a new message.
  */
-export const StationSchema: GenMessage<Station> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 7);
+export const StationSchema: GenMessage<Station> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 7);
 
 /**
  * @generated from message trainstation.v1alpha1.Geometry
  */
-export type Geometry = Message<'trainstation.v1alpha1.Geometry'> & {
-	/**
-	 * @generated from field: string type = 1;
-	 */
-	type: string;
+export type Geometry = Message<"trainstation.v1alpha1.Geometry"> & {
+  /**
+   * @generated from field: string type = 1;
+   */
+  type: string;
 
-	/**
-	 * @generated from field: repeated double coordinates = 2;
-	 */
-	coordinates: number[];
+  /**
+   * @generated from field: repeated double coordinates = 2;
+   */
+  coordinates: number[];
 };
 
 /**
  * Describes the message trainstation.v1alpha1.Geometry.
  * Use `create(GeometrySchema)` to create a new message.
  */
-export const GeometrySchema: GenMessage<Geometry> =
-	/*@__PURE__*/
-	messageDesc(file_trainstation_v1alpha1_station, 8);
+export const GeometrySchema: GenMessage<Geometry> = /*@__PURE__*/
+  messageDesc(file_trainstation_v1alpha1_station, 8);
 
 /**
  * StationAPI handles train stations from the SNCF.
@@ -312,34 +299,36 @@ export const GeometrySchema: GenMessage<Geometry> =
  * @generated from service trainstation.v1alpha1.StationAPI
  */
 export const StationAPI: GenService<{
-	/**
-	 * GetManyStations fetch a paginated list of station.
-	 *
-	 * @generated from rpc trainstation.v1alpha1.StationAPI.GetManyStations
-	 */
-	getManyStations: {
-		methodKind: 'unary';
-		input: typeof GetManyStationsRequestSchema;
-		output: typeof GetManyStationsResponseSchema;
-	};
-	/**
-	 * GetOneStation fetches the details of a station.
-	 *
-	 * @generated from rpc trainstation.v1alpha1.StationAPI.GetOneStation
-	 */
-	getOneStation: {
-		methodKind: 'unary';
-		input: typeof GetOneStationRequestSchema;
-		output: typeof GetOneStationResponseSchema;
-	};
-	/**
-	 * SetFavoriteOneStation set a station to favorite for a user.
-	 *
-	 * @generated from rpc trainstation.v1alpha1.StationAPI.SetFavoriteOneStation
-	 */
-	setFavoriteOneStation: {
-		methodKind: 'unary';
-		input: typeof SetFavoriteOneStationRequestSchema;
-		output: typeof SetFavoriteOneStationResponseSchema;
-	};
-}> = /*@__PURE__*/ serviceDesc(file_trainstation_v1alpha1_station, 0);
+  /**
+   * GetManyStations fetch a paginated list of station.
+   *
+   * @generated from rpc trainstation.v1alpha1.StationAPI.GetManyStations
+   */
+  getManyStations: {
+    methodKind: "unary";
+    input: typeof GetManyStationsRequestSchema;
+    output: typeof GetManyStationsResponseSchema;
+  },
+  /**
+   * GetOneStation fetches the details of a station.
+   *
+   * @generated from rpc trainstation.v1alpha1.StationAPI.GetOneStation
+   */
+  getOneStation: {
+    methodKind: "unary";
+    input: typeof GetOneStationRequestSchema;
+    output: typeof GetOneStationResponseSchema;
+  },
+  /**
+   * SetFavoriteOneStation set a station to favorite for a user.
+   *
+   * @generated from rpc trainstation.v1alpha1.StationAPI.SetFavoriteOneStation
+   */
+  setFavoriteOneStation: {
+    methodKind: "unary";
+    input: typeof SetFavoriteOneStationRequestSchema;
+    output: typeof SetFavoriteOneStationResponseSchema;
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_trainstation_v1alpha1_station, 0);
+

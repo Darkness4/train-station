@@ -83,3 +83,4 @@ public object GetManyStationsRequestKt {
 }
 public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest.copy(block: `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.GetManyStationsRequestKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetManyStationsRequest =
   `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.GetManyStationsRequestKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+

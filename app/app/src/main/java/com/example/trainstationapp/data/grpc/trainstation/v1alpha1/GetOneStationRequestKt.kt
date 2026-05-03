@@ -49,3 +49,4 @@ public object GetOneStationRequestKt {
 }
 public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest.copy(block: `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.GetOneStationRequestKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.GetOneStationRequest =
   `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.GetOneStationRequestKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+

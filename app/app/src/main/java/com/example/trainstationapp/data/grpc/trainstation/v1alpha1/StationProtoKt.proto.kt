@@ -5,5 +5,5 @@
 @file:com.google.protobuf.Generated
 // Generated files should ignore deprecation warnings
 @file:Suppress("DEPRECATION")
+package com.example.trainstationapp.data.grpc.trainstation.v1alpha1;
 
-package com.example.trainstationapp.data.grpc.trainstation.v1alpha1

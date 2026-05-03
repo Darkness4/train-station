@@ -32,3 +32,4 @@ public object SetFavoriteOneStationResponseKt {
 }
 public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse.copy(block: `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.SetFavoriteOneStationResponseKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.SetFavoriteOneStationResponse =
   `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.SetFavoriteOneStationResponseKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+

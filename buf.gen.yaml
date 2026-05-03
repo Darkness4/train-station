@@ -37,6 +37,11 @@ plugins:
     opt: lite
   - remote: buf.build/connectrpc/kotlin
     out: ./app/app/src/main/java
+  # Doc
+  - local: ./generate-doc.sh
+    out: ./docs
+    opt: markdown,docs.md,source_relative
+
 inputs:
   - directory: protos/trainstationapis
   - module: buf.build/grpc/grpc:1730f7242d0f45138a638b7612d46586

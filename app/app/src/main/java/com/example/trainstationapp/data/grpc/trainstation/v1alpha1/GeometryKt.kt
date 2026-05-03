@@ -114,3 +114,4 @@ public object GeometryKt {
 }
 public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry.copy(block: `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.GeometryKt.Dsl.() -> kotlin.Unit): com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry =
   `com.example.trainstationapp.data.grpc.trainstation.v1alpha1`.GeometryKt.Dsl._create(this.toBuilder()).apply { block() }._build()
+

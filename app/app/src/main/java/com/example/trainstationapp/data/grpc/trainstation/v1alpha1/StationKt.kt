@@ -464,3 +464,4 @@ public inline fun com.example.trainstationapp.data.grpc.trainstation.v1alpha1.St
 
 public val com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.StationOrBuilder.geoShapeOrNull: com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto.Geometry?
   get() = if (hasGeoShape()) getGeoShape() else null
+
