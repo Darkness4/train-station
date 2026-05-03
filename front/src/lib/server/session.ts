@@ -13,7 +13,7 @@ export function setSessionTokenCookie(
 		path: '/',
 		secure: import.meta.env.PROD,
 		expires: expiresAt,
-		sameSite: 'strict'
+		sameSite: 'lax'
 	});
 
 	event.cookies.set('train.refresh_token', refreshToken, {
@@ -21,7 +21,7 @@ export function setSessionTokenCookie(
 		path: '/',
 		secure: import.meta.env.PROD,
 		expires: refreshTokenExpiresAt,
-		sameSite: 'strict'
+		sameSite: 'lax'
 	});
 
 	event.cookies.set('train.username', username, {
@@ -29,7 +29,7 @@ export function setSessionTokenCookie(
 		path: '/',
 		secure: import.meta.env.PROD,
 		expires: refreshTokenExpiresAt,
-		sameSite: 'strict'
+		sameSite: 'lax'
 	});
 }
 
@@ -39,7 +39,7 @@ export function deleteSessionTokenCookie(event: RequestEvent): void {
 		path: '/',
 		secure: import.meta.env.PROD,
 		maxAge: 0,
-		sameSite: 'strict'
+		sameSite: 'lax'
 	});
 
 	event.cookies.set('train.refresh_token', '', {
@@ -47,7 +47,7 @@ export function deleteSessionTokenCookie(event: RequestEvent): void {
 		path: '/',
 		secure: import.meta.env.PROD,
 		maxAge: 0,
-		sameSite: 'strict'
+		sameSite: 'lax'
 	});
 
 	event.cookies.set('train.username', '', {
@@ -55,6 +55,6 @@ export function deleteSessionTokenCookie(event: RequestEvent): void {
 		path: '/',
 		secure: import.meta.env.PROD,
 		maxAge: 0,
-		sameSite: 'strict'
+		sameSite: 'lax'
 	});
 }
