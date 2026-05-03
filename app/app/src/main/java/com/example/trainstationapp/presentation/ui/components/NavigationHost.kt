@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,15 +54,18 @@ fun NavigationHost(
             var state by remember { mutableIntStateOf(0) }
             val titles = listOf("Stations", "About")
             Column {
-                TabRow(selectedTabIndex = state) {
-                    titles.forEachIndexed { index, title ->
-                        Tab(
-                            text = { Text(title) },
-                            selected = state == index,
-                            onClick = { state = index },
-                        )
-                    }
-                }
+                PrimaryTabRow(
+                    state,
+                    tabs = {
+                        titles.forEachIndexed { index, title ->
+                            Tab(
+                                text = { Text(title) },
+                                selected = state == index,
+                                onClick = { state = index },
+                            )
+                        }
+                    },
+                )
                 when (state) {
                     0 ->
                         StationListScreen(
