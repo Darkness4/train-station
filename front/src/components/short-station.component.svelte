@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Station } from '$gen/ts/trainstation/v1alpha1/station';
+	import type { Station } from '$gen/ts/trainstation/v1alpha1/station_pb';
 
 	interface Props {
 		station: Station;
@@ -21,13 +21,15 @@
 <article class="m-2">
 	<hgroup>
 		<h1>{station.libelle}</h1>
-		<h2 class="overflow-hidden text-ellipsis whitespace-nowrap max-md:max-w-xs">{station.id}</h2>
+		<h2 class="overflow-hidden text-ellipsis whitespace-nowrap max-md:max-w-xs">
+			{station.id}
+		</h2>
 	</hgroup>
 	<div>
-		<button onclick={() => onClick(station)}>
+		<button type="button" onclick={() => onClick(station)}>
 			<span class="align-middle">Details</span>
 		</button>
-		<button onclick={onClickFavorite}>
+		<button type="button" onclick={onClickFavorite}>
 			<span
 				class="material-symbols-outlined align-middle"
 				style={station.isFavorite

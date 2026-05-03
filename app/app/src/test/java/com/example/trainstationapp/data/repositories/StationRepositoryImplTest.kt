@@ -1,12 +1,15 @@
 package com.example.trainstationapp.data.repositories
 
 import androidx.datastore.core.DataStore
+import com.connectrpc.Code
+import com.connectrpc.ConnectException
+import com.connectrpc.ResponseMessage
 import com.example.trainstationapp.data.database.Database
 import com.example.trainstationapp.data.database.RemoteKeysDao
 import com.example.trainstationapp.data.database.StationDao
 import com.example.trainstationapp.data.datastore.Session
-import com.example.trainstationapp.data.datastore.jwt
-import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIGrpcKt
+import com.example.trainstationapp.data.datastore.oAuth
+import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationAPIClientInterface
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.StationProto
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getOneStationRequest
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.getOneStationResponse
@@ -14,8 +17,6 @@ import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.setFavoriteOn
 import com.example.trainstationapp.data.grpc.trainstation.v1alpha1.setFavoriteOneStationResponse
 import com.example.trainstationapp.domain.entities.Station
 import com.example.trainstationapp.utils.TestUtils
-import io.grpc.Status
-import io.grpc.StatusException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.WordSpec
 import io.mockk.Called
@@ -32,11 +33,11 @@ import kotlinx.coroutines.flow.flow
 
 class StationRepositoryImplTest :
     WordSpec({
-        val remote = mockk<StationAPIGrpcKt.StationAPICoroutineStub>()
+        val remote = mockk<StationAPIClientInterface>()
         val local = mockk<Database>()
         val stationDao = mockk<StationDao>()
         val remoteKeysDao = mockk<RemoteKeysDao>()
-        val auth = mockk<DataStore<Session.Jwt>>()
+        val auth = mockk<DataStore<Session.OAuth>>()
         val repository = StationRepositoryImpl(remote, local, auth)
 
         beforeTest {
@@ -52,18 +53,35 @@ class StationRepositoryImplTest :
                     val slot = slot<StationProto.SetFavoriteOneStationRequest>()
                     coEvery { remote.setFavoriteOneStation(capture(slot), any()) } coAnswers
                         {
-                            setFavoriteOneStationResponse {}
+                            ResponseMessage.Success(
+                                message = setFavoriteOneStationResponse {},
+                                headers = mapOf(),
+                                trailers = mapOf(),
+                            )
                         }
                     coEvery { stationDao.insert(any<Station>()) } just Runs
                     val station = TestUtils.createStation("0")
                     coEvery { remote.getOneStation(any(), any()) } coAnswers
                         {
-                            getOneStationResponse {
-                                this.station =
-                                    station.copy(isFavorite = !station.isFavorite).asGrpcModel()
-                            }
+                            ResponseMessage.Success(
+                                message = getOneStationResponse {
+                                    this.station =
+                                        station.copy(isFavorite = !station.isFavorite).asGrpcModel()
+                                },
+                                headers = mapOf(),
+                                trailers = mapOf(),
+                            )
                         }
-                    coEvery { auth.data } coAnswers { flow { emit(jwt { token = "token" }) } }
+                    coEvery { auth.data } coAnswers {
+                        flow {
+                            emit(
+                                oAuth {
+                                    accessToken = "token"
+                                    expiresAt = Long.MAX_VALUE
+                                },
+                            )
+                        }
+                    }
 
                     // Act
                     repository.makeFavoriteOne(station.id, !station.isFavorite)
@@ -73,19 +91,17 @@ class StationRepositoryImplTest :
                         remote.setFavoriteOneStation(
                             setFavoriteOneStationRequest {
                                 id = station.id
-                                token = "token"
                                 value = !station.isFavorite
                             },
-                            any(),
+                            mapOf("Authorization" to listOf("Bearer token")),
                         )
                     }
                     coVerify {
                         remote.getOneStation(
                             getOneStationRequest {
                                 id = station.id
-                                token = "token"
                             },
-                            any(),
+                            mapOf("Authorization" to listOf("Bearer token")),
                         )
                     }
                     coVerify { stationDao.insert(station.copy(isFavorite = !station.isFavorite)) }
@@ -94,12 +110,21 @@ class StationRepositoryImplTest :
                 "throw" {
                     // Arrange
                     coEvery { remote.setFavoriteOneStation(any(), any()) } throws
-                        StatusException(Status.NOT_FOUND)
-                    coEvery { auth.data } coAnswers { flow { emit(jwt { token = "token" }) } }
+                        ConnectException(Code.NOT_FOUND)
+                    coEvery { auth.data } coAnswers {
+                        flow {
+                            emit(
+                                oAuth {
+                                    accessToken = "token"
+                                    expiresAt = Long.MAX_VALUE
+                                },
+                            )
+                        }
+                    }
                     val station = TestUtils.createStation("0")
 
                     // Act
-                    shouldThrow<StatusException> {
+                    shouldThrow<ConnectException> {
                         repository.makeFavoriteOne(station.id, station.isFavorite)
                     }
 
@@ -108,10 +133,9 @@ class StationRepositoryImplTest :
                         remote.setFavoriteOneStation(
                             setFavoriteOneStationRequest {
                                 id = station.id
-                                token = "token"
                                 value = station.isFavorite
                             },
-                            any(),
+                            mapOf("Authorization" to listOf("Bearer token")),
                         )
                     }
                     verify { stationDao wasNot Called }

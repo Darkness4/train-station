@@ -10,18 +10,12 @@ import kotlinx.serialization.json.Json
 @ProvidedTypeConverter
 class ListConverters private constructor(private val json: Json) {
     @TypeConverter
-    fun fromString(value: String): List<Double> {
-        return json.decodeFromString(value)
-    }
+    fun fromString(value: String): List<Double> = json.decodeFromString(value)
 
     @TypeConverter
-    fun fromList(list: List<Double>): String {
-        return json.encodeToString(list)
-    }
+    fun fromList(list: List<Double>): String = json.encodeToString(list)
 
     companion object {
-        fun create(json: Json): ListConverters {
-            return ListConverters(json)
-        }
+        fun create(json: Json): ListConverters = ListConverters(json)
     }
 }

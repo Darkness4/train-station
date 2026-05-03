@@ -12,10 +12,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StationDao {
     /** Observe the whole cache */
-    @Query("SELECT * FROM stations") fun watch(): Flow<List<Station>>
+    @Query("SELECT * FROM stations")
+    fun watch(): Flow<List<Station>>
 
     /** Observe one item from the cache */
-    @Query("SELECT * FROM stations WHERE id = :id") fun watchById(id: String): Flow<Station>
+    @Query("SELECT * FROM stations WHERE id = :id")
+    fun watchById(id: String): Flow<Station>
 
     /** Fetch a paging source from cache, with a search filters. */
     @Query("SELECT * FROM stations WHERE libelle LIKE '%' || :search || '%' ORDER BY libelle, id")
@@ -25,10 +27,13 @@ interface StationDao {
     @Query("SELECT * FROM stations ORDER BY libelle, id")
     fun watchAsPagingSource(): PagingSource<Int, Station>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(items: List<Station>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(items: List<Station>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(vararg items: Station)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(vararg items: Station)
 
     /** Delete every rows. */
-    @Query("DELETE FROM stations") suspend fun clear()
+    @Query("DELETE FROM stations")
+    suspend fun clear()
 }

@@ -7,11 +7,10 @@ import (
 	"testing"
 
 	"github.com/Darkness4/train-station/go/db"
-	"github.com/Darkness4/train-station/go/logger"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/google/uuid"
+	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/suite"
-	"go.uber.org/zap"
 	_ "modernc.org/sqlite"
 )
 
@@ -47,10 +46,11 @@ type DBTestSuite struct {
 func (suite *DBTestSuite) BeforeTest(suiteName, testName string) {
 	d, err := sql.Open("sqlite", fmt.Sprintf("file:%s?mode=memory&cache=shared", uuid.NewString()))
 	if err != nil {
-		logger.I.Panic("failed to open db", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to open db")
 	}
 	suite.db = d
-	db.InitialMigration(d)
+	err = db.Migrate(d, "up")
+	suite.Require().NoError(err)
 	suite.q = db.New(suite.db)
 }
 

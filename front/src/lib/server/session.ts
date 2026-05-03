@@ -1,58 +1,60 @@
-import { decode } from 'jsonwebtoken';
-import { authClient } from './api';
-
 import type { RequestEvent } from '@sveltejs/kit';
 
-export function setSessionTokenCookie(event: RequestEvent, session: Session): void {
-	event.cookies.set('session', session.token, {
+export function setSessionTokenCookie(
+	event: RequestEvent,
+	accessToken: string,
+	refreshToken: string,
+	expiresAt: Date,
+	refreshTokenExpiresAt: Date,
+	username: string
+): void {
+	event.cookies.set('train.access_token', accessToken, {
 		httpOnly: true,
 		path: '/',
 		secure: import.meta.env.PROD,
-		sameSite: 'lax',
-		expires: session.expiresAt
+		expires: expiresAt,
+		sameSite: 'strict'
+	});
+
+	event.cookies.set('train.refresh_token', refreshToken, {
+		httpOnly: true,
+		path: '/',
+		secure: import.meta.env.PROD,
+		expires: refreshTokenExpiresAt,
+		sameSite: 'strict'
+	});
+
+	event.cookies.set('train.username', username, {
+		httpOnly: true,
+		path: '/',
+		secure: import.meta.env.PROD,
+		expires: refreshTokenExpiresAt,
+		sameSite: 'strict'
 	});
 }
 
 export function deleteSessionTokenCookie(event: RequestEvent): void {
-	event.cookies.set('session', '', {
+	event.cookies.set('train.access_token', '', {
 		httpOnly: true,
 		path: '/',
 		secure: import.meta.env.PROD,
-		sameSite: 'lax',
-		maxAge: 0
-	});
-}
-
-export async function createSession(accessToken: string, userId: string): Promise<Session> {
-	const { response } = await authClient.getJWT({
-		account: {
-			accessToken: accessToken,
-			provider: 'github',
-			providerAccountId: userId,
-			type: 'oauth'
-		}
+		maxAge: 0,
+		sameSite: 'strict'
 	});
 
-	const payload = decode(response.token, { json: true }) as {
-		exp: number;
-		name: string;
-		picture: string;
-	} | null;
-	return {
-		token: response.token,
-		expiresAt: payload?.exp ? new Date(payload.exp * 1000) : new Date(),
-		user: {
-			name: payload?.name ?? '',
-			image: payload?.picture ?? ''
-		}
-	};
-}
+	event.cookies.set('train.refresh_token', '', {
+		httpOnly: true,
+		path: '/',
+		secure: import.meta.env.PROD,
+		maxAge: 0,
+		sameSite: 'strict'
+	});
 
-export interface Session {
-	token: string;
-	expiresAt: Date;
-	user: {
-		name: string;
-		image: string;
-	};
+	event.cookies.set('train.username', '', {
+		httpOnly: true,
+		path: '/',
+		secure: import.meta.env.PROD,
+		maxAge: 0,
+		sameSite: 'strict'
+	});
 }

@@ -4,17 +4,19 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.trainstationapp.data.database.converters.ListConverters
 import com.example.trainstationapp.utils.AndroidTestUtils
-import java.io.IOException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.IOException
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -25,7 +27,13 @@ internal class StationDaoTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, Database::class.java).build()
+        val listConverters = ListConverters.create(
+            Json {
+                isLenient = true
+                ignoreUnknownKeys = true
+            },
+        )
+        db = Room.inMemoryDatabaseBuilder(context, Database::class.java).addTypeConverter(listConverters).build()
         dao = db.stationDao()
     }
 

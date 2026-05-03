@@ -4,15 +4,14 @@ import (
 	"encoding/json"
 
 	"github.com/Darkness4/train-station/go/db"
-	"github.com/Darkness4/train-station/go/logger"
 	"github.com/Darkness4/train-station/go/sncf"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 )
 
 func coordinatesToString(in []float64) string {
 	bytes, err := json.Marshal(in)
 	if err != nil {
-		logger.I.Panic("failed to convert", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to convert")
 	}
 	return string(bytes)
 }
@@ -20,7 +19,7 @@ func coordinatesToString(in []float64) string {
 func geoToString(in *sncf.Geo) string {
 	bytes, err := json.Marshal(in)
 	if err != nil {
-		logger.I.Panic("failed to convert", zap.Error(err))
+		log.Panic().Err(err).Msg("failed to convert")
 	}
 	return string(bytes)
 }

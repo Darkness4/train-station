@@ -2,6 +2,7 @@ package com.example.trainstationapp.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import android.view.Window
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -32,13 +33,12 @@ private val LightColorScheme =
         onTertiary = Color.White,
         onBackground = Color(0xFF1C1B1F),
         onSurface = Color(0xFF1C1B1F),
-        */
+         */
     )
 
 @Composable
 fun TrainStationAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
@@ -48,17 +48,31 @@ fun TrainStationAppTheme(
                 val context = LocalContext.current
                 if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
             }
+
             darkTheme -> DarkColorScheme
+
             else -> LightColorScheme
         }
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            setStatusBarColor(window, colorScheme.primary.toArgb())
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
 
     MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
+}
+
+fun setStatusBarColor(window: Window, color: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) { // Android 15+
+        window.decorView.setOnApplyWindowInsetsListener { view, insets ->
+            view.setBackgroundColor(color)
+            insets
+        }
+    } else {
+        // For Android 14 and below
+        window.statusBarColor = color
+    }
 }

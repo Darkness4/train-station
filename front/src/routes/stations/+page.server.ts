@@ -1,28 +1,45 @@
-import { stationClient } from '$lib/server/api';
+import { Code, ConnectError } from '@connectrpc/connect';
 import { error } from '@sveltejs/kit';
 import clone from 'just-clone';
+import { getStationClient } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ url, locals }) => {
-	const page = parseInt(url.searchParams.get('page') ?? '1');
+	const page = BigInt(url.searchParams.get('page') ?? '1');
 	const searchQuery = url.searchParams.get('s') ?? '';
-	if (!locals.session?.token) {
+	if (!locals.session?.accessToken) {
 		error(401, {
 			message: 'Unauthorized'
 		});
 	}
 
-	// TODO: handle error
-	const { response } = await stationClient.getManyStations({
-		limit: 12,
-		page: page,
-		query: searchQuery,
-		token: locals.session?.token
-	});
-	if (!response.stations) {
-		throw new Error('no data');
+	try {
+		const response = await getStationClient().getManyStations(
+			{
+				limit: 12n,
+				page: page,
+				query: searchQuery
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${locals.session.accessToken}`
+				}
+			}
+		);
+		if (!response.stations) {
+			throw new Error('no data');
+		}
+		return {
+			stations: clone(response.stations)
+		};
+	} catch (e) {
+		if (e instanceof ConnectError) {
+			if (e.code === Code.Unauthenticated) {
+				console.error('Failed to get stations', e);
+				error(401, {
+					message: 'Unauthorized'
+				});
+			}
+		}
 	}
-	return {
-		stations: clone(response.stations)
-	};
 }) satisfies PageServerLoad;

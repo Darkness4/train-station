@@ -13,7 +13,9 @@ func Download(ctx context.Context) ([]Station, error) {
 	if err != nil {
 		return []Station{}, err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	var stations []Station
 	if err := json.NewDecoder(resp.Body).Decode(&stations); err != nil {

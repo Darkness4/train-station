@@ -1,66 +1,71 @@
-import com.google.protobuf.gradle.id
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.kotlinKapt)
     alias(libs.plugins.kotlinParcelize)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.spotless)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.protobuf)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.google.services)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.room)
 }
 
 spotless {
     java {
         target("**/*.java")
+        importOrder()
         targetExclude("src/main/java/com/example/trainstationapp/data/grpc/**/*.java")
         googleJavaFormat().aosp()
         removeUnusedImports()
         trimTrailingWhitespace()
-        indentWithSpaces()
         endWithNewline()
     }
     kotlin {
         target("**/*.kt", "**/*.kts")
         targetExclude("src/main/java/com/example/trainstationapp/data/grpc/**/*.kt")
-        ktfmt("0.52").kotlinlangStyle()
+        ktlint()
+            .editorConfigOverride(
+                mapOf(
+                    "ktlint_standard_no-unused-imports" to "enabled",
+                    "ktlint_standard_function-naming" to "disabled",
+                ),
+            ).customRuleSets(
+                listOf(
+                    "io.nlopez.compose.rules:ktlint:0.5.8",
+                ),
+            )
         trimTrailingWhitespace()
-        indentWithSpaces()
         endWithNewline()
     }
-    format("misc") {
-        target("**/*.gradle", "**/*.md", "**/.gitignore")
-        indentWithSpaces()
+    kotlinGradle {
+        target("**/*.gradle.kts")
         trimTrailingWhitespace()
         endWithNewline()
-    }
-    format("xml") {
-        target("**/*.xml")
-        indentWithSpaces()
-        trimTrailingWhitespace()
-        endWithNewline()
+        ktlint()
     }
 }
 
 android {
     namespace = "com.example.trainstationapp"
-    compileSdk = 35
+    compileSdk = 37
 
     buildFeatures {
         compose = true
         buildConfig = true
+        resValues = true
+    }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 
     defaultConfig {
         applicationId = "com.example.trainstationapp"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
         val secureProps = Properties()
@@ -68,21 +73,27 @@ android {
             secureProps.load(FileInputStream(file("../secure.properties")))
         }
         resValue("string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: ""))
-        resValue("string", "github_client_id", (secureProps.getProperty("GITHUB_CLIENT_ID") ?: ""))
-        resValue(
-            "string",
-            "github_client_secret",
-            (secureProps.getProperty("GITHUB_CLIENT_SECRET") ?: ""),
-        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
 
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-            arg("room.incremental", "true")
-            arg("room.expandProjection", "true")
-        }
+        buildConfigField(
+            "String",
+            "OIDC_DISCOVERY_URL",
+            "\"https://train.mnguyen.fr/dex/.well-known/openid-configuration\"",
+        )
+
+        buildConfigField(
+            "String",
+            "TRAIN_STATION_API_URL",
+            "\"https://api.train.mnguyen.fr\"",
+        )
+
+        buildConfigField(
+            "String",
+            "CLIENT_ID",
+            "\"train-station-app\"",
+        )
     }
 
     signingConfigs {
@@ -93,9 +104,11 @@ android {
                 keyAlias = properties.getProperty("keyAlias")
                 keyPassword = properties.getProperty("keyPassword")
                 storeFile =
-                    if (file(properties.getProperty("storeFile")).exists())
+                    if (file(properties.getProperty("storeFile")).exists()) {
                         file(properties.getProperty("storeFile"))
-                    else null
+                    } else {
+                        null
+                    }
                 storePassword = properties.getProperty("storePassword")
             }
         }
@@ -128,41 +141,33 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-        freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
-    }
     packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
     testOptions { unitTests.all { it.useJUnitPlatform() } }
 }
 
 protobuf {
-    protoc { artifact = libs.protoc.asProvider().get().toString() }
-    plugins {
-        id("grpc") { artifact = libs.protoc.gen.grpc.java.get().toString() }
-        id("grpckt") { artifact = "${libs.protoc.gen.grpc.kotlin.get()}:jdk8@jar" }
-    }
+    protoc { artifact = libs.protoc.get().toString() }
     generateProtoTasks {
-        all().forEach {
-            it.plugins {
-                id("grpc") {
+        all().forEach { task ->
+            task.builtins {
+                create("java") {
                     option("lite")
-                    outputSubDir = "java"
                 }
-                id("grpckt") {
+                create("kotlin") {
                     option("lite")
-                    outputSubDir = "java"
                 }
-            }
-            it.builtins {
-                id("java") { option("lite") }
-                id("kotlin") { option("lite") }
             }
         }
     }
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 dependencies {
+    implementation(libs.nimbus.jose.jwt)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
@@ -178,13 +183,13 @@ dependencies {
     // Dagger Hilt
     implementation(libs.hilt.android)
     implementation(libs.hiltx.navigation.compose)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
-    // gRPC
-    implementation(libs.grpc.kotlin.stub)
-    implementation(libs.grpc.protobuf.lite)
+    // ConnectRPC
+    implementation(libs.connectrpc)
+    implementation(libs.connectrpc.okhttp)
+    implementation(libs.connect.kotlin.google.javalite.ext)
     implementation(libs.protobuf.kotlin.lite)
-    runtimeOnly(libs.grpc.okhttp)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
 
@@ -204,7 +209,9 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
 
     // Navigation
-    implementation(libs.navigation.compose)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
 
     // UI
     implementation(libs.activity.compose)
@@ -214,6 +221,7 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.material.icons)
     implementation(libs.foundation)
     implementation(libs.constraintlayout)
     implementation(libs.constraintlayout.compose)
@@ -222,13 +230,18 @@ dependencies {
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
 
-    // Google Services
-    implementation(libs.maps.ktx)
-    implementation(libs.play.services.maps)
-    implementation(libs.android.maps.utils)
-
     // Logging
     implementation(libs.timber)
+
+    // MapLibre
+    implementation(
+        libs.maplibre.compose
+            .get()
+            .toString(),
+    ) {
+        exclude(group = "org.maplibre.gl", module = "android-sdk")
+    }
+    implementation(libs.maplibre)
 
     // Paging
     implementation(libs.paging.runtime.ktx)
@@ -239,7 +252,6 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
 
     debugImplementation(libs.leakcanary)
 

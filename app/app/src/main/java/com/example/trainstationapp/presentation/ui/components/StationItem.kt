@@ -53,6 +53,6 @@ fun StationItem(
 
 @Preview(showBackground = true)
 @Composable
-fun StationItemPreview() {
+private fun StationItemPreview() {
     TrainStationAppTheme { StationItem(station = Station(id = "id", libelle = "libelle")) }
 }

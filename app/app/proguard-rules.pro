@@ -23,3 +23,6 @@
 -keepclassmembers class * extends androidx.datastore.*.** {
     *;
 }
+
+# R8 missing classes
+-dontwarn com.google.crypto.tink.subtle.XChaCha20Poly1305

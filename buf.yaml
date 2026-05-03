@@ -1,0 +1,12 @@
+version: v2
+deps:
+  - buf.build/bufbuild/protovalidate
+modules:
+  - path: protos/trainstationapis
+    lint:
+      use:
+        - DEFAULT
+      service_suffix: API
+    breaking:
+      use:
+        - FILE

@@ -3,6 +3,8 @@ package com.example.trainstationapp.presentation.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -12,40 +14,62 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.datastore.core.DataStore
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.scene.DialogSceneStrategy
+import androidx.navigation3.ui.NavDisplay
 import com.example.trainstationapp.R
-import com.example.trainstationapp.data.datastore.Session
-import com.example.trainstationapp.data.datastore.oAuth
-import com.example.trainstationapp.data.github.GithubApi
-import com.example.trainstationapp.data.github.GithubLogin
-import com.example.trainstationapp.presentation.ui.components.NavigationHost
+import com.example.trainstationapp.presentation.ui.components.AboutScreen
+import com.example.trainstationapp.presentation.ui.components.DetailScreen
+import com.example.trainstationapp.presentation.ui.components.LoginScreen
+import com.example.trainstationapp.presentation.ui.components.StationListScreen
+import com.example.trainstationapp.presentation.ui.navigation.Navigator
+import com.example.trainstationapp.presentation.ui.navigation.rememberNavigationState
+import com.example.trainstationapp.presentation.ui.navigation.toEntries
 import com.example.trainstationapp.presentation.ui.theme.TrainStationAppTheme
 import com.example.trainstationapp.presentation.viewmodels.DetailViewModel
+import com.example.trainstationapp.presentation.viewmodels.DetailViewModel.Companion.provideFactory
+import com.example.trainstationapp.presentation.viewmodels.LoginViewModel
+import com.example.trainstationapp.presentation.viewmodels.StationListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 import javax.inject.Inject
-import kotlinx.coroutines.launch
+
+@Serializable
+sealed class Route {
+    @Serializable
+    object Login : NavKey
+
+    @Serializable
+    object Stations : NavKey
+
+    @Serializable
+    data class Detail(val id: String) : NavKey
+}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject lateinit var assisted: DetailViewModel.AssistedFactory
-    @Inject lateinit var githubLogin: GithubLogin
-    @Inject lateinit var oauthDataStore: DataStore<Session.OAuth>
-    @Inject lateinit var githubApi: GithubApi
+    @Inject
+    lateinit var assisted: DetailViewModel.AssistedFactory
+
+    private val loginViewModel: LoginViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,17 +79,23 @@ class MainActivity : ComponentActivity() {
         intent.data?.getQueryParameter("code")?.let { code -> loginOAuth(code) }
 
         setContent {
-            val navController = rememberNavController()
+            val navigationState = rememberNavigationState(
+                startRoute = Route.Login,
+                topLevelRoutes = setOf(Route.Login, Route.Stations),
+            )
 
-            var canPop by remember { mutableStateOf(false) }
+            val navigator = remember { Navigator(navigationState) }
 
-            DisposableEffect(navController) {
-                val listener =
-                    NavController.OnDestinationChangedListener { controller, _, _ ->
-                        canPop = controller.previousBackStackEntry != null
-                    }
-                navController.addOnDestinationChangedListener(listener)
-                onDispose { navController.removeOnDestinationChangedListener(listener) }
+            val canPop = navigationState.backStacks[navigationState.topLevelRoute]?.size!! > 1
+
+            val isOnline by loginViewModel.isOnline.collectAsState()
+
+            LaunchedEffect(isOnline) {
+                if (isOnline) {
+                    navigator.navigate(Route.Stations)
+                } else {
+                    navigator.navigate(Route.Login)
+                }
             }
 
             TrainStationAppTheme {
@@ -80,10 +110,10 @@ class MainActivity : ComponentActivity() {
                                     title = { Text(stringResource(R.string.title_activity_main)) },
                                     navigationIcon = {
                                         if (canPop) {
-                                            IconButton(onClick = { navController.popBackStack() }) {
+                                            IconButton(onClick = { navigator.goBack() }) {
                                                 Icon(
                                                     imageVector =
-                                                        Icons.AutoMirrored.Filled.ArrowBack,
+                                                    Icons.AutoMirrored.Filled.ArrowBack,
                                                     contentDescription = "Back",
                                                 )
                                             }
@@ -91,11 +121,52 @@ class MainActivity : ComponentActivity() {
                                     },
                                 )
                             }
-                        }
+                        },
                     ) { contentPadding ->
-                        NavigationHost(
-                            navController = navController,
-                            detailViewModelFactory = assisted,
+                        val entryProvider = entryProvider {
+                            entry<Route.Login> {
+                                LoginScreen(navigator = navigator, viewModel = loginViewModel)
+                            }
+                            entry<Route.Stations> {
+                                var state by remember { mutableIntStateOf(0) }
+                                val titles = listOf("Stations", "About")
+                                Column {
+                                    PrimaryTabRow(
+                                        state,
+                                        tabs = {
+                                            titles.forEachIndexed { index, title ->
+                                                Tab(
+                                                    text = { Text(title) },
+                                                    selected = state == index,
+                                                    onClick = { state = index },
+                                                )
+                                            }
+                                        },
+                                    )
+                                    when (state) {
+                                        0 ->
+                                            StationListScreen(
+                                                navigator = navigator,
+                                                viewModel = hiltViewModel<StationListViewModel>(),
+                                            )
+
+                                        1 -> AboutScreen()
+                                    }
+                                }
+                            }
+                            entry<Route.Detail> { key ->
+                                DetailScreen(
+                                    viewModel = viewModel(
+                                        factory = assisted.provideFactory(key.id),
+                                    ),
+                                )
+                            }
+                        }
+
+                        NavDisplay(
+                            entries = navigationState.toEntries(entryProvider),
+                            onBack = { navigator.goBack() },
+                            sceneStrategies = remember { listOf(DialogSceneStrategy()) },
                             modifier = Modifier.padding(contentPadding),
                         )
                     }
@@ -105,26 +176,6 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun loginOAuth(code: String) {
-        lifecycleScope.launch {
-            val token =
-                githubLogin.accessToken(
-                    getString(R.string.github_client_id),
-                    getString(R.string.github_client_secret),
-                    code,
-                )
-
-            // Test oauth
-            val user = githubApi.user("${token.tokenType} ${token.accessToken}")
-            println(user)
-
-            // Store oauth
-            oauthDataStore.updateData {
-                oAuth {
-                    accessToken = token.accessToken
-                    tokenType = token.tokenType
-                    userId = user.id
-                }
-            }
-        }
+        loginViewModel.code = code
     }
 }

@@ -100,10 +100,10 @@ lint: $(golint)
 	$(golint) run ./...
 
 $(migrate):
-	go install -tags 'sqlite3' github.com/golang-migrate/migrate/v4/cmd/migrate
+	go install -tags 'sqlite3' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
 $(sqlc):
-	go install github.com/sqlc-dev/sqlc/cmd/sqlc
+	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 
 $(golint):
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest

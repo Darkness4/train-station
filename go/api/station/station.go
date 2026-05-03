@@ -3,122 +3,118 @@ package station
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
-	"github.com/Darkness4/train-station/go/api/mappers"
+	"connectrpc.com/connect"
 	"github.com/Darkness4/train-station/go/db"
-	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/go/trainstation/v1alpha1"
-	"github.com/Darkness4/train-station/go/jwt"
-	"github.com/Darkness4/train-station/go/logger"
-	"go.uber.org/zap"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+	trainstationv1alpha1 "github.com/Darkness4/train-station/go/gen/trainstation/v1alpha1"
+	"github.com/Darkness4/train-station/go/gen/trainstation/v1alpha1/trainstationv1alpha1connect"
+	"github.com/Darkness4/train-station/go/introspection"
+	"github.com/rs/zerolog/log"
 )
 
-type stationAPIServer struct {
-	trainstationv1alpha1.UnimplementedStationAPIServer
-	q   *db.Queries
-	jwt *jwt.Service
+var _ trainstationv1alpha1connect.StationAPIHandler = (*StationAPIHandler)(nil)
+
+type StationAPIHandler struct {
+	q *db.Queries
 }
 
-func New(q *db.Queries, jwt *jwt.Service) *stationAPIServer {
+func NewAPIHandler(q *db.Queries) *StationAPIHandler {
 	if q == nil {
-		logger.I.Panic("q is nil")
+		log.Panic().Msg("q is nil")
 	}
-	if jwt == nil {
-		logger.I.Panic("jwt is nil")
-	}
-	return &stationAPIServer{
-		q:   q,
-		jwt: jwt,
-	}
+	return &StationAPIHandler{q: q}
 }
 
-func (s *stationAPIServer) GetManyStations(
+func (s *StationAPIHandler) GetManyStations(
 	ctx context.Context,
-	req *trainstationv1alpha1.GetManyStationsRequest,
-) (*trainstationv1alpha1.GetManyStationsResponse, error) {
-	userID, err := s.jwt.Validate(req.GetToken())
-	if err != nil {
-		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
-		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
+	req *connect.Request[trainstationv1alpha1.GetManyStationsRequest],
+) (*connect.Response[trainstationv1alpha1.GetManyStationsResponse], error) {
+	userID, ok := introspection.GetSubject(ctx)
+	if !ok {
+		log.Panic().Msg("failed to get subject, AuthMiddleware was not called")
 	}
 
-	total, err := s.q.CountStations(ctx, req.GetQuery())
+	total, err := s.q.CountStations(ctx, req.Msg.GetQuery())
 	if err != nil {
-		logger.I.Error("count station failed", zap.Error(err), zap.Any("req", req))
+		log.Err(err).Any("req", req).Msg("count station failed")
 		return nil, err
 	}
-	pageCount := total/req.GetLimit() + 1
+	pageCount := total/req.Msg.GetLimit() + 1
 
 	res, err := s.q.FindManyStationAndFavorite(
 		ctx,
 		db.FindManyStationAndFavoriteParams{
 			UserID: userID,
-			Search: req.GetQuery(),
-			Limit:  req.GetLimit(),
-			Page:   req.GetPage(),
+			Search: req.Msg.GetQuery(),
+			Limit:  req.Msg.GetLimit(),
+			Page:   req.Msg.GetPage(),
 		},
 	)
 	if err == sql.ErrNoRows {
-		return &trainstationv1alpha1.GetManyStationsResponse{
-			Stations: &trainstationv1alpha1.PaginatedStation{
-				Data:      []*trainstationv1alpha1.Station{},
-				Count:     0,
-				Total:     total,
-				Page:      req.GetPage(),
-				PageCount: pageCount,
+		return &connect.Response[trainstationv1alpha1.GetManyStationsResponse]{
+			Msg: &trainstationv1alpha1.GetManyStationsResponse{
+				Stations: &trainstationv1alpha1.PaginatedStation{
+					Data:      []*trainstationv1alpha1.Station{},
+					Count:     0,
+					Total:     total,
+					Page:      req.Msg.GetPage(),
+					PageCount: pageCount,
+				},
 			},
 		}, nil
 	}
 
-	data := mappers.StationAndFavoritesFromDB(res)
+	data := StationAndFavoritesFromDB(res)
 
-	return &trainstationv1alpha1.GetManyStationsResponse{
-		Stations: &trainstationv1alpha1.PaginatedStation{
-			Data:      data,
-			Count:     int64(len(data)),
-			Total:     total,
-			Page:      req.GetPage(),
-			PageCount: pageCount,
+	return &connect.Response[trainstationv1alpha1.GetManyStationsResponse]{
+		Msg: &trainstationv1alpha1.GetManyStationsResponse{
+			Stations: &trainstationv1alpha1.PaginatedStation{
+				Data:      data,
+				Count:     int64(len(data)),
+				Total:     total,
+				Page:      req.Msg.GetPage(),
+				PageCount: pageCount,
+			},
 		},
 	}, nil
 }
 
-func (s *stationAPIServer) GetOneStation(
+func (s *StationAPIHandler) GetOneStation(
 	ctx context.Context,
-	req *trainstationv1alpha1.GetOneStationRequest,
-) (*trainstationv1alpha1.GetOneStationResponse, error) {
-	userID, err := s.jwt.Validate(req.GetToken())
-	if err != nil {
-		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
-		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
+	req *connect.Request[trainstationv1alpha1.GetOneStationRequest],
+) (*connect.Response[trainstationv1alpha1.GetOneStationResponse], error) {
+	userID, ok := introspection.GetSubject(ctx)
+	if !ok {
+		log.Panic().Msg("failed to get subject, AuthMiddleware was not called")
 	}
 
 	res, err := s.q.FindOneStationAndFavorite(ctx, db.FindOneStationAndFavoriteParams{
 		UserID: userID,
-		ID:     req.GetId(),
+		ID:     req.Msg.GetId(),
 	})
 	if err == sql.ErrNoRows {
-		return nil, status.Error(codes.NotFound, "station not found")
+		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("station not found: %w", err))
 	}
-	return &trainstationv1alpha1.GetOneStationResponse{
-		Station: mappers.StationAndFavoriteFromDB(res),
+	return &connect.Response[trainstationv1alpha1.GetOneStationResponse]{
+		Msg: &trainstationv1alpha1.GetOneStationResponse{
+			Station: StationAndFavoriteFromDB(res),
+		},
 	}, nil
 }
 
-func (s *stationAPIServer) SetFavoriteOneStation(
+func (s *StationAPIHandler) SetFavoriteOneStation(
 	ctx context.Context,
-	req *trainstationv1alpha1.SetFavoriteOneStationRequest,
-) (*trainstationv1alpha1.SetFavoriteOneStationResponse, error) {
-	userID, err := s.jwt.Validate(req.GetToken())
-	if err != nil {
-		logger.I.Error("authentication error", zap.Error(err), zap.Any("req", req))
-		return nil, status.Errorf(codes.Unauthenticated, "failed to authenticate: %s", err)
+	req *connect.Request[trainstationv1alpha1.SetFavoriteOneStationRequest],
+) (*connect.Response[trainstationv1alpha1.SetFavoriteOneStationResponse], error) {
+	userID, ok := introspection.GetSubject(ctx)
+	if !ok {
+		log.Panic().Msg("failed to get subject, AuthMiddleware was not called")
 	}
 
-	if req.GetValue() {
+	if req.Msg.GetValue() {
 		if err := s.q.CreateFavorite(ctx, db.CreateFavoriteParams{
-			StationID: req.GetId(),
+			StationID: req.Msg.GetId(),
 			UserID:    userID,
 		}); err != nil {
 			return nil, err
@@ -126,12 +122,14 @@ func (s *stationAPIServer) SetFavoriteOneStation(
 
 	} else {
 		if err := s.q.DeleteFavorite(ctx, db.DeleteFavoriteParams{
-			StationID: req.GetId(),
+			StationID: req.Msg.GetId(),
 			UserID:    userID,
 		}); err != nil {
 			return nil, err
 		}
 	}
 
-	return &trainstationv1alpha1.SetFavoriteOneStationResponse{}, nil
+	return &connect.Response[trainstationv1alpha1.SetFavoriteOneStationResponse]{
+		Msg: &trainstationv1alpha1.SetFavoriteOneStationResponse{},
+	}, nil
 }

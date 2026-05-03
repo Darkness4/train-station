@@ -35,61 +35,57 @@ data class Station(
 
     @SuppressLint("ParcelCreator")
     @Parcelize
-    data class Geometry(val type: String = "", val coordinates: List<Double> = emptyList()) :
-        Parcelable {
+    data class Geometry(val type: String = "", val coordinates: List<Double> = emptyList()) : Parcelable {
         companion object {
             fun fromGrpc(model: StationProto.Geometry) = Geometry(model.type, model.coordinatesList)
         }
 
-        fun asGrpcModel(): StationProto.Geometry =
-            StationProto.Geometry.newBuilder().setType(type).addAllCoordinates(coordinates).build()
+        fun asGrpcModel(): StationProto.Geometry = StationProto.Geometry.newBuilder().setType(type).addAllCoordinates(coordinates).build()
     }
 
     companion object {
-        fun fromGrpc(model: StationProto.Station) =
-            Station(
-                model.id,
-                model.isFavorite,
-                model.commune,
-                model.yWgs84,
-                model.xWgs84,
-                model.libelle,
-                model.idgaia,
-                model.voyageurs,
-                model.geoPoint2DList,
-                model.codeLigne,
-                model.xL93,
-                model.cGeoList,
-                model.rgTroncon,
-                Geometry.fromGrpc(model.geoShape),
-                model.pk,
-                model.idreseau,
-                model.departemen,
-                model.yL93,
-                model.fret,
-            )
+        fun fromGrpc(model: StationProto.Station) = Station(
+            model.id,
+            model.isFavorite,
+            model.commune,
+            model.yWgs84,
+            model.xWgs84,
+            model.libelle,
+            model.idgaia,
+            model.voyageurs,
+            model.geoPoint2DList,
+            model.codeLigne,
+            model.xL93,
+            model.cGeoList,
+            model.rgTroncon,
+            Geometry.fromGrpc(model.geoShape),
+            model.pk,
+            model.idreseau,
+            model.departemen,
+            model.yL93,
+            model.fret,
+        )
     }
 
-    fun asGrpcModel(): StationProto.Station =
-        StationProto.Station.newBuilder()
-            .setId(id)
-            .setIsFavorite(isFavorite)
-            .setCommune(commune)
-            .setYWgs84(yWgs84)
-            .setXWgs84(xWgs84)
-            .setLibelle(libelle)
-            .setIdgaia(idgaia)
-            .setVoyageurs(voyageurs)
-            .addAllGeoPoint2D(geoPoint2d)
-            .setCodeLigne(codeLigne)
-            .setXL93(xL93)
-            .addAllCGeo(cGeo)
-            .setRgTroncon(rgTroncon)
-            .setGeoShape(geoShape.asGrpcModel())
-            .setPk(pk)
-            .setIdreseau(idreseau)
-            .setDepartemen(departemen)
-            .setYL93(yL93)
-            .setFret(fret)
-            .build()
+    fun asGrpcModel(): StationProto.Station = StationProto.Station.newBuilder()
+        .setId(id)
+        .setIsFavorite(isFavorite)
+        .setCommune(commune)
+        .setYWgs84(yWgs84)
+        .setXWgs84(xWgs84)
+        .setLibelle(libelle)
+        .setIdgaia(idgaia)
+        .setVoyageurs(voyageurs)
+        .addAllGeoPoint2D(geoPoint2d)
+        .setCodeLigne(codeLigne)
+        .setXL93(xL93)
+        .addAllCGeo(cGeo)
+        .setRgTroncon(rgTroncon)
+        .setGeoShape(geoShape.asGrpcModel())
+        .setPk(pk)
+        .setIdreseau(idreseau)
+        .setDepartemen(departemen)
+        .setYL93(yL93)
+        .setFret(fret)
+        .build()
 }

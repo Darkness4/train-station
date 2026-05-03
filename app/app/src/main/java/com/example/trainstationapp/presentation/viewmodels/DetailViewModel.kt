@@ -16,24 +16,26 @@ import timber.log.Timber
 
 class DetailViewModel
 @AssistedInject
-constructor(stationRepository: StationRepository, @Assisted initialStationId: String) :
-    ViewModel() {
+constructor(
+    stationRepository: StationRepository,
+    @Assisted initialStationId: String,
+) : ViewModel() {
 
     val station: StateFlow<Station?> =
         stationRepository
             .watchOne(initialStationId)
             .catch { e ->
                 Timber.e(e)
-                _errorState.value = e.toString()
+                _error.value = e.toString()
             }
             .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    private val _errorState = MutableStateFlow<String?>(null)
+    private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?>
-        get() = _errorState
+        get() = _error
 
     fun clearError() {
-        _errorState.value = null
+        _error.value = null
     }
 
     @dagger.assisted.AssistedFactory
@@ -42,12 +44,9 @@ constructor(stationRepository: StationRepository, @Assisted initialStationId: St
     }
 
     companion object {
-        fun AssistedFactory.provideFactory(initialStationId: String): ViewModelProvider.Factory =
-            object : ViewModelProvider.Factory {
-                @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return this@provideFactory.create(initialStationId) as T
-                }
-            }
+        fun AssistedFactory.provideFactory(initialStationId: String): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = this@provideFactory.create(initialStationId) as T
+        }
     }
 }

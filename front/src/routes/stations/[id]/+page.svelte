@@ -4,9 +4,7 @@
 	let { data } = $props();
 </script>
 
-<svelte:head>
-	<title>Station {data.id}</title>
-</svelte:head>
+<svelte:head><title>Station {data.id}</title></svelte:head>
 
 {#if data.station}
 	<DetailStation station={data.station} />

@@ -1,14 +1,14 @@
-import { PlaywrightTestConfig, devices } from '@playwright/test';
-import fs from 'fs';
+import fs from 'node:fs';
+import { defineConfig, devices } from '@playwright/test';
 
 const authFile = 'playwright/.auth/auth.json';
 
-const config: PlaywrightTestConfig = {
+export default defineConfig({
 	webServer: {
 		command: 'bun run build && bun run preview',
 		port: 4173
 	},
-	testDir: 'tests',
+	testMatch: '**/*.e2e.{ts,js}',
 	projects: [
 		// Setup proect
 		!fs.existsSync(authFile) ? { name: 'setup', testMatch: /.*\.setup\.ts/ } : {},
@@ -33,6 +33,4 @@ const config: PlaywrightTestConfig = {
 			dependencies: !fs.existsSync(authFile) ? ['setup'] : []
 		}
 	]
-};
-
-export default config;
+});

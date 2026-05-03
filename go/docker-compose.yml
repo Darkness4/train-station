@@ -1,9 +1,36 @@
 services:
+  init-permissions:
+    image: registry-1.docker.io/library/busybox:1.37.0-uclibc
+    volumes:
+      - store:/data
+    entrypoint: [ "sh", "-c" ]
+    command:
+      - chown -R 1000:1000 /data && chmod -R 700 /data
+
   train-station-api:
     build:
       context: .
       dockerfile: Dockerfile
+    user: "1000:1000"
     ports:
       - '3000:3000'
     env_file:
       - .env
+    environment:
+      - DB_PATH=/data/db.sqlite3
+    volumes:
+      - store:/data
+    depends_on:
+      init-permissions:
+        condition: service_completed_successfully
+
+  dex:
+    image: ghcr.io/dexidp/dex:latest
+    ports:
+      - '5556:5556'
+    command: dex serve /etc/dex/config.yaml
+    volumes:
+      - ./docker/dex/config.docker.yaml:/etc/dex/config.yaml
+
+volumes:
+  store:

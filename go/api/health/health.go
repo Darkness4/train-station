@@ -4,33 +4,52 @@ import (
 	"context"
 	"time"
 
-	healthv1 "github.com/Darkness4/train-station/go/gen/go/grpc/health/v1"
-	"github.com/Darkness4/train-station/go/logger"
-	"go.uber.org/zap"
+	"connectrpc.com/connect"
+	healthv1 "github.com/Darkness4/train-station/go/gen/grpc/health/v1"
+	"github.com/Darkness4/train-station/go/gen/grpc/health/v1/healthv1connect"
+	"github.com/rs/zerolog/log"
 )
 
-type health struct {
-	healthv1.UnimplementedHealthServer
+var _ healthv1connect.HealthHandler = (*HealthHandler)(nil)
+
+type HealthHandler struct {
 }
 
-func New() *health {
-	return &health{}
+func New() *HealthHandler {
+	return &HealthHandler{}
 }
 
-func (h *health) Check(
+func (h *HealthHandler) Check(
 	ctx context.Context,
-	req *healthv1.HealthCheckRequest,
-) (*healthv1.HealthCheckResponse, error) {
-	return &healthv1.HealthCheckResponse{
-		Status: healthv1.HealthCheckResponse_SERVING,
+	req *connect.Request[healthv1.HealthCheckRequest],
+) (*connect.Response[healthv1.HealthCheckResponse], error) {
+	return &connect.Response[healthv1.HealthCheckResponse]{
+		Msg: &healthv1.HealthCheckResponse{
+			Status: healthv1.HealthCheckResponse_SERVING,
+		},
 	}, nil
 }
 
-func (h *health) Watch(
-	req *healthv1.HealthCheckRequest,
-	stream healthv1.Health_WatchServer,
+func (h *HealthHandler) List(
+	ctx context.Context,
+	req *connect.Request[healthv1.HealthListRequest],
+) (*connect.Response[healthv1.HealthListResponse], error) {
+	return &connect.Response[healthv1.HealthListResponse]{
+		Msg: &healthv1.HealthListResponse{
+			Statuses: map[string]*healthv1.HealthCheckResponse{
+				"main": {
+					Status: healthv1.HealthCheckResponse_SERVING,
+				},
+			},
+		},
+	}, nil
+}
+
+func (h *HealthHandler) Watch(
+	ctx context.Context,
+	req *connect.Request[healthv1.HealthCheckRequest],
+	stream *connect.ServerStream[healthv1.HealthCheckResponse],
 ) error {
-	ctx := stream.Context()
 	ticker := time.NewTicker(10 * time.Second)
 
 	go func(ctx context.Context) {
@@ -38,7 +57,7 @@ func (h *health) Watch(
 			if err := stream.Send(&healthv1.HealthCheckResponse{
 				Status: healthv1.HealthCheckResponse_SERVING,
 			}); err != nil {
-				logger.I.Error("healthcheck send failed", zap.Error(err))
+				log.Err(err).Msg("healthcheck send failed")
 			}
 
 			select {
