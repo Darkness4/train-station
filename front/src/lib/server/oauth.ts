@@ -1,7 +1,7 @@
-import { CodeChallengeMethod, OAuth2Client, type OAuth2Tokens } from "arctic";
-import jwt from "jsonwebtoken";
-import jwksClient from "jwks-rsa";
-import { env } from "$env/dynamic/private";
+import { CodeChallengeMethod, OAuth2Client, type OAuth2Tokens } from 'arctic';
+import jwt from 'jsonwebtoken';
+import jwksClient from 'jwks-rsa';
+import { env } from '$env/dynamic/private';
 
 class OidcClient {
 	constructor(
@@ -12,7 +12,7 @@ class OidcClient {
 		readonly authorizationEndpoint: string,
 		readonly tokenEndpoint: string,
 		readonly revocationEndpoint: string | undefined,
-		readonly jwksClient: jwksClient.JwksClient,
+		readonly jwksClient: jwksClient.JwksClient
 	) {}
 
 	static async create(
@@ -20,50 +20,42 @@ class OidcClient {
 		clientId: string,
 		clientSecret: string,
 		redirectUri: string,
-		scopes: string[],
+		scopes: string[]
 	): Promise<OidcClient> {
 		const response = await fetch(discoveryUrl);
 
 		if (!response.ok) {
-			throw new Error(
-				`Failed to fetch OIDC discovery document: ${response.statusText}`,
-			);
+			throw new Error(`Failed to fetch OIDC discovery document: ${response.statusText}`);
 		}
 
 		const config = await response.json();
 
-		if (
-			config.grant_types_supported?.includes("authorization_code") === false
-		) {
-			throw new Error(
-				"OIDC client does not support authorization_code grant type",
-			);
+		if (config.grant_types_supported?.includes('authorization_code') === false) {
+			throw new Error('OIDC client does not support authorization_code grant type');
 		}
 
-		if (config.grant_types_supported?.includes("refresh_token") === false) {
-			throw new Error("OIDC client does not support refresh_token grant type");
+		if (config.grant_types_supported?.includes('refresh_token') === false) {
+			throw new Error('OIDC client does not support refresh_token grant type');
 		}
 
-		if (config.code_challenge_methods_supported?.includes("S256") === false) {
-			throw new Error(
-				"OIDC client does not support S256 code challenge method",
-			);
+		if (config.code_challenge_methods_supported?.includes('S256') === false) {
+			throw new Error('OIDC client does not support S256 code challenge method');
 		}
 
 		if (!config.issuer) {
-			throw new Error("OIDC client missing issuer");
+			throw new Error('OIDC client missing issuer');
 		}
 
 		if (!config.authorization_endpoint) {
-			throw new Error("OIDC client missing authorization_endpoint");
+			throw new Error('OIDC client missing authorization_endpoint');
 		}
 
 		if (!config.token_endpoint) {
-			throw new Error("OIDC client missing token_endpoint");
+			throw new Error('OIDC client missing token_endpoint');
 		}
 
 		if (!config.jwks_uri) {
-			throw new Error("OIDC client missing jwks_uri");
+			throw new Error('OIDC client missing jwks_uri');
 		}
 
 		return new OidcClient(
@@ -79,8 +71,8 @@ class OidcClient {
 				timeout: 30000,
 				cache: true,
 				cacheMaxAge: 3600,
-				rateLimit: true,
-			}),
+				rateLimit: true
+			})
 		);
 	}
 
@@ -90,42 +82,26 @@ class OidcClient {
 			state,
 			CodeChallengeMethod.S256,
 			codeVerifier,
-			this.scopes,
+			this.scopes
 		);
 	}
 
-	validateAuthorizationCode(
-		code: string,
-		codeVerifier: string,
-	): Promise<OAuth2Tokens> {
-		return this.oauth2Client.validateAuthorizationCode(
-			this.tokenEndpoint,
-			code,
-			codeVerifier,
-		);
+	validateAuthorizationCode(code: string, codeVerifier: string): Promise<OAuth2Tokens> {
+		return this.oauth2Client.validateAuthorizationCode(this.tokenEndpoint, code, codeVerifier);
 	}
 
 	refreshAccessToken(refreshToken: string): Promise<OAuth2Tokens> {
-		return this.oauth2Client.refreshAccessToken(
-			this.tokenEndpoint,
-			refreshToken,
-			this.scopes,
-		);
+		return this.oauth2Client.refreshAccessToken(this.tokenEndpoint, refreshToken, this.scopes);
 	}
 
 	async revokeToken(accessToken: string): Promise<void> {
 		if (this.revocationEndpoint !== undefined) {
-			return this.oauth2Client.revokeToken(
-				this.revocationEndpoint,
-				accessToken,
-			);
+			return this.oauth2Client.revokeToken(this.revocationEndpoint, accessToken);
 		}
 	}
 
 	getKey: jwt.GetPublicKeyOrSecret = (header, callback) => {
-		this.jwksClient.getSigningKey(header.kid, (_err, key) =>
-			callback(null, key?.getPublicKey()),
-		);
+		this.jwksClient.getSigningKey(header.kid, (_err, key) => callback(null, key?.getPublicKey()));
 	};
 
 	verifyIdToken(idToken: string): Promise<jwt.JwtPayload> {
@@ -135,7 +111,7 @@ class OidcClient {
 				this.getKey,
 				{
 					issuer: this.issuer,
-					audience: this.oauth2Client.clientId,
+					audience: this.oauth2Client.clientId
 				},
 				(err, decoded) => {
 					if (err) {
@@ -143,7 +119,7 @@ class OidcClient {
 					} else {
 						resolve(decoded as jwt.JwtPayload);
 					}
-				},
+				}
 			);
 		});
 	}
@@ -155,24 +131,24 @@ export const getOidcClient = async () => {
 	if (instance) return instance;
 
 	if (!env.OIDC_DISCOVERY_URL) {
-		throw new Error("Missing OIDC_DISCOVERY_URL");
+		throw new Error('Missing OIDC_DISCOVERY_URL');
 	}
 	if (!env.CLIENT_ID) {
-		throw new Error("Missing CLIENT_ID");
+		throw new Error('Missing CLIENT_ID');
 	}
 	if (!env.CLIENT_SECRET) {
-		throw new Error("Missing CLIENT_SECRET");
+		throw new Error('Missing CLIENT_SECRET');
 	}
 	if (!env.OAUTH_REDIRECT_URI) {
-		throw new Error("Missing OAUTH_REDIRECT_URI");
+		throw new Error('Missing OAUTH_REDIRECT_URI');
 	}
 
 	instance = await OidcClient.create(
-		env.OIDC_DISCOVERY_URL ?? "",
-		env.CLIENT_ID ?? "",
-		env.CLIENT_SECRET ?? "",
-		env.OAUTH_REDIRECT_URI ?? "",
-		env.OAUTH_SCOPES?.split(" ") ?? ["openid", "profile", "offline_access"],
+		env.OIDC_DISCOVERY_URL ?? '',
+		env.CLIENT_ID ?? '',
+		env.CLIENT_SECRET ?? '',
+		env.OAUTH_REDIRECT_URI ?? '',
+		env.OAUTH_SCOPES?.split(' ') ?? ['openid', 'profile', 'offline_access']
 	);
 	return instance;
 };

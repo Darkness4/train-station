@@ -1,4 +1,5 @@
 <script lang="ts">
+	import './layout.scss';
 	import './layout.css';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';

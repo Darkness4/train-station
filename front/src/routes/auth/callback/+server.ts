@@ -1,33 +1,30 @@
-import { redirect } from "@sveltejs/kit";
-import type { OAuth2Tokens } from "arctic";
-import { getOidcClient } from "$lib/server/oauth";
-import { setSessionTokenCookie } from "$lib/server/session";
-import type { RequestHandler } from "./$types";
+import { redirect } from '@sveltejs/kit';
+import type { OAuth2Tokens } from 'arctic';
+import { getOidcClient } from '$lib/server/oauth';
+import { setSessionTokenCookie } from '$lib/server/session';
+import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async (event) => {
-	const code = event.url.searchParams.get("code");
-	const state = event.url.searchParams.get("state");
-	const storedState = event.cookies.get("state");
-	const storedCodeVerifier = event.cookies.get("code_verifier");
+	const code = event.url.searchParams.get('code');
+	const state = event.url.searchParams.get('state');
+	const storedState = event.cookies.get('state');
+	const storedCodeVerifier = event.cookies.get('code_verifier');
 
 	const oidcClient = await getOidcClient();
 
 	if (!code || !state || storedState !== state || !storedCodeVerifier) {
-		return new Response("Please restart the process.", {
-			status: 400,
+		return new Response('Please restart the process.', {
+			status: 400
 		});
 	}
 
 	let tokens: OAuth2Tokens;
 	try {
-		tokens = await oidcClient.validateAuthorizationCode(
-			code,
-			storedCodeVerifier,
-		);
+		tokens = await oidcClient.validateAuthorizationCode(code, storedCodeVerifier);
 	} catch (e) {
-		return new Response("Please restart the process.", {
-			statusText: e instanceof Error ? e.message : "An error occurred",
-			status: 400,
+		return new Response('Please restart the process.', {
+			statusText: e instanceof Error ? e.message : 'An error occurred',
+			status: 400
 		});
 	}
 
@@ -39,7 +36,7 @@ export const GET: RequestHandler = async (event) => {
 		tokens.refreshToken(),
 		tokens.accessTokenExpiresAt(),
 		new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-		(decodedIdToken.name ?? decodedIdToken.username) as string,
+		(decodedIdToken.name ?? decodedIdToken.username) as string
 	);
-	return redirect(302, "/");
+	return redirect(302, '/');
 };

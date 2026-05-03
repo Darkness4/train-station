@@ -1,4 +1,4 @@
-import type { RequestEvent } from "@sveltejs/kit";
+import type { RequestEvent } from '@sveltejs/kit';
 
 export function setSessionTokenCookie(
 	event: RequestEvent,
@@ -6,55 +6,55 @@ export function setSessionTokenCookie(
 	refreshToken: string,
 	expiresAt: Date,
 	refreshTokenExpiresAt: Date,
-	username: string,
+	username: string
 ): void {
-	event.cookies.set("train.access_token", accessToken, {
+	event.cookies.set('train.access_token', accessToken, {
 		httpOnly: true,
-		path: "/",
+		path: '/',
 		secure: import.meta.env.PROD,
 		expires: expiresAt,
-		sameSite: "strict",
+		sameSite: 'strict'
 	});
 
-	event.cookies.set("train.refresh_token", refreshToken, {
+	event.cookies.set('train.refresh_token', refreshToken, {
 		httpOnly: true,
-		path: "/",
+		path: '/',
 		secure: import.meta.env.PROD,
 		expires: refreshTokenExpiresAt,
-		sameSite: "strict",
+		sameSite: 'strict'
 	});
 
-	event.cookies.set("train.username", username, {
+	event.cookies.set('train.username', username, {
 		httpOnly: true,
-		path: "/",
+		path: '/',
 		secure: import.meta.env.PROD,
 		expires: refreshTokenExpiresAt,
-		sameSite: "strict",
+		sameSite: 'strict'
 	});
 }
 
 export function deleteSessionTokenCookie(event: RequestEvent): void {
-	event.cookies.set("train.access_token", "", {
+	event.cookies.set('train.access_token', '', {
 		httpOnly: true,
-		path: "/",
+		path: '/',
 		secure: import.meta.env.PROD,
 		maxAge: 0,
-		sameSite: "strict",
+		sameSite: 'strict'
 	});
 
-	event.cookies.set("train.refresh_token", "", {
+	event.cookies.set('train.refresh_token', '', {
 		httpOnly: true,
-		path: "/",
+		path: '/',
 		secure: import.meta.env.PROD,
 		maxAge: 0,
-		sameSite: "strict",
+		sameSite: 'strict'
 	});
 
-	event.cookies.set("train.username", "", {
+	event.cookies.set('train.username', '', {
 		httpOnly: true,
-		path: "/",
+		path: '/',
 		secure: import.meta.env.PROD,
 		maxAge: 0,
-		sameSite: "strict",
+		sameSite: 'strict'
 	});
 }

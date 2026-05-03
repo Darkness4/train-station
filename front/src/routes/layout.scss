@@ -1,0 +1,20 @@
+@use '@picocss/pico/scss/pico' with (
+	$enable-semantic-container: true,
+	$enable-classes: false,
+	$enable-responsive-spacings: true,
+	$modules: (
+		'forms/checkbox-radio-switch': false,
+		'forms/input-color': false,
+		'forms/input-date': false,
+		'forms/input-file': false,
+		'forms/input-range': false,
+		'components/accordion': false,
+		'components/dropdown': false,
+		'components/loading': false,
+		'components/progress': false,
+		'components/tooltip': false
+	)
+);
+
+$material-symbols-font-path: 'material-symbols/';
+@import 'material-symbols';
