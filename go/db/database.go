@@ -35,16 +35,20 @@ func Migrate(db *sql.DB, direction string) error {
 	var maxVersion int
 	for rows.Next() {
 		var v int
-		rows.Scan(&v)
+		if err = rows.Scan(&v); err != nil {
+			return fmt.Errorf("failed to scan row: %w", err)
+		}
 		applied[v] = true
 		maxVersion = v
 	}
-	rows.Close()
+	if err = rows.Close(); err != nil {
+		return fmt.Errorf("failed to close rows query: %w", err)
+	}
 
 	// 3. Load migration files
 	entries, err := migrationFiles.ReadDir("migrations")
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to read migration files: %w", err)
 	}
 
 	switch direction {
@@ -108,7 +112,7 @@ func executeFile(db *sql.DB, filename string, version int, isUp bool) error {
 	// Since your SQL has BEGIN/COMMIT, we execute directly on db.
 	if _, err := db.Exec(string(content)); err != nil {
 		// Attempt a rollback in case the script's internal transaction is dangling
-		db.Exec("ROLLBACK;")
+		_, _ = db.Exec("ROLLBACK;")
 		return fmt.Errorf("executing %s: %w", filename, err)
 	}
 
@@ -123,5 +127,5 @@ func executeFile(db *sql.DB, filename string, version int, isUp bool) error {
 		_, err = db.Exec("DELETE FROM schema_migrations WHERE version = ?", version)
 	}
 
-	return err
+	return fmt.Errorf("failed to update migration tracking table: %w", err)
 }

@@ -144,7 +144,10 @@ var app = &cli.Command{
 			log.Err(err).Msg("db failed")
 			return err
 		}
-		db.Migrate(d, "up")
+		if err := db.Migrate(d, "up"); err != nil {
+			log.Err(err).Msg("db migration failed")
+			return err
+		}
 		q := db.New(d)
 
 		log.Info().Msg("downloading initial data...")

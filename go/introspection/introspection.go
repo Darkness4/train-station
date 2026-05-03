@@ -92,7 +92,9 @@ func (s *Service) introspect(ctx context.Context, token string) (*IntrospectionR
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer func() {
+		_ = res.Body.Close()
+	}()
 
 	if res.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("introspection failed: %d", res.StatusCode)
