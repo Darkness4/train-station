@@ -127,5 +127,8 @@ func executeFile(db *sql.DB, filename string, version int, isUp bool) error {
 		_, err = db.Exec("DELETE FROM schema_migrations WHERE version = ?", version)
 	}
 
-	return fmt.Errorf("failed to update migration tracking table: %w", err)
+	if err != nil {
+		return fmt.Errorf("failed to update migration tracking table: %w", err)
+	}
+	return nil
 }
