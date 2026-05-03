@@ -33,7 +33,7 @@
 		"@vitest/browser-playwright": "4.1.5",
 		"arctic": "3.7.0",
 		"depcheck": "1.4.7",
-		"eslint": "10.2.1",
+		"eslint": "10.3.0",
 		"eslint-plugin-svelte": "3.17.1",
 		"globals": "17.6.0",
 		"jsonwebtoken": "9.0.3",
