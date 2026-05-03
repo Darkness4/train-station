@@ -169,7 +169,7 @@ jobs:
           ./gradlew assembleRelease
       - name: Upload Release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: app-apk
           path: app/app/build/outputs/apk/release/app-release.apk
@@ -182,7 +182,7 @@ jobs:
           ./gradlew assembleStaging
       - name: Upload Staging
         if: "!startsWith(github.ref, 'refs/tags/')"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: app-apk
           path: app/app/build/outputs/apk/staging/app-staging-unsigned.apk
@@ -233,7 +233,7 @@ jobs:
           ./gradlew app:bundleRelease
       - name: Upload Release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: app-aab
           path: app/app/build/outputs/bundle/release/app-release.aab
@@ -246,7 +246,7 @@ jobs:
           ./gradlew app:bundleStaging
       - name: Upload Staging
         if: "!startsWith(github.ref, 'refs/tags/')"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: app-aab
           path: app/app/build/outputs/bundle/staging/app-staging.aab
@@ -264,11 +264,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: app-apk
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: app-aab
       - name: Release
