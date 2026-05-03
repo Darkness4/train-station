@@ -72,7 +72,16 @@ class StationRepositoryImplTest :
                                 trailers = mapOf(),
                             )
                         }
-                    coEvery { auth.data } coAnswers { flow { emit(oAuth { accessToken = "token" }) } }
+                    coEvery { auth.data } coAnswers {
+                        flow {
+                            emit(
+                                oAuth {
+                                    accessToken = "token"
+                                    expiresAt = Long.MAX_VALUE
+                                },
+                            )
+                        }
+                    }
 
                     // Act
                     repository.makeFavoriteOne(station.id, !station.isFavorite)
@@ -102,7 +111,16 @@ class StationRepositoryImplTest :
                     // Arrange
                     coEvery { remote.setFavoriteOneStation(any(), any()) } throws
                         ConnectException(Code.NOT_FOUND)
-                    coEvery { auth.data } coAnswers { flow { emit(oAuth { accessToken = "token" }) } }
+                    coEvery { auth.data } coAnswers {
+                        flow {
+                            emit(
+                                oAuth {
+                                    accessToken = "token"
+                                    expiresAt = Long.MAX_VALUE
+                                },
+                            )
+                        }
+                    }
                     val station = TestUtils.createStation("0")
 
                     // Act
