@@ -43,7 +43,7 @@
 		"material-symbols": "0.44.8",
 		"playwright": "1.59.1",
 		"sass-embedded": "1.99.0",
-		"svelte": "5.55.5",
+		"svelte": "5.55.7",
 		"svelte-adapter-bun": "1.0.1",
 		"svelte-check": "4.4.8",
 		"tailwindcss": "4.2.4",
