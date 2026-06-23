@@ -35,7 +35,7 @@
 		"depcheck": "1.4.7",
 		"eslint": "10.3.0",
 		"eslint-plugin-svelte": "3.19.0",
-		"globals": "17.6.0",
+		"globals": "17.7.0",
 		"jsonwebtoken": "9.0.3",
 		"just-clone": "6.2.0",
 		"jwks-rsa": "4.1.0",
