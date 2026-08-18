@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	connectrpc.com/connect v1.20.0
 	connectrpc.com/validate v0.6.0
-	github.com/go-chi/chi/v5 v5.2.5
+	github.com/go-chi/chi/v5 v5.3.1
 	github.com/golang-migrate/migrate/v4 v4.19.1
 	github.com/google/uuid v1.6.0
 	github.com/grafana/pyroscope-go/godeltaprof v0.1.12
