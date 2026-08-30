@@ -1,6 +1,6 @@
 services:
   init-permissions:
-    image: registry-1.docker.io/library/busybox:1.37.0-uclibc
+    image: registry-1.docker.io/library/busybox:1.38.0-uclibc
     volumes:
       - store:/data
     entrypoint: [ "sh", "-c" ]
