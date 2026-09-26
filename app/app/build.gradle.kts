@@ -34,7 +34,7 @@ spotless {
                 ),
             ).customRuleSets(
                 listOf(
-                    "io.nlopez.compose.rules:ktlint:0.6.6",
+                    "io.nlopez.compose.rules:ktlint:0.6.7",
                 ),
             )
         trimTrailingWhitespace()
