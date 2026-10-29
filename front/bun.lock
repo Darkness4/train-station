@@ -8,7 +8,7 @@
         "@biomejs/biome": "2.6.3",
         "@bufbuild/protobuf": "2.16.0",
         "@connectrpc/connect": "2.3.0",
-        "@connectrpc/connect-node": "2.2.0",
+        "@connectrpc/connect-node": "2.3.0",
         "@eslint/compat": "2.1.1",
         "@eslint/js": "10.0.1",
         "@picocss/pico": "2.1.1",
@@ -94,7 +94,7 @@
 
     "@connectrpc/connect": ["@connectrpc/connect@2.3.0", "", { "peerDependencies": { "@bufbuild/protobuf": "^2.7.0" } }, "sha512-rjAn8L9KbAZrkwiB8m1qzDsLs74hkYmwwM2iSWuxTPVOTRm/EZw31smKbQqPU50AXqJC5eKKpEnA6Uf/swQOgQ=="],
 
-    "@connectrpc/connect-node": ["@connectrpc/connect-node@2.2.0", "", { "peerDependencies": { "@bufbuild/protobuf": "^2.7.0", "@connectrpc/connect": "2.2.0" } }, "sha512-E6uUO6e11WdynAuBjuN+0WpHjqxEM9BNDdfDIJHcn49Esg/WxSIbn2y1KFt9XL96IJi01qdBbvubcdpBz1X3Zw=="],
+    "@connectrpc/connect-node": ["@connectrpc/connect-node@2.3.0", "", { "peerDependencies": { "@bufbuild/protobuf": "^2.7.0", "@connectrpc/connect": "2.3.0" } }, "sha512-kcQgV4GqFIESsl0MOHInC9/wNYU4aJDvG1OfGR5Lq6/l0gqycSGqEk+fixXGcUtPLc8vJBgS4V1nTmWlh4o9gw=="],
 
     "@eslint-community/eslint-utils": ["@eslint-community/eslint-utils@4.9.1", "", { "dependencies": { "eslint-visitor-keys": "^3.4.3" }, "peerDependencies": { "eslint": "^6.0.0 || ^7.0.0 || >=8.0.0" } }, "sha512-phrYmNiYppR7znFEdqgfWHXR6NCkZEK7hwWDHZUjit/2/U0r6XvkDl0SYnoM51Hq7FhCGdLDT6zxCCOY1hexsQ=="],
 
