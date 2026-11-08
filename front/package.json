@@ -34,7 +34,7 @@
 		"arctic": "3.7.0",
 		"depcheck": "1.4.7",
 		"eslint": "10.14.0",
-		"eslint-plugin-svelte": "3.24.0",
+		"eslint-plugin-svelte": "3.24.1",
 		"globals": "17.14.0",
 		"jsonwebtoken": "9.0.3",
 		"just-clone": "6.2.0",
